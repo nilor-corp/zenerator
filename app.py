@@ -11,7 +11,7 @@ workflow_definitions = {
             "options_text": "str"
         }
     }
-    # Add more workflow definitions here
+    # Add more workflow definitions here.
 }
 
 def run_workflow(workflow_json, parameters):
