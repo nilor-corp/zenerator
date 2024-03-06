@@ -1,17 +1,21 @@
 import gradio as gr
 import json
+from pathlib import Path
 
 # Load workflow definitions from JSON files
 workflow_definitions = {
-    "workflow1.json": {
+    "Promptable Motion": {
         "parameters": {
-            "text": "str",
-            "image_dir": "str",
-            "video_dir": "str",
-            "options_text": "str"
-        }
+            "text_1"
+        },
+    },
+        "Steerable Motion": {
+        "parameters": {
+            "images",
+            "image_path",
+        },
     }
-    # Add more workflow definitions here.
+    # Add more workflow definitions here
 }
 
 def run_workflow(workflow_json, parameters):
@@ -23,46 +27,88 @@ def run_workflow(workflow_json, parameters):
     # ... (Your workflow execution code goes here)
 
     # Return a placeholder output for demonstration
-    return "Placeholder output"
+    return ["output_video1.mp4", "output_video2.mp4"]
 
-def update_parameters(workflow_json):
-    # Get the parameter definitions for the selected workflow
-    parameter_definitions = workflow_definitions.get(workflow_json, {}).get("parameters", {})
 
-    # Create a dictionary to store the parameter components
-    parameter_components = {}
+def update_parameter_visibility(workflow_json, parameter_name):
+    # Get the parameters for the selected workflow
+    workflow_parameters = workflow_definitions[workflow_json]["parameters"]
 
-    # Create input components for each parameter
-    for param_name, param_type in parameter_definitions.items():
-        if param_type == "str":
-            parameter_components[param_name] = gr.Textbox(label=param_name)
-        elif param_type == "int":
-            parameter_components[param_name] = gr.Number(label=param_name, type="number")
-        # Add more parameter types as needed
+    print(workflow_parameters)
 
-    return parameter_components
+    # Check if the parameter is in the workflow parameters
+    if parameter_name in workflow_parameters:
+        return True  # visible
+    else:
+        return False  # not visible
+
+
+def update_gif(workflow_json):
+    # Load the GIF based on the selected workflow
+    gif_path = Path(f"gifs/{workflow_json.replace('.json', '.gif')}")
+    if gif_path.exists():
+        return str(gif_path)
+    else:
+        return None
 
 # Create the Gradio interface
 with gr.Blocks() as demo:
     with gr.Row():
-        workflow_dropdown = gr.Dropdown(
-            choices=list(workflow_definitions.keys()),
-            label="Choose Workflow",
-            value=list(workflow_definitions.keys())[0]
-        )
+        with gr.Column():
+            workflow_dropdown = gr.Dropdown(
+                choices=list(workflow_definitions.keys()),
+                label="Choose Workflow",
+                value=list(workflow_definitions.keys())[0]
+            )
 
-    with gr.Row():
-        parameter_group = gr.Group(update_parameters(workflow_dropdown.value))
+            with gr.Row():
+                gr.Markdown("Workflow Parameters")
 
-    with gr.Row():
-        input_gif = gr.Image(label="Preview GIF")
-        output_text = gr.Textbox(label="Output")
+
+            with gr.Row():
+                text_1 = gr.Textbox(label="Text 1", visible=update_parameter_visibility(workflow_dropdown.value, "text_1"))
+                text_2 = gr.Textbox(label="Text 2", visible=update_parameter_visibility(workflow_dropdown.value, "text_2"))
+
+            with gr.Row():
+                image_uploads = [gr.Image(label=f"Image {i+1}", type="filepath") for i in range(4)]
+
+            with gr.Row():
+                img_path = gr.Textbox(label="Image Directory", visible=update_parameter_visibility(workflow_dropdown.value, "img_path"))
+
+            with gr.Row():
+                 video_file = gr.File(label="Video File", visible=update_parameter_visibility(workflow_dropdown.value, "video_file"))
+                 video_path = gr.Textbox(label="Video Directory", visible=update_parameter_visibility(workflow_dropdown.value, "video_path"))
+        
+        with gr.Column():
+            preview_gif = gr.Image(label="Preview GIF", value=update_gif(workflow_dropdown.value), interactive=False)
+
+            with gr.Row():
+                output_player = gr.Video(label="Output Video")
+
+            with gr.Row():
+                mark_bad = gr.Button("Mark as Bad")
+                mark_good = gr.Button("Mark as Good")
+                upscale_button = gr.Button("Upscale")
 
     run_button = gr.Button("Run Workflow")
     run_button.click(
         fn=run_workflow,
-        inputs=[workflow_dropdown, parameter_group],
-        outputs=[output_text]
+        inputs=[workflow_dropdown] ,
+        outputs=[output_player]
     )
+
+    workflow_dropdown.change(
+        #fn=update_parameter_visibility,
+        #inputs=workflow_dropdown,
+        
+    )
+
+    workflow_dropdown.change(
+        fn=update_gif,
+        inputs=workflow_dropdown,
+        outputs=preview_gif
+    )
+
+
 
 demo.launch()
