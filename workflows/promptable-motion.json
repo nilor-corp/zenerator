@@ -1,0 +1,874 @@
+{
+  "207": {
+    "inputs": {
+      "add_noise": "enable",
+      "noise_seed": 253001276593999,
+      "steps": 25,
+      "cfg": 2.2,
+      "sampler_name": "lcm",
+      "scheduler": "sgm_uniform",
+      "start_at_step": 0,
+      "end_at_step": 10000,
+      "return_with_leftover_noise": "disable",
+      "preview_method": "auto",
+      "vae_decode": "true",
+      "model": [
+        "494",
+        0
+      ],
+      "positive": [
+        "606",
+        1
+      ],
+      "negative": [
+        "606",
+        2
+      ],
+      "latent_image": [
+        "506",
+        0
+      ],
+      "optional_vae": [
+        "512",
+        0
+      ]
+    },
+    "class_type": "KSampler Adv. (Efficient)",
+    "_meta": {
+      "title": "KSampler Adv. (Efficient), CN sampler"
+    }
+  },
+  "369": {
+    "inputs": {
+      "ipadapter_file": "ip-adapter-plus_sd15.bin"
+    },
+    "class_type": "IPAdapterModelLoader",
+    "_meta": {
+      "title": "Load IPAdapter Model"
+    }
+  },
+  "370": {
+    "inputs": {
+      "clip_name": "ip-adapter_image_encoder_sd15.safetensors"
+    },
+    "class_type": "CLIPVisionLoader",
+    "_meta": {
+      "title": "Load CLIP Vision"
+    }
+  },
+  "389": {
+    "inputs": {
+      "images": [
+        "582",
+        5
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "436": {
+    "inputs": {
+      "images": [
+        "606",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "461": {
+    "inputs": {
+      "ckpt_name": "realisticVisionV51_v51VAE.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "Load Checkpoint"
+    }
+  },
+  "462": {
+    "inputs": {
+      "text": "",
+      "clip": [
+        "487",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "463": {
+    "inputs": {
+      "text": "",
+      "clip": [
+        "487",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "464": {
+    "inputs": {
+      "width": 720,
+      "height": 720,
+      "batch_size": [
+        "606",
+        5
+      ]
+    },
+    "class_type": "ADE_EmptyLatentImageLarge",
+    "_meta": {
+      "title": "Empty Latent Image (Big Batch) 🎭🅐🅓"
+    }
+  },
+  "487": {
+    "inputs": {
+      "stop_at_clip_layer": -1,
+      "clip": [
+        "461",
+        1
+      ]
+    },
+    "class_type": "CLIPSetLastLayer",
+    "_meta": {
+      "title": "CLIP Set Last Layer"
+    }
+  },
+  "488": {
+    "inputs": {
+      "lora_name": "lcm_lora_sd15.safetensors",
+      "strength_model": 1,
+      "model": [
+        "461",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "LoraLoaderModelOnly"
+    }
+  },
+  "489": {
+    "inputs": {
+      "sampling": "lcm",
+      "zsnr": false,
+      "model": [
+        "577",
+        0
+      ]
+    },
+    "class_type": "ModelSamplingDiscrete",
+    "_meta": {
+      "title": "ModelSamplingDiscrete"
+    }
+  },
+  "490": {
+    "inputs": {
+      "model_name": "animate_lcm_sd15_t2v_beta.ckpt"
+    },
+    "class_type": "ADE_LoadAnimateDiffModel",
+    "_meta": {
+      "title": "Load AnimateDiff Model 🎭🅐🅓②"
+    }
+  },
+  "492": {
+    "inputs": {
+      "start_percent": 0,
+      "end_percent": 1,
+      "motion_model": [
+        "490",
+        0
+      ]
+    },
+    "class_type": "ADE_ApplyAnimateDiffModel",
+    "_meta": {
+      "title": "Apply AnimateDiff Model (Adv.) 🎭🅐🅓②"
+    }
+  },
+  "494": {
+    "inputs": {
+      "beta_schedule": "lcm avg(sqrt_linear,linear)",
+      "model": [
+        "606",
+        3
+      ],
+      "m_models": [
+        "492",
+        0
+      ],
+      "context_options": [
+        "556",
+        0
+      ],
+      "sample_settings": [
+        "495",
+        0
+      ]
+    },
+    "class_type": "ADE_UseEvolvedSampling",
+    "_meta": {
+      "title": "Use Evolved Sampling 🎭🅐🅓②"
+    }
+  },
+  "495": {
+    "inputs": {
+      "batch_offset": 0,
+      "noise_type": "empty",
+      "seed_gen": "comfy",
+      "seed_offset": 1,
+      "adapt_denoise_steps": false
+    },
+    "class_type": "ADE_AnimateDiffSamplingSettings",
+    "_meta": {
+      "title": "Sample Settings 🎭🅐🅓"
+    }
+  },
+  "497": {
+    "inputs": {
+      "start_percent": 0,
+      "end_percent": 1,
+      "motion_model": [
+        "490",
+        0
+      ]
+    },
+    "class_type": "ADE_ApplyAnimateDiffModel",
+    "_meta": {
+      "title": "Apply AnimateDiff Model (Adv.) 🎭🅐🅓②"
+    }
+  },
+  "498": {
+    "inputs": {
+      "beta_schedule": "lcm >> sqrt_linear",
+      "model": [
+        "606",
+        3
+      ],
+      "m_models": [
+        "497",
+        0
+      ],
+      "context_options": [
+        "557",
+        0
+      ],
+      "sample_settings": [
+        "500",
+        0
+      ]
+    },
+    "class_type": "ADE_UseEvolvedSampling",
+    "_meta": {
+      "title": "Use Evolved Sampling 🎭🅐🅓②"
+    }
+  },
+  "500": {
+    "inputs": {
+      "batch_offset": 0,
+      "noise_type": "repeated_context",
+      "seed_gen": "comfy",
+      "seed_offset": 1,
+      "adapt_denoise_steps": false
+    },
+    "class_type": "ADE_AnimateDiffSamplingSettings",
+    "_meta": {
+      "title": "Sample Settings 🎭🅐🅓"
+    }
+  },
+  "504": {
+    "inputs": {
+      "samples": [
+        "207",
+        3
+      ]
+    },
+    "class_type": "gcLatentTunnel",
+    "_meta": {
+      "title": "LatentGarbageCollector"
+    }
+  },
+  "506": {
+    "inputs": {
+      "samples": [
+        "464",
+        0
+      ]
+    },
+    "class_type": "gcLatentTunnel",
+    "_meta": {
+      "title": "LatentGarbageCollector"
+    }
+  },
+  "512": {
+    "inputs": {
+      "vae_name": "vae-ft-mse-840000-ema-pruned.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE"
+    }
+  },
+  "514": {
+    "inputs": {
+      "frame_rate": 8,
+      "loop_count": 0,
+      "filename_prefix": [
+        "645",
+        1
+      ],
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 20,
+      "save_metadata": false,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "563",
+        2
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "552": {
+    "inputs": {
+      "mode": "always",
+      "volume": 0.5,
+      "file": "notify.mp3"
+    },
+    "class_type": "PlaySound|pysssss",
+    "_meta": {
+      "title": "PlaySound 🐍"
+    }
+  },
+  "556": {
+    "inputs": {
+      "context_length": 16,
+      "context_stride": 1,
+      "context_overlap": 3,
+      "closed_loop": false,
+      "fuse_method": "pyramid",
+      "use_on_equal_length": false,
+      "start_percent": 0,
+      "guarantee_steps": 1
+    },
+    "class_type": "ADE_LoopedUniformContextOptions",
+    "_meta": {
+      "title": "Context Options◆Looped Uniform 🎭🅐🅓"
+    }
+  },
+  "557": {
+    "inputs": {
+      "context_length": 16,
+      "context_stride": 1,
+      "context_overlap": 4,
+      "closed_loop": false,
+      "fuse_method": "pyramid",
+      "use_on_equal_length": false,
+      "start_percent": 0,
+      "guarantee_steps": 1
+    },
+    "class_type": "ADE_LoopedUniformContextOptions",
+    "_meta": {
+      "title": "Context Options◆Looped Uniform 🎭🅐🅓"
+    }
+  },
+  "563": {
+    "inputs": {
+      "split_index": 4,
+      "images": [
+        "207",
+        5
+      ]
+    },
+    "class_type": "VHS_SplitImages",
+    "_meta": {
+      "title": "Split Image Batch 🎥🅥🅗🅢"
+    }
+  },
+  "577": {
+    "inputs": {
+      "lora_name": "People-Pleaser-10.safetensors",
+      "strength_model": 0.74,
+      "model": [
+        "488",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "LoraLoaderModelOnly"
+    }
+  },
+  "580": {
+    "inputs": {
+      "image": "disc.jpg",
+      "upload": "image"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "581": {
+    "inputs": {
+      "pixels": [
+        "585",
+        0
+      ],
+      "vae": [
+        "512",
+        0
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE Encode"
+    }
+  },
+  "582": {
+    "inputs": {
+      "add_noise": "enable",
+      "noise_seed": [
+        "622",
+        0
+      ],
+      "steps": 40,
+      "cfg": 7,
+      "sampler_name": "dpmpp_2m",
+      "scheduler": "karras",
+      "start_at_step": 0,
+      "end_at_step": 40,
+      "return_with_leftover_noise": "disable",
+      "preview_method": "auto",
+      "vae_decode": "true",
+      "model": [
+        "461",
+        0
+      ],
+      "positive": [
+        "583",
+        0
+      ],
+      "negative": [
+        "584",
+        0
+      ],
+      "latent_image": [
+        "608",
+        0
+      ],
+      "optional_vae": [
+        "512",
+        0
+      ]
+    },
+    "class_type": "KSampler Adv. (Efficient)",
+    "_meta": {
+      "title": "KSampler Adv. (Efficient), CN sampler"
+    }
+  },
+  "583": {
+    "inputs": {
+      "text": "complex, organic, (luxury, black velvet, white queen of the night, Epiphyllum oxypetalum):1.1, highly detailed, 4k, silk, macro shot, asymmetric, (particles, fluid simulation, space, galaxy):1.2",
+      "clip": [
+        "487",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "584": {
+    "inputs": {
+      "text": "nsfw, watermark",
+      "clip": [
+        "487",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "585": {
+    "inputs": {
+      "width": 512,
+      "height": 512,
+      "interpolation": "lanczos",
+      "keep_proportion": false,
+      "condition": "always",
+      "image": [
+        "580",
+        0
+      ]
+    },
+    "class_type": "ImageResize+",
+    "_meta": {
+      "title": "🔧 Image Resize"
+    }
+  },
+  "587": {
+    "inputs": {
+      "images": [
+        "591",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "588": {
+    "inputs": {
+      "width": 1024,
+      "height": 1024,
+      "batch_size": 4
+    },
+    "class_type": "ADE_EmptyLatentImageLarge",
+    "_meta": {
+      "title": "Empty Latent Image (Big Batch) 🎭🅐🅓"
+    }
+  },
+  "589": {
+    "inputs": {
+      "multiply_by": 4,
+      "images": [
+        "591",
+        0
+      ]
+    },
+    "class_type": "VHS_DuplicateImages",
+    "_meta": {
+      "title": "Duplicate Image Batch 🎥🅥🅗🅢"
+    }
+  },
+  "590": {
+    "inputs": {
+      "channel": "red",
+      "image": [
+        "589",
+        0
+      ]
+    },
+    "class_type": "ImageToMask",
+    "_meta": {
+      "title": "Convert Image to Mask"
+    }
+  },
+  "591": {
+    "inputs": {
+      "black_level": 0,
+      "mid_level": 5,
+      "white_level": 7,
+      "image": [
+        "585",
+        0
+      ]
+    },
+    "class_type": "Image Levels Adjustment",
+    "_meta": {
+      "title": "Image Levels Adjustment"
+    }
+  },
+  "592": {
+    "inputs": {
+      "mask": [
+        "590",
+        0
+      ]
+    },
+    "class_type": "MaskPreview+",
+    "_meta": {
+      "title": "🔧 Mask Preview"
+    }
+  },
+  "593": {
+    "inputs": {
+      "x": 0,
+      "y": 0,
+      "resize_source": false,
+      "destination": [
+        "594",
+        0
+      ],
+      "source": [
+        "588",
+        0
+      ],
+      "mask": [
+        "590",
+        0
+      ]
+    },
+    "class_type": "LatentCompositeMasked",
+    "_meta": {
+      "title": "LatentCompositeMasked"
+    }
+  },
+  "594": {
+    "inputs": {
+      "multiply_by": 4,
+      "latents": [
+        "581",
+        0
+      ]
+    },
+    "class_type": "VHS_DuplicateLatents",
+    "_meta": {
+      "title": "Duplicate Latent Batch 🎥🅥🅗🅢"
+    }
+  },
+  "603": {
+    "inputs": {
+      "filename_prefix": [
+        "642",
+        1
+      ],
+      "images": [
+        "582",
+        5
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "606": {
+    "inputs": {
+      "control_net_name": "control_v11p_sd15_openpose.pth",
+      "type_of_frame_distribution": "linear",
+      "linear_frame_distribution_value": 24,
+      "dynamic_frame_distribution_values": "0,10,26,40",
+      "type_of_key_frame_influence": "linear",
+      "linear_key_frame_influence_value": "1.6",
+      "dynamic_key_frame_influence_values": "(1.0,1.0),(1.0,1.5)(1.0,0.5)",
+      "type_of_strength_distribution": "linear",
+      "linear_strength_value": "(0.2,0.9)",
+      "dynamic_strength_values": "(0.0,1.0),(0.0,1.0),(0.0,1.0),(0.0,1.0)",
+      "soft_scaled_cn_weights_multiplier": 0.85,
+      "buffer": 4,
+      "relative_cn_strength": 0,
+      "relative_ipadapter_strength": 1,
+      "ipadapter_noise": 0.15,
+      "ipadapter_start_at": 0,
+      "ipadapter_end_at": 0.8,
+      "cn_start_at": 0,
+      "cn_end_at": 0.75,
+      "positive": [
+        "462",
+        0
+      ],
+      "negative": [
+        "463",
+        0
+      ],
+      "images": [
+        "582",
+        5
+      ],
+      "model": [
+        "489",
+        0
+      ],
+      "ipadapter": [
+        "369",
+        0
+      ],
+      "clip_vision": [
+        "370",
+        0
+      ]
+    },
+    "class_type": "BatchCreativeInterpolation",
+    "_meta": {
+      "title": "Batch Creative Interpolation 🎞️🅢🅜"
+    }
+  },
+  "608": {
+    "inputs": {
+      "boolean": false,
+      "on_true": [
+        "593",
+        0
+      ],
+      "on_false": [
+        "588",
+        0
+      ]
+    },
+    "class_type": "Switch any [Crystools]",
+    "_meta": {
+      "title": "🪛 Switch any"
+    }
+  },
+  "616": {
+    "inputs": {
+      "project_root_name": "promptable-motion",
+      "output_path_generation": "relative"
+    },
+    "class_type": "Create Project Root",
+    "_meta": {
+      "title": "Create Project Root"
+    }
+  },
+  "618": {
+    "inputs": {
+      "folder_name": "",
+      "add_date_time": "prefix",
+      "date_time_format": "%Y-%m-%d",
+      "path": [
+        "616",
+        0
+      ]
+    },
+    "class_type": "Add Folder Advanced",
+    "_meta": {
+      "title": "Add Folder Advanced"
+    }
+  },
+  "619": {
+    "inputs": {
+      "file_name_prefix": [
+        "633",
+        0
+      ],
+      "add_date_time": "disable",
+      "date_time_format": "%Y_%m_%d_%H:%M:%S",
+      "path": [
+        "636",
+        0
+      ],
+      "input_variables": [
+        "622",
+        0
+      ]
+    },
+    "class_type": "Add File Name Prefix Advanced",
+    "_meta": {
+      "title": "Add File Name Prefix Advanced"
+    }
+  },
+  "622": {
+    "inputs": {
+      "seed": 10000001
+    },
+    "class_type": "CR Seed",
+    "_meta": {
+      "title": "🌱 CR Seed"
+    }
+  },
+  "626": {
+    "inputs": {
+      "file_name_prefix": [
+        "633",
+        0
+      ],
+      "add_date_time": "disable",
+      "date_time_format": "%Y_%m_%d_%H:%M:%S",
+      "path": [
+        "638",
+        0
+      ],
+      "input_variables": [
+        "622",
+        0
+      ]
+    },
+    "class_type": "Add File Name Prefix Advanced",
+    "_meta": {
+      "title": "Add File Name Prefix Advanced"
+    }
+  },
+  "633": {
+    "inputs": {
+      "string": "{}"
+    },
+    "class_type": "Primitive string [Crystools]",
+    "_meta": {
+      "title": "🪛 File Prefix"
+    }
+  },
+  "634": {
+    "inputs": {
+      "string": [
+        "619",
+        0
+      ],
+      "text": "./Jon-Hopkins\\2024-03-01_\\Inputs\\4206660016"
+    },
+    "class_type": "Show String",
+    "_meta": {
+      "title": "Show String"
+    }
+  },
+  "636": {
+    "inputs": {
+      "folder_name": "Inputs",
+      "path": [
+        "618",
+        0
+      ]
+    },
+    "class_type": "Add Folder",
+    "_meta": {
+      "title": "Add Folder"
+    }
+  },
+  "638": {
+    "inputs": {
+      "folder_name": "01P",
+      "path": [
+        "618",
+        0
+      ]
+    },
+    "class_type": "Add Folder",
+    "_meta": {
+      "title": "Add Folder"
+    }
+  },
+  "642": {
+    "inputs": {
+      "source": [
+        "619",
+        0
+      ],
+      "split_by": "/",
+      "from_right": "false"
+    },
+    "class_type": "JWStringSplit",
+    "_meta": {
+      "title": "String Split"
+    }
+  },
+  "645": {
+    "inputs": {
+      "source": [
+        "626",
+        0
+      ],
+      "split_by": "/",
+      "from_right": "false"
+    },
+    "class_type": "JWStringSplit",
+    "_meta": {
+      "title": "String Split"
+    }
+  }
+}
