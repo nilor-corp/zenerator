@@ -719,7 +719,7 @@
   },
   "616": {
     "inputs": {
-      "project_root_name": "promptable-motion",
+      "project_root_name": "WorkFlower",
       "output_path_generation": "relative"
     },
     "class_type": "Create Project Root",
