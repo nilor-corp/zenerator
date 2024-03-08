@@ -1,9 +1,9 @@
 {
   "3": {
     "inputs": {
-      "seed": 760391083442949,
+      "seed": 666,
       "steps": 6,
-      "cfg": 2.2,
+      "cfg": 1.5,
       "sampler_name": "lcm",
       "scheduler": "sgm_uniform",
       "denoise": 1,
@@ -51,7 +51,7 @@
   },
   "6": {
     "inputs": {
-      "text": "a cool dudette",
+      "text": "a cool person",
       "clip": [
         "4",
         1
@@ -64,7 +64,7 @@
   },
   "7": {
     "inputs": {
-      "text": "text, watermark, nsfw, young",
+      "text": "text, watermark, nsfw",
       "clip": [
         "4",
         1

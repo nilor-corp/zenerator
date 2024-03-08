@@ -231,58 +231,6 @@
       "title": "Sample Settings 🎭🅐🅓"
     }
   },
-  "497": {
-    "inputs": {
-      "start_percent": 0,
-      "end_percent": 1,
-      "motion_model": [
-        "490",
-        0
-      ]
-    },
-    "class_type": "ADE_ApplyAnimateDiffModel",
-    "_meta": {
-      "title": "Apply AnimateDiff Model (Adv.) 🎭🅐🅓②"
-    }
-  },
-  "498": {
-    "inputs": {
-      "beta_schedule": "lcm >> sqrt_linear",
-      "model": [
-        "606",
-        3
-      ],
-      "m_models": [
-        "497",
-        0
-      ],
-      "context_options": [
-        "557",
-        0
-      ],
-      "sample_settings": [
-        "500",
-        0
-      ]
-    },
-    "class_type": "ADE_UseEvolvedSampling",
-    "_meta": {
-      "title": "Use Evolved Sampling 🎭🅐🅓②"
-    }
-  },
-  "500": {
-    "inputs": {
-      "batch_offset": 0,
-      "noise_type": "repeated_context",
-      "seed_gen": "comfy",
-      "seed_offset": 1,
-      "adapt_denoise_steps": false
-    },
-    "class_type": "ADE_AnimateDiffSamplingSettings",
-    "_meta": {
-      "title": "Sample Settings 🎭🅐🅓"
-    }
-  },
   "504": {
     "inputs": {
       "samples": [
@@ -320,10 +268,7 @@
     "inputs": {
       "frame_rate": 8,
       "loop_count": 0,
-      "filename_prefix": [
-        "645",
-        1
-      ],
+      "filename_prefix": "WorkFlower/Video_01P",
       "format": "video/h264-mp4",
       "pix_fmt": "yuv420p",
       "crf": 20,
@@ -356,22 +301,6 @@
       "context_length": 16,
       "context_stride": 1,
       "context_overlap": 3,
-      "closed_loop": false,
-      "fuse_method": "pyramid",
-      "use_on_equal_length": false,
-      "start_percent": 0,
-      "guarantee_steps": 1
-    },
-    "class_type": "ADE_LoopedUniformContextOptions",
-    "_meta": {
-      "title": "Context Options◆Looped Uniform 🎭🅐🅓"
-    }
-  },
-  "557": {
-    "inputs": {
-      "context_length": 16,
-      "context_stride": 1,
-      "context_overlap": 4,
       "closed_loop": false,
       "fuse_method": "pyramid",
       "use_on_equal_length": false,
@@ -480,7 +409,7 @@
   },
   "583": {
     "inputs": {
-      "text": "complex, organic, (luxury, black velvet, white queen of the night, Epiphyllum oxypetalum):1.1, highly detailed, 4k, silk, macro shot, asymmetric, (particles, fluid simulation, space, galaxy):1.2",
+      "text": "complex, organic, (luxury, black velvet, white Epiphyllum oxypetalum, pollen grains):1.1, highly detailed, 4k, silk, asymmetric, (particles, fluid simulation, space, spiral galaxy):1.6",
       "clip": [
         "487",
         0
@@ -719,7 +648,7 @@
   },
   "616": {
     "inputs": {
-      "project_root_name": "WorkFlower",
+      "project_root_name": "Jon-Hopkins",
       "output_path_generation": "relative"
     },
     "class_type": "Create Project Root",
@@ -766,7 +695,7 @@
   },
   "622": {
     "inputs": {
-      "seed": 10000001
+      "seed": 4206660022
     },
     "class_type": "CR Seed",
     "_meta": {
@@ -810,7 +739,7 @@
         "619",
         0
       ],
-      "text": "./Jon-Hopkins\\2024-03-01_\\Inputs\\4206660016"
+      "text": "./Jon-Hopkins\\2024-03-01_\\Inputs\\4206660021"
     },
     "class_type": "Show String",
     "_meta": {
