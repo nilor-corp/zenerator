@@ -135,7 +135,7 @@ def create_tab_interface(workflow_name):
 
 
 # Create the Gradio interface
-with gr.Blocks() as demo:
+with gr.Blocks(title="WorkFlower") as demo:
     with gr.Row():
         with gr.Column():
             tabs = gr.Tabs()
@@ -168,4 +168,4 @@ with gr.Blocks() as demo:
                             inputs=components,
                             outputs=[output_player],
                         )
-    demo.launch()
+    demo.launch(favicon_path="favicon.png")
