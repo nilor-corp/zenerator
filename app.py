@@ -24,42 +24,9 @@ def start_queue(prompt_workflow):
         # Here you can add code to retry the request, or handle the error in another way
 
 
-# Definitions of the workflows that can be run
-workflow_definitions = {
-    "Debug Video Gen": {
-        "info": "Generate a video from a positive and a negative prompt",
-        "parameters": {
-            "text_1": '["6"]["inputs"]["text"]',
-            "text_2": '["7"]["inputs"]["text"]',
-        },
-        "labels": {
-            "text_1": "Positive Prompt",
-            "text_2": "Negative Prompt",
-        },
-        "filename": "debug-video-gen",
-    },
-    "Promptable Motion": {
-        "info": "Four images will be created from your text prompt, then a video will be made that moves creatively between those images. ETA: 5 mins.",
-        "parameters": {
-            "text_1": '["583"]["inputs"]["text"]',
-            "text_2": '["584"]["inputs"]["text"]',
-        },
-        "labels": {
-            "text_1": "Positive Prompt",
-            "text_2": "Negative Prompt",
-        },
-        "filename": "promptable-motion",
-    },
-    "Steerable Motion": {
-        "info": "Create a video that moves creatively between the images you provide (maximum 4 images). ETA: 5 mins.",
-        "parameters": {"images": '["path_to_node"]', "image_path": '["path_to_node"]'},
-        "labels": {
-            "images": "Option 1: Select up to 4 Images",
-            "image_path": "Option 2: Enter Images Path",
-        },
-        "filename": "steerable-motion",
-    },
-}
+# Load the workflow definitions from the JSON file
+with open("workflow_definitions.json") as f:
+    workflow_definitions = json.load(f)
 
 
 # Function to get the latest image file in a directory
@@ -109,10 +76,6 @@ def run_workflow(workflow_name, *args):
         current_datetime = datetime.now().strftime("%Y-%m-%d")
 
         output_directory = OUT_DIR
-
-        # ... rest of your code ...
-
-        # ... rest of your code ...
 
         previous_video = get_latest_video(output_directory)
 
