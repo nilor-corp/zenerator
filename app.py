@@ -6,11 +6,13 @@ from datetime import datetime
 import gradio as gr
 from pathlib import Path
 
+with open("config.json") as f:
+    config = json.load(f)
+
 # URL for the server that will process the workflows
-URL = "http://127.0.0.1:8188/prompt"
+URL = config["COMFY_URL"]
 # Directory where the output of the workflows will be stored
-OUT_DIR = "D:/SD/StabilityMatrix/Packages/ComfyUI-git/output/WorkFlower/"
-output_player = gr.Video(label="Output Video")
+OUT_DIR = config["OUT_DIR"]
 
 
 # Function to start a workflow on the server
