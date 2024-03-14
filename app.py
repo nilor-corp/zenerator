@@ -6,6 +6,7 @@ import time
 from datetime import datetime
 import gradio as gr
 from pathlib import Path
+from image_downloader import resolve_online_collection
 
 with open("config.json") as f:
     config = json.load(f)
@@ -86,13 +87,23 @@ def run_workflow(workflow_name, *args):
             sub_dict = workflow
             for key in keys[:-1]:
                 sub_dict = sub_dict[key]
-            if keys[-1] == "image_path":
-                if args[i + 1] == "Online":
+            print(f"sub_dict[keys[-1]]: {sub_dict[keys[-1]]}")
+            if "image_path" in params:
+                if args[i] == "Nilor Collection Name":
+                    print(f"Resolving online collection: {args[i+1]}")
                     # Resolve the online collection name into a local folder of files
-                    sub_dict[keys[-1]] = resolve_online_collection(args[i])
+                    path = resolve_online_collection(args[i + 1])
+                    image_count = count_images(path)
+                    print(f"Detected {image_count} images in the collection.")
+                    sub_dict[keys[-1]] = path
                 else:
+                    print(f"Loading images from local directory: {args[i+1]}")
                     # Use the local directory path as is
-                    sub_dict[keys[-1]] = args[i]
+                    path = args[i + 1]
+                    image_count = count_images(path)
+                    print(f"Detected {image_count} images in the collection.")
+                    sub_dict[keys[-1]] = path
+
             else:
                 sub_dict[keys[-1]] = args[i]
 
