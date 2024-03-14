@@ -1,5 +1,5 @@
 {
     "COMFY_URL": "http://127.0.0.1:8188/prompt",
-    "OUT_DIR" : "D:/SD/StabilityMatrix/Packages/ComfyUI-git/output/WorkFlower/", 
+    "COMFY_ROOT": "D:/SD/StabilityMatrix/Packages/ComfyUI-git/",
     "User": "test"
 }

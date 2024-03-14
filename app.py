@@ -12,7 +12,7 @@ with open("config.json") as f:
 # URL for the server that will process the workflows
 URL = config["COMFY_URL"]
 # Directory where the output of the workflows will be stored
-OUT_DIR = config["OUT_DIR"]
+OUT_DIR = config["COMFY_ROOT"] + "output/WorkFlower/"
 
 
 # Function to start a workflow on the server
@@ -73,7 +73,15 @@ def run_workflow(workflow_name, *args):
             sub_dict = workflow
             for key in keys[:-1]:
                 sub_dict = sub_dict[key]
-            sub_dict[keys[-1]] = args[i]
+            if keys[-1] == "image_path":
+                if args[i + 1] == "Online":
+                    # Resolve the online collection name into a local folder of files
+                    sub_dict[keys[-1]] = resolve_online_collection(args[i])
+                else:
+                    # Use the local directory path as is
+                    sub_dict[keys[-1]] = args[i]
+            else:
+                sub_dict[keys[-1]] = args[i]
 
         current_datetime = datetime.now().strftime("%Y-%m-%d")
 
@@ -125,6 +133,12 @@ def create_tab_interface(workflow_name):
         elif param == "images":
             components.append(gr.Files(label=label))
         elif param == "image_path":
+            components.append(
+                gr.Radio(
+                    ["Local Directory", "Nilor Collection Name"],
+                    label="Images Path Type",
+                )
+            )
             components.append(gr.Textbox(label=label))
         elif param == "video_file":
             components.append(gr.File(label=label))
