@@ -124,7 +124,7 @@ def run_workflow(workflow_name, *args):
                 latest_video = get_latest_video(output_directory)
                 if latest_video != previous_video:
                     print(f"New video created: {latest_video}")
-                    time.sleep(10)
+                    time.sleep(1)
                     return latest_video
                 time.sleep(1)
         except KeyboardInterrupt:
