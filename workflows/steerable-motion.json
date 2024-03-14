@@ -2,11 +2,11 @@
   "207": {
     "inputs": {
       "add_noise": "enable",
-      "noise_seed": 420,
+      "noise_seed": 253001276593999,
       "steps": 8,
-      "cfg": 1.5,
+      "cfg": 1,
       "sampler_name": "lcm",
-      "scheduler": "ddim_uniform",
+      "scheduler": "sgm_uniform",
       "start_at_step": 0,
       "end_at_step": 10000,
       "return_with_leftover_noise": "disable",
@@ -17,12 +17,12 @@
         0
       ],
       "positive": [
-        "468",
-        0
+        "606",
+        1
       ],
       "negative": [
-        "468",
-        1
+        "606",
+        2
       ],
       "latent_image": [
         "506",
@@ -42,17 +42,37 @@
     "inputs": {
       "frame_rate": 24,
       "loop_count": 0,
-      "filename_prefix": "steerable-motion/AD_",
+      "filename_prefix": [
+        "647",
+        1
+      ],
       "format": "video/h264-mp4",
       "pix_fmt": "yuv420p",
       "crf": 20,
       "save_metadata": true,
       "pingpong": false,
-      "save_output": true
+      "save_output": true,
+      "images": [
+        "550",
+        0
+      ]
     },
     "class_type": "VHS_VideoCombine",
     "_meta": {
       "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "354": {
+    "inputs": {
+      "split_index": 4,
+      "images": [
+        "496",
+        5
+      ]
+    },
+    "class_type": "VHS_SplitImages",
+    "_meta": {
+      "title": "Split Image Batch 🎥🅥🅗🅢"
     }
   },
   "369": {
@@ -76,7 +96,7 @@
   "389": {
     "inputs": {
       "images": [
-        "476",
+        "662",
         0
       ]
     },
@@ -88,7 +108,7 @@
   "436": {
     "inputs": {
       "images": [
-        "473",
+        "606",
         0
       ]
     },
@@ -99,7 +119,7 @@
   },
   "461": {
     "inputs": {
-      "ckpt_name": "epicrealism_naturalSinRC1VAE.safetensors"
+      "ckpt_name": "photonLCM_v10.safetensors"
     },
     "class_type": "CheckpointLoaderSimple",
     "_meta": {
@@ -134,10 +154,10 @@
   },
   "464": {
     "inputs": {
-      "width": 512,
-      "height": 512,
+      "width": 720,
+      "height": 720,
       "batch_size": [
-        "473",
+        "606",
         5
       ]
     },
@@ -146,174 +166,28 @@
       "title": "Empty Latent Image (Big Batch) 🎭🅐🅓"
     }
   },
-  "467": {
+  "480": {
     "inputs": {
-      "sparsectrl_name": "v3_sd15_sparsectrl_rgb.ckpt",
-      "use_motion": true,
-      "motion_strength": 1,
-      "motion_scale": 1,
-      "sparse_method": [
-        "473",
-        4
-      ]
-    },
-    "class_type": "ACN_SparseCtrlLoaderAdvanced",
-    "_meta": {
-      "title": "Load SparseCtrl Model 🛂🅐🅒🅝"
-    }
-  },
-  "468": {
-    "inputs": {
-      "strength": 1,
-      "start_percent": 0,
-      "end_percent": 0.7000000000000001,
-      "positive": [
-        "473",
+      "frame_rate": 8,
+      "loop_count": 0,
+      "filename_prefix": [
+        "646",
         1
       ],
-      "negative": [
-        "473",
-        2
-      ],
-      "control_net": [
-        "467",
-        0
-      ],
-      "image": [
-        "469",
-        0
-      ]
-    },
-    "class_type": "ACN_AdvancedControlNetApply",
-    "_meta": {
-      "title": "Apply Advanced ControlNet 🛂🅐🅒🅝"
-    }
-  },
-  "469": {
-    "inputs": {
-      "image": [
-        "476",
-        0
-      ],
-      "vae": [
-        "512",
-        0
-      ],
-      "latent_size": [
-        "464",
-        0
-      ]
-    },
-    "class_type": "ACN_SparseCtrlRGBPreprocessor",
-    "_meta": {
-      "title": "RGB SparseCtrl 🛂🅐🅒🅝"
-    }
-  },
-  "473": {
-    "inputs": {
-      "control_net_name": "control_v11p_sd15_openpose.pth",
-      "type_of_frame_distribution": "linear",
-      "linear_frame_distribution_value": 24,
-      "dynamic_frame_distribution_values": "0,10,26,40",
-      "type_of_key_frame_influence": "linear",
-      "linear_key_frame_influence_value": "1.2",
-      "dynamic_key_frame_influence_values": "1.0,1.0,1.0,0.5",
-      "type_of_strength_distribution": "linear",
-      "linear_strength_value": "(0.3,1.0)",
-      "dynamic_strength_values": "(0.0,1.0),(0.0,1.0),(0.0,1.0),(0.0,1.0)",
-      "soft_scaled_cn_weights_multiplier": 0.85,
-      "buffer": 3,
-      "relative_cn_strength": 0.3,
-      "relative_ipadapter_strength": 0.6,
-      "ipadapter_noise": 0.3,
-      "ipadapter_start_at": 0,
-      "ipadapter_end_at": 0.5,
-      "cn_start_at": 0,
-      "cn_end_at": 0.75,
-      "positive": [
-        "462",
-        0
-      ],
-      "negative": [
-        "463",
-        0
-      ],
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 20,
+      "save_metadata": true,
+      "pingpong": false,
+      "save_output": true,
       "images": [
-        "476",
-        0
-      ],
-      "model": [
-        "489",
-        0
-      ],
-      "ipadapter": [
-        "369",
-        0
-      ],
-      "clip_vision": [
-        "370",
-        0
+        "354",
+        2
       ]
     },
-    "class_type": "BatchCreativeInterpolation",
+    "class_type": "VHS_VideoCombine",
     "_meta": {
-      "title": "Batch Creative Interpolation 🎞️🅢🅜"
-    }
-  },
-  "475": {
-    "inputs": {
-      "directory": "Zenon Refs",
-      "image_load_cap": 4,
-      "skip_first_images": 0,
-      "select_every_nth": 1
-    },
-    "class_type": "VHS_LoadImages",
-    "_meta": {
-      "title": "Load Images (Upload) 🎥🅥🅗🅢"
-    }
-  },
-  "476": {
-    "inputs": {
-      "value": [
-        "478",
-        0
-      ]
-    },
-    "class_type": "ReroutePrimitive|pysssss",
-    "_meta": {
-      "title": "Reroute Primitive 🐍"
-    }
-  },
-  "478": {
-    "inputs": {
-      "upscale_method": "lanczos",
-      "width": 512,
-      "height": 512,
-      "crop": "center",
-      "image": [
-        "550",
-        0
-      ]
-    },
-    "class_type": "ImageScale",
-    "_meta": {
-      "title": "Upscale Image"
-    }
-  },
-  "486": {
-    "inputs": {
-      "b1": 1.2,
-      "b2": 1.3,
-      "s1": 0.9,
-      "s2": 0.2,
-      "model": [
-        "461",
-        0
-      ]
-    },
-    "class_type": "FreeU_V2",
-    "_meta": {
-      "title": "FreeU_V2"
+      "title": "Video Combine 🎥🅥🅗🅢"
     }
   },
   "487": {
@@ -329,26 +203,12 @@
       "title": "CLIP Set Last Layer"
     }
   },
-  "488": {
-    "inputs": {
-      "lora_name": "lcm_lora_sd15.safetensors",
-      "strength_model": 1,
-      "model": [
-        "486",
-        0
-      ]
-    },
-    "class_type": "LoraLoaderModelOnly",
-    "_meta": {
-      "title": "LoraLoaderModelOnly"
-    }
-  },
   "489": {
     "inputs": {
       "sampling": "lcm",
       "zsnr": false,
       "model": [
-        "488",
+        "461",
         0
       ]
     },
@@ -366,25 +226,12 @@
       "title": "Load AnimateDiff Model 🎭🅐🅓②"
     }
   },
-  "491": {
-    "inputs": {
-      "float_val": 0.8
-    },
-    "class_type": "ADE_MultivalDynamic",
-    "_meta": {
-      "title": "Multival Dynamic 🎭🅐🅓"
-    }
-  },
   "492": {
     "inputs": {
       "start_percent": 0,
       "end_percent": 1,
       "motion_model": [
         "490",
-        0
-      ],
-      "effect_multival": [
-        "491",
         0
       ]
     },
@@ -393,26 +240,11 @@
       "title": "Apply AnimateDiff Model (Adv.) 🎭🅐🅓②"
     }
   },
-  "493": {
-    "inputs": {
-      "context_length": 16,
-      "context_stride": 1,
-      "context_overlap": 4,
-      "fuse_method": "pyramid",
-      "use_on_equal_length": false,
-      "start_percent": 0,
-      "guarantee_steps": 1
-    },
-    "class_type": "ADE_StandardUniformContextOptions",
-    "_meta": {
-      "title": "Context Options◆Standard Uniform 🎭🅐🅓"
-    }
-  },
   "494": {
     "inputs": {
-      "beta_schedule": "lcm",
+      "beta_schedule": "lcm avg(sqrt_linear,linear)",
       "model": [
-        "473",
+        "606",
         3
       ],
       "m_models": [
@@ -420,7 +252,7 @@
         0
       ],
       "context_options": [
-        "493",
+        "556",
         0
       ],
       "sample_settings": [
@@ -436,9 +268,100 @@
   "495": {
     "inputs": {
       "batch_offset": 0,
-      "noise_type": "FreeNoise",
+      "noise_type": "empty",
       "seed_gen": "comfy",
-      "seed_offset": 0,
+      "seed_offset": 1,
+      "adapt_denoise_steps": false
+    },
+    "class_type": "ADE_AnimateDiffSamplingSettings",
+    "_meta": {
+      "title": "Sample Settings 🎭🅐🅓"
+    }
+  },
+  "496": {
+    "inputs": {
+      "add_noise": "enable",
+      "noise_seed": 736619743473000,
+      "steps": 8,
+      "cfg": 1,
+      "sampler_name": "lcm",
+      "scheduler": "sgm_uniform",
+      "start_at_step": 15,
+      "end_at_step": 10000,
+      "return_with_leftover_noise": "disable",
+      "preview_method": "auto",
+      "vae_decode": "true",
+      "model": [
+        "498",
+        0
+      ],
+      "positive": [
+        "207",
+        1
+      ],
+      "negative": [
+        "207",
+        2
+      ],
+      "latent_image": [
+        "207",
+        3
+      ],
+      "optional_vae": [
+        "207",
+        4
+      ]
+    },
+    "class_type": "KSampler Adv. (Efficient)",
+    "_meta": {
+      "title": "KSampler Adv. (Efficient), CN sampler"
+    }
+  },
+  "497": {
+    "inputs": {
+      "start_percent": 0,
+      "end_percent": 1,
+      "motion_model": [
+        "490",
+        0
+      ]
+    },
+    "class_type": "ADE_ApplyAnimateDiffModel",
+    "_meta": {
+      "title": "Apply AnimateDiff Model (Adv.) 🎭🅐🅓②"
+    }
+  },
+  "498": {
+    "inputs": {
+      "beta_schedule": "lcm >> sqrt_linear",
+      "model": [
+        "606",
+        3
+      ],
+      "m_models": [
+        "497",
+        0
+      ],
+      "context_options": [
+        "557",
+        0
+      ],
+      "sample_settings": [
+        "500",
+        0
+      ]
+    },
+    "class_type": "ADE_UseEvolvedSampling",
+    "_meta": {
+      "title": "Use Evolved Sampling 🎭🅐🅓②"
+    }
+  },
+  "500": {
+    "inputs": {
+      "batch_offset": 0,
+      "noise_type": "repeated_context",
+      "seed_gen": "comfy",
+      "seed_offset": 1,
       "adapt_denoise_steps": false
     },
     "class_type": "ADE_AnimateDiffSamplingSettings",
@@ -483,7 +406,10 @@
     "inputs": {
       "frame_rate": 8,
       "loop_count": 0,
-      "filename_prefix": "WorkFlower/steerable-01p",
+      "filename_prefix": [
+        "645",
+        1
+      ],
       "format": "video/h264-mp4",
       "pix_fmt": "yuv420p",
       "crf": 20,
@@ -491,8 +417,8 @@
       "pingpong": false,
       "save_output": true,
       "images": [
-        "207",
-        5
+        "563",
+        2
       ]
     },
     "class_type": "VHS_VideoCombine",
@@ -500,7 +426,670 @@
       "title": "Video Combine 🎥🅥🅗🅢"
     }
   },
+  "515": {
+    "inputs": {
+      "ckpt_name": "film_net_fp32.pt",
+      "clear_cache_after_n_frames": 10,
+      "multiplier": 3,
+      "frames": [
+        "354",
+        2
+      ]
+    },
+    "class_type": "FILM VFI",
+    "_meta": {
+      "title": "FILM VFI"
+    }
+  },
   "550": {
+    "inputs": {
+      "ckpt_name": "amt-s.pth",
+      "clear_cache_after_n_frames": 10,
+      "multiplier": 3,
+      "frames": [
+        "354",
+        2
+      ]
+    },
+    "class_type": "AMT VFI",
+    "_meta": {
+      "title": "AMT VFI"
+    }
+  },
+  "552": {
+    "inputs": {
+      "mode": "always",
+      "volume": 0.5,
+      "file": "notify.mp3",
+      "any": [
+        "550",
+        0
+      ]
+    },
+    "class_type": "PlaySound|pysssss",
+    "_meta": {
+      "title": "PlaySound 🐍"
+    }
+  },
+  "556": {
+    "inputs": {
+      "context_length": 16,
+      "context_stride": 1,
+      "context_overlap": 3,
+      "closed_loop": false,
+      "fuse_method": "pyramid",
+      "use_on_equal_length": false,
+      "start_percent": 0,
+      "guarantee_steps": 1
+    },
+    "class_type": "ADE_LoopedUniformContextOptions",
+    "_meta": {
+      "title": "Context Options◆Looped Uniform 🎭🅐🅓"
+    }
+  },
+  "557": {
+    "inputs": {
+      "context_length": 16,
+      "context_stride": 1,
+      "context_overlap": 4,
+      "closed_loop": false,
+      "fuse_method": "pyramid",
+      "use_on_equal_length": false,
+      "start_percent": 0,
+      "guarantee_steps": 1
+    },
+    "class_type": "ADE_LoopedUniformContextOptions",
+    "_meta": {
+      "title": "Context Options◆Looped Uniform 🎭🅐🅓"
+    }
+  },
+  "563": {
+    "inputs": {
+      "split_index": 4,
+      "images": [
+        "207",
+        5
+      ]
+    },
+    "class_type": "VHS_SplitImages",
+    "_meta": {
+      "title": "Split Image Batch 🎥🅥🅗🅢"
+    }
+  },
+  "580": {
+    "inputs": {
+      "image": "disc.jpg",
+      "upload": "image"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "581": {
+    "inputs": {
+      "pixels": [
+        "585",
+        0
+      ],
+      "vae": [
+        "512",
+        0
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE Encode"
+    }
+  },
+  "583": {
+    "inputs": {
+      "text": "complex, organic, (luxury, black velvet, white Epiphyllum oxypetalum):1.1, highly detailed, 4k, silk, macro shot, rule of thirds",
+      "clip": [
+        "487",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "584": {
+    "inputs": {
+      "text": "nsfw, watermark",
+      "clip": [
+        "487",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "585": {
+    "inputs": {
+      "width": 512,
+      "height": 512,
+      "interpolation": "lanczos",
+      "keep_proportion": false,
+      "condition": "always",
+      "multiple_of": 0,
+      "image": [
+        "580",
+        0
+      ]
+    },
+    "class_type": "ImageResize+",
+    "_meta": {
+      "title": "🔧 Image Resize"
+    }
+  },
+  "587": {
+    "inputs": {
+      "images": [
+        "591",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "588": {
+    "inputs": {
+      "width": 1024,
+      "height": 1024,
+      "batch_size": 4
+    },
+    "class_type": "ADE_EmptyLatentImageLarge",
+    "_meta": {
+      "title": "Empty Latent Image (Big Batch) 🎭🅐🅓"
+    }
+  },
+  "589": {
+    "inputs": {
+      "multiply_by": 4,
+      "images": [
+        "591",
+        0
+      ]
+    },
+    "class_type": "VHS_DuplicateImages",
+    "_meta": {
+      "title": "Duplicate Image Batch 🎥🅥🅗🅢"
+    }
+  },
+  "590": {
+    "inputs": {
+      "channel": "red",
+      "image": [
+        "589",
+        0
+      ]
+    },
+    "class_type": "ImageToMask",
+    "_meta": {
+      "title": "Convert Image to Mask"
+    }
+  },
+  "591": {
+    "inputs": {
+      "black_level": 0,
+      "mid_level": 5,
+      "white_level": 7,
+      "image": [
+        "585",
+        0
+      ]
+    },
+    "class_type": "Image Levels Adjustment",
+    "_meta": {
+      "title": "Image Levels Adjustment"
+    }
+  },
+  "592": {
+    "inputs": {
+      "mask": [
+        "590",
+        0
+      ]
+    },
+    "class_type": "MaskPreview+",
+    "_meta": {
+      "title": "🔧 Mask Preview"
+    }
+  },
+  "593": {
+    "inputs": {
+      "x": 0,
+      "y": 0,
+      "resize_source": false,
+      "destination": [
+        "594",
+        0
+      ],
+      "source": [
+        "588",
+        0
+      ],
+      "mask": [
+        "590",
+        0
+      ]
+    },
+    "class_type": "LatentCompositeMasked",
+    "_meta": {
+      "title": "LatentCompositeMasked"
+    }
+  },
+  "594": {
+    "inputs": {
+      "multiply_by": 4,
+      "latents": [
+        "581",
+        0
+      ]
+    },
+    "class_type": "VHS_DuplicateLatents",
+    "_meta": {
+      "title": "Duplicate Latent Batch 🎥🅥🅗🅢"
+    }
+  },
+  "603": {
+    "inputs": {
+      "filename_prefix": [
+        "642",
+        1
+      ],
+      "images": [
+        "662",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "606": {
+    "inputs": {
+      "control_net_name": "control_v11p_sd15_openpose.pth",
+      "type_of_frame_distribution": "linear",
+      "linear_frame_distribution_value": 24,
+      "dynamic_frame_distribution_values": "0,10,26,40",
+      "type_of_key_frame_influence": "linear",
+      "linear_key_frame_influence_value": "1.6",
+      "dynamic_key_frame_influence_values": "(1.0,1.0),(1.0,1.5)(1.0,0.5)",
+      "type_of_strength_distribution": "linear",
+      "linear_strength_value": "(0.2,0.9)",
+      "dynamic_strength_values": "(0.0,1.0),(0.0,1.0),(0.0,1.0),(0.0,1.0)",
+      "soft_scaled_cn_weights_multiplier": 0.85,
+      "buffer": 4,
+      "relative_cn_strength": 0,
+      "relative_ipadapter_strength": 1,
+      "ipadapter_noise": 0.15,
+      "ipadapter_start_at": 0,
+      "ipadapter_end_at": 0.8,
+      "cn_start_at": 0,
+      "cn_end_at": 0.75,
+      "positive": [
+        "462",
+        0
+      ],
+      "negative": [
+        "463",
+        0
+      ],
+      "images": [
+        "662",
+        0
+      ],
+      "model": [
+        "489",
+        0
+      ],
+      "ipadapter": [
+        "369",
+        0
+      ],
+      "clip_vision": [
+        "370",
+        0
+      ]
+    },
+    "class_type": "BatchCreativeInterpolation",
+    "_meta": {
+      "title": "Batch Creative Interpolation 🎞️🅢🅜"
+    }
+  },
+  "608": {
+    "inputs": {
+      "boolean": false,
+      "on_true": [
+        "593",
+        0
+      ],
+      "on_false": [
+        "588",
+        0
+      ]
+    },
+    "class_type": "Switch any [Crystools]",
+    "_meta": {
+      "title": "🪛 Switch any"
+    }
+  },
+  "616": {
+    "inputs": {
+      "project_root_name": "WorkFlower",
+      "output_path_generation": "relative"
+    },
+    "class_type": "Create Project Root",
+    "_meta": {
+      "title": "Create Project Root"
+    }
+  },
+  "619": {
+    "inputs": {
+      "file_name_prefix": [
+        "633",
+        0
+      ],
+      "add_date_time": "disable",
+      "date_time_format": "%Y_%m_%d_%H:%M:%S",
+      "path": [
+        "636",
+        0
+      ],
+      "input_variables": [
+        "622",
+        0
+      ]
+    },
+    "class_type": "Add File Name Prefix Advanced",
+    "_meta": {
+      "title": "Add File Name Prefix Advanced"
+    }
+  },
+  "622": {
+    "inputs": {
+      "seed": 420677
+    },
+    "class_type": "CR Seed",
+    "_meta": {
+      "title": "🌱 CR Seed"
+    }
+  },
+  "626": {
+    "inputs": {
+      "file_name_prefix": [
+        "633",
+        0
+      ],
+      "add_date_time": "disable",
+      "date_time_format": "%Y_%m_%d_%H:%M:%S",
+      "path": [
+        "638",
+        0
+      ],
+      "input_variables": [
+        "622",
+        0
+      ]
+    },
+    "class_type": "Add File Name Prefix Advanced",
+    "_meta": {
+      "title": "Add File Name Prefix Advanced"
+    }
+  },
+  "628": {
+    "inputs": {
+      "file_name_prefix": [
+        "633",
+        0
+      ],
+      "add_date_time": "disable",
+      "date_time_format": "%Y_%m_%d_%H:%M:%S",
+      "path": [
+        "637",
+        0
+      ],
+      "input_variables": [
+        "622",
+        0
+      ]
+    },
+    "class_type": "Add File Name Prefix Advanced",
+    "_meta": {
+      "title": "Add File Name Prefix Advanced"
+    }
+  },
+  "630": {
+    "inputs": {
+      "file_name_prefix": [
+        "633",
+        0
+      ],
+      "add_date_time": "disable",
+      "date_time_format": "%Y_%m_%d_%H:%M:%S",
+      "path": [
+        "616",
+        0
+      ],
+      "input_variables": [
+        "622",
+        0
+      ]
+    },
+    "class_type": "Add File Name Prefix Advanced",
+    "_meta": {
+      "title": "Add File Name Prefix Advanced"
+    }
+  },
+  "633": {
+    "inputs": {
+      "string": "{}"
+    },
+    "class_type": "Primitive string [Crystools]",
+    "_meta": {
+      "title": "🪛 File Prefix"
+    }
+  },
+  "634": {
+    "inputs": {
+      "string": [
+        "619",
+        0
+      ],
+      "text": "./WorkFlower\\Inputs\\420676"
+    },
+    "class_type": "Show String",
+    "_meta": {
+      "title": "Show String"
+    }
+  },
+  "636": {
+    "inputs": {
+      "folder_name": "Inputs",
+      "path": [
+        "616",
+        0
+      ]
+    },
+    "class_type": "Add Folder",
+    "_meta": {
+      "title": "Add Folder"
+    }
+  },
+  "637": {
+    "inputs": {
+      "folder_name": "02P",
+      "path": [
+        "616",
+        0
+      ]
+    },
+    "class_type": "Add Folder",
+    "_meta": {
+      "title": "Add Folder"
+    }
+  },
+  "638": {
+    "inputs": {
+      "folder_name": "01P",
+      "path": [
+        "616",
+        0
+      ]
+    },
+    "class_type": "Add Folder",
+    "_meta": {
+      "title": "Add Folder"
+    }
+  },
+  "642": {
+    "inputs": {
+      "source": [
+        "619",
+        0
+      ],
+      "split_by": "/",
+      "from_right": "false"
+    },
+    "class_type": "JWStringSplit",
+    "_meta": {
+      "title": "String Split"
+    }
+  },
+  "645": {
+    "inputs": {
+      "source": [
+        "626",
+        0
+      ],
+      "split_by": "/",
+      "from_right": "false"
+    },
+    "class_type": "JWStringSplit",
+    "_meta": {
+      "title": "String Split"
+    }
+  },
+  "646": {
+    "inputs": {
+      "source": [
+        "628",
+        0
+      ],
+      "split_by": "/",
+      "from_right": "false"
+    },
+    "class_type": "JWStringSplit",
+    "_meta": {
+      "title": "String Split"
+    }
+  },
+  "647": {
+    "inputs": {
+      "source": [
+        "630",
+        0
+      ],
+      "split_by": "/",
+      "from_right": "false"
+    },
+    "class_type": "JWStringSplit",
+    "_meta": {
+      "title": "String Split"
+    }
+  },
+  "650": {
+    "inputs": {
+      "noise_seed": [
+        "622",
+        0
+      ],
+      "steps": 8,
+      "cfg": 1,
+      "sampler": "lcm",
+      "scheduler": "sgm_uniform",
+      "variation_seed": 1062354319039019,
+      "variation_strength": 1,
+      "cfg_scale": 1,
+      "model": [
+        "461",
+        0
+      ],
+      "latent_image": [
+        "608",
+        0
+      ],
+      "positive": [
+        "583",
+        0
+      ],
+      "negative": [
+        "584",
+        0
+      ]
+    },
+    "class_type": "KSamplerVariationsStochastic+",
+    "_meta": {
+      "title": "🔧 KSampler Stochastic Variations"
+    }
+  },
+  "651": {
+    "inputs": {
+      "samples": [
+        "652",
+        0
+      ],
+      "vae": [
+        "512",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "652": {
+    "inputs": {
+      "main_seed": 420677,
+      "steps": 8,
+      "cfg": 1,
+      "sampler_name": "lcm",
+      "scheduler": "sgm_uniform",
+      "variation_strength": 0.75,
+      "variation_seed": 863889619042789,
+      "denoise": 1,
+      "model": [
+        "461",
+        0
+      ],
+      "latent_image": [
+        "608",
+        0
+      ],
+      "positive": [
+        "583",
+        0
+      ],
+      "negative": [
+        "584",
+        0
+      ]
+    },
+    "class_type": "KSamplerVariationsWithNoise+",
+    "_meta": {
+      "title": "🔧 KSampler Variations with Noise Injection"
+    }
+  },
+  "662": {
     "inputs": {
       "directory": "X://path/to/images",
       "image_load_cap": 4,

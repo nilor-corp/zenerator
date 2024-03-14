@@ -3,8 +3,8 @@
     "inputs": {
       "add_noise": "enable",
       "noise_seed": 253001276593999,
-      "steps": 25,
-      "cfg": 2.2,
+      "steps": 8,
+      "cfg": 1,
       "sampler_name": "lcm",
       "scheduler": "sgm_uniform",
       "start_at_step": 0,
@@ -38,6 +38,43 @@
       "title": "KSampler Adv. (Efficient), CN sampler"
     }
   },
+  "281": {
+    "inputs": {
+      "frame_rate": 24,
+      "loop_count": 0,
+      "filename_prefix": [
+        "647",
+        1
+      ],
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 20,
+      "save_metadata": true,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "550",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "354": {
+    "inputs": {
+      "split_index": 4,
+      "images": [
+        "496",
+        5
+      ]
+    },
+    "class_type": "VHS_SplitImages",
+    "_meta": {
+      "title": "Split Image Batch 🎥🅥🅗🅢"
+    }
+  },
   "369": {
     "inputs": {
       "ipadapter_file": "ip-adapter-plus_sd15.bin"
@@ -59,8 +96,8 @@
   "389": {
     "inputs": {
       "images": [
-        "582",
-        5
+        "651",
+        0
       ]
     },
     "class_type": "PreviewImage",
@@ -82,7 +119,7 @@
   },
   "461": {
     "inputs": {
-      "ckpt_name": "realisticVisionV51_v51VAE.safetensors"
+      "ckpt_name": "photonLCM_v10.safetensors"
     },
     "class_type": "CheckpointLoaderSimple",
     "_meta": {
@@ -129,6 +166,30 @@
       "title": "Empty Latent Image (Big Batch) 🎭🅐🅓"
     }
   },
+  "480": {
+    "inputs": {
+      "frame_rate": 8,
+      "loop_count": 0,
+      "filename_prefix": [
+        "646",
+        1
+      ],
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 20,
+      "save_metadata": true,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "354",
+        2
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
   "487": {
     "inputs": {
       "stop_at_clip_layer": -1,
@@ -142,26 +203,12 @@
       "title": "CLIP Set Last Layer"
     }
   },
-  "488": {
-    "inputs": {
-      "lora_name": "lcm_lora_sd15.safetensors",
-      "strength_model": 1,
-      "model": [
-        "461",
-        0
-      ]
-    },
-    "class_type": "LoraLoaderModelOnly",
-    "_meta": {
-      "title": "LoraLoaderModelOnly"
-    }
-  },
   "489": {
     "inputs": {
       "sampling": "lcm",
       "zsnr": false,
       "model": [
-        "577",
+        "461",
         0
       ]
     },
@@ -231,6 +278,97 @@
       "title": "Sample Settings 🎭🅐🅓"
     }
   },
+  "496": {
+    "inputs": {
+      "add_noise": "enable",
+      "noise_seed": 736619743473000,
+      "steps": 8,
+      "cfg": 1,
+      "sampler_name": "lcm",
+      "scheduler": "sgm_uniform",
+      "start_at_step": 15,
+      "end_at_step": 10000,
+      "return_with_leftover_noise": "disable",
+      "preview_method": "auto",
+      "vae_decode": "true",
+      "model": [
+        "498",
+        0
+      ],
+      "positive": [
+        "207",
+        1
+      ],
+      "negative": [
+        "207",
+        2
+      ],
+      "latent_image": [
+        "207",
+        3
+      ],
+      "optional_vae": [
+        "207",
+        4
+      ]
+    },
+    "class_type": "KSampler Adv. (Efficient)",
+    "_meta": {
+      "title": "KSampler Adv. (Efficient), CN sampler"
+    }
+  },
+  "497": {
+    "inputs": {
+      "start_percent": 0,
+      "end_percent": 1,
+      "motion_model": [
+        "490",
+        0
+      ]
+    },
+    "class_type": "ADE_ApplyAnimateDiffModel",
+    "_meta": {
+      "title": "Apply AnimateDiff Model (Adv.) 🎭🅐🅓②"
+    }
+  },
+  "498": {
+    "inputs": {
+      "beta_schedule": "lcm >> sqrt_linear",
+      "model": [
+        "606",
+        3
+      ],
+      "m_models": [
+        "497",
+        0
+      ],
+      "context_options": [
+        "557",
+        0
+      ],
+      "sample_settings": [
+        "500",
+        0
+      ]
+    },
+    "class_type": "ADE_UseEvolvedSampling",
+    "_meta": {
+      "title": "Use Evolved Sampling 🎭🅐🅓②"
+    }
+  },
+  "500": {
+    "inputs": {
+      "batch_offset": 0,
+      "noise_type": "repeated_context",
+      "seed_gen": "comfy",
+      "seed_offset": 1,
+      "adapt_denoise_steps": false
+    },
+    "class_type": "ADE_AnimateDiffSamplingSettings",
+    "_meta": {
+      "title": "Sample Settings 🎭🅐🅓"
+    }
+  },
   "504": {
     "inputs": {
       "samples": [
@@ -268,7 +406,10 @@
     "inputs": {
       "frame_rate": 8,
       "loop_count": 0,
-      "filename_prefix": "WorkFlower/Video_01P",
+      "filename_prefix": [
+        "645",
+        1
+      ],
       "format": "video/h264-mp4",
       "pix_fmt": "yuv420p",
       "crf": 20,
@@ -285,11 +426,45 @@
       "title": "Video Combine 🎥🅥🅗🅢"
     }
   },
+  "515": {
+    "inputs": {
+      "ckpt_name": "film_net_fp32.pt",
+      "clear_cache_after_n_frames": 10,
+      "multiplier": 3,
+      "frames": [
+        "354",
+        2
+      ]
+    },
+    "class_type": "FILM VFI",
+    "_meta": {
+      "title": "FILM VFI"
+    }
+  },
+  "550": {
+    "inputs": {
+      "ckpt_name": "amt-s.pth",
+      "clear_cache_after_n_frames": 10,
+      "multiplier": 3,
+      "frames": [
+        "354",
+        2
+      ]
+    },
+    "class_type": "AMT VFI",
+    "_meta": {
+      "title": "AMT VFI"
+    }
+  },
   "552": {
     "inputs": {
       "mode": "always",
       "volume": 0.5,
-      "file": "notify.mp3"
+      "file": "notify.mp3",
+      "any": [
+        "550",
+        0
+      ]
     },
     "class_type": "PlaySound|pysssss",
     "_meta": {
@@ -312,6 +487,22 @@
       "title": "Context Options◆Looped Uniform 🎭🅐🅓"
     }
   },
+  "557": {
+    "inputs": {
+      "context_length": 16,
+      "context_stride": 1,
+      "context_overlap": 4,
+      "closed_loop": false,
+      "fuse_method": "pyramid",
+      "use_on_equal_length": false,
+      "start_percent": 0,
+      "guarantee_steps": 1
+    },
+    "class_type": "ADE_LoopedUniformContextOptions",
+    "_meta": {
+      "title": "Context Options◆Looped Uniform 🎭🅐🅓"
+    }
+  },
   "563": {
     "inputs": {
       "split_index": 4,
@@ -323,20 +514,6 @@
     "class_type": "VHS_SplitImages",
     "_meta": {
       "title": "Split Image Batch 🎥🅥🅗🅢"
-    }
-  },
-  "577": {
-    "inputs": {
-      "lora_name": "People-Pleaser-10.safetensors",
-      "strength_model": 0.74,
-      "model": [
-        "488",
-        0
-      ]
-    },
-    "class_type": "LoraLoaderModelOnly",
-    "_meta": {
-      "title": "LoraLoaderModelOnly"
     }
   },
   "580": {
@@ -365,51 +542,9 @@
       "title": "VAE Encode"
     }
   },
-  "582": {
-    "inputs": {
-      "add_noise": "enable",
-      "noise_seed": [
-        "622",
-        0
-      ],
-      "steps": 40,
-      "cfg": 7,
-      "sampler_name": "dpmpp_2m",
-      "scheduler": "karras",
-      "start_at_step": 0,
-      "end_at_step": 40,
-      "return_with_leftover_noise": "disable",
-      "preview_method": "auto",
-      "vae_decode": "true",
-      "model": [
-        "461",
-        0
-      ],
-      "positive": [
-        "583",
-        0
-      ],
-      "negative": [
-        "584",
-        0
-      ],
-      "latent_image": [
-        "608",
-        0
-      ],
-      "optional_vae": [
-        "512",
-        0
-      ]
-    },
-    "class_type": "KSampler Adv. (Efficient)",
-    "_meta": {
-      "title": "KSampler Adv. (Efficient), CN sampler"
-    }
-  },
   "583": {
     "inputs": {
-      "text": "complex, organic, (luxury, black velvet, white Epiphyllum oxypetalum, pollen grains):1.1, highly detailed, 4k, silk, asymmetric, (particles, fluid simulation, space, spiral galaxy):1.6",
+      "text": "complex, organic, (luxury, black velvet, white Epiphyllum oxypetalum):1.1, highly detailed, 4k, silk, macro shot, rule of thirds",
       "clip": [
         "487",
         0
@@ -440,6 +575,7 @@
       "interpolation": "lanczos",
       "keep_proportion": false,
       "condition": "always",
+      "multiple_of": 0,
       "image": [
         "580",
         0
@@ -569,8 +705,8 @@
         1
       ],
       "images": [
-        "582",
-        5
+        "651",
+        0
       ]
     },
     "class_type": "SaveImage",
@@ -608,8 +744,8 @@
         0
       ],
       "images": [
-        "582",
-        5
+        "651",
+        0
       ],
       "model": [
         "489",
@@ -648,27 +784,12 @@
   },
   "616": {
     "inputs": {
-      "project_root_name": "Jon-Hopkins",
+      "project_root_name": "WorkFlower",
       "output_path_generation": "relative"
     },
     "class_type": "Create Project Root",
     "_meta": {
       "title": "Create Project Root"
-    }
-  },
-  "618": {
-    "inputs": {
-      "folder_name": "",
-      "add_date_time": "prefix",
-      "date_time_format": "%Y-%m-%d",
-      "path": [
-        "616",
-        0
-      ]
-    },
-    "class_type": "Add Folder Advanced",
-    "_meta": {
-      "title": "Add Folder Advanced"
     }
   },
   "619": {
@@ -695,7 +816,7 @@
   },
   "622": {
     "inputs": {
-      "seed": 4206660022
+      "seed": 420677
     },
     "class_type": "CR Seed",
     "_meta": {
@@ -724,6 +845,50 @@
       "title": "Add File Name Prefix Advanced"
     }
   },
+  "628": {
+    "inputs": {
+      "file_name_prefix": [
+        "633",
+        0
+      ],
+      "add_date_time": "disable",
+      "date_time_format": "%Y_%m_%d_%H:%M:%S",
+      "path": [
+        "637",
+        0
+      ],
+      "input_variables": [
+        "622",
+        0
+      ]
+    },
+    "class_type": "Add File Name Prefix Advanced",
+    "_meta": {
+      "title": "Add File Name Prefix Advanced"
+    }
+  },
+  "630": {
+    "inputs": {
+      "file_name_prefix": [
+        "633",
+        0
+      ],
+      "add_date_time": "disable",
+      "date_time_format": "%Y_%m_%d_%H:%M:%S",
+      "path": [
+        "616",
+        0
+      ],
+      "input_variables": [
+        "622",
+        0
+      ]
+    },
+    "class_type": "Add File Name Prefix Advanced",
+    "_meta": {
+      "title": "Add File Name Prefix Advanced"
+    }
+  },
   "633": {
     "inputs": {
       "string": "{}"
@@ -739,7 +904,7 @@
         "619",
         0
       ],
-      "text": "./Jon-Hopkins\\2024-03-01_\\Inputs\\4206660021"
+      "text": "./WorkFlower\\Inputs\\420676"
     },
     "class_type": "Show String",
     "_meta": {
@@ -750,7 +915,20 @@
     "inputs": {
       "folder_name": "Inputs",
       "path": [
-        "618",
+        "616",
+        0
+      ]
+    },
+    "class_type": "Add Folder",
+    "_meta": {
+      "title": "Add Folder"
+    }
+  },
+  "637": {
+    "inputs": {
+      "folder_name": "02P",
+      "path": [
+        "616",
         0
       ]
     },
@@ -763,7 +941,7 @@
     "inputs": {
       "folder_name": "01P",
       "path": [
-        "618",
+        "616",
         0
       ]
     },
@@ -798,6 +976,117 @@
     "class_type": "JWStringSplit",
     "_meta": {
       "title": "String Split"
+    }
+  },
+  "646": {
+    "inputs": {
+      "source": [
+        "628",
+        0
+      ],
+      "split_by": "/",
+      "from_right": "false"
+    },
+    "class_type": "JWStringSplit",
+    "_meta": {
+      "title": "String Split"
+    }
+  },
+  "647": {
+    "inputs": {
+      "source": [
+        "630",
+        0
+      ],
+      "split_by": "/",
+      "from_right": "false"
+    },
+    "class_type": "JWStringSplit",
+    "_meta": {
+      "title": "String Split"
+    }
+  },
+  "650": {
+    "inputs": {
+      "noise_seed": [
+        "622",
+        0
+      ],
+      "steps": 8,
+      "cfg": 1,
+      "sampler": "lcm",
+      "scheduler": "sgm_uniform",
+      "variation_seed": 1062354319039019,
+      "variation_strength": 1,
+      "cfg_scale": 1,
+      "model": [
+        "461",
+        0
+      ],
+      "latent_image": [
+        "608",
+        0
+      ],
+      "positive": [
+        "583",
+        0
+      ],
+      "negative": [
+        "584",
+        0
+      ]
+    },
+    "class_type": "KSamplerVariationsStochastic+",
+    "_meta": {
+      "title": "🔧 KSampler Stochastic Variations"
+    }
+  },
+  "651": {
+    "inputs": {
+      "samples": [
+        "652",
+        0
+      ],
+      "vae": [
+        "512",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "652": {
+    "inputs": {
+      "main_seed": 420677,
+      "steps": 8,
+      "cfg": 1,
+      "sampler_name": "lcm",
+      "scheduler": "sgm_uniform",
+      "variation_strength": 0.75,
+      "variation_seed": 863889619042789,
+      "denoise": 1,
+      "model": [
+        "461",
+        0
+      ],
+      "latent_image": [
+        "608",
+        0
+      ],
+      "positive": [
+        "583",
+        0
+      ],
+      "negative": [
+        "584",
+        0
+      ]
+    },
+    "class_type": "KSamplerVariationsWithNoise+",
+    "_meta": {
+      "title": "🔧 KSampler Variations with Noise Injection"
     }
   }
 }
