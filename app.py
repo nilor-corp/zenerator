@@ -95,14 +95,17 @@ def run_workflow(workflow_name, *args):
         start_queue(workflow)
 
         # Wait for a new video to be created in the output directory
-        while True:
-            latest_video = get_latest_video(output_directory)
-            if latest_video != previous_video:
-                print(f"New video created: {latest_video}")
-                return latest_video
-            time.sleep(1)
-
-    return ["output_video1.mp4", "output_video2.mp4"]
+        try:
+            while True:
+                latest_video = get_latest_video(output_directory)
+                if latest_video != previous_video:
+                    print(f"New video created: {latest_video}")
+                    time.sleep(10)
+                    return latest_video
+                time.sleep(1)
+        except KeyboardInterrupt:
+            print("Interrupted by user. Exiting...")
+            return None
 
 
 # Function to create a wrapper function for a workflow
