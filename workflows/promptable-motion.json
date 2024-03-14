@@ -203,20 +203,6 @@
       "title": "CLIP Set Last Layer"
     }
   },
-  "489": {
-    "inputs": {
-      "sampling": "lcm",
-      "zsnr": false,
-      "model": [
-        "461",
-        0
-      ]
-    },
-    "class_type": "ModelSamplingDiscrete",
-    "_meta": {
-      "title": "ModelSamplingDiscrete"
-    }
-  },
   "490": {
     "inputs": {
       "model_name": "animate_lcm_sd15_t2v_beta.ckpt"
@@ -242,7 +228,7 @@
   },
   "494": {
     "inputs": {
-      "beta_schedule": "lcm avg(sqrt_linear,linear)",
+      "beta_schedule": "lcm >> sqrt_linear",
       "model": [
         "606",
         3
@@ -748,7 +734,7 @@
         0
       ],
       "model": [
-        "489",
+        "461",
         0
       ],
       "ipadapter": [
@@ -816,7 +802,7 @@
   },
   "622": {
     "inputs": {
-      "seed": 420677
+      "seed": 420679
     },
     "class_type": "CR Seed",
     "_meta": {
@@ -904,7 +890,7 @@
         "619",
         0
       ],
-      "text": "./WorkFlower\\Inputs\\420676"
+      "text": "./WorkFlower\\Inputs\\420678"
     },
     "class_type": "Show String",
     "_meta": {
@@ -1016,7 +1002,7 @@
       "cfg": 1,
       "sampler": "lcm",
       "scheduler": "sgm_uniform",
-      "variation_seed": 1062354319039019,
+      "variation_seed": 436431963173833,
       "variation_strength": 1,
       "cfg_scale": 1,
       "model": [
@@ -1059,13 +1045,13 @@
   },
   "652": {
     "inputs": {
-      "main_seed": 420677,
+      "main_seed": 420679,
       "steps": 8,
       "cfg": 1,
       "sampler_name": "lcm",
       "scheduler": "sgm_uniform",
       "variation_strength": 0.75,
-      "variation_seed": 863889619042789,
+      "variation_seed": 905912772377186,
       "denoise": 1,
       "model": [
         "461",
@@ -1087,6 +1073,18 @@
     "class_type": "KSamplerVariationsWithNoise+",
     "_meta": {
       "title": "🔧 KSampler Variations with Noise Injection"
+    }
+  },
+  "662": {
+    "inputs": {
+      "directory": "X://path/to/images",
+      "image_load_cap": 4,
+      "skip_first_images": 0,
+      "select_every_nth": 1
+    },
+    "class_type": "VHS_LoadImagesPath",
+    "_meta": {
+      "title": "Load Images (Path) 🎥🅥🅗🅢"
     }
   }
 }
