@@ -1,6 +1,7 @@
 import json
 import requests
 import os
+import glob
 import time
 from datetime import datetime
 import gradio as gr
@@ -49,6 +50,18 @@ def get_latest_video(folder):
     video_files.sort(key=lambda x: os.path.getmtime(os.path.join(folder, x)))
     latest_video = os.path.join(folder, video_files[-1]) if video_files else None
     return latest_video
+
+
+def count_images(directory):
+    # Define the image file extensions to count
+    extensions = ["*.png", "*.jpg", "*.jpeg", "*.gif", "*.bmp", "*.tiff"]
+
+    # Use a list comprehension to count the files with each extension
+    image_count = sum(
+        len(glob.glob(os.path.join(directory, ext))) for ext in extensions
+    )
+
+    return image_count
 
 
 # Function to run a workflow and return the path to the output video
