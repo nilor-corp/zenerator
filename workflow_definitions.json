@@ -26,11 +26,10 @@
     "Steerable Motion": {
         "info": "Create a video that moves creatively between the images you provide (maximum 4 images). ETA: 5 mins.",
         "parameters": {
-            "image_path": "[\"550\"][\"inputs\"][\"directory\"]"
+            "image_path": "[\"662\"][\"inputs\"][\"directory\"]"
         },
         "labels": {
-            "images": "Option 1: Select up to 4 Images",
-            "image_path": "Option 2: Enter Images Path"
+            "image_path": "Enter Path to Images"
         },
         "filename": "steerable-motion"
     }
