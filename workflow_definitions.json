@@ -15,21 +15,25 @@
         "info": "Four images will be created from your text prompt, then a video will be made that moves creatively between those images. ETA: 5 mins.",
         "parameters": {
             "text_1": "[\"583\"][\"inputs\"][\"text\"]",
-            "text_2": "[\"584\"][\"inputs\"][\"text\"]"
+            "text_2": "[\"584\"][\"inputs\"][\"text\"]",
+            "bool_1": "[\"673\"][\"inputs\"][\"boolean\"]"
         },
         "labels": {
             "text_1": "Positive Prompt",
-            "text_2": "Negative Prompt"
+            "text_2": "Negative Prompt",
+            "bool_1": "Circular?"
         },
         "filename": "promptable-motion"
     },
     "Steerable Motion": {
         "info": "Create a video that moves creatively between the images you provide (maximum 4 images). ETA: 5 mins.",
         "parameters": {
-            "image_path": "[\"662\"][\"inputs\"][\"directory\"]"
+            "image_path": "[\"662\"][\"inputs\"][\"directory\"]",
+            "bool_1": "[\"673\"][\"inputs\"][\"boolean\"]"
         },
         "labels": {
-            "image_path": "Enter Path to Images"
+            "image_path": "Enter Path to Images",
+            "bool_1": "Circular?"
         },
         "filename": "steerable-motion"
     }

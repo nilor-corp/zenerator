@@ -2,7 +2,7 @@
   "207": {
     "inputs": {
       "add_noise": "enable",
-      "noise_seed": 253001276593999,
+      "noise_seed": 302563829595751,
       "steps": 8,
       "cfg": 1,
       "sampler_name": "lcm",
@@ -29,8 +29,8 @@
         0
       ],
       "optional_vae": [
-        "512",
-        0
+        "461",
+        2
       ]
     },
     "class_type": "KSampler Adv. (Efficient)",
@@ -96,7 +96,7 @@
   "389": {
     "inputs": {
       "images": [
-        "662",
+        "719",
         0
       ]
     },
@@ -154,8 +154,14 @@
   },
   "464": {
     "inputs": {
-      "width": 720,
-      "height": 720,
+      "width": [
+        "714",
+        0
+      ],
+      "height": [
+        "715",
+        0
+      ],
       "batch_size": [
         "606",
         5
@@ -257,7 +263,11 @@
       "noise_type": "empty",
       "seed_gen": "comfy",
       "seed_offset": 1,
-      "adapt_denoise_steps": false
+      "adapt_denoise_steps": false,
+      "noise_layers": [
+        "695",
+        0
+      ]
     },
     "class_type": "ADE_AnimateDiffSamplingSettings",
     "_meta": {
@@ -370,7 +380,7 @@
   "506": {
     "inputs": {
       "samples": [
-        "464",
+        "674",
         0
       ]
     },
@@ -519,8 +529,8 @@
         0
       ],
       "vae": [
-        "512",
-        0
+        "461",
+        2
       ]
     },
     "class_type": "VAEEncode",
@@ -530,7 +540,7 @@
   },
   "583": {
     "inputs": {
-      "text": "complex, organic, (luxury, black velvet, white Epiphyllum oxypetalum):1.1, highly detailed, 4k, silk, macro shot, rule of thirds",
+      "text": "(crisp details, elegance), (Carré Hermès scarf, horse motif):1.4, (luxurious, timeless, silk fabric, intricate patterns, classic design):1.3, (vibrant colors, equestrian theme, red, gold, navy, white):1.2, high resolution, close-up shot, soft natural lighting, smooth textures, refined composition, square format, intricate stitch",
       "clip": [
         "487",
         0
@@ -556,8 +566,8 @@
   },
   "585": {
     "inputs": {
-      "width": 512,
-      "height": 512,
+      "width": 1024,
+      "height": 1024,
       "interpolation": "lanczos",
       "keep_proportion": false,
       "condition": "always",
@@ -588,7 +598,10 @@
     "inputs": {
       "width": 1024,
       "height": 1024,
-      "batch_size": 4
+      "batch_size": [
+        "672",
+        0
+      ]
     },
     "class_type": "ADE_EmptyLatentImageLarge",
     "_meta": {
@@ -691,7 +704,7 @@
         1
       ],
       "images": [
-        "662",
+        "719",
         0
       ]
     },
@@ -730,7 +743,7 @@
         0
       ],
       "images": [
-        "662",
+        "719",
         0
       ],
       "model": [
@@ -753,9 +766,12 @@
   },
   "608": {
     "inputs": {
-      "boolean": false,
+      "boolean": [
+        "673",
+        0
+      ],
       "on_true": [
-        "593",
+        "668",
         0
       ],
       "on_false": [
@@ -765,7 +781,7 @@
     },
     "class_type": "Switch any [Crystools]",
     "_meta": {
-      "title": "🪛 Switch any"
+      "title": "IsCircular"
     }
   },
   "616": {
@@ -802,7 +818,7 @@
   },
   "622": {
     "inputs": {
-      "seed": 420679
+      "seed": 420720
     },
     "class_type": "CR Seed",
     "_meta": {
@@ -890,7 +906,7 @@
         "619",
         0
       ],
-      "text": "./WorkFlower\\Inputs\\420678"
+      "text": "./WorkFlower\\Inputs\\420719"
     },
     "class_type": "Show String",
     "_meta": {
@@ -992,41 +1008,6 @@
       "title": "String Split"
     }
   },
-  "650": {
-    "inputs": {
-      "noise_seed": [
-        "622",
-        0
-      ],
-      "steps": 8,
-      "cfg": 1,
-      "sampler": "lcm",
-      "scheduler": "sgm_uniform",
-      "variation_seed": 436431963173833,
-      "variation_strength": 1,
-      "cfg_scale": 1,
-      "model": [
-        "461",
-        0
-      ],
-      "latent_image": [
-        "608",
-        0
-      ],
-      "positive": [
-        "583",
-        0
-      ],
-      "negative": [
-        "584",
-        0
-      ]
-    },
-    "class_type": "KSamplerVariationsStochastic+",
-    "_meta": {
-      "title": "🔧 KSampler Stochastic Variations"
-    }
-  },
   "651": {
     "inputs": {
       "samples": [
@@ -1034,8 +1015,8 @@
         0
       ],
       "vae": [
-        "512",
-        0
+        "461",
+        2
       ]
     },
     "class_type": "VAEDecode",
@@ -1045,13 +1026,13 @@
   },
   "652": {
     "inputs": {
-      "main_seed": 420679,
+      "main_seed": 385969144017636,
       "steps": 8,
       "cfg": 1,
       "sampler_name": "lcm",
       "scheduler": "sgm_uniform",
       "variation_strength": 0.75,
-      "variation_seed": 905912772377186,
+      "variation_seed": 148402110883801,
       "denoise": 1,
       "model": [
         "461",
@@ -1077,7 +1058,7 @@
   },
   "662": {
     "inputs": {
-      "directory": "X://path/to/images",
+      "directory": "H:\\My Drive\\Loras\\hermes-horses\\dataset",
       "image_load_cap": 4,
       "skip_first_images": 0,
       "select_every_nth": 1
@@ -1085,6 +1066,500 @@
     "class_type": "VHS_LoadImagesPath",
     "_meta": {
       "title": "Load Images (Path) 🎥🅥🅗🅢"
+    }
+  },
+  "664": {
+    "inputs": {
+      "shape": "circle",
+      "frames": [
+        "672",
+        0
+      ],
+      "location_x": 512,
+      "location_y": 512,
+      "grow": 0,
+      "frame_width": 1024,
+      "frame_height": 1024,
+      "shape_width": 900,
+      "shape_height": 900
+    },
+    "class_type": "CreateShapeMask",
+    "_meta": {
+      "title": "CreateShapeMask"
+    }
+  },
+  "665": {
+    "inputs": {
+      "mask": [
+        "664",
+        0
+      ]
+    },
+    "class_type": "MaskPreview+",
+    "_meta": {
+      "title": "🔧 Mask Preview"
+    }
+  },
+  "667": {
+    "inputs": {
+      "mask": [
+        "664",
+        0
+      ]
+    },
+    "class_type": "MaskToImage",
+    "_meta": {
+      "title": "Mask To Image (mtb)"
+    }
+  },
+  "668": {
+    "inputs": {
+      "x": 0,
+      "y": 0,
+      "resize_source": false,
+      "destination": [
+        "669",
+        0
+      ],
+      "source": [
+        "588",
+        0
+      ],
+      "mask": [
+        "664",
+        0
+      ]
+    },
+    "class_type": "LatentCompositeMasked",
+    "_meta": {
+      "title": "LatentCompositeMasked"
+    }
+  },
+  "669": {
+    "inputs": {
+      "pixels": [
+        "667",
+        0
+      ],
+      "vae": [
+        "461",
+        2
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE Encode"
+    }
+  },
+  "672": {
+    "inputs": {
+      "int": 4
+    },
+    "class_type": "Primitive integer [Crystools]",
+    "_meta": {
+      "title": "🪛 Primitive integer"
+    }
+  },
+  "673": {
+    "inputs": {
+      "boolean": true
+    },
+    "class_type": "Primitive boolean [Crystools]",
+    "_meta": {
+      "title": "IsCircularController"
+    }
+  },
+  "674": {
+    "inputs": {
+      "boolean": [
+        "673",
+        0
+      ],
+      "on_true": [
+        "677",
+        0
+      ],
+      "on_false": [
+        "464",
+        0
+      ]
+    },
+    "class_type": "Switch any [Crystools]",
+    "_meta": {
+      "title": "IsCircular"
+    }
+  },
+  "675": {
+    "inputs": {
+      "shape": "circle",
+      "frames": [
+        "606",
+        5
+      ],
+      "location_x": [
+        "681",
+        0
+      ],
+      "location_y": [
+        "686",
+        0
+      ],
+      "grow": 0,
+      "frame_width": [
+        "714",
+        0
+      ],
+      "frame_height": [
+        "715",
+        0
+      ],
+      "shape_width": [
+        "688",
+        0
+      ],
+      "shape_height": [
+        "690",
+        0
+      ]
+    },
+    "class_type": "CreateShapeMask",
+    "_meta": {
+      "title": "CreateShapeMask"
+    }
+  },
+  "676": {
+    "inputs": {
+      "mask": [
+        "675",
+        0
+      ]
+    },
+    "class_type": "MaskToImage",
+    "_meta": {
+      "title": "Mask To Image (mtb)"
+    }
+  },
+  "677": {
+    "inputs": {
+      "x": 0,
+      "y": 0,
+      "resize_source": false,
+      "destination": [
+        "678",
+        0
+      ],
+      "source": [
+        "464",
+        0
+      ],
+      "mask": [
+        "675",
+        0
+      ]
+    },
+    "class_type": "LatentCompositeMasked",
+    "_meta": {
+      "title": "LatentCompositeMasked"
+    }
+  },
+  "678": {
+    "inputs": {
+      "pixels": [
+        "676",
+        0
+      ],
+      "vae": [
+        "461",
+        2
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE Encode"
+    }
+  },
+  "681": {
+    "inputs": {
+      "value": [
+        "682",
+        0
+      ],
+      "mode": "round"
+    },
+    "class_type": "JWFloatToInteger",
+    "_meta": {
+      "title": "Float to Integer"
+    }
+  },
+  "682": {
+    "inputs": {
+      "a": [
+        "684",
+        0
+      ],
+      "b": 0.5
+    },
+    "class_type": "JWFloatMul",
+    "_meta": {
+      "title": "Float Multiply"
+    }
+  },
+  "683": {
+    "inputs": {
+      "value": [
+        "715",
+        0
+      ]
+    },
+    "class_type": "JWIntegerToFloat",
+    "_meta": {
+      "title": "Integer to Float"
+    }
+  },
+  "684": {
+    "inputs": {
+      "value": [
+        "714",
+        0
+      ]
+    },
+    "class_type": "JWIntegerToFloat",
+    "_meta": {
+      "title": "Integer to Float"
+    }
+  },
+  "685": {
+    "inputs": {
+      "a": [
+        "683",
+        0
+      ],
+      "b": 0.5
+    },
+    "class_type": "JWFloatMul",
+    "_meta": {
+      "title": "Float Multiply"
+    }
+  },
+  "686": {
+    "inputs": {
+      "value": [
+        "685",
+        0
+      ],
+      "mode": "round"
+    },
+    "class_type": "JWFloatToInteger",
+    "_meta": {
+      "title": "Float to Integer"
+    }
+  },
+  "687": {
+    "inputs": {
+      "a": [
+        "684",
+        0
+      ],
+      "b": 0.9
+    },
+    "class_type": "JWFloatMul",
+    "_meta": {
+      "title": "Float Multiply"
+    }
+  },
+  "688": {
+    "inputs": {
+      "value": [
+        "687",
+        0
+      ],
+      "mode": "round"
+    },
+    "class_type": "JWFloatToInteger",
+    "_meta": {
+      "title": "Float to Integer"
+    }
+  },
+  "689": {
+    "inputs": {
+      "a": [
+        "683",
+        0
+      ],
+      "b": 0.9
+    },
+    "class_type": "JWFloatMul",
+    "_meta": {
+      "title": "Float Multiply"
+    }
+  },
+  "690": {
+    "inputs": {
+      "value": [
+        "689",
+        0
+      ],
+      "mode": "round"
+    },
+    "class_type": "JWFloatToInteger",
+    "_meta": {
+      "title": "Float to Integer"
+    }
+  },
+  "695": {
+    "inputs": {
+      "batch_offset": 0,
+      "noise_type": "default",
+      "seed_gen_override": "comfy",
+      "seed_offset": 0,
+      "mask_optional": [
+        "697",
+        0
+      ]
+    },
+    "class_type": "ADE_NoiseLayerReplace",
+    "_meta": {
+      "title": "Noise Layer [Replace] 🎭🅐🅓"
+    }
+  },
+  "697": {
+    "inputs": {
+      "boolean": [
+        "673",
+        0
+      ],
+      "on_true": [
+        "675",
+        0
+      ],
+      "on_false": [
+        "702",
+        0
+      ]
+    },
+    "class_type": "Switch any [Crystools]",
+    "_meta": {
+      "title": "IsCircular"
+    }
+  },
+  "700": {
+    "inputs": {
+      "width": 1024,
+      "height": 1024,
+      "color": "rgba(255, 255, 255)",
+      "batch_size": [
+        "606",
+        5
+      ],
+      "color_mode": "RGB"
+    },
+    "class_type": "Create Solid Color",
+    "_meta": {
+      "title": "Create Solid Color"
+    }
+  },
+  "702": {
+    "inputs": {
+      "channel": "red",
+      "image": [
+        "700",
+        0
+      ]
+    },
+    "class_type": "ImageToMask",
+    "_meta": {
+      "title": "Convert Image to Mask"
+    }
+  },
+  "714": {
+    "inputs": {
+      "int": 768
+    },
+    "class_type": "Primitive integer [Crystools]",
+    "_meta": {
+      "title": "width"
+    }
+  },
+  "715": {
+    "inputs": {
+      "int": 768
+    },
+    "class_type": "Primitive integer [Crystools]",
+    "_meta": {
+      "title": "height"
+    }
+  },
+  "716": {
+    "inputs": {
+      "x": 0,
+      "y": 0,
+      "resize_source": false,
+      "destination": [
+        "667",
+        0
+      ],
+      "source": [
+        "718",
+        0
+      ],
+      "mask": [
+        "664",
+        0
+      ]
+    },
+    "class_type": "ImageCompositeMasked",
+    "_meta": {
+      "title": "ImageCompositeMasked"
+    }
+  },
+  "717": {
+    "inputs": {
+      "images": [
+        "716",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "718": {
+    "inputs": {
+      "width": 1024,
+      "height": 1024,
+      "interpolation": "bicubic",
+      "keep_proportion": false,
+      "condition": "always",
+      "multiple_of": 0,
+      "image": [
+        "662",
+        0
+      ]
+    },
+    "class_type": "ImageResize+",
+    "_meta": {
+      "title": "🔧 Image Resize"
+    }
+  },
+  "719": {
+    "inputs": {
+      "boolean": [
+        "673",
+        0
+      ],
+      "on_true": [
+        "716",
+        0
+      ],
+      "on_false": [
+        "718",
+        0
+      ]
+    },
+    "class_type": "Switch any [Crystools]",
+    "_meta": {
+      "title": "IsCircular"
     }
   }
 }
