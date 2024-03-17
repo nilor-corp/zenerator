@@ -59,48 +59,72 @@ def run_workflow(workflow_name, *args):
     workflow_json = (
         "./workflows/" + workflow_definitions[workflow_name]["filename"] + ".json"
     )
+    # Open the workflow JSON file
     with open(workflow_json, "r", encoding="utf-8") as f:
+        # Load the JSON data into the workflow variable
         workflow = json.load(f)
+        # Get the parameters for the current workflow
         params = workflow_definitions[workflow_name]["parameters"]
-        arg_index = 0  # Add a separate counter for the args tuple
+        # Initialize a counter for the arguments tuple
+        arg_index = 0
+        # Iterate over the values in the parameters dictionary
         for i, path in enumerate(params.values()):
+            # Split the path into keys, removing brackets and splitting on ']['
             keys = path.strip("[]").split("][")
+            # Remove any leading or trailing quotes from the keys
             keys = [key.strip('"') for key in keys]
+            # Start with the full workflow dictionary
             sub_dict = workflow
+            # Traverse the dictionary using the keys, stopping before the last key
             for key in keys[:-1]:
                 sub_dict = sub_dict[key]
+            # If the parameters include an image path
             if "image_path" in params:
+                # Print the arguments for debugging
                 print(args)
-                if arg_index + 1 < len(
-                    args
-                ):  # Check if arg_index+1 is less than the length of args
+                # Check if the next argument index is within the range of the arguments tuple
+                if arg_index + 1 < len(args):
+                    # If the current argument is a Nilor Collection Name
                     if args[arg_index] == "Nilor Collection Name":
+                        # Print a message indicating that the code is resolving an online collection
                         print(f"Resolving online collection: {args[arg_index+1]}")
+                        # Resolve the online collection and get the path to the images
                         path = resolve_online_collection(
                             args[arg_index + 1],
                             int(args[arg_index + 2]),
                             args[arg_index + 3],
                         )
+                        # Count the number of images in the path
                         image_count = count_images(path)
+                        # Print the number of images
                         print(f"Detected {image_count} images in the collection.")
+                        # Set the last key in the sub-dictionary to the path
                         sub_dict[keys[-1]] = path
-                        arg_index += (
-                            4  # Increment the counter by 4 if it's a collection
-                        )
+                        # Increment the argument index by 4 to skip the arguments used for the online collection
+                        arg_index += 4
                     else:
+                        # If the current argument is not a Nilor Collection Name, it's a local directory
+                        # Print a message indicating that the code is loading images from a local directory
                         print(
                             f"Loading images from local directory: {args[arg_index+1]}"
                         )
+                        # Get the path to the local directory
                         path = args[arg_index + 1]
+                        # Count the number of images in the path
                         image_count = count_images(path)
+                        # Print the number of images
                         print(f"Detected {image_count} images in the collection.")
+                        # Set the last key in the sub-dictionary to the path
                         sub_dict[keys[-1]] = path
-                        arg_index += 2  # Increment the counter by 2 if it's a directory
-            else:
-                sub_dict[keys[-1]] = args[arg_index]
-                arg_index += 1  # Increment the counter by 1 for other parameters
-        # Rest of the function...
-        # Rest of the function...]
+                        # Increment the argument index by 4 to skip the arguments used for the online collection
+                        arg_index += 4
+                else:
+                    # If the current argument is not an image path, it's a regular parameter
+                    # Set the last key in the sub-dictionary to the current argument
+                    sub_dict[keys[-1]] = args[arg_index]
+                    # Increment the argument index by 1 to move to the next argument
+                    arg_index += 1
+            # Rest of the function...
         current_datetime = datetime.now().strftime("%Y-%m-%d")
         output_directory = OUT_DIR
         previous_video = get_latest_video(output_directory)
