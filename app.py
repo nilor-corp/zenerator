@@ -132,7 +132,6 @@ def run_workflow(workflow_name, *args):
                     # Increment the argument index by 1 to move to the next argument
                     arg_index += 1
             # Rest of the function...
-        current_datetime = datetime.now().strftime("%Y-%m-%d")
         output_directory = OUT_DIR
         previous_video = get_latest_video(output_directory)
         print(f"Previous video: {previous_video}")
