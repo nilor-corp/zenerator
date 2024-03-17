@@ -7,6 +7,7 @@ from datetime import datetime
 import gradio as gr
 from pathlib import Path
 from image_downloader import resolve_online_collection
+from image_downloader import reorganise_local_files
 
 with open("config.json") as f:
     config = json.load(f)
@@ -114,6 +115,12 @@ def run_workflow(workflow_name, *args):
                         image_count = count_images(path)
                         # Print the number of images
                         print(f"Detected {image_count} images in the collection.")
+
+                        # make a copy of the relevant local files, optionally shuffling them
+                        path = reorganise_local_files(
+                            path, int(args[arg_index + 2]), args[arg_index + 3]
+                        )
+
                         # Set the last key in the sub-dictionary to the path
                         sub_dict[keys[-1]] = path
                         # Increment the argument index by 4 to skip the arguments used for the online collection
@@ -177,14 +184,8 @@ def create_tab_interface(workflow_name):
                 )
             )
             components.append(gr.Textbox(label="Collection Name or Directory Path"))
-            components.append(
-                gr.Number(label="Max Images (only for Nilor Collection)", value=4)
-            )
-            components.append(
-                gr.Checkbox(
-                    label="Shuffle Images (only for Nilor Collection)", value=True
-                )
-            )
+            components.append(gr.Number(label="Max Images", value=4))
+            components.append(gr.Checkbox(label="Shuffle Images", value=False))
         elif param == "video_file":
             components.append(gr.File(label=label))
         elif param == "video_path":

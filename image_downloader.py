@@ -5,6 +5,8 @@ import os
 import json
 from datetime import datetime
 import random
+import shutil
+
 
 with open("SECRET_KEYS.json") as f:
     KEYS = json.load(f)
@@ -74,4 +76,41 @@ def resolve_online_collection(collection_name, max_images=None, shuffle=False):
 
     except Exception as e:
         print(f"Failed to resolve online collection: {e}")
+        return None
+
+
+def reorganise_local_files(dir, max_images=None, shuffle=False):
+    try:
+        if not os.path.exists(dir):
+            print(f"Directory does not exist: {dir}")
+            return None
+
+        print(f"Listing files in directory: {dir}")
+        files = os.listdir(dir)
+        if shuffle:
+            random.shuffle(files)
+            print(f"Shuffled files in directory {dir}")
+
+        sanitized_name = sanitize_name(os.path.basename(dir))
+        current_datetime = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+        directory = os.path.join(IN_DIR, sanitized_name, current_datetime)
+        os.makedirs(directory, exist_ok=True)
+        print(f"Created directory for images: {directory}")
+
+        for i, file in enumerate(files):
+            if max_images is not None and i >= max_images:
+                print(f"Reached the limit of {max_images} images. Stopping copy.")
+                break
+
+            print(f"Copying file {i+1} of {len(files)}")
+            src = os.path.join(dir, file)
+            dst = os.path.join(directory, f"image_{i}.png")
+            shutil.copy(src, dst)
+            print(f"Copied file {i+1} to {directory}")
+
+        print(f"Finished copying images from directory: {dir}")
+        return directory
+
+    except Exception as e:
+        print(f"Failed to shuffle local files: {e}")
         return None
