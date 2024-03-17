@@ -183,7 +183,9 @@ def create_tab_interface(workflow_name):
                 )
             )
             components.append(gr.Textbox(label="Collection Name or Directory Path"))
-            components.append(gr.Number(label="Max Images", value=4))
+            components.append(
+                gr.Slider(label="Max Images", minimum=2, maximum=4, value=4, step=1)
+            )
             components.append(gr.Checkbox(label="Shuffle Images", value=False))
         elif param == "video_file":
             components.append(gr.File(label=label))
