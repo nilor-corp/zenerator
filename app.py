@@ -220,9 +220,9 @@ with gr.Blocks(title="WorkFlower") as demo:
                                     label="Output Video", autoplay=True
                                 )
                                 with gr.Row():
-                                    # mark_bad = gr.Button("Mark as Bad")
-                                    # mark_good = gr.Button("Mark as Good")
-                                    upscale_button = gr.Button("Upscale")
+                                    mark_bad = gr.Button("Mark as Bad", visible=False)
+                                    mark_good = gr.Button("Mark as Good", visible=False)
+                                    upscale_button = gr.Button("Upscale", visible=False)
                         run_button.click(
                             fn=run_workflow_with_name(workflow_name),
                             inputs=components,
