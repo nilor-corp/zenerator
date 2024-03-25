@@ -35,7 +35,7 @@
     },
     "class_type": "KSampler Adv. (Efficient)",
     "_meta": {
-      "title": "KSampler Adv. (Efficient), CN sampler"
+      "title": "KSampler Adv. (Efficient)"
     }
   },
   "281": {
@@ -81,7 +81,7 @@
     },
     "class_type": "IPAdapterModelLoader",
     "_meta": {
-      "title": "Load IPAdapter Model"
+      "title": "IPAdapter Model Loader"
     }
   },
   "370": {
@@ -91,18 +91,6 @@
     "class_type": "CLIPVisionLoader",
     "_meta": {
       "title": "Load CLIP Vision"
-    }
-  },
-  "389": {
-    "inputs": {
-      "images": [
-        "651",
-        0
-      ]
-    },
-    "class_type": "PreviewImage",
-    "_meta": {
-      "title": "Preview Image"
     }
   },
   "436": {
@@ -200,7 +188,7 @@
     "inputs": {
       "stop_at_clip_layer": -1,
       "clip": [
-        "461",
+        "721",
         1
       ]
     },
@@ -244,7 +232,7 @@
         0
       ],
       "context_options": [
-        "556",
+        "735",
         0
       ],
       "sample_settings": [
@@ -310,7 +298,7 @@
     },
     "class_type": "KSampler Adv. (Efficient)",
     "_meta": {
-      "title": "KSampler Adv. (Efficient), CN sampler"
+      "title": "KSampler Adv. (Efficient)"
     }
   },
   "497": {
@@ -339,7 +327,7 @@
         0
       ],
       "context_options": [
-        "557",
+        "736",
         0
       ],
       "sample_settings": [
@@ -365,18 +353,6 @@
       "title": "Sample Settings 🎭🅐🅓"
     }
   },
-  "504": {
-    "inputs": {
-      "samples": [
-        "207",
-        3
-      ]
-    },
-    "class_type": "gcLatentTunnel",
-    "_meta": {
-      "title": "LatentGarbageCollector"
-    }
-  },
   "506": {
     "inputs": {
       "samples": [
@@ -387,15 +363,6 @@
     "class_type": "gcLatentTunnel",
     "_meta": {
       "title": "LatentGarbageCollector"
-    }
-  },
-  "512": {
-    "inputs": {
-      "vae_name": "vae-ft-mse-840000-ema-pruned.safetensors"
-    },
-    "class_type": "VAELoader",
-    "_meta": {
-      "title": "Load VAE"
     }
   },
   "514": {
@@ -422,21 +389,6 @@
       "title": "Video Combine 🎥🅥🅗🅢"
     }
   },
-  "515": {
-    "inputs": {
-      "ckpt_name": "film_net_fp32.pt",
-      "clear_cache_after_n_frames": 10,
-      "multiplier": 3,
-      "frames": [
-        "354",
-        2
-      ]
-    },
-    "class_type": "FILM VFI",
-    "_meta": {
-      "title": "FILM VFI"
-    }
-  },
   "550": {
     "inputs": {
       "ckpt_name": "amt-s.pth",
@@ -458,45 +410,13 @@
       "volume": 0.5,
       "file": "notify.mp3",
       "any": [
-        "550",
+        "281",
         0
       ]
     },
     "class_type": "PlaySound|pysssss",
     "_meta": {
       "title": "PlaySound 🐍"
-    }
-  },
-  "556": {
-    "inputs": {
-      "context_length": 16,
-      "context_stride": 1,
-      "context_overlap": 3,
-      "closed_loop": false,
-      "fuse_method": "pyramid",
-      "use_on_equal_length": false,
-      "start_percent": 0,
-      "guarantee_steps": 1
-    },
-    "class_type": "ADE_LoopedUniformContextOptions",
-    "_meta": {
-      "title": "Context Options◆Looped Uniform 🎭🅐🅓"
-    }
-  },
-  "557": {
-    "inputs": {
-      "context_length": 16,
-      "context_stride": 1,
-      "context_overlap": 4,
-      "closed_loop": false,
-      "fuse_method": "pyramid",
-      "use_on_equal_length": false,
-      "start_percent": 0,
-      "guarantee_steps": 1
-    },
-    "class_type": "ADE_LoopedUniformContextOptions",
-    "_meta": {
-      "title": "Context Options◆Looped Uniform 🎭🅐🅓"
     }
   },
   "563": {
@@ -512,35 +432,9 @@
       "title": "Split Image Batch 🎥🅥🅗🅢"
     }
   },
-  "580": {
-    "inputs": {
-      "image": "disc.jpg",
-      "upload": "image"
-    },
-    "class_type": "LoadImage",
-    "_meta": {
-      "title": "Load Image"
-    }
-  },
-  "581": {
-    "inputs": {
-      "pixels": [
-        "585",
-        0
-      ],
-      "vae": [
-        "461",
-        2
-      ]
-    },
-    "class_type": "VAEEncode",
-    "_meta": {
-      "title": "VAE Encode"
-    }
-  },
   "583": {
     "inputs": {
-      "text": "(crisp details, elegance), (Carré Hermès scarf, horse motif):1.4, (luxurious, timeless, silk fabric, intricate patterns, classic design):1.3, (vibrant colors, equestrian theme, red, gold, navy, white):1.2, high resolution, close-up shot, soft natural lighting, smooth textures, refined composition, square format, intricate stitch",
+      "text": "(crisp details, elegance), (Carré Hermès scarf, horse motif):1.4, (luxurious, timeless, silk fabric, intricate patterns, classic design):1.3, (vibrant colors, equestrian theme):1.2, high resolution, close-up shot, intricate stitch",
       "clip": [
         "487",
         0
@@ -564,36 +458,6 @@
       "title": "CLIP Text Encode (Prompt)"
     }
   },
-  "585": {
-    "inputs": {
-      "width": 1024,
-      "height": 1024,
-      "interpolation": "lanczos",
-      "keep_proportion": false,
-      "condition": "always",
-      "multiple_of": 0,
-      "image": [
-        "580",
-        0
-      ]
-    },
-    "class_type": "ImageResize+",
-    "_meta": {
-      "title": "🔧 Image Resize"
-    }
-  },
-  "587": {
-    "inputs": {
-      "images": [
-        "591",
-        0
-      ]
-    },
-    "class_type": "PreviewImage",
-    "_meta": {
-      "title": "Preview Image"
-    }
-  },
   "588": {
     "inputs": {
       "width": 1024,
@@ -608,93 +472,27 @@
       "title": "Empty Latent Image (Big Batch) 🎭🅐🅓"
     }
   },
-  "589": {
-    "inputs": {
-      "multiply_by": 4,
-      "images": [
-        "591",
-        0
-      ]
-    },
-    "class_type": "VHS_DuplicateImages",
-    "_meta": {
-      "title": "Duplicate Image Batch 🎥🅥🅗🅢"
-    }
-  },
-  "590": {
-    "inputs": {
-      "channel": "red",
-      "image": [
-        "589",
-        0
-      ]
-    },
-    "class_type": "ImageToMask",
-    "_meta": {
-      "title": "Convert Image to Mask"
-    }
-  },
-  "591": {
-    "inputs": {
-      "black_level": 0,
-      "mid_level": 5,
-      "white_level": 7,
-      "image": [
-        "585",
-        0
-      ]
-    },
-    "class_type": "Image Levels Adjustment",
-    "_meta": {
-      "title": "Image Levels Adjustment"
-    }
-  },
-  "592": {
-    "inputs": {
-      "mask": [
-        "590",
-        0
-      ]
-    },
-    "class_type": "MaskPreview+",
-    "_meta": {
-      "title": "🔧 Mask Preview"
-    }
-  },
   "593": {
     "inputs": {
       "x": 0,
       "y": 0,
-      "resize_source": false,
+      "resize_source": true,
       "destination": [
-        "594",
-        0
-      ],
-      "source": [
         "588",
         0
       ],
-      "mask": [
-        "590",
+      "source": [
+        "725",
         0
+      ],
+      "mask": [
+        "664",
+        1
       ]
     },
     "class_type": "LatentCompositeMasked",
     "_meta": {
       "title": "LatentCompositeMasked"
-    }
-  },
-  "594": {
-    "inputs": {
-      "multiply_by": 4,
-      "latents": [
-        "581",
-        0
-      ]
-    },
-    "class_type": "VHS_DuplicateLatents",
-    "_meta": {
-      "title": "Duplicate Latent Batch 🎥🅥🅗🅢"
     }
   },
   "603": {
@@ -704,7 +502,7 @@
         1
       ],
       "images": [
-        "651",
+        "719",
         0
       ]
     },
@@ -725,7 +523,7 @@
       "type_of_strength_distribution": "linear",
       "linear_strength_value": "(0.2,0.9)",
       "dynamic_strength_values": "(0.0,1.0),(0.0,1.0),(0.0,1.0),(0.0,1.0)",
-      "soft_scaled_cn_weights_multiplier": 0.85,
+      "soft_scaled_cn_weights_multiplier": 0.9,
       "buffer": 4,
       "relative_cn_strength": 0,
       "relative_ipadapter_strength": 1,
@@ -743,11 +541,11 @@
         0
       ],
       "images": [
-        "651",
+        "719",
         0
       ],
       "model": [
-        "461",
+        "721",
         0
       ],
       "ipadapter": [
@@ -771,7 +569,7 @@
         0
       ],
       "on_true": [
-        "668",
+        "593",
         0
       ],
       "on_false": [
@@ -781,7 +579,7 @@
     },
     "class_type": "Switch any [Crystools]",
     "_meta": {
-      "title": "IsCircular"
+      "title": "🪛 Switch any"
     }
   },
   "616": {
@@ -818,7 +616,7 @@
   },
   "622": {
     "inputs": {
-      "seed": 420720
+      "seed": 471858296383423
     },
     "class_type": "CR Seed",
     "_meta": {
@@ -897,7 +695,7 @@
     },
     "class_type": "Primitive string [Crystools]",
     "_meta": {
-      "title": "🪛 File Prefix"
+      "title": "🪛 Primitive string"
     }
   },
   "634": {
@@ -906,7 +704,7 @@
         "619",
         0
       ],
-      "text": "./WorkFlower\\Inputs\\420719"
+      "text": "./WorkFlower\\Inputs\\1015404554823989"
     },
     "class_type": "Show String",
     "_meta": {
@@ -1026,16 +824,16 @@
   },
   "652": {
     "inputs": {
-      "main_seed": 385969144017636,
+      "main_seed": 391916107176121,
       "steps": 8,
       "cfg": 1,
       "sampler_name": "lcm",
       "scheduler": "sgm_uniform",
       "variation_strength": 0.75,
-      "variation_seed": 148402110883801,
+      "variation_seed": 519684731366498,
       "denoise": 1,
       "model": [
-        "461",
+        "721",
         0
       ],
       "latent_image": [
@@ -1056,13 +854,22 @@
       "title": "🔧 KSampler Variations with Noise Injection"
     }
   },
+  "662": {
+    "inputs": {
+      "directory": "H:\\My Drive\\Loras\\hermes-horses\\dataset",
+      "image_load_cap": 4,
+      "skip_first_images": 0,
+      "select_every_nth": 1
+    },
+    "class_type": "VHS_LoadImagesPath",
+    "_meta": {
+      "title": "Load Images (Path) 🎥🅥🅗🅢"
+    }
+  },
   "664": {
     "inputs": {
       "shape": "circle",
-      "frames": [
-        "672",
-        0
-      ],
+      "frames": 1,
       "location_x": 512,
       "location_y": 512,
       "grow": 0,
@@ -1076,67 +883,27 @@
       "title": "CreateShapeMask"
     }
   },
-  "665": {
-    "inputs": {
-      "mask": [
-        "664",
-        0
-      ]
-    },
-    "class_type": "MaskPreview+",
-    "_meta": {
-      "title": "🔧 Mask Preview"
-    }
-  },
-  "667": {
-    "inputs": {
-      "mask": [
-        "664",
-        0
-      ]
-    },
-    "class_type": "MaskToImage",
-    "_meta": {
-      "title": "Mask To Image (mtb)"
-    }
-  },
   "668": {
     "inputs": {
       "x": 0,
       "y": 0,
-      "resize_source": false,
+      "resize_source": true,
       "destination": [
-        "669",
+        "464",
         0
       ],
       "source": [
-        "588",
+        "725",
         0
       ],
       "mask": [
         "664",
-        0
+        1
       ]
     },
     "class_type": "LatentCompositeMasked",
     "_meta": {
       "title": "LatentCompositeMasked"
-    }
-  },
-  "669": {
-    "inputs": {
-      "pixels": [
-        "667",
-        0
-      ],
-      "vae": [
-        "461",
-        2
-      ]
-    },
-    "class_type": "VAEEncode",
-    "_meta": {
-      "title": "VAE Encode"
     }
   },
   "672": {
@@ -1150,11 +917,11 @@
   },
   "673": {
     "inputs": {
-      "boolean": true
+      "boolean": false
     },
     "class_type": "Primitive boolean [Crystools]",
     "_meta": {
-      "title": "IsCircularController"
+      "title": "IsCircular?"
     }
   },
   "674": {
@@ -1164,7 +931,7 @@
         0
       ],
       "on_true": [
-        "677",
+        "668",
         0
       ],
       "on_false": [
@@ -1174,51 +941,121 @@
     },
     "class_type": "Switch any [Crystools]",
     "_meta": {
-      "title": "IsCircular"
+      "title": "🪛 Switch any"
     }
   },
-  "675": {
+  "695": {
     "inputs": {
-      "shape": "circle",
-      "frames": [
-        "606",
-        5
-      ],
-      "location_x": [
-        "681",
-        0
-      ],
-      "location_y": [
-        "686",
-        0
-      ],
-      "grow": 0,
-      "frame_width": [
-        "714",
-        0
-      ],
-      "frame_height": [
-        "715",
-        0
-      ],
-      "shape_width": [
-        "688",
-        0
-      ],
-      "shape_height": [
-        "690",
+      "batch_offset": 0,
+      "noise_type": "default",
+      "seed_gen_override": "use existing",
+      "seed_offset": 0
+    },
+    "class_type": "ADE_NoiseLayerReplace",
+    "_meta": {
+      "title": "Noise Layer [Replace] 🎭🅐🅓"
+    }
+  },
+  "714": {
+    "inputs": {
+      "int": 768
+    },
+    "class_type": "Primitive integer [Crystools]",
+    "_meta": {
+      "title": "🪛 Primitive integer"
+    }
+  },
+  "715": {
+    "inputs": {
+      "int": 768
+    },
+    "class_type": "Primitive integer [Crystools]",
+    "_meta": {
+      "title": "🪛 Primitive integer"
+    }
+  },
+  "718": {
+    "inputs": {
+      "width": 1024,
+      "height": 1024,
+      "interpolation": "lanczos",
+      "keep_proportion": false,
+      "condition": "always",
+      "multiple_of": 0,
+      "image": [
+        "662",
         0
       ]
     },
-    "class_type": "CreateShapeMask",
+    "class_type": "ImageResize+",
     "_meta": {
-      "title": "CreateShapeMask"
+      "title": "🔧 Image Resize"
     }
   },
-  "676": {
+  "719": {
+    "inputs": {
+      "boolean": [
+        "737",
+        0
+      ],
+      "on_true": [
+        "651",
+        0
+      ],
+      "on_false": [
+        "734",
+        0
+      ]
+    },
+    "class_type": "Switch any [Crystools]",
+    "_meta": {
+      "title": "Promptable?"
+    }
+  },
+  "721": {
+    "inputs": {
+      "model": [
+        "461",
+        0
+      ],
+      "clip": [
+        "461",
+        1
+      ],
+      "lora_stack": [
+        "722",
+        0
+      ]
+    },
+    "class_type": "CR Apply LoRA Stack",
+    "_meta": {
+      "title": "💊 CR Apply LoRA Stack"
+    }
+  },
+  "722": {
+    "inputs": {
+      "switch_1": "Off",
+      "lora_name_1": "People-Pleaser-10.safetensors",
+      "model_weight_1": 0.7000000000000001,
+      "clip_weight_1": 0,
+      "switch_2": "Off",
+      "lora_name_2": "None",
+      "model_weight_2": 0.7000000000000001,
+      "clip_weight_2": 0,
+      "switch_3": "Off",
+      "lora_name_3": "None",
+      "model_weight_3": 0.7000000000000001,
+      "clip_weight_3": 0
+    },
+    "class_type": "CR LoRA Stack",
+    "_meta": {
+      "title": "💊 CR LoRA Stack"
+    }
+  },
+  "724": {
     "inputs": {
       "mask": [
-        "675",
+        "664",
         0
       ]
     },
@@ -1227,33 +1064,10 @@
       "title": "Mask To Image (mtb)"
     }
   },
-  "677": {
-    "inputs": {
-      "x": 0,
-      "y": 0,
-      "resize_source": false,
-      "destination": [
-        "678",
-        0
-      ],
-      "source": [
-        "464",
-        0
-      ],
-      "mask": [
-        "675",
-        0
-      ]
-    },
-    "class_type": "LatentCompositeMasked",
-    "_meta": {
-      "title": "LatentCompositeMasked"
-    }
-  },
-  "678": {
+  "725": {
     "inputs": {
       "pixels": [
-        "676",
+        "724",
         0
       ],
       "vae": [
@@ -1266,215 +1080,138 @@
       "title": "VAE Encode"
     }
   },
-  "681": {
+  "726": {
     "inputs": {
-      "value": [
-        "682",
-        0
-      ],
-      "mode": "round"
-    },
-    "class_type": "JWFloatToInteger",
-    "_meta": {
-      "title": "Float to Integer"
-    }
-  },
-  "682": {
-    "inputs": {
-      "a": [
-        "684",
-        0
-      ],
-      "b": 0.5
-    },
-    "class_type": "JWFloatMul",
-    "_meta": {
-      "title": "Float Multiply"
-    }
-  },
-  "683": {
-    "inputs": {
-      "value": [
-        "715",
+      "images": [
+        "724",
         0
       ]
     },
-    "class_type": "JWIntegerToFloat",
+    "class_type": "PreviewImage",
     "_meta": {
-      "title": "Integer to Float"
+      "title": "Preview Image"
     }
   },
-  "684": {
+  "728": {
     "inputs": {
-      "value": [
-        "714",
+      "samples": [
+        "593",
+        0
+      ],
+      "vae": [
+        "461",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "729": {
+    "inputs": {
+      "images": [
+        "728",
         0
       ]
     },
-    "class_type": "JWIntegerToFloat",
+    "class_type": "PreviewImage",
     "_meta": {
-      "title": "Integer to Float"
+      "title": "Preview Image"
     }
   },
-  "685": {
+  "732": {
     "inputs": {
-      "a": [
-        "683",
+      "x": 0,
+      "y": 0,
+      "resize_source": true,
+      "destination": [
+        "718",
         0
       ],
-      "b": 0.5
-    },
-    "class_type": "JWFloatMul",
-    "_meta": {
-      "title": "Float Multiply"
-    }
-  },
-  "686": {
-    "inputs": {
-      "value": [
-        "685",
+      "source": [
+        "724",
         0
       ],
-      "mode": "round"
+      "mask": [
+        "664",
+        1
+      ]
     },
-    "class_type": "JWFloatToInteger",
+    "class_type": "ImageCompositeMasked",
     "_meta": {
-      "title": "Float to Integer"
+      "title": "ImageCompositeMasked"
     }
   },
-  "687": {
+  "733": {
     "inputs": {
-      "a": [
-        "684",
-        0
-      ],
-      "b": 0.9
-    },
-    "class_type": "JWFloatMul",
-    "_meta": {
-      "title": "Float Multiply"
-    }
-  },
-  "688": {
-    "inputs": {
-      "value": [
-        "687",
-        0
-      ],
-      "mode": "round"
-    },
-    "class_type": "JWFloatToInteger",
-    "_meta": {
-      "title": "Float to Integer"
-    }
-  },
-  "689": {
-    "inputs": {
-      "a": [
-        "683",
-        0
-      ],
-      "b": 0.9
-    },
-    "class_type": "JWFloatMul",
-    "_meta": {
-      "title": "Float Multiply"
-    }
-  },
-  "690": {
-    "inputs": {
-      "value": [
-        "689",
-        0
-      ],
-      "mode": "round"
-    },
-    "class_type": "JWFloatToInteger",
-    "_meta": {
-      "title": "Float to Integer"
-    }
-  },
-  "695": {
-    "inputs": {
-      "batch_offset": 0,
-      "noise_type": "default",
-      "seed_gen_override": "comfy",
-      "seed_offset": 0,
-      "mask_optional": [
-        "697",
+      "images": [
+        "732",
         0
       ]
     },
-    "class_type": "ADE_NoiseLayerReplace",
+    "class_type": "PreviewImage",
     "_meta": {
-      "title": "Noise Layer [Replace] 🎭🅐🅓"
+      "title": "Preview Image"
     }
   },
-  "697": {
+  "734": {
     "inputs": {
       "boolean": [
         "673",
         0
       ],
       "on_true": [
-        "675",
+        "732",
         0
       ],
       "on_false": [
-        "702",
+        "718",
         0
       ]
     },
     "class_type": "Switch any [Crystools]",
     "_meta": {
-      "title": "IsCircular"
+      "title": "🪛 Switch any"
     }
   },
-  "700": {
+  "735": {
     "inputs": {
-      "width": 1024,
-      "height": 1024,
-      "color": "rgba(255, 255, 255)",
-      "batch_size": [
-        "606",
-        5
-      ],
-      "color_mode": "RGB"
+      "context_length": 16,
+      "context_stride": 1,
+      "context_overlap": 3,
+      "fuse_method": "pyramid",
+      "use_on_equal_length": false,
+      "start_percent": 0,
+      "guarantee_steps": 1
     },
-    "class_type": "Create Solid Color",
+    "class_type": "ADE_StandardUniformContextOptions",
     "_meta": {
-      "title": "Create Solid Color"
+      "title": "Context Options◆Standard Uniform 🎭🅐🅓"
     }
   },
-  "702": {
+  "736": {
     "inputs": {
-      "channel": "red",
-      "image": [
-        "700",
-        0
-      ]
+      "context_length": 16,
+      "context_stride": 1,
+      "context_overlap": 4,
+      "fuse_method": "pyramid",
+      "use_on_equal_length": false,
+      "start_percent": 0,
+      "guarantee_steps": 1
     },
-    "class_type": "ImageToMask",
+    "class_type": "ADE_StandardUniformContextOptions",
     "_meta": {
-      "title": "Convert Image to Mask"
+      "title": "Context Options◆Standard Uniform 🎭🅐🅓"
     }
   },
-  "714": {
+  "737": {
     "inputs": {
-      "int": 768
+      "boolean": true
     },
-    "class_type": "Primitive integer [Crystools]",
+    "class_type": "Primitive boolean [Crystools]",
     "_meta": {
-      "title": "width"
-    }
-  },
-  "715": {
-    "inputs": {
-      "int": 768
-    },
-    "class_type": "Primitive integer [Crystools]",
-    "_meta": {
-      "title": "height"
+      "title": "IsPromptable?"
     }
   }
 }
