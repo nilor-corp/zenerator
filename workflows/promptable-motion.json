@@ -521,7 +521,7 @@
       "linear_key_frame_influence_value": "1.0",
       "dynamic_key_frame_influence_values": "(1.0,1.0),(1.0,1.5)(1.0,0.5)",
       "type_of_strength_distribution": "linear",
-      "linear_strength_value": "(0.0,1.0)",
+      "linear_strength_value": "(0.05,1.0)",
       "dynamic_strength_values": "(0.0,1.0),(0.0,1.0),(0.0,1.0),(0.0,1.0)",
       "soft_scaled_cn_weights_multiplier": 0.9,
       "buffer": 4,
