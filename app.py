@@ -8,6 +8,7 @@ import gradio as gr
 from pathlib import Path
 from image_downloader import resolve_online_collection
 from image_downloader import reorganise_local_files
+import asyncio
 
 with open("config.json") as f:
     config = json.load(f)
@@ -72,8 +73,17 @@ def count_images(directory):
     return image_count
 
 
-def run_workflow(workflow_name, *args):
-    print("inside run workflow with args: " + str(args))
+async def wait_for_new_video(previous_video, output_directory):
+    while True:
+        latest_video = get_latest_video(output_directory)
+        if latest_video != previous_video:
+            print(f"New video created: {latest_video}")
+            return latest_video
+        await asyncio.sleep(1)
+
+
+def run_workflow(workflow_name, **kwargs):
+    print("inside run workflow with kwargs: " + str(kwargs))
     workflow_json = (
         "./workflows/" + workflow_definitions[workflow_name]["filename"] + ".json"
     )
@@ -83,116 +93,123 @@ def run_workflow(workflow_name, *args):
         workflow = json.load(f)
         # Get the parameters for the current workflow
         params = workflow_definitions[workflow_name]["parameters"]
-        # Initialize a counter for the arguments tuple
-        arg_index = 0
+        # Create a mapping between Gradio labels and params keys
+        label_to_param = {
+            v: k for k, v in workflow_definitions[workflow_name]["labels"].items()
+        }
         # Iterate over the values in the parameters dictionary
-        for i, path in enumerate(params.values()):
-            # Split the path into keys, removing brackets and splitting on ']['
-            keys = path.strip("[]").split("][")
-            # Remove any leading or trailing quotes from the keys
-            keys = [key.strip('"') for key in keys]
-            # Start with the full workflow dictionary
-            sub_dict = workflow
-            # Traverse the dictionary using the keys, stopping before the last key
-            for key in keys[:-1]:
-                sub_dict = sub_dict[key]
-            # If the parameters include lora control
-            if "loras" in params:
-                # for each lora in the loras array
-                lora_start_index = 3
-                for lora in loras:
-                    # set switch to the value of the checkbox
-                    lora_switch = args[lora_start_index + (loras.index(lora) * 3)]
-                    # get the lora name
-                    lora_name = args[lora_start_index + 1 + (loras.index(lora) * 3)]
-                    # set the model_weight to the value of the slider
-                    lora_weight = args[lora_start_index + 2 + (loras.index(lora) * 3)]
-                    print(
-                        f"lora_switch: {lora_switch}, lora_name: {lora_name}, lora_weight: {lora_weight}"
-                    )
-                    # set the lora details
-                    switch_key = f"switch_{loras.index(lora) + 1}"
-                    sub_dict["loras"][switch_key] = lora_switch
+        for key, value in kwargs.items():
+            # Get the corresponding param key for this Gradio label
+            param_key = label_to_param.get(key)
+            if param_key:
+                # Get the path this value needs to be written to
+                path = params.get(param_key)
+                if path:
+                    # Split the path into keys, removing brackets and splitting on ']['
+                    keys = path.strip("[]").split("][")
+                    # Remove any leading or trailing quotes from the keys
+                    keys = [key.strip('"') for key in keys]
+                    # Start with the full workflow dictionary
+                    sub_dict = workflow
+                    # Traverse the dictionary using the keys, stopping before the last key
+                    for key in keys[:-1]:
+                        sub_dict = sub_dict[key]
+                    # Update the value at the last part of the path
+                    sub_dict[keys[-1]] = value
 
-                    name_key = f"name_{loras.index(lora) + 1}"
-                    sub_dict["loras"][name_key] = lora_name
+                    print("######################")
+                    print("params:", params)
+                    print("sub_dict:", sub_dict)
+                    # If the parameters include lora control
+                    if (
+                        "loras" in params
+                        and sub_dict.get("class_type") == "CR LoRA Stack"
+                    ):
+                        # for each lora in the loras array
+                        for lora in loras:
+                            # set switch to the value of the checkbox (but make it 'on' or 'off' instead of True or False)
+                            lora_switch = (
+                                "On" if kwargs.get(f"Lora_Switch_{lora}") else "Off"
+                            )
+                            # get the lora name
+                            lora_name = kwargs.get(f"Lora_Name_{lora}")
+                            # set the model_weight to the value of the slider
+                            lora_weight = kwargs.get(f"Lora_Weight_{lora}")
+                            print(
+                                f"lora_switch: {lora_switch}, lora_name: {lora_name}, lora_weight: {lora_weight}"
+                            )
+                            # set the lora details
+                            switch_key = f"switch_{loras.index(lora) + 1}"
+                            # print(f"Switch Key: {switch_key}")
+                            # print(f"Before: {sub_dict['inputs'].get(switch_key)}")
+                            sub_dict["inputs"][switch_key] = lora_switch
+                            # print(f"After: {sub_dict['inputs'].get(switch_key)}")
 
-                    weight_key = f"weight_{loras.index(lora) + 1}"
-                    sub_dict["loras"][weight_key] = lora_weight
+                            name_key = f"lora_name_{loras.index(lora) + 1}"
+                            # print(f"\nName Key: {name_key}")
+                            # print(f"Before: {sub_dict['inputs'].get(name_key)}")
+                            sub_dict["inputs"][name_key] = lora_name
+                            # print(f"After: {sub_dict['inputs'].get(name_key)}")
 
-            # If the parameters include an image path
-            if "image_path" in params:
-                # Print the arguments for debugging
-                print(args)
-                # Check if the next argument index is within the range of the arguments tuple
-                if arg_index + 1 < len(args):
-                    # If the current argument is a Nilor Collection Name
-                    if args[arg_index] == "Nilor Collection Name":
-                        # Print a message indicating that the code is resolving an online collection
-                        print(f"Resolving online collection: {args[arg_index+1]}")
-                        # Resolve the online collection and get the path to the images
-                        path = resolve_online_collection(
-                            args[arg_index + 1],
-                            int(args[arg_index + 2]),
-                            args[arg_index + 3],
-                        )
-                        # Count the number of images in the path
-                        image_count = count_images(path)
-                        # Print the number of images
-                        print(f"Detected {image_count} images in the collection.")
-                        # Set the last key in the sub-dictionary to the path
-                        sub_dict[keys[-1]] = path
-                        # Increment the argument index by 4 to skip the arguments used for the online collection
-                        arg_index += 4
-                    else:
-                        # If the current argument is not a Nilor Collection Name, it's a local directory
-                        # Print a message indicating that the code is loading images from a local directory
-                        print(
-                            f"Loading images from local directory: {args[arg_index+1]}"
-                        )
-                        # Get the path to the local directory
-                        path = args[arg_index + 1]
-                        # Count the number of images in the path
-                        image_count = count_images(path)
-                        # Print the number of images
-                        print(f"Detected {image_count} images in the collection.")
+                            model_weight_key = f"model_weight_{loras.index(lora) + 1}"
+                            # print(f"\nModel Weight Key: {model_weight_key}")
+                            # print(f"Before: {sub_dict['inputs'].get(model_weight_key)}")
+                            sub_dict["inputs"][model_weight_key] = lora_weight
+                            # print(f"After: {sub_dict['inputs'].get(model_weight_key)}")
 
-                        # make a copy of the relevant local files, optionally shuffling them
-                        path = reorganise_local_files(
-                            path, int(args[arg_index + 2]), args[arg_index + 3]
-                        )
+                            clip_weight_key = f"clip_weight_{loras.index(lora) + 1}"
+                            # print(f"\nClip Weight Key: {clip_weight_key}")
+                            # print(f"Before: {sub_dict['inputs'].get(clip_weight_key)}")
+                            sub_dict["inputs"][clip_weight_key] = lora_weight
+                            # print(f"After: {sub_dict['inputs'].get(clip_weight_key)}")
+                    elif "image_path" in params:
+                        print(kwargs)
+                        if kwargs.get("Images Path Type") == "Nilor Collection Name":
+                            print(
+                                f"Resolving online collection: {kwargs.get('Collection Name or Directory Path')}"
+                            )
+                            path = resolve_online_collection(
+                                kwargs.get("Collection Name or Directory Path"),
+                                int(kwargs.get("Max Images")),
+                                kwargs.get("Shuffle Images"),
+                            )
+                            image_count = count_images(path)
+                            print(f"Detected {image_count} images in the collection.")
+                            sub_dict["image_path"] = path
+                        else:
+                            print(
+                                f"Loading images from local directory: {kwargs.get('Collection Name or Directory Path')}"
+                            )
+                            path = kwargs.get("Collection Name or Directory Path")
+                            image_count = count_images(path)
+                            print(f"Detected {image_count} images in the collection.")
+                            path = reorganise_local_files(
+                                path,
+                                int(kwargs.get("Max Images")),
+                                kwargs.get("Shuffle Images"),
+                            )
+                            sub_dict["image_path"] = path
+                    # else:
+                    #     print("Key:", keys[-1])
+                    #     print("Kwargs keys:", kwargs.keys())
+                    #     sub_dict[keys[-1]] = kwargs.get(keys[-1])
 
-                        # Set the last key in the sub-dictionary to the path
-                        sub_dict[keys[-1]] = path
-                        # Increment the argument index by 4 to skip the arguments used for the online collection
-                        arg_index += 4
-                else:
-                    # If the current argument is not an image path, it's a regular parameter
-                    # Set the last key in the sub-dictionary to the current argument
-                    sub_dict[keys[-1]] = args[arg_index]
-                    # Increment the argument index by 1 to move to the next argument
-                    arg_index += 1
-            # Rest of the function...
-        output_directory = OUT_DIR
-        previous_video = get_latest_video(output_directory)
-        print(f"Previous video: {previous_video}")
-        start_queue(workflow)
+                    print(f"Sub_dict after update: {sub_dict}")
         try:
-            while True:
-                latest_video = get_latest_video(output_directory)
-                if latest_video != previous_video:
-                    print(f"New video created: {latest_video}")
-                    time.sleep(1)
-                    return latest_video
-                time.sleep(1)
+            output_directory = OUT_DIR
+            previous_video = get_latest_video(output_directory)
+            print(f"Previous video: {previous_video}")
+            start_queue(workflow)
+            asyncio.run(wait_for_new_video(previous_video, output_directory))
         except KeyboardInterrupt:
             print("Interrupted by user. Exiting...")
             return None
 
 
-def run_workflow_with_name(workflow_name):
+def run_workflow_with_name(workflow_name, component_names):
     def wrapper(*args):
-        return run_workflow(workflow_name, *args)
+        kwargs = {str(component_names[i].label): arg for i, arg in enumerate(args)}
+        return run_workflow(workflow_name, **kwargs)
 
     return wrapper
 
@@ -212,9 +229,9 @@ def create_tab_interface(workflow_name):
     for param in workflow_definitions[workflow_name]["parameters"]:
         label = workflow_definitions[workflow_name]["labels"].get(param, param)
         if param == "text_1" or param == "text_2":
-            components.append(gr.Textbox(label=label))
+            components.append(gr.Textbox(label=param))
         elif param == "images":
-            components.append(gr.Files(label=label))
+            components.append(gr.Files(label=param))
         elif param == "image_path":
             components.append(
                 gr.Radio(
@@ -225,25 +242,40 @@ def create_tab_interface(workflow_name):
             )
             components.append(gr.Textbox(label="Collection Name or Directory Path"))
             components.append(
-                gr.Slider(label="Max Images", minimum=2, maximum=4, value=4, step=1)
+                gr.Slider(
+                    label="Max Images",
+                    minimum=2,
+                    maximum=4,
+                    value=4,
+                    step=1,
+                )
             )
             components.append(gr.Checkbox(label="Shuffle Images", value=False))
         elif param == "video_file":
-            components.append(gr.File(label=label))
+            components.append(gr.File(label=param))
         elif param == "video_path":
-            components.append(gr.Textbox(label=label))
+            components.append(gr.Textbox(label=param))
         elif param == "bool_1":
-            components.append(gr.Checkbox(label=label))
+            components.append(gr.Checkbox(label=param))
         elif param == "loras":
             with gr.Accordion(label="Lora Models", open=False):
                 for lora in loras:
-                    components.append(gr.Checkbox(label=f"{lora}", value=False))
                     components.append(
-                        gr.Textbox(value=lora, label="Lora Model Name", visible=False)
+                        gr.Checkbox(
+                            label=f"Lora_Switch_{lora}",
+                            value=False,
+                        )
+                    )
+                    components.append(
+                        gr.Textbox(
+                            value=lora,
+                            label=f"Lora_Name_{lora}",
+                            visible=False,
+                        )
                     )
                     components.append(
                         gr.Slider(
-                            label=f"{lora} Model Weight",
+                            label=f"Lora_Weight_{lora}",
                             minimum=0,
                             maximum=1,
                             value=0.7,
@@ -282,8 +314,9 @@ with gr.Blocks(title="WorkFlower") as demo:
                                     mark_bad = gr.Button("Mark as Bad", visible=False)
                                     mark_good = gr.Button("Mark as Good", visible=False)
                                     upscale_button = gr.Button("Upscale", visible=False)
+
                         run_button.click(
-                            fn=run_workflow_with_name(workflow_name),
+                            fn=run_workflow_with_name(workflow_name, components),
                             inputs=components,
                             outputs=[output_player],
                         )
