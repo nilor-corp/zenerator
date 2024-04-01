@@ -117,84 +117,79 @@ def run_workflow(workflow_name, **kwargs):
                     # Update the value at the last part of the path
                     sub_dict[keys[-1]] = value
 
-                    print("######################")
-                    print("params:", params)
-                    print("sub_dict:", sub_dict)
-                    # If the parameters include lora control
-                    if (
-                        "loras" in params
-                        and sub_dict.get("class_type") == "CR LoRA Stack"
-                    ):
-                        # for each lora in the loras array
-                        for lora in loras:
-                            # set switch to the value of the checkbox (but make it 'on' or 'off' instead of True or False)
-                            lora_switch = (
-                                "On" if kwargs.get(f"Lora_Switch_{lora}") else "Off"
-                            )
-                            # get the lora name
-                            lora_name = kwargs.get(f"Lora_Name_{lora}")
-                            # set the model_weight to the value of the slider
-                            lora_weight = kwargs.get(f"Lora_Weight_{lora}")
-                            print(
-                                f"lora_switch: {lora_switch}, lora_name: {lora_name}, lora_weight: {lora_weight}"
-                            )
-                            # set the lora details
-                            switch_key = f"switch_{loras.index(lora) + 1}"
-                            # print(f"Switch Key: {switch_key}")
-                            # print(f"Before: {sub_dict['inputs'].get(switch_key)}")
-                            sub_dict["inputs"][switch_key] = lora_switch
-                            # print(f"After: {sub_dict['inputs'].get(switch_key)}")
+            print("######################")
+            print("params:", params)
+            print("sub_dict:", sub_dict)
+            # If the parameters include lora control
+            if "loras" in params and sub_dict.get("class_type") == "CR LoRA Stack":
+                # for each lora in the loras array
+                for lora in loras:
+                    # set switch to the value of the checkbox (but make it 'on' or 'off' instead of True or False)
+                    lora_switch = "On" if kwargs.get(f"Lora_Switch_{lora}") else "Off"
+                    # get the lora name
+                    lora_name = kwargs.get(f"Lora_Name_{lora}")
+                    # set the model_weight to the value of the slider
+                    lora_weight = kwargs.get(f"Lora_Weight_{lora}")
+                    print(
+                        f"lora_switch: {lora_switch}, lora_name: {lora_name}, lora_weight: {lora_weight}"
+                    )
+                    # set the lora details
+                    switch_key = f"switch_{loras.index(lora) + 1}"
+                    # print(f"Switch Key: {switch_key}")
+                    # print(f"Before: {sub_dict['inputs'].get(switch_key)}")
+                    sub_dict["inputs"][switch_key] = lora_switch
+                    # print(f"After: {sub_dict['inputs'].get(switch_key)}")
 
-                            name_key = f"lora_name_{loras.index(lora) + 1}"
-                            # print(f"\nName Key: {name_key}")
-                            # print(f"Before: {sub_dict['inputs'].get(name_key)}")
-                            sub_dict["inputs"][name_key] = lora_name
-                            # print(f"After: {sub_dict['inputs'].get(name_key)}")
+                    name_key = f"lora_name_{loras.index(lora) + 1}"
+                    # print(f"\nName Key: {name_key}")
+                    # print(f"Before: {sub_dict['inputs'].get(name_key)}")
+                    sub_dict["inputs"][name_key] = lora_name
+                    # print(f"After: {sub_dict['inputs'].get(name_key)}")
 
-                            model_weight_key = f"model_weight_{loras.index(lora) + 1}"
-                            # print(f"\nModel Weight Key: {model_weight_key}")
-                            # print(f"Before: {sub_dict['inputs'].get(model_weight_key)}")
-                            sub_dict["inputs"][model_weight_key] = lora_weight
-                            # print(f"After: {sub_dict['inputs'].get(model_weight_key)}")
+                    model_weight_key = f"model_weight_{loras.index(lora) + 1}"
+                    # print(f"\nModel Weight Key: {model_weight_key}")
+                    # print(f"Before: {sub_dict['inputs'].get(model_weight_key)}")
+                    sub_dict["inputs"][model_weight_key] = lora_weight
+                    # print(f"After: {sub_dict['inputs'].get(model_weight_key)}")
 
-                            clip_weight_key = f"clip_weight_{loras.index(lora) + 1}"
-                            # print(f"\nClip Weight Key: {clip_weight_key}")
-                            # print(f"Before: {sub_dict['inputs'].get(clip_weight_key)}")
-                            sub_dict["inputs"][clip_weight_key] = lora_weight
-                            # print(f"After: {sub_dict['inputs'].get(clip_weight_key)}")
-                    elif "image_path" in params:
-                        print(kwargs)
-                        if kwargs.get("Images Path Type") == "Nilor Collection Name":
-                            print(
-                                f"Resolving online collection: {kwargs.get('Collection Name or Directory Path')}"
-                            )
-                            path = resolve_online_collection(
-                                kwargs.get("Collection Name or Directory Path"),
-                                int(kwargs.get("Max Images")),
-                                kwargs.get("Shuffle Images"),
-                            )
-                            image_count = count_images(path)
-                            print(f"Detected {image_count} images in the collection.")
-                            sub_dict["image_path"] = path
-                        else:
-                            print(
-                                f"Loading images from local directory: {kwargs.get('Collection Name or Directory Path')}"
-                            )
-                            path = kwargs.get("Collection Name or Directory Path")
-                            image_count = count_images(path)
-                            print(f"Detected {image_count} images in the collection.")
-                            path = reorganise_local_files(
-                                path,
-                                int(kwargs.get("Max Images")),
-                                kwargs.get("Shuffle Images"),
-                            )
-                            sub_dict["image_path"] = path
-                    # else:
-                    #     print("Key:", keys[-1])
-                    #     print("Kwargs keys:", kwargs.keys())
-                    #     sub_dict[keys[-1]] = kwargs.get(keys[-1])
+                    clip_weight_key = f"clip_weight_{loras.index(lora) + 1}"
+                    # print(f"\nClip Weight Key: {clip_weight_key}")
+                    # print(f"Before: {sub_dict['inputs'].get(clip_weight_key)}")
+                    sub_dict["inputs"][clip_weight_key] = lora_weight
+                    # print(f"After: {sub_dict['inputs'].get(clip_weight_key)}")
+            elif "image_path" in params:
+                print(kwargs)
+                if kwargs.get("Images Path Type") == "Nilor Collection Name":
+                    print(
+                        f"Resolving online collection: {kwargs.get('Collection Name or Directory Path')}"
+                    )
+                    path = resolve_online_collection(
+                        kwargs.get("Collection Name or Directory Path"),
+                        int(kwargs.get("Max Images")),
+                        kwargs.get("Shuffle Images"),
+                    )
+                    image_count = count_images(path)
+                    print(f"Detected {image_count} images in the collection.")
+                    sub_dict["image_path"] = path
+                else:
+                    print(
+                        f"Loading images from local directory: {kwargs.get('Collection Name or Directory Path')}"
+                    )
+                    path = kwargs.get("Collection Name or Directory Path")
+                    image_count = count_images(path)
+                    print(f"Detected {image_count} images in the collection.")
+                    path = reorganise_local_files(
+                        path,
+                        int(kwargs.get("Max Images")),
+                        kwargs.get("Shuffle Images"),
+                    )
+                    sub_dict["image_path"] = path
+            # else:
+            #     print("Key:", keys[-1])
+            #     print("Kwargs keys:", kwargs.keys())
+            #     sub_dict[keys[-1]] = kwargs.get(keys[-1])
 
-                    print(f"Sub_dict after update: {sub_dict}")
+            print(f"Sub_dict after update: {sub_dict}")
         try:
             output_directory = OUT_DIR
             previous_video = get_latest_video(output_directory)
