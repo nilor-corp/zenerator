@@ -14,6 +14,7 @@ with open("config.json") as f:
 
 URL = config["COMFY_URL"]
 OUT_DIR = config["COMFY_ROOT"] + "output/WorkFlower/"
+LORA_DIR = config["COMFY_ROOT"] + "models/loras/"
 
 
 def start_queue(prompt_workflow):
@@ -27,6 +28,22 @@ def start_queue(prompt_workflow):
 
 with open("workflow_definitions.json") as f:
     workflow_definitions = json.load(f)
+
+
+def get_lora_filenames(directory):
+    # Get all files in the directory
+    files = os.listdir(directory)
+
+    # Filter out any directories, leaving only files
+    filenames = [
+        file for file in files if os.path.isfile(os.path.join(directory, file))
+    ]
+
+    return filenames
+
+
+# Replace with the actual path to the Loras
+loras = get_lora_filenames(LORA_DIR)
 
 
 def get_latest_image(folder):
@@ -79,6 +96,30 @@ def run_workflow(workflow_name, *args):
             # Traverse the dictionary using the keys, stopping before the last key
             for key in keys[:-1]:
                 sub_dict = sub_dict[key]
+            # If the parameters include lora control
+            if "loras" in params:
+                # for each lora in the loras array
+                lora_start_index = 3
+                for lora in loras:
+                    # set switch to the value of the checkbox
+                    lora_switch = args[lora_start_index + (loras.index(lora) * 3)]
+                    # get the lora name
+                    lora_name = args[lora_start_index + 1 + (loras.index(lora) * 3)]
+                    # set the model_weight to the value of the slider
+                    lora_weight = args[lora_start_index + 2 + (loras.index(lora) * 3)]
+                    print(
+                        f"lora_switch: {lora_switch}, lora_name: {lora_name}, lora_weight: {lora_weight}"
+                    )
+                    # set the lora details
+                    switch_key = f"switch_{loras.index(lora) + 1}"
+                    sub_dict["loras"][switch_key] = lora_switch
+
+                    name_key = f"name_{loras.index(lora) + 1}"
+                    sub_dict["loras"][name_key] = lora_name
+
+                    weight_key = f"weight_{loras.index(lora) + 1}"
+                    sub_dict["loras"][weight_key] = lora_weight
+
             # If the parameters include an image path
             if "image_path" in params:
                 # Print the arguments for debugging
@@ -193,6 +234,23 @@ def create_tab_interface(workflow_name):
             components.append(gr.Textbox(label=label))
         elif param == "bool_1":
             components.append(gr.Checkbox(label=label))
+        elif param == "loras":
+            with gr.Accordion(label="Lora Models", open=False):
+                for lora in loras:
+                    components.append(gr.Checkbox(label=f"{lora}", value=False))
+                    components.append(
+                        gr.Textbox(value=lora, label="Lora Model Name", visible=False)
+                    )
+                    components.append(
+                        gr.Slider(
+                            label=f"{lora} Model Weight",
+                            minimum=0,
+                            maximum=1,
+                            value=0.7,
+                            step=0.01,
+                        )
+                    )
+
     return components
 
 

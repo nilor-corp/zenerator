@@ -16,12 +16,14 @@
         "parameters": {
             "text_1": "[\"583\"][\"inputs\"][\"text\"]",
             "text_2": "[\"584\"][\"inputs\"][\"text\"]",
-            "bool_1": "[\"673\"][\"inputs\"][\"boolean\"]"
+            "bool_1": "[\"673\"][\"inputs\"][\"boolean\"]",
+            "loras": "[\"722\"][\"inputs\"]"
         },
         "labels": {
             "text_1": "Positive Prompt",
             "text_2": "Negative Prompt",
-            "bool_1": "Circular?"
+            "bool_1": "Circular?",
+            "loras": "LORAS"
         },
         "filename": "promptable-motion"
     },
@@ -29,11 +31,15 @@
         "info": "Create a video that moves creatively between the images you provide (maximum 4 images). ETA: 5 mins.",
         "parameters": {
             "image_path": "[\"662\"][\"inputs\"][\"directory\"]",
-            "bool_1": "[\"673\"][\"inputs\"][\"boolean\"]"
+            "bool_1": "[\"673\"][\"inputs\"][\"boolean\"]",
+            "loras": "[\"722\"][\"inputs\"]"
+
         },
         "labels": {
             "image_path": "Enter Path to Images",
-            "bool_1": "Circular?"
+            "bool_1": "Circular?",
+            "loras": "LORAS"
+
         },
         "filename": "steerable-motion"
     }
