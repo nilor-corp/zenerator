@@ -83,44 +83,63 @@ async def wait_for_new_video(previous_video, output_directory):
 
 
 def run_workflow(workflow_name, **kwargs):
+    # Print the input arguments for debugging
     print("inside run workflow with kwargs: " + str(kwargs))
+    print("workflow_definitions: " + str(workflow_definitions[workflow_name]))
+
+    # Construct the path to the workflow JSON file
     workflow_json = (
         "./workflows/" + workflow_definitions[workflow_name]["filename"] + ".json"
     )
+
     # Open the workflow JSON file
     with open(workflow_json, "r", encoding="utf-8") as f:
         # Load the JSON data into the workflow variable
         workflow = json.load(f)
+
         # Get the parameters for the current workflow
         params = workflow_definitions[workflow_name]["parameters"]
-        # Create a mapping between Gradio labels and params keys
-        label_to_param = {
-            v: k for k, v in workflow_definitions[workflow_name]["labels"].items()
-        }
+
+        # get the human readable labels associated with those parameters
+        param_labels = workflow_definitions[workflow_name]["labels"]
+
+        # Initialize sub_dict to None
+        sub_dict = None
+
         # Iterate over the values in the parameters dictionary
         for key, value in kwargs.items():
-            # Get the corresponding param key for this Gradio label
-            param_key = label_to_param.get(key)
-            if param_key:
+            # Print the current key and value for debugging
+            print(f"\n\nkey: {key}, value: {value}")
+
+            # look inside the parameters for the matching kwargs key
+            if key in params:
                 # Get the path this value needs to be written to
-                path = params.get(param_key)
+                path = params.get(key)
+                print(f"path: {path}")
+
+                # If a path was found
                 if path:
                     # Split the path into keys, removing brackets and splitting on ']['
                     keys = path.strip("[]").split("][")
+
                     # Remove any leading or trailing quotes from the keys
                     keys = [key.strip('"') for key in keys]
+
                     # Start with the full workflow dictionary
                     sub_dict = workflow
+
                     # Traverse the dictionary using the keys, stopping before the last key
                     for key in keys[:-1]:
                         sub_dict = sub_dict[key]
+
                     # Update the value at the last part of the path
                     sub_dict[keys[-1]] = value
 
+            # Print the current state of params and sub_dict for debugging
             print("######################")
             print("params:", params)
             print("sub_dict:", sub_dict)
-            # If the parameters include lora control
+
             if "loras" in params and sub_dict.get("class_type") == "CR LoRA Stack":
                 # for each lora in the loras array
                 for lora in loras:
@@ -204,6 +223,7 @@ def run_workflow(workflow_name, **kwargs):
 def run_workflow_with_name(workflow_name, component_names):
     def wrapper(*args):
         kwargs = {str(component_names[i].label): arg for i, arg in enumerate(args)}
+        print(f"kwargs in wrapper: {kwargs}")
         return run_workflow(workflow_name, **kwargs)
 
     return wrapper
