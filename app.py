@@ -197,7 +197,23 @@ def run_workflow(workflow_name, **kwargs):
                     # print(f"Before: {sub_dict['inputs'].get(clip_weight_key)}")
                     sub_dict["inputs"][clip_weight_key] = lora_weight
                     # print(f"After: {sub_dict['inputs'].get(clip_weight_key)}")
-        elif "image_path" in params:
+        if "image_path" in params:
+            # find out where to write the path to eventually
+            json_path = params.get("image_path")
+            print(f"Image path detected in params! Path: {json_path}")
+
+            image_path_accessors = json_path.strip("[]").split("][")
+            image_path_accessors = [key.strip('"') for key in image_path_accessors]
+            print(f"image_path_accessors: {image_path_accessors}")
+
+            # reset the sub_dict to include all parameters again
+            sub_dict = workflow
+
+            for key in image_path_accessors[:-1]:
+                sub_dict = sub_dict[key]
+
+            print(f"sub_dict: {sub_dict}")  # Debugging step 1
+
             print(kwargs)
             if kwargs.get("Images Path Type") == "Nilor Collection Name":
                 print(
@@ -210,7 +226,7 @@ def run_workflow(workflow_name, **kwargs):
                 )
                 image_count = count_images(path)
                 print(f"Detected {image_count} images in the collection.")
-                sub_dict["image_path"] = path
+                sub_dict["directory"] = path
             else:
                 print(
                     f"Loading images from local directory: {kwargs.get('Collection Name or Directory Path')}"
@@ -223,13 +239,13 @@ def run_workflow(workflow_name, **kwargs):
                     int(kwargs.get("Max Images")),
                     kwargs.get("Shuffle Images"),
                 )
-                sub_dict["image_path"] = path
+                sub_dict["directory"] = path
 
         try:
             output_directory = OUT_DIR
             previous_video = get_latest_video(output_directory)
             print(f"Previous video: {previous_video}")
-            # print(workflow)
+            print(f"!!!!!!!!!\nSubmitting workflow:\n{workflow}\n!!!!!!!!!")
             start_queue(workflow)
             asyncio.run(wait_for_new_video(previous_video, output_directory))
         except KeyboardInterrupt:
