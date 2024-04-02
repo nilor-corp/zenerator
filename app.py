@@ -109,7 +109,8 @@ def run_workflow(workflow_name, **kwargs):
         # Iterate over the values in the parameters dictionary
         for key, value in kwargs.items():
             # Print the current key and value for debugging
-            print(f"\n\nkey: {key}, value: {value}")
+            print("######################\n\n")
+            print(f"key: {key}, value: {value}")
 
             # look inside the parameters for the matching kwargs key
             if key in params:
@@ -132,13 +133,13 @@ def run_workflow(workflow_name, **kwargs):
                     for key in keys[:-1]:
                         sub_dict = sub_dict[key]
 
+                        print("sub_dict:", sub_dict)
+
                     # Update the value at the last part of the path
                     sub_dict[keys[-1]] = value
 
             # Print the current state of params and sub_dict for debugging
-            print("######################")
             print("params:", params)
-            print("sub_dict:", sub_dict)
 
             if "loras" in params and sub_dict.get("class_type") == "CR LoRA Stack":
                 # for each lora in the loras array
@@ -222,7 +223,26 @@ def run_workflow(workflow_name, **kwargs):
 
 def run_workflow_with_name(workflow_name, component_names):
     def wrapper(*args):
-        kwargs = {str(component_names[i].label): arg for i, arg in enumerate(args)}
+        param_labels = workflow_definitions[workflow_name]["labels"]
+
+        # Create a reverse dictionary that maps labels to parameter names
+        labels_to_param = {v: k for k, v in param_labels.items()}
+
+        # Initialize an empty dictionary for kwargs
+        kwargs = {}
+
+        # Iterate over the arguments and their corresponding component names
+        for i, arg in enumerate(args):
+            # Get the label of the i-th component
+            label = str(component_names[i].label)
+
+            # Get the parameter name that corresponds to this label,
+            # or use the label itself if it's not in the dictionary
+            param_name = labels_to_param.get(label, label)
+
+            # Add this argument to kwargs with the parameter name as the key
+            kwargs[param_name] = arg
+
         print(f"kwargs in wrapper: {kwargs}")
         return run_workflow(workflow_name, **kwargs)
 
@@ -244,9 +264,9 @@ def create_tab_interface(workflow_name):
     for param in workflow_definitions[workflow_name]["parameters"]:
         label = workflow_definitions[workflow_name]["labels"].get(param, param)
         if param == "text_1" or param == "text_2":
-            components.append(gr.Textbox(label=param))
+            components.append(gr.Textbox(label=label))
         elif param == "images":
-            components.append(gr.Files(label=param))
+            components.append(gr.Files(label=label))
         elif param == "image_path":
             components.append(
                 gr.Radio(
@@ -267,11 +287,11 @@ def create_tab_interface(workflow_name):
             )
             components.append(gr.Checkbox(label="Shuffle Images", value=False))
         elif param == "video_file":
-            components.append(gr.File(label=param))
+            components.append(gr.File(label=label))
         elif param == "video_path":
-            components.append(gr.Textbox(label=param))
+            components.append(gr.Textbox(label=label))
         elif param == "bool_1":
-            components.append(gr.Checkbox(label=param))
+            components.append(gr.Checkbox(label="Circular?"))
         elif param == "loras":
             with gr.Accordion(label="Lora Models", open=False):
                 for lora in loras:
