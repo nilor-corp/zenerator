@@ -290,6 +290,12 @@ def update_gif(workflow_name):
         return None
 
 
+def generate_lora(collection_name):
+    print(f"Generate Lora with {collection_name}")
+    # download all images in the collection
+    path_to_images = resolve_online_collection(collection_name=collection_name)
+
+
 def create_tab_interface(workflow_name):
     gr.Markdown("### Workflow Parameters")
     components = []
@@ -358,6 +364,14 @@ with gr.Blocks(title="WorkFlower") as demo:
         with gr.Column():
             tabs = gr.Tabs()
             with tabs:
+                with gr.TabItem(label="About"):
+                    with gr.Row():
+                        gr.Markdown(
+                            "WorkFlower is a tool for creating and running workflows. "
+                            "Select a workflow from the tabs above and fill in the parameters. "
+                            "Click 'Run Workflow' to start the workflow. "
+                            "The output video will be displayed below."
+                        )
                 for workflow_name in workflow_definitions.keys():
                     with gr.TabItem(label=workflow_name):
                         with gr.Row():
@@ -387,4 +401,17 @@ with gr.Blocks(title="WorkFlower") as demo:
                             inputs=components,
                             outputs=[output_player],
                         )
+                with gr.TabItem(label="LORA Maker"):
+                    with gr.Row():
+                        gr.Markdown(
+                            "Input name of Nilor Collection to generate a LORA from the images in the collection."
+                        )
+                        with gr.Column():
+                            lora_collection = gr.Textbox(label="Collection Name")
+                            generate_lora_button = gr.Button("Generate LORA")
+                        output_lora = gr.File(label="Output LORA")
+
+                    generate_lora_button.click(
+                        fn=generate_lora, inputs=lora_collection, outputs=output_lora
+                    )
     demo.launch(favicon_path="favicon.png")
