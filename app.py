@@ -112,6 +112,9 @@ def run_workflow(workflow_name, **kwargs):
             print("######################\n\n")
             print(f"key: {key}, value: {value}")
 
+            # Print the current state of params and sub_dict for debugging
+            print("params:", params)
+
             # look inside the parameters for the matching kwargs key
             if key in params:
                 # Get the path this value needs to be written to
@@ -133,17 +136,34 @@ def run_workflow(workflow_name, **kwargs):
                     for key in keys[:-1]:
                         sub_dict = sub_dict[key]
 
-                        print("sub_dict:", sub_dict)
-
                     # Update the value at the last part of the path
+                    print(f"updating: {sub_dict[keys[-1]]}\nto {value}")
                     sub_dict[keys[-1]] = value
 
-            # Print the current state of params and sub_dict for debugging
-            print("params:", params)
+        if "loras" in params:
+            # now we know loras is there, get the path it should be modifying:
+            path = params.get("loras")
+            print(f"\n\nLora parameter detected!\nLora path: {path}")
 
-            if "loras" in params and sub_dict.get("class_type") == "CR LoRA Stack":
+            lora_accessors = path.strip("[]").split("][")
+            lora_accessors = [key.strip('"') for key in lora_accessors]
+            print(f"lora_accessors: {lora_accessors}")
+
+            # reset the sub_dict to include all parameters again
+            sub_dict = workflow
+
+            for key in lora_accessors[:-1]:
+                sub_dict = sub_dict[key]
+
+            print(f"sub_dict: {sub_dict}")  # Debugging step 1
+
+            if "class_type" in sub_dict:  # Debugging step 2
+                print(f"class_type: {sub_dict['class_type']}")  # Debugging step 3
+
+            if sub_dict.get("class_type") == "CR LoRA Stack":
                 # for each lora in the loras array
                 for lora in loras:
+                    print("\n\n")
                     # set switch to the value of the checkbox (but make it 'on' or 'off' instead of True or False)
                     lora_switch = "On" if kwargs.get(f"Lora_Switch_{lora}") else "Off"
                     # get the lora name
@@ -155,16 +175,16 @@ def run_workflow(workflow_name, **kwargs):
                     )
                     # set the lora details
                     switch_key = f"switch_{loras.index(lora) + 1}"
-                    # print(f"Switch Key: {switch_key}")
-                    # print(f"Before: {sub_dict['inputs'].get(switch_key)}")
+                    print(f"Switch Key: {switch_key}")
+                    print(f"Before: {sub_dict['inputs'].get(switch_key)}")
                     sub_dict["inputs"][switch_key] = lora_switch
-                    # print(f"After: {sub_dict['inputs'].get(switch_key)}")
+                    print(f"After: {sub_dict['inputs'].get(switch_key)}")
 
                     name_key = f"lora_name_{loras.index(lora) + 1}"
-                    # print(f"\nName Key: {name_key}")
-                    # print(f"Before: {sub_dict['inputs'].get(name_key)}")
+                    print(f"Name Key: {name_key}")
+                    print(f"Before: {sub_dict['inputs'].get(name_key)}")
                     sub_dict["inputs"][name_key] = lora_name
-                    # print(f"After: {sub_dict['inputs'].get(name_key)}")
+                    print(f"After: {sub_dict['inputs'].get(name_key)}")
 
                     model_weight_key = f"model_weight_{loras.index(lora) + 1}"
                     # print(f"\nModel Weight Key: {model_weight_key}")
@@ -177,43 +197,39 @@ def run_workflow(workflow_name, **kwargs):
                     # print(f"Before: {sub_dict['inputs'].get(clip_weight_key)}")
                     sub_dict["inputs"][clip_weight_key] = lora_weight
                     # print(f"After: {sub_dict['inputs'].get(clip_weight_key)}")
-            elif "image_path" in params:
-                print(kwargs)
-                if kwargs.get("Images Path Type") == "Nilor Collection Name":
-                    print(
-                        f"Resolving online collection: {kwargs.get('Collection Name or Directory Path')}"
-                    )
-                    path = resolve_online_collection(
-                        kwargs.get("Collection Name or Directory Path"),
-                        int(kwargs.get("Max Images")),
-                        kwargs.get("Shuffle Images"),
-                    )
-                    image_count = count_images(path)
-                    print(f"Detected {image_count} images in the collection.")
-                    sub_dict["image_path"] = path
-                else:
-                    print(
-                        f"Loading images from local directory: {kwargs.get('Collection Name or Directory Path')}"
-                    )
-                    path = kwargs.get("Collection Name or Directory Path")
-                    image_count = count_images(path)
-                    print(f"Detected {image_count} images in the collection.")
-                    path = reorganise_local_files(
-                        path,
-                        int(kwargs.get("Max Images")),
-                        kwargs.get("Shuffle Images"),
-                    )
-                    sub_dict["image_path"] = path
-            # else:
-            #     print("Key:", keys[-1])
-            #     print("Kwargs keys:", kwargs.keys())
-            #     sub_dict[keys[-1]] = kwargs.get(keys[-1])
+        elif "image_path" in params:
+            print(kwargs)
+            if kwargs.get("Images Path Type") == "Nilor Collection Name":
+                print(
+                    f"Resolving online collection: {kwargs.get('Collection Name or Directory Path')}"
+                )
+                path = resolve_online_collection(
+                    kwargs.get("Collection Name or Directory Path"),
+                    int(kwargs.get("Max Images")),
+                    kwargs.get("Shuffle Images"),
+                )
+                image_count = count_images(path)
+                print(f"Detected {image_count} images in the collection.")
+                sub_dict["image_path"] = path
+            else:
+                print(
+                    f"Loading images from local directory: {kwargs.get('Collection Name or Directory Path')}"
+                )
+                path = kwargs.get("Collection Name or Directory Path")
+                image_count = count_images(path)
+                print(f"Detected {image_count} images in the collection.")
+                path = reorganise_local_files(
+                    path,
+                    int(kwargs.get("Max Images")),
+                    kwargs.get("Shuffle Images"),
+                )
+                sub_dict["image_path"] = path
 
-            print(f"Sub_dict after update: {sub_dict}")
         try:
             output_directory = OUT_DIR
             previous_video = get_latest_video(output_directory)
             print(f"Previous video: {previous_video}")
+            # print(workflow)
             start_queue(workflow)
             asyncio.run(wait_for_new_video(previous_video, output_directory))
         except KeyboardInterrupt:
