@@ -6,6 +6,7 @@ import json
 from datetime import datetime
 import random
 import shutil
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 
 with open("SECRET_KEYS.json") as f:
@@ -28,6 +29,20 @@ def resize_image(image, base_width):
     return image
 
 
+def download_image(i, image_url, directory, max_images):
+    if max_images is not None and i >= max_images:
+        print(f"Reached the limit of {max_images} images. Stopping download.")
+        return
+
+    print(f"Downloading image {i+1} of {max_images}")
+    response = requests.get(image_url)
+    response.raise_for_status()
+    image = Image.open(BytesIO(response.content))
+    image = resize_image(image, 768)
+    image.save(os.path.join(directory, f"image_{i}.png"))
+    print(f"Saved image {i+1} to {directory}")
+
+
 def resolve_online_collection(collection_name, max_images=None, shuffle=False):
     try:
         apiKey = KEYS["NILOR_API_KEY"]
@@ -48,9 +63,13 @@ def resolve_online_collection(collection_name, max_images=None, shuffle=False):
         image_urls = response.json()["imageUrls"]
         print(f"Received {len(image_urls)} image URLs")
 
-        if max_images is not None and shuffle:
-            image_urls = random.sample(image_urls, min(max_images, len(image_urls)))
-            print(f"Randomly selected {len(image_urls)} image URLs")
+        if max_images is not None:
+            if shuffle:
+                image_urls = random.sample(image_urls, min(max_images, len(image_urls)))
+                print(f"Randomly selected {len(image_urls)} image URLs")
+            else:
+                image_urls = image_urls[:max_images]
+                print(f"Selected first {len(image_urls)} image URLs")
 
         sanitized_name = sanitize_name(collection_name)
         current_datetime = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
@@ -58,18 +77,18 @@ def resolve_online_collection(collection_name, max_images=None, shuffle=False):
         os.makedirs(directory, exist_ok=True)
         print(f"Created directory for images: {directory}")
 
-        for i, image_url in enumerate(image_urls):
-            if max_images is not None and i >= max_images:
-                print(f"Reached the limit of {max_images} images. Stopping download.")
-                break
+        print(image_urls)
 
-            print(f"Downloading image {i+1} of {len(image_urls)}")
-            response = requests.get(image_url)
-            response.raise_for_status()
-            image = Image.open(BytesIO(response.content))
-            image = resize_image(image, 768)
-            image.save(os.path.join(directory, f"image_{i}.png"))
-            print(f"Saved image {i+1} to {directory}")
+        with ThreadPoolExecutor() as executor:
+            futures = [
+                executor.submit(download_image, i, url, directory, max_images)
+                for i, url in enumerate(image_urls)
+            ]
+            for future in as_completed(futures):
+                try:
+                    future.result()
+                except Exception as e:
+                    print(f"An error occurred: {e}")
 
         print(f"Finished downloading images for collection: {collection_name}")
         return directory
