@@ -8,6 +8,7 @@ import gradio as gr
 from pathlib import Path
 from image_downloader import resolve_online_collection
 from image_downloader import reorganise_local_files
+from lora_maker import generate_lora
 import asyncio
 
 with open("config.json") as f:
@@ -43,7 +44,7 @@ def get_lora_filenames(directory):
     return filenames
 
 
-# Replace with the actual path to the Loras
+# Replace with the actual path to the Loras.
 loras = get_lora_filenames(LORA_DIR)
 
 
@@ -288,12 +289,6 @@ def update_gif(workflow_name):
         return str(gif_path)
     else:
         return None
-
-
-def generate_lora(collection_name):
-    print(f"Generate Lora with {collection_name}")
-    # download all images in the collection
-    path_to_images = resolve_online_collection(collection_name=collection_name)
 
 
 def create_tab_interface(workflow_name):
