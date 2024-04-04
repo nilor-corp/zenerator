@@ -29,12 +29,12 @@ def resize_image(image, base_width):
     return image
 
 
-def download_image(i, image_url, directory, max_images):
+def download_image(i, image_url, directory, max_images, num_images):
     if max_images is not None and i >= max_images:
         print(f"Reached the limit of {max_images} images. Stopping download.")
         return
 
-    print(f"Downloading image {i+1} of {max_images}")
+    print(f"Downloading image {i+1} of {num_images}")
     response = requests.get(image_url)
     response.raise_for_status()
     image = Image.open(BytesIO(response.content))
@@ -63,7 +63,10 @@ def resolve_online_collection(collection_name, max_images=None, shuffle=False):
         image_urls = response.json()["imageUrls"]
         print(f"Received {len(image_urls)} image URLs")
 
+        num_images = len(image_urls)
+
         if max_images is not None:
+            num_images = min(max_images, num_images)
             if shuffle:
                 image_urls = random.sample(image_urls, min(max_images, len(image_urls)))
                 print(f"Randomly selected {len(image_urls)} image URLs")
@@ -81,7 +84,9 @@ def resolve_online_collection(collection_name, max_images=None, shuffle=False):
 
         with ThreadPoolExecutor() as executor:
             futures = [
-                executor.submit(download_image, i, url, directory, max_images)
+                executor.submit(
+                    download_image, i, url, directory, max_images, num_images
+                )
                 for i, url in enumerate(image_urls)
             ]
             for future in as_completed(futures):
