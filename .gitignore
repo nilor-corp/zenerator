@@ -2,3 +2,4 @@ __pycache__/
 venv/
 SECRET_KEYS.json
 loras/
+kohya-trainer/
