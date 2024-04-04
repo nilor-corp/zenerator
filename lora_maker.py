@@ -12,8 +12,7 @@ from datetime import datetime
 def prepare_directory(directory):
     if os.path.exists(directory):
         shutil.rmtree(directory)
-    else:
-        os.makedirs(directory, exist_ok=True)
+    os.makedirs(directory, exist_ok=True)
     return directory
 
 
@@ -65,6 +64,7 @@ def tag_dataset(
             ["git", "reset", "--hard", "9a67e0df390033a89f17e70df5131393692c2a55"]
         )
         os.chdir(os.getcwd())
+    sys.path.append(kohya)
 
     # tag images or make captions
     if "anime" in method:
@@ -81,7 +81,12 @@ def tag_dataset(
             "albumentations",
         ]
         for package in dependencies:
-            package_name, required_version = package.split("==")
+            if "==" in package:
+                package_name, required_version = package.split("==")
+            else:
+                package_name = package
+                required_version = None
+
             if not is_installed(package_name, required_version):
                 print(f"Installing {package}...")
                 try:
@@ -91,7 +96,9 @@ def tag_dataset(
                             "-m",
                             "pip",
                             "install",
-                            package,
+                            f"{package_name}=={required_version}"
+                            if required_version
+                            else package_name,
                             "--upgrade",
                             "--force-reinstall",
                         ]
@@ -141,8 +148,9 @@ def tag_dataset(
                             "-m",
                             "pip",
                             "install",
-                            package,
-                            "--upgrade",
+                            f"{package_name}=={required_version}"
+                            if required_version
+                            else package_name,
                             "--force-reinstall",
                         ]
                     )
@@ -175,7 +183,7 @@ def generate_lora(collection_name):
     path_to_images = resolve_online_collection(collection_name=collection_name)
 
     # make a folder for the Lora with collection_name relative to the current directory something like ./loras/collection_name
-    lora_folder = os.path.join("./loras", collection_name)
+    lora_folder = os.path.join(".", "loras", collection_name)
     os.makedirs(lora_folder, exist_ok=True)
 
     # make two subfolders in the Lora folder called "dataset" and "output"

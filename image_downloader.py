@@ -15,7 +15,9 @@ with open("SECRET_KEYS.json") as f:
 with open("config.json") as f:
     config = json.load(f)
 
-IN_DIR = config["COMFY_ROOT"] + "input/WorkFlower/"
+
+COMFY_ROOT = os.path.normpath(config["COMFY_ROOT"])
+IN_DIR = os.path.join(COMFY_ROOT, "input", "WorkFlower")
 
 
 def sanitize_name(name):
@@ -80,7 +82,7 @@ def resolve_online_collection(collection_name, max_images=None, shuffle=False):
         os.makedirs(directory, exist_ok=True)
         print(f"Created directory for images: {directory}")
 
-        print(image_urls)
+        # print(image_urls)
 
         with ThreadPoolExecutor() as executor:
             futures = [
