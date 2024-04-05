@@ -93,7 +93,7 @@
   },
   "10": {
     "inputs": {
-      "model_name": "animate_lcm_sd15_t2v_beta.ckpt",
+      "model_name": "AnimateLCM_sd15_t2v.ckpt",
       "beta_schedule": "lcm >> sqrt_linear",
       "motion_scale": 1,
       "apply_v2_models_properly": true,
