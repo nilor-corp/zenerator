@@ -45,9 +45,9 @@ def download_image(i, image_url, directory, max_images):
 
 def resolve_online_collection(collection_name, max_images=None, shuffle=False):
     try:
-        apiKey = KEYS["NILOR_API_KEY"]
+        apiKey = os.environ["NILOR_API_KEY"]
         url = (
-            f"{KEYS['NILOR_API_URI']}/collection/api-get-collection-image-urls-by-name"
+            f"{os.environ['NILOR_API_URI']}/collection/api-get-collection-image-urls-by-name"
         )
         headers = {
             "Content-Type": "application/json",
