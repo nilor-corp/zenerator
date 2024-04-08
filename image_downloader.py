@@ -8,10 +8,6 @@ import random
 import shutil
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-
-with open("SECRET_KEYS.json") as f:
-    KEYS = json.load(f)
-
 with open("config.json") as f:
     config = json.load(f)
 
