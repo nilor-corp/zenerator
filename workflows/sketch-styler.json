@@ -1,0 +1,233 @@
+{
+  "75": {
+    "inputs": {
+      "image": "pffa-test.png",
+      "upload": "image"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "83": {
+    "inputs": {
+      "seed": 229252989957017
+    },
+    "class_type": "Seed Generator",
+    "_meta": {
+      "title": "Seed Generator"
+    }
+  },
+  "97": {
+    "inputs": {
+      "weight_style": 0.9500000000000001,
+      "weight_composition": 0.9500000000000001,
+      "expand_style": false,
+      "combine_embeds": "average",
+      "start_at": 0,
+      "end_at": 0.9500000000000001,
+      "embeds_scaling": "V only",
+      "model": [
+        "98",
+        0
+      ],
+      "ipadapter": [
+        "100",
+        0
+      ],
+      "image_style": [
+        "108",
+        0
+      ],
+      "image_composition": [
+        "75",
+        0
+      ],
+      "clip_vision": [
+        "101",
+        0
+      ]
+    },
+    "class_type": "IPAdapterStyleComposition",
+    "_meta": {
+      "title": "IPAdapter Style & Composition SDXL"
+    }
+  },
+  "98": {
+    "inputs": {
+      "ckpt_name": "epicrealismXL_v5Ultimate.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "Load Checkpoint"
+    }
+  },
+  "99": {
+    "inputs": {
+      "seed": [
+        "83",
+        0
+      ],
+      "steps": 35,
+      "cfg": 3,
+      "sampler_name": "dpmpp_2m",
+      "scheduler": "karras",
+      "denoise": 1,
+      "preview_method": "auto",
+      "vae_decode": "true",
+      "model": [
+        "97",
+        0
+      ],
+      "positive": [
+        "102",
+        0
+      ],
+      "negative": [
+        "103",
+        0
+      ],
+      "latent_image": [
+        "104",
+        0
+      ],
+      "optional_vae": [
+        "98",
+        2
+      ],
+      "script": [
+        "105",
+        0
+      ]
+    },
+    "class_type": "KSampler (Efficient)",
+    "_meta": {
+      "title": "KSampler (Efficient)"
+    }
+  },
+  "100": {
+    "inputs": {
+      "ipadapter_file": "ip-adapter-plus_sdxl_vit-h.bin"
+    },
+    "class_type": "IPAdapterModelLoader",
+    "_meta": {
+      "title": "IPAdapter Model Loader"
+    }
+  },
+  "101": {
+    "inputs": {
+      "clip_name": "ip-adapter_image_encoder_sd15.safetensors"
+    },
+    "class_type": "CLIPVisionLoader",
+    "_meta": {
+      "title": "Load CLIP Vision"
+    }
+  },
+  "102": {
+    "inputs": {
+      "text": "a smug pig in a toga reclining on a velvet chaise longue holding an apple, plain background, photography, pig:1.3, toga, renaissance, hog, wild boar",
+      "clip": [
+        "98",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "103": {
+    "inputs": {
+      "text": "nsfw, deformed, bad anatomy, human, text, breasts",
+      "clip": [
+        "98",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "104": {
+    "inputs": {
+      "width": 1024,
+      "height": 1024,
+      "batch_size": 1
+    },
+    "class_type": "EmptyLatentImage",
+    "_meta": {
+      "title": "Empty Latent Image"
+    }
+  },
+  "105": {
+    "inputs": {
+      "upscale_type": "latent",
+      "hires_ckpt_name": "(use same)",
+      "latent_upscaler": "nearest-exact",
+      "pixel_upscaler": "2xLexicaRRDBNet_Sharp.pth",
+      "upscale_by": 1.25,
+      "use_same_seed": true,
+      "seed": 285603529036099,
+      "hires_steps": 12,
+      "denoise": 0.56,
+      "iterations": 1,
+      "use_controlnet": false,
+      "control_net_name": "OpenPoseXL2.safetensors",
+      "strength": 1,
+      "preprocessor": "none",
+      "preprocessor_imgs": false
+    },
+    "class_type": "HighRes-Fix Script",
+    "_meta": {
+      "title": "HighRes-Fix Script"
+    }
+  },
+  "108": {
+    "inputs": {
+      "image": "image-107.png",
+      "upload": "image"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "109": {
+    "inputs": {
+      "filename_prefix": "ComfyUI",
+      "images": [
+        "99",
+        5
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "111": {
+    "inputs": {
+      "images": [
+        "108",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "112": {
+    "inputs": {
+      "images": [
+        "75",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  }
+}

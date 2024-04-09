@@ -9,7 +9,8 @@
             "text_1": "Positive Prompt",
             "text_2": "Negative Prompt"
         },
-        "filename": "debug-video-gen"
+        "filename": "debug-video-gen",
+        "ouput_type": "video"
     },
     "Promptable Motion": {
         "info": "Four images will be created from your text prompt, then a video will be made that moves creatively between those images. ETA: 5 mins.",
@@ -25,7 +26,8 @@
             "bool_1": "Circular?",
             "loras": "LORAS"
         },
-        "filename": "promptable-motion"
+        "filename": "promptable-motion",
+        "ouput_type": "video"
     },
     "Steerable Motion": {
         "info": "Create a video that moves creatively between the images you provide (maximum 4 images). ETA: 5 mins.",
@@ -41,6 +43,25 @@
             "loras": "LORAS"
 
         },
-        "filename": "steerable-motion"
+        "filename": "steerable-motion",
+        "ouput_type": "video"
+    },
+    "Sketch Styler": {
+        "info": "Take a sketch input and a style input and generate a new image",
+        "parameters": {
+            "image_filename_1": "[\"75\"][\"inputs\"][\"image\"]",
+            "image_filename_2":"[\"108\"][\"inputs\"][\"image\"]",
+            "text_1": "[\"102\"][\"inputs\"][\"text\"]",
+            "text_2": "[\"103\"][\"inputs\"][\"text\"]"
+
+        },
+        "labels": {
+            "image_path": "Path to Sketch Image",
+            "image_path_2": "Path to Style Image",
+            "text_1": "Positive Prompt",
+            "text_2": "Negative Prompt"
+        },
+        "filename": "sketch-styler",
+        "ouput_type": "image"
     }
 }
