@@ -7,6 +7,10 @@ from datetime import datetime
 import random
 import shutil
 from concurrent.futures import ThreadPoolExecutor, as_completed
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 with open("config.json") as f:
     config = json.load(f)

@@ -65,3 +65,4 @@ urllib3==2.2.1
 uvicorn==0.29.0
 websockets==11.0.3
 setuptools==69.2.0
+python-dotenv
