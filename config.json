@@ -1,5 +1,5 @@
 {
-    "COMFY_URL": "http://127.0.0.1:8188/prompt",
-    "COMFY_ROOT": "D:/SD/StabilityMatrix/Packages/ComfyUI-git/",
-    "User": "test"
+  "COMFY_URL": "http://127.0.0.1:8188/prompt",
+  "COMFY_ROOT": "C:/Stable Diffusion/ComfyUI_windows_portable/ComfyUI/",
+  "User": "test"
 }
