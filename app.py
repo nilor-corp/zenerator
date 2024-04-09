@@ -14,7 +14,8 @@ import asyncio
 with open("config.json") as f:
     config = json.load(f)
 
-URL = config["COMFY_URL"]
+COMFY_URL = config["COMFY_URL"]
+QUEUE_URL = config["COMFY_URL"] + "/prompt"
 OUT_DIR = config["COMFY_ROOT"] + "output/WorkFlower/"
 LORA_DIR = config["COMFY_ROOT"] + "models/loras/"
 
@@ -23,7 +24,7 @@ def start_queue(prompt_workflow):
     p = {"prompt": prompt_workflow}
     data = json.dumps(p).encode("utf-8")
     try:
-        requests.post(URL, data=data)
+        requests.post(QUEUE_URL, data=data)
     except ConnectionResetError:
         print("Connection was reset while trying to start the workflow. Retrying...")
 
@@ -242,6 +243,45 @@ def run_workflow(workflow_name, **kwargs):
                 )
                 sub_dict["directory"] = path
 
+        # Process cases where there should be filenames of images submitted, rather than paths
+        image_filenames = []
+
+        if "image_filename_1" in params:
+            image_filenames.append("image_filename_1")
+        if "image_filename_2" in params:
+            image_filenames.append("image_filename_2")
+
+        for image_filename in image_filenames:
+            print(params[image_filename])
+
+            # get path for the final image filename to go to
+            json_path = params.get(image_filename)
+            image_filename_accessors = json_path.strip("[]").split("][")
+            image_filename_accessors = [
+                key.strip('"') for key in image_filename_accessors
+            ]
+            print(f"image_filename_accessors: {image_filename_accessors}")
+
+            # reset the sub_dict to include all parameters again
+            sub_dict = workflow
+
+            for key in image_filename_accessors[:-1]:
+                sub_dict = sub_dict[key]
+
+            print(f"sub_dict: {sub_dict}")  # Debugging step
+
+            # take a gradio input and POST it to the api input folder
+            img = kwargs.get(image_filename)
+            post_url = f"{COMFY_URL}/upload/image"
+            data = {"image": img, "overwrite": "false", "type": "png", "subfolder": ""}
+            response = requests.post(post_url, files=data)
+
+            # get the POST response, which contains the actual filename that comfy can see
+            image_filename_from_POST = response.json()["name"]
+
+            # update the workflow json with the filename
+            sub_dict["image"] = image_filename_from_POST
+
         try:
             output_directory = OUT_DIR
             previous_video = get_latest_video(output_directory)
@@ -350,6 +390,8 @@ def create_tab_interface(workflow_name):
                             step=0.01,
                         )
                     )
+        elif param == "image_filename_1" or "image_filename_2":
+            components.append(gr.Image(label=label))
 
     return components
 
@@ -383,9 +425,15 @@ with gr.Blocks(title="WorkFlower") as demo:
                                 run_button = gr.Button("Run Workflow")
                                 components = create_tab_interface(workflow_name)
                             with gr.Column():
-                                output_player = gr.Video(
-                                    label="Output Video", autoplay=True
+                                output_type = workflow_definitions[workflow_name].get(
+                                    "output_type", ""
                                 )
+                                if output_type == "video":
+                                    output_player = gr.Video(
+                                        label="Output Video", autoplay=True
+                                    )
+                                elif output_type == "image":
+                                    output_player = gr.Image(label="Output Image")
                                 with gr.Row():
                                     mark_bad = gr.Button("Mark as Bad", visible=False)
                                     mark_good = gr.Button("Mark as Good", visible=False)
