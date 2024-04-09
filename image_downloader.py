@@ -112,7 +112,7 @@ def reorganise_local_files(dir, max_images=None, shuffle=False):
             return None
 
         print(f"Listing files in directory: {dir}")
-        files = os.listdir(dir)
+        files = sorted(os.listdir(dir))
         if shuffle:
             random.shuffle(files)
             print(f"Shuffled files in directory {dir}")
