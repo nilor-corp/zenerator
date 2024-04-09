@@ -4,3 +4,4 @@ SECRET_KEYS.json
 loras/
 kohya-trainer/
 /.vs
+*.env
