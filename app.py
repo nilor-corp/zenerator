@@ -10,6 +10,7 @@ from image_downloader import resolve_online_collection
 from image_downloader import reorganise_local_files
 from lora_maker import generate_lora
 import asyncio
+import socket
 
 with open("config.json") as f:
     config = json.load(f)
@@ -18,6 +19,8 @@ COMFY_URL = config["COMFY_URL"]
 QUEUE_URL = config["COMFY_URL"] + "/prompt"
 OUT_DIR = config["COMFY_ROOT"] + "output/WorkFlower/"
 LORA_DIR = config["COMFY_ROOT"] + "models/loras/"
+
+output_type = ""
 
 
 def start_queue(prompt_workflow):
@@ -75,12 +78,16 @@ def count_images(directory):
     return image_count
 
 
-async def wait_for_new_video(previous_video, output_directory):
+async def wait_for_new_content(previous_content, output_directory):
     while True:
-        latest_video = get_latest_video(output_directory)
-        if latest_video != previous_video:
-            print(f"New video created: {latest_video}")
-            return latest_video
+        latest_content = ""
+        if output_type == "video":
+            latest_content = get_latest_video(output_directory)
+        elif output_type == "image":
+            latest_content = get_latest_image(output_directory)
+        if latest_content != previous_content:
+            print(f"New content created: {latest_content}")
+            return latest_content
         await asyncio.sleep(1)
 
 
@@ -252,43 +259,78 @@ def run_workflow(workflow_name, **kwargs):
             image_filenames.append("image_filename_2")
 
         for image_filename in image_filenames:
-            print(params[image_filename])
+            print(f"image_filename: {image_filename}")
+            if image_filename is None:
+                return
+            else:
+                print(params[image_filename])
 
-            # get path for the final image filename to go to
-            json_path = params.get(image_filename)
-            image_filename_accessors = json_path.strip("[]").split("][")
-            image_filename_accessors = [
-                key.strip('"') for key in image_filename_accessors
-            ]
-            print(f"image_filename_accessors: {image_filename_accessors}")
+                # get path for the final image filename to go to
+                json_path = params.get(image_filename)
+                image_filename_accessors = json_path.strip("[]").split("][")
+                image_filename_accessors = [
+                    key.strip('"') for key in image_filename_accessors
+                ]
+                print(f"image_filename_accessors: {image_filename_accessors}")
 
-            # reset the sub_dict to include all parameters again
-            sub_dict = workflow
+                # reset the sub_dict to include all parameters again
+                sub_dict = workflow
 
-            for key in image_filename_accessors[:-1]:
-                sub_dict = sub_dict[key]
+                for key in image_filename_accessors[:-1]:
+                    sub_dict = sub_dict[key]
 
-            print(f"sub_dict: {sub_dict}")  # Debugging step
+                print(f"sub_dict: {sub_dict}")  # Debugging step
 
-            # take a gradio input and POST it to the api input folder
-            img = kwargs.get(image_filename)
-            post_url = f"{COMFY_URL}/upload/image"
-            data = {"image": img, "overwrite": "false", "type": "png", "subfolder": ""}
-            response = requests.post(post_url, files=data)
+                # take a gradio input and POST it to the api input folder
+                img_path = kwargs.get(image_filename)
+                post_url = f"{COMFY_URL}/upload/image"
+                data = {
+                    "overwrite": "false",
+                    "subfolder": "",
+                }
 
-            # get the POST response, which contains the actual filename that comfy can see
-            image_filename_from_POST = response.json()["name"]
+                print(f"Posting image to {post_url}")
+                print(f"Data: {data}")
 
-            # update the workflow json with the filename
-            sub_dict["image"] = image_filename_from_POST
+                try:
+                    with open(img_path, "rb") as img_file:
+                        files = {"image": img_file}
+                        response = requests.post(post_url, files=files, data=data)
+                except ConnectionResetError:
+                    print(
+                        "Connection was reset. The remote host may have forcibly closed the connection."
+                    )
+                except socket.error as e:
+                    print(f"Socket error: {e}")
+                except Exception as e:
+                    print(f"An unexpected error occurred: {e}")
+
+                # get the POST response, which contains the actual filename that comfy can see
+                try:
+                    data = response.json()
+                    image_filename_from_POST = data["name"]
+                except json.JSONDecodeError:
+                    print("Invalid JSON response:", response.text)
+
+                # update the workflow json with the filename
+                sub_dict["image"] = image_filename_from_POST
 
         try:
             output_directory = OUT_DIR
-            previous_video = get_latest_video(output_directory)
-            print(f"Previous video: {previous_video}")
+
+            previous_content = ""
+
+            if output_type == "video":
+                previous_content = get_latest_video(output_directory)
+                print(f"Previous video: {previous_content}")
+            elif output_type == "image":
+                previous_content = get_latest_image(output_directory)
+                print(f"Previous image: {previous_content}")
+
             print(f"!!!!!!!!!\nSubmitting workflow:\n{workflow}\n!!!!!!!!!")
             start_queue(workflow)
-            asyncio.run(wait_for_new_video(previous_video, output_directory))
+
+            asyncio.run(wait_for_new_content(previous_content, output_directory))
         except KeyboardInterrupt:
             print("Interrupted by user. Exiting...")
             return None
@@ -391,7 +433,7 @@ def create_tab_interface(workflow_name):
                         )
                     )
         elif param == "image_filename_1" or "image_filename_2":
-            components.append(gr.Image(label=label))
+            components.append(gr.Image(label=label, type="filepath"))
 
     return components
 

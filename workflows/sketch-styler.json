@@ -195,7 +195,7 @@
   },
   "109": {
     "inputs": {
-      "filename_prefix": "ComfyUI",
+      "filename_prefix": "WorkFlower/Output",
       "images": [
         "99",
         5
