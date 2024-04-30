@@ -24,10 +24,12 @@ Check out the configuration reference at https://huggingface.co/docs/hub/spaces-
 
 ## Installation
 ### setup python environment
+```
 mkdir nilor-corp
 cd nilor-corp
 python -m venv venv
 .\venv\Scripts\activate
+```
 
 ### Install comfy-cli
 git clone https://github.com/Comfy-Org/comfy-cli
