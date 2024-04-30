@@ -532,6 +532,7 @@
       "ipadapter_end_at": 1.0,
       "cn_start_at": 0,
       "cn_end_at": 0.75,
+      "high_detail_mode": false,
       "positive": [
         "462",
         0
@@ -856,7 +857,7 @@
   },
   "662": {
     "inputs": {
-      "directory": "H:\\My Drive\\Loras\\hermes-horses\\dataset",
+      "directory": ".\\temp",
       "image_load_cap": 4,
       "skip_first_images": 0,
       "select_every_nth": 1

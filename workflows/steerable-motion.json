@@ -532,6 +532,7 @@
       "ipadapter_end_at": 1.0,
       "cn_start_at": 0,
       "cn_end_at": 0.75,
+      "high_detail_mode" : false,
       "positive": [
         "462",
         0
