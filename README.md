@@ -32,11 +32,13 @@ python -m venv venv
 ```
 
 ### Install comfy-cli
+```
 git clone https://github.com/Comfy-Org/comfy-cli
 cd comfy-cli
 git checkout e7d5e8a4dab2e32289d32ecf6d01a7aa0705d2de
 python -m pip install .
 cd ..
+```
 
 ### Install ComfyUI
 ```
