@@ -23,6 +23,7 @@ Check out the configuration reference at https://huggingface.co/docs/hub/spaces-
 
 
 ## Installation
+these commands have only been tested using adminsistrative powershell so far
 ### setup python environment
 ```
 mkdir nilor-corp
