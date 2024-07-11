@@ -327,7 +327,7 @@ def run_workflow(workflow_name, **kwargs):
                 previous_content = get_latest_image(output_directory)
                 print(f"Previous image: {previous_content}")
 
-            print(f"!!!!!!!!!\nSubmitting workflow:\n{workflow}\n!!!!!!!!!")
+            # print(f"!!!!!!!!!\nSubmitting workflow:\n{workflow}\n!!!!!!!!!")
             start_queue(workflow)
 
             asyncio.run(wait_for_new_content(previous_content, output_directory))
@@ -336,56 +336,25 @@ def run_workflow(workflow_name, **kwargs):
             return None
 
 
-def run_workflow_with_name(workflow_name, component_names):
+def run_workflow_with_name(workflow_name, raw_components, component_info_dict):
     def wrapper(*args):
 
-
-
-        
         # Initialize an empty dictionary for kwargs
         kwargs = {}
 
+        # attach the component label to the arg
+        for component, arg in zip(raw_components, args):
 
+            # access the component_info_dict using component.elem_id and add a value field = arg
+            component_info_dict[component.elem_id]["value"] = arg
 
+        # print(f"\nComponent Info Dict: {component_info_dict}\n")
 
-        # param_labels = workflow_definitions[workflow_name]["labels"]
-
-        # # Create a reverse dictionary that maps labels to parameter names
-        # labels_to_param = {v: k for k, v in param_labels.items()}
-
-        # # Iterate over the arguments and their corresponding component names
-        # for i, arg in enumerate(args):
-        #     # Get the label of the i-th component
-        #     label = str(component_names[i].label)
-
-        #     # Get the parameter name that corresponds to this label,
-        #     # or use the label itself if it's not in the dictionary
-        #     param_name = labels_to_param.get(label, label)
-
-        #     # Add this argument to kwargs with the parameter name as the key
-        #     kwargs[param_name] = arg
-
-        
-        for component in component_names:
-            print(f"Component: {component.label}")
-            print(f"Component type: {type(component)}")
-
-            kwargs[component.label] = component.label
-
-        
-        print(f"kwargs in wrapper: {kwargs}")
-        return run_workflow(workflow_name, **kwargs)
+        return run_workflow(workflow_name, **component_info_dict)
 
     return wrapper
 
 
-def run_workflow_new(workflow_name, components):
-    print(f"\nRunning workflow: {workflow_name}")
-
-    for component in components:
-        print(f"{component.label} : {component.value}")
-
-    return None
 
 
 def update_gif(workflow_name):
@@ -399,7 +368,11 @@ def update_gif(workflow_name):
 
 def create_tab_interface(workflow_name):
     gr.Markdown("### Workflow Parameters")
+    # create the actual gradio components
     components = []
+    # create a dictionary to store the components and their data
+    component_data_dict = {workflow_name:workflow_definitions[workflow_name]["inputs"]}
+
     # print(f"\n{workflow_name}")
     
     for input_key in workflow_definitions[workflow_name]["inputs"]:
@@ -408,6 +381,7 @@ def create_tab_interface(workflow_name):
         input_label = input_details["label"]
         input_node_id = input_details["node-id"]
         # Now you can use input_type, input_label, and input_node_id as needed
+        # print(f"\nInput Key: {input_key}")
         # print(f"Type: {input_type}, Label: {input_label}, Node-ID: {input_node_id}")
         
         # Define a mapping of input types to Gradio components
@@ -423,70 +397,13 @@ def create_tab_interface(workflow_name):
         # Use the mapping to create components based on input_type
         component_constructor = component_map.get(input_type)
         if component_constructor:
-            components.append(component_constructor(label=input_label))
+            # add the component to the list of components
+            components.append(component_constructor(label=input_label, elem_id=input_key))
+            
         else:
             print(f"Unsupported input type: {input_type}")
 
-    # for param in workflow_definitions[workflow_name]["parameters"]:
-    #     label = workflow_definitions[workflow_name]["labels"].get(param, param)
-    #     if param == "text_1" or param == "text_2":
-    #         components.append(gr.Textbox(label=label))
-    #     elif param == "images":
-    #         components.append(gr.Files(label=label, type="filepath"))
-    #     elif param == "image_path":
-    #         components.append(
-    #             gr.Radio(
-    #                 ["Local Directory", "Nilor Collection Name"],
-    #                 label="Images Path Type",
-    #                 value="Local Directory",
-    #             )
-    #         )
-    #         components.append(gr.Textbox(label="Collection Name or Directory Path"))
-    #         components.append(
-    #             gr.Slider(
-    #                 label="Max Images",
-    #                 minimum=2,
-    #                 maximum=4,
-    #                 value=4,
-    #                 step=1,
-    #             )
-    #         )
-    #         components.append(gr.Checkbox(label="Shuffle Images", value=False))
-    #     elif param == "video_file":
-    #         components.append(gr.File(label=label))
-    #     elif param == "video_path":
-    #         components.append(gr.Textbox(label=label))
-    #     elif param == "bool_1":
-    #         components.append(gr.Checkbox(label="Circular?"))
-    #     elif param == "loras":
-    #         with gr.Accordion(label="Lora Models", open=False):
-    #             for lora in loras:
-    #                 components.append(
-    #                     gr.Checkbox(
-    #                         label=f"Lora_Switch_{lora}",
-    #                         value=False,
-    #                     )
-    #                 )
-    #                 components.append(
-    #                     gr.Textbox(
-    #                         value=lora,
-    #                         label=f"Lora_Name_{lora}",
-    #                         visible=False,
-    #                     )
-    #                 )
-    #                 components.append(
-    #                     gr.Slider(
-    #                         label=f"Lora_Weight_{lora}",
-    #                         minimum=0,
-    #                         maximum=1,
-    #                         value=0.7,
-    #                         step=0.01,
-    #                     )
-    #                 )
-    #     elif param == "image_filename_1" or "image_filename_2":
-    #         components.append(gr.Image(label=label, type="filepath"))
-
-    return components
+    return components, component_data_dict
 
 
 with gr.Blocks(title="WorkFlower") as demo:
@@ -518,7 +435,8 @@ with gr.Blocks(title="WorkFlower") as demo:
                             # main input construction
                             with gr.Column():
                                 run_button = gr.Button("Run Workflow")
-                                components = create_tab_interface(workflow_name)
+                                # also make a dictionary with the components' data
+                                components, component_dict = create_tab_interface(workflow_name)
                             # output player construction
                             with gr.Column():
                                 output_type = workflow_definitions[workflow_name]["outputs"].get(
@@ -531,21 +449,14 @@ with gr.Blocks(title="WorkFlower") as demo:
                                 elif output_type == "image":
                                     output_player = gr.Image(label="Output Image")
 
-
                         # investigate trigger_mode=multiple for run_button.click event
 
                         run_button.click(
-                            run_workflow_new(workflow_name, components),
+                            fn=run_workflow_with_name(workflow_name, components, component_dict[workflow_name]),
                             inputs=components,
                             outputs=[output_player],
                         )
 
-
-                        # run_button.click(
-                        #     fn=run_workflow_with_name(workflow_name, components),
-                        #     inputs=components,
-                        #     outputs=[output_player],
-                        # )
 
 
 
