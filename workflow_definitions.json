@@ -14,7 +14,7 @@
                 "node-id": "[\"584\"][\"inputs\"][\"text\"]"
             },
             "bool-01": {
-                "type": "boolean",
+                "type": "bool",
                 "label": "Circular?",
                 "node-id": "[\"673\"][\"inputs\"][\"boolean\"]"
             }

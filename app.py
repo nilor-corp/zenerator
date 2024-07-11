@@ -98,7 +98,7 @@ def run_workflow(workflow_name, **kwargs):
 
     # Construct the path to the workflow JSON file
     workflow_json = (
-        "./workflows/" + workflow_definitions[workflow_name]["filename"] + ".json"
+        "./workflows/" + workflow_name + ".json"
     )
 
     # Open the workflow JSON file
@@ -107,10 +107,10 @@ def run_workflow(workflow_name, **kwargs):
         workflow = json.load(f)
 
         # Get the parameters for the current workflow
-        params = workflow_definitions[workflow_name]["parameters"]
+        params = workflow_definitions[workflow_name]["inputs"]
 
         # get the human readable labels associated with those parameters
-        param_labels = workflow_definitions[workflow_name]["labels"]
+        # param_labels = workflow_definitions[workflow_name]["labels"]
 
         # Initialize sub_dict to None
         sub_dict = None
@@ -338,34 +338,58 @@ def run_workflow(workflow_name, **kwargs):
 
 def run_workflow_with_name(workflow_name, component_names):
     def wrapper(*args):
-        param_labels = workflow_definitions[workflow_name]["labels"]
 
-        # Create a reverse dictionary that maps labels to parameter names
-        labels_to_param = {v: k for k, v in param_labels.items()}
 
+
+        
         # Initialize an empty dictionary for kwargs
         kwargs = {}
 
-        # Iterate over the arguments and their corresponding component names
-        for i, arg in enumerate(args):
-            # Get the label of the i-th component
-            label = str(component_names[i].label)
 
-            # Get the parameter name that corresponds to this label,
-            # or use the label itself if it's not in the dictionary
-            param_name = labels_to_param.get(label, label)
 
-            # Add this argument to kwargs with the parameter name as the key
-            kwargs[param_name] = arg
 
+        # param_labels = workflow_definitions[workflow_name]["labels"]
+
+        # # Create a reverse dictionary that maps labels to parameter names
+        # labels_to_param = {v: k for k, v in param_labels.items()}
+
+        # # Iterate over the arguments and their corresponding component names
+        # for i, arg in enumerate(args):
+        #     # Get the label of the i-th component
+        #     label = str(component_names[i].label)
+
+        #     # Get the parameter name that corresponds to this label,
+        #     # or use the label itself if it's not in the dictionary
+        #     param_name = labels_to_param.get(label, label)
+
+        #     # Add this argument to kwargs with the parameter name as the key
+        #     kwargs[param_name] = arg
+
+        
+        for component in component_names:
+            print(f"Component: {component.label}")
+            print(f"Component type: {type(component)}")
+
+            kwargs[component.label] = component.label
+
+        
         print(f"kwargs in wrapper: {kwargs}")
         return run_workflow(workflow_name, **kwargs)
 
     return wrapper
 
 
+def run_workflow_new(workflow_name, components):
+    print(f"\nRunning workflow: {workflow_name}")
+
+    for component in components:
+        print(f"{component.label} : {component.value}")
+
+    return None
+
+
 def update_gif(workflow_name):
-    workflow_json = workflow_definitions[workflow_name]["filename"]
+    workflow_json = workflow_definitions[workflow_name]["name"]
     gif_path = Path(f"gifs/{workflow_json}.gif")
     if gif_path.exists():
         return str(gif_path)
@@ -376,64 +400,91 @@ def update_gif(workflow_name):
 def create_tab_interface(workflow_name):
     gr.Markdown("### Workflow Parameters")
     components = []
-    for param in workflow_definitions[workflow_name]["parameters"]:
-        label = workflow_definitions[workflow_name]["labels"].get(param, param)
-        if param == "text_1" or param == "text_2":
-            components.append(gr.Textbox(label=label))
-        elif param == "images":
-            components.append(gr.Files(label=label))
-        elif param == "image_path":
-            components.append(
-                gr.Radio(
-                    ["Local Directory", "Nilor Collection Name"],
-                    label="Images Path Type",
-                    value="Local Directory",
-                )
-            )
-            components.append(gr.Textbox(label="Collection Name or Directory Path"))
-            components.append(
-                gr.Slider(
-                    label="Max Images",
-                    minimum=2,
-                    maximum=4,
-                    value=4,
-                    step=1,
-                )
-            )
-            components.append(gr.Checkbox(label="Shuffle Images", value=False))
-        elif param == "video_file":
-            components.append(gr.File(label=label))
-        elif param == "video_path":
-            components.append(gr.Textbox(label=label))
-        elif param == "bool_1":
-            components.append(gr.Checkbox(label="Circular?"))
-        elif param == "loras":
-            with gr.Accordion(label="Lora Models", open=False):
-                for lora in loras:
-                    components.append(
-                        gr.Checkbox(
-                            label=f"Lora_Switch_{lora}",
-                            value=False,
-                        )
-                    )
-                    components.append(
-                        gr.Textbox(
-                            value=lora,
-                            label=f"Lora_Name_{lora}",
-                            visible=False,
-                        )
-                    )
-                    components.append(
-                        gr.Slider(
-                            label=f"Lora_Weight_{lora}",
-                            minimum=0,
-                            maximum=1,
-                            value=0.7,
-                            step=0.01,
-                        )
-                    )
-        elif param == "image_filename_1" or "image_filename_2":
-            components.append(gr.Image(label=label, type="filepath"))
+    # print(f"\n{workflow_name}")
+    
+    for input_key in workflow_definitions[workflow_name]["inputs"]:
+        input_details = workflow_definitions[workflow_name]["inputs"][input_key]
+        input_type = input_details["type"]
+        input_label = input_details["label"]
+        input_node_id = input_details["node-id"]
+        # Now you can use input_type, input_label, and input_node_id as needed
+        # print(f"Type: {input_type}, Label: {input_label}, Node-ID: {input_node_id}")
+        
+        # Define a mapping of input types to Gradio components
+        component_map = {
+            "text": gr.Textbox,
+            "image": gr.Image,
+            "video": gr.File,
+            "bool": gr.Checkbox,
+            "float": gr.Number,
+            "int": lambda label: gr.Number(label=label, precision=0)  # Special case for int to round
+        }
+
+        # Use the mapping to create components based on input_type
+        component_constructor = component_map.get(input_type)
+        if component_constructor:
+            components.append(component_constructor(label=input_label))
+        else:
+            print(f"Unsupported input type: {input_type}")
+
+    # for param in workflow_definitions[workflow_name]["parameters"]:
+    #     label = workflow_definitions[workflow_name]["labels"].get(param, param)
+    #     if param == "text_1" or param == "text_2":
+    #         components.append(gr.Textbox(label=label))
+    #     elif param == "images":
+    #         components.append(gr.Files(label=label, type="filepath"))
+    #     elif param == "image_path":
+    #         components.append(
+    #             gr.Radio(
+    #                 ["Local Directory", "Nilor Collection Name"],
+    #                 label="Images Path Type",
+    #                 value="Local Directory",
+    #             )
+    #         )
+    #         components.append(gr.Textbox(label="Collection Name or Directory Path"))
+    #         components.append(
+    #             gr.Slider(
+    #                 label="Max Images",
+    #                 minimum=2,
+    #                 maximum=4,
+    #                 value=4,
+    #                 step=1,
+    #             )
+    #         )
+    #         components.append(gr.Checkbox(label="Shuffle Images", value=False))
+    #     elif param == "video_file":
+    #         components.append(gr.File(label=label))
+    #     elif param == "video_path":
+    #         components.append(gr.Textbox(label=label))
+    #     elif param == "bool_1":
+    #         components.append(gr.Checkbox(label="Circular?"))
+    #     elif param == "loras":
+    #         with gr.Accordion(label="Lora Models", open=False):
+    #             for lora in loras:
+    #                 components.append(
+    #                     gr.Checkbox(
+    #                         label=f"Lora_Switch_{lora}",
+    #                         value=False,
+    #                     )
+    #                 )
+    #                 components.append(
+    #                     gr.Textbox(
+    #                         value=lora,
+    #                         label=f"Lora_Name_{lora}",
+    #                         visible=False,
+    #                     )
+    #                 )
+    #                 components.append(
+    #                     gr.Slider(
+    #                         label=f"Lora_Weight_{lora}",
+    #                         minimum=0,
+    #                         maximum=1,
+    #                         value=0.7,
+    #                         step=0.01,
+    #                     )
+    #                 )
+    #     elif param == "image_filename_1" or "image_filename_2":
+    #         components.append(gr.Image(label=label, type="filepath"))
 
     return components
 
@@ -452,7 +503,8 @@ with gr.Blocks(title="WorkFlower") as demo:
                             "The output video will be displayed below."
                         )
                 for workflow_name in workflow_definitions.keys():
-                    with gr.TabItem(label=workflow_name):
+                    # make a tab for each workflow
+                    with gr.TabItem(label=workflow_definitions[workflow_name]["name"]):
                         with gr.Row():
                             with gr.Column():
                                 with gr.Row():
@@ -461,14 +513,16 @@ with gr.Blocks(title="WorkFlower") as demo:
                                         value=update_gif(workflow_name),
                                     )
                                 info = gr.Markdown(
-                                    workflow_definitions[workflow_name].get("info", "")
+                                    workflow_definitions[workflow_name].get("description", "")
                                 )
+                            # main input construction
                             with gr.Column():
                                 run_button = gr.Button("Run Workflow")
                                 components = create_tab_interface(workflow_name)
+                            # output player construction
                             with gr.Column():
-                                output_type = workflow_definitions[workflow_name].get(
-                                    "output_type", ""
+                                output_type = workflow_definitions[workflow_name]["outputs"].get(
+                                    "type", ""
                                 )
                                 if output_type == "video":
                                     output_player = gr.Video(
@@ -476,27 +530,37 @@ with gr.Blocks(title="WorkFlower") as demo:
                                     )
                                 elif output_type == "image":
                                     output_player = gr.Image(label="Output Image")
-                                with gr.Row():
-                                    mark_bad = gr.Button("Mark as Bad", visible=False)
-                                    mark_good = gr.Button("Mark as Good", visible=False)
-                                    upscale_button = gr.Button("Upscale", visible=False)
+
+
+                        # investigate trigger_mode=multiple for run_button.click event
 
                         run_button.click(
-                            fn=run_workflow_with_name(workflow_name, components),
+                            run_workflow_new(workflow_name, components),
                             inputs=components,
                             outputs=[output_player],
                         )
-                with gr.TabItem(label="LORA Maker"):
-                    with gr.Row():
-                        gr.Markdown(
-                            "Input name of Nilor Collection to generate a LORA from the images in the collection."
-                        )
-                        with gr.Column():
-                            lora_collection = gr.Textbox(label="Collection Name")
-                            generate_lora_button = gr.Button("Generate LORA")
-                        output_lora = gr.File(label="Output LORA")
 
-                    generate_lora_button.click(
-                        fn=generate_lora, inputs=lora_collection, outputs=output_lora
-                    )
+
+                        # run_button.click(
+                        #     fn=run_workflow_with_name(workflow_name, components),
+                        #     inputs=components,
+                        #     outputs=[output_player],
+                        # )
+
+
+
+
+    #             with gr.TabItem(label="LORA Maker"):
+    #                 with gr.Row():
+    #                     gr.Markdown(
+    #                         "Input name of Nilor Collection to generate a LORA from the images in the collection."
+    #                     )
+    #                     with gr.Column():
+    #                         lora_collection = gr.Textbox(label="Collection Name")
+    #                         generate_lora_button = gr.Button("Generate LORA")
+    #                     output_lora = gr.File(label="Output LORA")
+
+    #                 generate_lora_button.click(
+    #                     fn=generate_lora, inputs=lora_collection, outputs=output_lora
+    #                 )
     demo.launch(favicon_path="favicon.png")
