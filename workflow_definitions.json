@@ -1,6 +1,6 @@
 {
-    "workflows" : {
-        "name": "promptable-motion",
+    "promptable-motion" : {
+        "name": "Promptable Motion",
         "description": "Four images will be created from your text prompt, then a video will be made that moves creatively between those images.",
         "inputs": {
             "text-01": {
@@ -22,6 +22,25 @@
         "outputs": {
             "type": "video"
 
+        }
+    },
+    "debug-video-gen":{
+        "name": "Debug Video Generation",
+        "description": "Debugging tool for video generation",
+        "inputs": {
+            "text-01": {
+                "type": "text",
+                "label": "Positive Prompt",
+                "node-id": "[\"6\"][\"inputs\"][\"text\"]"
+            },
+            "text-02": {
+                "type": "text",
+                "label": "Negative Prompt",
+                "node-id": "[\"7\"][\"inputs\"][\"text\"]"
+            }
+        },
+        "outputs": {
+            "type": "video"
         }
     }
 }
