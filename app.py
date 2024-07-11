@@ -331,16 +331,10 @@ def run_workflow(workflow_name, **kwargs):
 def run_workflow_with_name(workflow_name, raw_components, component_info_dict):
     def wrapper(*args):
 
-        # Initialize an empty dictionary for kwargs
-        kwargs = {}
-
-        # attach the component label to the arg
+        # match the component to the arg
         for component, arg in zip(raw_components, args):
-
             # access the component_info_dict using component.elem_id and add a value field = arg
             component_info_dict[component.elem_id]["value"] = arg
-
-        # print(f"\nComponent Info Dict: {component_info_dict}\n")
 
         return run_workflow(workflow_name, **component_info_dict)
 
@@ -364,14 +358,13 @@ def create_tab_interface(workflow_name):
     components = []
     # create a dictionary to store the components and their data
     component_data_dict = {workflow_name:workflow_definitions[workflow_name]["inputs"]}
-
-    # print(f"\n{workflow_name}")
     
     for input_key in workflow_definitions[workflow_name]["inputs"]:
         input_details = workflow_definitions[workflow_name]["inputs"][input_key]
         input_type = input_details["type"]
         input_label = input_details["label"]
-        input_node_id = input_details["node-id"]
+        input_node_id = input_details["node-id"] # this will only be needed in the component_data_dict
+
         # Now you can use input_type, input_label, and input_node_id as needed
         # print(f"\nInput Key: {input_key}")
         # print(f"Type: {input_type}, Label: {input_label}, Node-ID: {input_node_id}")
@@ -379,7 +372,7 @@ def create_tab_interface(workflow_name):
         # Define a mapping of input types to Gradio components
         component_map = {
             "text": gr.Textbox,
-            "image": gr.Image,
+            "image": gr.Textbox, # right now just specify path to images only
             "video": gr.File,
             "bool": gr.Checkbox,
             "float": gr.Number,
@@ -447,6 +440,7 @@ with gr.Blocks(title="WorkFlower") as demo:
                             fn=run_workflow_with_name(workflow_name, components, component_dict[workflow_name]),
                             inputs=components,
                             outputs=[output_player],
+                            trigger_mode="multiple",
                         )
 
 

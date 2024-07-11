@@ -42,5 +42,24 @@
         "outputs": {
             "type": "video"
         }
+    },
+    "steerable-motion":{
+        "name": "Steerable Motion",
+        "description": "Creatively interpolate between images",
+        "inputs": {
+            "images-01": {
+                "type": "image",
+                "label": "Path to Images",
+                "node-id": "[\"662\"][\"inputs\"][\"directory\"]"
+            },
+            "bool-01": {
+                "type": "bool",
+                "label": "Circular?",
+                "node-id": "[\"673\"][\"inputs\"][\"boolean\"]"
+            }
+        },
+        "outputs": {
+            "type": "video"
+        }
     }
 }
