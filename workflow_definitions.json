@@ -1,67 +1,27 @@
 {
-    "Debug Video Gen": {
-        "info": "Generate a video from a positive and a negative prompt",
-        "parameters": {
-            "text_1": "[\"6\"][\"inputs\"][\"text\"]",
-            "text_2": "[\"7\"][\"inputs\"][\"text\"]"
+    "workflows" : {
+        "name": "promptable-motion",
+        "description": "Four images will be created from your text prompt, then a video will be made that moves creatively between those images.",
+        "inputs": {
+            "text-01": {
+                "type": "text",
+                "label": "Positive Prompt",
+                "node-id": "[\"583\"][\"inputs\"][\"text\"]"
+            },
+            "text-02": {
+                "type": "text",
+                "label": "Negative Prompt",
+                "node-id": "[\"584\"][\"inputs\"][\"text\"]"
+            },
+            "bool-01": {
+                "type": "boolean",
+                "label": "Circular?",
+                "node-id": "[\"673\"][\"inputs\"][\"boolean\"]"
+            }
         },
-        "labels": {
-            "text_1": "Positive Prompt",
-            "text_2": "Negative Prompt"
-        },
-        "filename": "debug-video-gen",
-        "output_type": "video"
-    },
-    "Promptable Motion": {
-        "info": "Four images will be created from your text prompt, then a video will be made that moves creatively between those images. ETA: 5 mins.",
-        "parameters": {
-            "text_1": "[\"583\"][\"inputs\"][\"text\"]",
-            "text_2": "[\"584\"][\"inputs\"][\"text\"]",
-            "bool_1": "[\"673\"][\"inputs\"][\"boolean\"]",
-            "loras": "[\"722\"][\"inputs\"]"
-        },
-        "labels": {
-            "text_1": "Positive Prompt",
-            "text_2": "Negative Prompt",
-            "bool_1": "Circular?",
-            "loras": "LORAS"
-        },
-        "filename": "promptable-motion",
-        "output_type": "video"
-    },
-    "Steerable Motion": {
-        "info": "Create a video that moves creatively between the images you provide (maximum 4 images). ETA: 5 mins.",
-        "parameters": {
-            "image_path": "[\"662\"][\"inputs\"][\"directory\"]",
-            "bool_1": "[\"673\"][\"inputs\"][\"boolean\"]",
-            "loras": "[\"722\"][\"inputs\"]"
+        "outputs": {
+            "type": "video"
 
-        },
-        "labels": {
-            "image_path": "Enter Path to Images",
-            "bool_1": "Circular?",
-            "loras": "LORAS"
-
-        },
-        "filename": "steerable-motion",
-        "output_type": "video"
-    },
-    "Sketch Styler": {
-        "info": "Take a sketch input and a style input and generate a new image",
-        "parameters": {
-            "image_filename_1": "[\"75\"][\"inputs\"][\"image\"]",
-            "image_filename_2":"[\"108\"][\"inputs\"][\"image\"]",
-            "text_1": "[\"102\"][\"inputs\"][\"text\"]",
-            "text_2": "[\"103\"][\"inputs\"][\"text\"]"
-
-        },
-        "labels": {
-            "image_filename_1": "Path to Sketch Image",
-            "image_filename_2": "Path to Style Image",
-            "text_1": "Positive Prompt",
-            "text_2": "Negative Prompt"
-        },
-        "filename": "sketch-styler",
-        "output_type": "image"
+        }
     }
 }
