@@ -94,7 +94,8 @@ async def wait_for_new_content(previous_content, output_directory):
 def run_workflow(workflow_name, **kwargs):
     # Print the input arguments for debugging
     print("inside run workflow with kwargs: " + str(kwargs))
-    print("workflow_definitions: " + str(workflow_definitions[workflow_name]))
+    # print("workflow_definitions: " + str(workflow_definitions[workflow_name]))
+
 
     # Construct the path to the workflow JSON file
     workflow_json = (
@@ -102,218 +103,209 @@ def run_workflow(workflow_name, **kwargs):
     )
 
     # Open the workflow JSON file
-    with open(workflow_json, "r", encoding="utf-8") as f:
-        # Load the JSON data into the workflow variable
-        workflow = json.load(f)
+    with open(workflow_json, "r", encoding="utf-8") as file:
+        # Load the JSON data
+        workflow = json.load(file)
+    
+        # Iterate through changes requested via kwargs
+        for change_request in kwargs.values():
+            # Extract the node path and the new value from the change request
+            node_path = change_request['node-id']
+            new_value = change_request['value']
+    
+            # Log the intended change for debugging
+            print(f"Intending to change {node_path} to {new_value}")
+    
+            # Process the node path into a list of keys
+            path_keys = node_path.strip("[]").split("][")
+            path_keys = [key.strip('"') for key in path_keys]
+    
+            # Navigate through the workflow data to the last key
+            current_section = workflow
+            for key in path_keys[:-1]:  # Exclude the last key for now
+                current_section = current_section[key]
+    
+            # Update the value at the final key
+            final_key = path_keys[-1]
+            print(f"Updating {current_section[final_key]} to {new_value}")
+            current_section[final_key] = new_value
 
-        # Get the parameters for the current workflow
-        params = workflow_definitions[workflow_name]["inputs"]
 
-        # get the human readable labels associated with those parameters
-        # param_labels = workflow_definitions[workflow_name]["labels"]
 
-        # Initialize sub_dict to None
-        sub_dict = None
 
-        # Iterate over the values in the parameters dictionary
-        for key, value in kwargs.items():
-            # Print the current key and value for debugging
-            print("######################\n\n")
-            print(f"key: {key}, value: {value}")
 
-            # Print the current state of params and sub_dict for debugging
-            print("params:", params)
 
-            # look inside the parameters for the matching kwargs key
-            if key in params:
-                # Get the path this value needs to be written to
-                path = params.get(key)
-                print(f"path: {path}")
 
-                # If a path was found
-                if path:
-                    # Split the path into keys, removing brackets and splitting on ']['
-                    keys = path.strip("[]").split("][")
 
-                    # Remove any leading or trailing quotes from the keys
-                    keys = [key.strip('"') for key in keys]
 
-                    # Start with the full workflow dictionary
-                    sub_dict = workflow
 
-                    # Traverse the dictionary using the keys, stopping before the last key
-                    for key in keys[:-1]:
-                        sub_dict = sub_dict[key]
 
-                    # Update the value at the last part of the path
-                    print(f"updating: {sub_dict[keys[-1]]}\nto {value}")
-                    sub_dict[keys[-1]] = value
 
-        if "loras" in params:
-            # now we know loras is there, get the path it should be modifying:
-            path = params.get("loras")
-            print(f"\n\nLora parameter detected!\nLora path: {path}")
+        # if "loras" in params:
+        #     # now we know loras is there, get the path it should be modifying:
+        #     path = params.get("loras")
+        #     print(f"\n\nLora parameter detected!\nLora path: {path}")
 
-            lora_accessors = path.strip("[]").split("][")
-            lora_accessors = [key.strip('"') for key in lora_accessors]
-            print(f"lora_accessors: {lora_accessors}")
+        #     lora_accessors = path.strip("[]").split("][")
+        #     lora_accessors = [key.strip('"') for key in lora_accessors]
+        #     print(f"lora_accessors: {lora_accessors}")
 
-            # reset the sub_dict to include all parameters again
-            sub_dict = workflow
+        #     # reset the sub_dict to include all parameters again
+        #     sub_dict = workflow
 
-            for key in lora_accessors[:-1]:
-                sub_dict = sub_dict[key]
+        #     for key in lora_accessors[:-1]:
+        #         sub_dict = sub_dict[key]
 
-            print(f"sub_dict: {sub_dict}")  # Debugging step 1
+        #     print(f"sub_dict: {sub_dict}")  # Debugging step 1
 
-            if "class_type" in sub_dict:  # Debugging step 2
-                print(f"class_type: {sub_dict['class_type']}")  # Debugging step 3
+        #     if "class_type" in sub_dict:  # Debugging step 2
+        #         print(f"class_type: {sub_dict['class_type']}")  # Debugging step 3
 
-            if sub_dict.get("class_type") == "CR LoRA Stack":
-                # for each lora in the loras array
-                for lora in loras:
-                    print("\n\n")
-                    # set switch to the value of the checkbox (but make it 'on' or 'off' instead of True or False)
-                    lora_switch = "On" if kwargs.get(f"Lora_Switch_{lora}") else "Off"
-                    # get the lora name
-                    lora_name = kwargs.get(f"Lora_Name_{lora}")
-                    # set the model_weight to the value of the slider
-                    lora_weight = kwargs.get(f"Lora_Weight_{lora}")
-                    print(
-                        f"lora_switch: {lora_switch}, lora_name: {lora_name}, lora_weight: {lora_weight}"
-                    )
-                    # set the lora details
-                    switch_key = f"switch_{loras.index(lora) + 1}"
-                    print(f"Switch Key: {switch_key}")
-                    print(f"Before: {sub_dict['inputs'].get(switch_key)}")
-                    sub_dict["inputs"][switch_key] = lora_switch
-                    print(f"After: {sub_dict['inputs'].get(switch_key)}")
+        #     if sub_dict.get("class_type") == "CR LoRA Stack":
+        #         # for each lora in the loras array
+        #         for lora in loras:
+        #             print("\n\n")
+        #             # set switch to the value of the checkbox (but make it 'on' or 'off' instead of True or False)
+        #             lora_switch = "On" if kwargs.get(f"Lora_Switch_{lora}") else "Off"
+        #             # get the lora name
+        #             lora_name = kwargs.get(f"Lora_Name_{lora}")
+        #             # set the model_weight to the value of the slider
+        #             lora_weight = kwargs.get(f"Lora_Weight_{lora}")
+        #             print(
+        #                 f"lora_switch: {lora_switch}, lora_name: {lora_name}, lora_weight: {lora_weight}"
+        #             )
+        #             # set the lora details
+        #             switch_key = f"switch_{loras.index(lora) + 1}"
+        #             print(f"Switch Key: {switch_key}")
+        #             print(f"Before: {sub_dict['inputs'].get(switch_key)}")
+        #             sub_dict["inputs"][switch_key] = lora_switch
+        #             print(f"After: {sub_dict['inputs'].get(switch_key)}")
 
-                    name_key = f"lora_name_{loras.index(lora) + 1}"
-                    print(f"Name Key: {name_key}")
-                    print(f"Before: {sub_dict['inputs'].get(name_key)}")
-                    sub_dict["inputs"][name_key] = lora_name
-                    print(f"After: {sub_dict['inputs'].get(name_key)}")
+        #             name_key = f"lora_name_{loras.index(lora) + 1}"
+        #             print(f"Name Key: {name_key}")
+        #             print(f"Before: {sub_dict['inputs'].get(name_key)}")
+        #             sub_dict["inputs"][name_key] = lora_name
+        #             print(f"After: {sub_dict['inputs'].get(name_key)}")
 
-                    model_weight_key = f"model_weight_{loras.index(lora) + 1}"
-                    # print(f"\nModel Weight Key: {model_weight_key}")
-                    # print(f"Before: {sub_dict['inputs'].get(model_weight_key)}")
-                    sub_dict["inputs"][model_weight_key] = lora_weight
-                    # print(f"After: {sub_dict['inputs'].get(model_weight_key)}")
+        #             model_weight_key = f"model_weight_{loras.index(lora) + 1}"
+        #             # print(f"\nModel Weight Key: {model_weight_key}")
+        #             # print(f"Before: {sub_dict['inputs'].get(model_weight_key)}")
+        #             sub_dict["inputs"][model_weight_key] = lora_weight
+        #             # print(f"After: {sub_dict['inputs'].get(model_weight_key)}")
 
-                    clip_weight_key = f"clip_weight_{loras.index(lora) + 1}"
-                    # print(f"\nClip Weight Key: {clip_weight_key}")
-                    # print(f"Before: {sub_dict['inputs'].get(clip_weight_key)}")
-                    sub_dict["inputs"][clip_weight_key] = lora_weight
-                    # print(f"After: {sub_dict['inputs'].get(clip_weight_key)}")
-        if "image_path" in params:
-            # find out where to write the path to eventually
-            json_path = params.get("image_path")
-            print(f"Image path detected in params! Path: {json_path}")
+        #             clip_weight_key = f"clip_weight_{loras.index(lora) + 1}"
+        #             # print(f"\nClip Weight Key: {clip_weight_key}")
+        #             # print(f"Before: {sub_dict['inputs'].get(clip_weight_key)}")
+        #             sub_dict["inputs"][clip_weight_key] = lora_weight
+        #             # print(f"After: {sub_dict['inputs'].get(clip_weight_key)}")
+        # if "image_path" in params:
+        #     # find out where to write the path to eventually
+        #     json_path = params.get("image_path")
+        #     print(f"Image path detected in params! Path: {json_path}")
 
-            image_path_accessors = json_path.strip("[]").split("][")
-            image_path_accessors = [key.strip('"') for key in image_path_accessors]
-            print(f"image_path_accessors: {image_path_accessors}")
+        #     image_path_accessors = json_path.strip("[]").split("][")
+        #     image_path_accessors = [key.strip('"') for key in image_path_accessors]
+        #     print(f"image_path_accessors: {image_path_accessors}")
 
-            # reset the sub_dict to include all parameters again
-            sub_dict = workflow
+        #     # reset the sub_dict to include all parameters again
+        #     sub_dict = workflow
 
-            for key in image_path_accessors[:-1]:
-                sub_dict = sub_dict[key]
+        #     for key in image_path_accessors[:-1]:
+        #         sub_dict = sub_dict[key]
 
-            print(f"sub_dict: {sub_dict}")  # Debugging step 1
+        #     print(f"sub_dict: {sub_dict}")  # Debugging step 1
 
-            print(kwargs)
-            if kwargs.get("Images Path Type") == "Nilor Collection Name":
-                print(
-                    f"Resolving online collection: {kwargs.get('Collection Name or Directory Path')}"
-                )
-                path = resolve_online_collection(
-                    kwargs.get("Collection Name or Directory Path"),
-                    int(kwargs.get("Max Images")),
-                    kwargs.get("Shuffle Images"),
-                )
-                image_count = count_images(path)
-                print(f"Detected {image_count} images in the collection.")
-                sub_dict["directory"] = path
-            else:
-                print(
-                    f"Loading images from local directory: {kwargs.get('Collection Name or Directory Path')}"
-                )
-                path = kwargs.get("Collection Name or Directory Path")
-                image_count = count_images(path)
-                print(f"Detected {image_count} images in the collection.")
-                path = reorganise_local_files(
-                    path,
-                    int(kwargs.get("Max Images")),
-                    kwargs.get("Shuffle Images"),
-                )
-                sub_dict["directory"] = path
+        #     print(kwargs)
+        #     if kwargs.get("Images Path Type") == "Nilor Collection Name":
+        #         print(
+        #             f"Resolving online collection: {kwargs.get('Collection Name or Directory Path')}"
+        #         )
+        #         path = resolve_online_collection(
+        #             kwargs.get("Collection Name or Directory Path"),
+        #             int(kwargs.get("Max Images")),
+        #             kwargs.get("Shuffle Images"),
+        #         )
+        #         image_count = count_images(path)
+        #         print(f"Detected {image_count} images in the collection.")
+        #         sub_dict["directory"] = path
+        #     else:
+        #         print(
+        #             f"Loading images from local directory: {kwargs.get('Collection Name or Directory Path')}"
+        #         )
+        #         path = kwargs.get("Collection Name or Directory Path")
+        #         image_count = count_images(path)
+        #         print(f"Detected {image_count} images in the collection.")
+        #         path = reorganise_local_files(
+        #             path,
+        #             int(kwargs.get("Max Images")),
+        #             kwargs.get("Shuffle Images"),
+        #         )
+        #         sub_dict["directory"] = path
 
-        # Process cases where there should be filenames of images submitted, rather than paths
-        image_filenames = []
+        # # Process cases where there should be filenames of images submitted, rather than paths
+        # image_filenames = []
 
-        if "image_filename_1" in params:
-            image_filenames.append("image_filename_1")
-        if "image_filename_2" in params:
-            image_filenames.append("image_filename_2")
+        # if "image_filename_1" in params:
+        #     image_filenames.append("image_filename_1")
+        # if "image_filename_2" in params:
+        #     image_filenames.append("image_filename_2")
 
-        for image_filename in image_filenames:
-            print(f"image_filename: {image_filename}")
-            if image_filename is None:
-                return
-            else:
-                print(params[image_filename])
+        # for image_filename in image_filenames:
+        #     print(f"image_filename: {image_filename}")
+        #     if image_filename is None:
+        #         return
+        #     else:
+        #         print(params[image_filename])
 
-                # get path for the final image filename to go to
-                json_path = params.get(image_filename)
-                image_filename_accessors = json_path.strip("[]").split("][")
-                image_filename_accessors = [
-                    key.strip('"') for key in image_filename_accessors
-                ]
-                print(f"image_filename_accessors: {image_filename_accessors}")
+        #         # get path for the final image filename to go to
+        #         json_path = params.get(image_filename)
+        #         image_filename_accessors = json_path.strip("[]").split("][")
+        #         image_filename_accessors = [
+        #             key.strip('"') for key in image_filename_accessors
+        #         ]
+        #         print(f"image_filename_accessors: {image_filename_accessors}")
 
-                # reset the sub_dict to include all parameters again
-                sub_dict = workflow
+        #         # reset the sub_dict to include all parameters again
+        #         sub_dict = workflow
 
-                for key in image_filename_accessors[:-1]:
-                    sub_dict = sub_dict[key]
+        #         for key in image_filename_accessors[:-1]:
+        #             sub_dict = sub_dict[key]
 
-                print(f"sub_dict: {sub_dict}")  # Debugging step
+        #         print(f"sub_dict: {sub_dict}")  # Debugging step
 
-                # take a gradio input and POST it to the api input folder
-                img_path = kwargs.get(image_filename)
-                post_url = f"{COMFY_URL}/upload/image"
-                data = {
-                    "overwrite": "false",
-                    "subfolder": "",
-                }
+        #         # take a gradio input and POST it to the api input folder
+        #         img_path = kwargs.get(image_filename)
+        #         post_url = f"{COMFY_URL}/upload/image"
+        #         data = {
+        #             "overwrite": "false",
+        #             "subfolder": "",
+        #         }
 
-                print(f"Posting image to {post_url}")
-                print(f"Data: {data}")
+        #         print(f"Posting image to {post_url}")
+        #         print(f"Data: {data}")
 
-                try:
-                    with open(img_path, "rb") as img_file:
-                        files = {"image": img_file}
-                        response = requests.post(post_url, files=files, data=data)
-                except ConnectionResetError:
-                    print(
-                        "Connection was reset. The remote host may have forcibly closed the connection."
-                    )
-                except socket.error as e:
-                    print(f"Socket error: {e}")
-                except Exception as e:
-                    print(f"An unexpected error occurred: {e}")
+        #         try:
+        #             with open(img_path, "rb") as img_file:
+        #                 files = {"image": img_file}
+        #                 response = requests.post(post_url, files=files, data=data)
+        #         except ConnectionResetError:
+        #             print(
+        #                 "Connection was reset. The remote host may have forcibly closed the connection."
+        #             )
+        #         except socket.error as e:
+        #             print(f"Socket error: {e}")
+        #         except Exception as e:
+        #             print(f"An unexpected error occurred: {e}")
 
-                # get the POST response, which contains the actual filename that comfy can see
-                try:
-                    data = response.json()
-                    image_filename_from_POST = data["name"]
-                except json.JSONDecodeError:
-                    print("Invalid JSON response:", response.text)
+        #         # get the POST response, which contains the actual filename that comfy can see
+        #         try:
+        #             data = response.json()
+        #             image_filename_from_POST = data["name"]
+        #         except json.JSONDecodeError:
+        #             print("Invalid JSON response:", response.text)
 
-                # update the workflow json with the filename
-                sub_dict["image"] = image_filename_from_POST
+        #         # update the workflow json with the filename
+        #         sub_dict["image"] = image_filename_from_POST
 
         try:
             output_directory = OUT_DIR
@@ -327,7 +319,7 @@ def run_workflow(workflow_name, **kwargs):
                 previous_content = get_latest_image(output_directory)
                 print(f"Previous image: {previous_content}")
 
-            # print(f"!!!!!!!!!\nSubmitting workflow:\n{workflow}\n!!!!!!!!!")
+            print(f"!!!!!!!!!\nSubmitting workflow:\n{workflow}\n!!!!!!!!!")
             start_queue(workflow)
 
             asyncio.run(wait_for_new_content(previous_content, output_directory))
