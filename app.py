@@ -379,6 +379,30 @@ def create_tab_interface(workflow_name):
             "int": lambda label: gr.Number(label=label, precision=0)  # Special case for int to round
         }
 
+
+        # in order to dynamically change between image input component types, we need to do something like the following (snippet from chatgpt, unmodified)
+
+        # def render_component(choice):
+        #     if choice == "filepath":
+        #         return gr.Textbox(label="Enter file path:")
+        #     elif choice == "nilor collection":
+        #         return gr.Textbox(label="Enter collection name:")
+        #     elif choice == "upload":
+        #         return gr.Image(label="Upload an image:")
+
+        # with gr.Blocks() as demo:
+        #     choice = gr.Radio(choices=["filepath", "nilor collection", "upload"], label="Select Input Type")
+        #     dynamic_input = gr.Render(choice, render_component)
+
+        #     def show_input_value(input_value):
+        #         return input_value
+
+        #     output = gr.Textbox(label="Output")
+        #     dynamic_input.change(show_input_value, dynamic_input, output)
+
+
+
+
         # Use the mapping to create components based on input_type
         component_constructor = component_map.get(input_type)
         if component_constructor:
