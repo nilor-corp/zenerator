@@ -329,6 +329,10 @@ def run_workflow(workflow_name, **kwargs):
 
 
 def run_workflow_with_name(workflow_name, raw_components, component_info_dict):
+    
+    for component in raw_components:
+        print(f"Component: {component.label}")
+
     def wrapper(*args):
 
         # match the component to the arg
@@ -341,8 +345,6 @@ def run_workflow_with_name(workflow_name, raw_components, component_info_dict):
     return wrapper
 
 
-
-
 def update_gif(workflow_name):
     workflow_json = workflow_definitions[workflow_name]["name"]
     gif_path = Path(f"gifs/{workflow_json}.gif")
@@ -352,63 +354,64 @@ def update_gif(workflow_name):
         return None
 
 
+
+def create_dynamic_input(selected_input, label, input_key):
+    print(f"\nSelected input: {selected_input}")
+    val = selected_input
+    if val == "filepath" or val == "nilor collection":
+        return gr.Textbox(label=label, elem_id=input_key)
+    elif val == "upload":
+        return gr.Gallery(label=label, elem_id=input_key)
+    else:
+        print(f"Unsupported input type: {selected_input}")
+        return None
+
+def render_dynamic_component(choice, label, input_key):
+    print(f"\nAttempting to render dynamic component with choice: {choice}")
+
+    @gr.render(inputs=choice)
+    def render_input(current_choice):
+        print(f"Current choice: {current_choice}")
+        dynamic_input = create_dynamic_input(current_choice, label, input_key)
+        # print(f"Dynamic input: {dynamic_input}")
+        return dynamic_input
+    
+    return render_input(choice)
+
 def create_tab_interface(workflow_name):
     gr.Markdown("### Workflow Parameters")
-    # create the actual gradio components
     components = []
-    # create a dictionary to store the components and their data
-    component_data_dict = {workflow_name:workflow_definitions[workflow_name]["inputs"]}
+    component_data_dict = {workflow_name: workflow_definitions[workflow_name]["inputs"]}
     
     for input_key in workflow_definitions[workflow_name]["inputs"]:
         input_details = workflow_definitions[workflow_name]["inputs"][input_key]
         input_type = input_details["type"]
         input_label = input_details["label"]
-        input_node_id = input_details["node-id"] # this will only be needed in the component_data_dict
-
-        # Now you can use input_type, input_label, and input_node_id as needed
-        # print(f"\nInput Key: {input_key}")
-        # print(f"Type: {input_type}, Label: {input_label}, Node-ID: {input_node_id}")
+        input_node_id = input_details["node-id"]
         
         # Define a mapping of input types to Gradio components
         component_map = {
             "text": gr.Textbox,
-            "image": gr.Textbox, # right now just specify path to images only
+            "image": lambda: gr.Radio(choices=["filepath", "nilor collection", "upload"], label="Select Input Type", value="filepath"),
             "video": gr.File,
             "bool": gr.Checkbox,
             "float": gr.Number,
             "int": gr.Number  # Special case for int to round
         }
 
-
-        # in order to dynamically change between image input component types, we need to do something like the following (snippet from chatgpt, unmodified)
-
-        # def render_component(choice):
-        #     if choice == "filepath":
-        #         return gr.Textbox(label="Enter file path:")
-        #     elif choice == "nilor collection":
-        #         return gr.Textbox(label="Enter collection name:")
-        #     elif choice == "upload":
-        #         return gr.Image(label="Upload an image:")
-
-        # with gr.Blocks() as demo:
-        #     choice = gr.Radio(choices=["filepath", "nilor collection", "upload"], label="Select Input Type")
-        #     dynamic_input = gr.Render(choice, render_component)
-
-        #     def show_input_value(input_value):
-        #         return input_value
-
-        #     output = gr.Textbox(label="Output")
-        #     dynamic_input.change(show_input_value, dynamic_input, output)
-
-
-
-
         # Use the mapping to create components based on input_type
         component_constructor = component_map.get(input_type)
         if component_constructor:
-            # add the component to the list of components
-            components.append(component_constructor(label=input_label, elem_id=input_key))
-            
+            if input_type == "image":
+                choice = component_constructor()
+                # print(f"Choice: {choice}, Input Label: {input_label}")
+                dynamic_component = render_dynamic_component(choice, input_label, input_key)
+                # print(f"Dynamic component: {dynamic_component}")
+                print(f"\nDynamic component: {dynamic_component}")
+                if dynamic_component:
+                    components.append(dynamic_component)
+            else:
+                components.append(component_constructor(label=input_label, elem_id=input_key))
         else:
             print(f"Unsupported input type: {input_type}")
 
