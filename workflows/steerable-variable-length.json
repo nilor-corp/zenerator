@@ -57,7 +57,7 @@
   },
   "197": {
     "inputs": {
-      "beta_schedule": "autoselect",
+      "beta_schedule": "lcm avg(sqrt_linear,linear)",
       "model": [
         "196",
         0
