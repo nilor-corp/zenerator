@@ -376,7 +376,7 @@ def create_tab_interface(workflow_name):
             "video": gr.File,
             "bool": gr.Checkbox,
             "float": gr.Number,
-            "int": lambda label: gr.Number(label=label, precision=0)  # Special case for int to round
+            "int": gr.Number  # Special case for int to round
         }
 
 

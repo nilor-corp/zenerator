@@ -61,5 +61,59 @@
         "outputs": {
             "type": "video"
         }
+    },
+    "steerable-variable-length":{
+        "name": "Steerable Variable Length",
+        "description": "Creatively interpolate between images",
+        "inputs": {
+            "images-01": {
+                "type": "image",
+                "label": "Path to Images",
+                "node-id": "[\"513\"][\"inputs\"][\"string\"]"
+            },
+            "int-01": {
+                "type": "int",
+                "label": "Width",
+                "node-id": "[\"509\"][\"inputs\"][\"int\"]"
+            },
+            "int-02": {
+                "type": "int",
+                "label": "Height",
+                "node-id": "[\"510\"][\"inputs\"][\"int\"]"
+            },
+            "int-03": {
+                "type": "int",
+                "label": "Frames Per Image",
+                "node-id": "[\"514\"][\"inputs\"][\"int\"]"
+            },
+            "int-04": {
+                "type": "int",
+                "label": "Skip First Images",
+                "node-id": "[\"507\"][\"inputs\"][\"int\"]"
+            },
+            "int-05": {
+                "type": "int",
+                "label": "Image Load Cap",
+                "node-id": "[\"506\"][\"inputs\"][\"int\"]"
+            },
+            "text-01":{
+                "type": "text",
+                "label": "Positive Prompt",
+                "node-id": "[\"495\"][\"inputs\"][\"text\"]"
+            },
+            "text-02":{
+                "type": "text",
+                "label": "Negative Prompt",
+                "node-id": "[\"103\"][\"inputs\"][\"text\"]"
+            },
+            "text-03":{
+                "type": "text",
+                "label": "Output Filename",
+                "node-id": "[\"511\"][\"inputs\"][\"string\"]"
+            }
+        },
+        "outputs": {
+            "type": "video"
+        }
     }
 }
