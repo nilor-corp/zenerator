@@ -356,64 +356,125 @@ def update_gif(workflow_name):
 
 
 def create_dynamic_input(selected_input, label, input_key):
-    print(f"\nSelected input: {selected_input}")
+    print(f"Selected input: {selected_input}")
     val = selected_input
-    if val == "filepath" or val == "nilor collection":
-        return gr.Textbox(label=label, elem_id=input_key)
-    elif val == "upload":
-        return gr.Gallery(label=label, elem_id=input_key)
-    else:
-        print(f"Unsupported input type: {selected_input}")
-        return None
+    if isinstance(val, str):
+        if val == "filepath" or val == "nilor collection":
+            return gr.Textbox(label=label, elem_id=input_key)
+        elif val == "upload":
+            return gr.Gallery(label=label, elem_id=input_key)
+        else:
+            print(f"Unsupported input type: {selected_input}")
+            return None
 
 def render_dynamic_component(choice, label, input_key):
     print(f"\nAttempting to render dynamic component with choice: {choice}")
 
     @gr.render(inputs=choice)
     def render_input(current_choice):
-        print(f"Current choice: {current_choice}")
-        dynamic_input = create_dynamic_input(current_choice, label, input_key)
-        # print(f"Dynamic input: {dynamic_input}")
-        return dynamic_input
+
+        if isinstance(current_choice, str):
+            print(f"\nCurrent GUI choice: {current_choice}")
+            dynamic_input = create_dynamic_input(current_choice, label, input_key)
+            # print(f"Dynamic input: {dynamic_input}")
+            return dynamic_input
     
     return render_input(choice)
+
+
+def update_dynamic_component(choice, label, input_key, components):
+
+    @gr.render(inputs= [choice, label, input_key, components])
+    def update_component(choice, label, input_key, components):
+        if isinstance(choice, gr.Radio):
+            print(f"\nChoice: {choice.value}, Label: {label}, Input Key: {input_key}")
+            dynamic_component = render_dynamic_component(choice.value, label, input_key)
+            print(f"\nDynamic component: {dynamic_component}")
+            if dynamic_component:
+                components.append(dynamic_component)
+                print(f"Dynamically added component: {dynamic_component} with label: {dynamic_component.label} and elem_id: {dynamic_component.elem_id}")  
+        else:
+            print(f"Not a Radio: {choice}")
+
+    update_component(choice, label, input_key, components)
+
+    return components
+
+def create_radio():
+    return gr.Radio(choices=["filepath", "nilor collection", "upload"], label="Select Input Type", value="filepath")
+
+
+# Ensure all elements in self.inputs are valid Gradio components
+def filter_valid_components(components):
+    valid_components = []
+    for component in components:
+        if hasattr(component, '_id'):
+            valid_components.append(component)
+    return valid_components
+
 
 def create_tab_interface(workflow_name):
     gr.Markdown("### Workflow Parameters")
     components = []
     component_data_dict = {workflow_name: workflow_definitions[workflow_name]["inputs"]}
-    
+    print(f"\nWORKFLOW: {workflow_name}")
+
+
     for input_key in workflow_definitions[workflow_name]["inputs"]:
         input_details = workflow_definitions[workflow_name]["inputs"][input_key]
         input_type = input_details["type"]
         input_label = input_details["label"]
         input_node_id = input_details["node-id"]
         
+
+
         # Define a mapping of input types to Gradio components
         component_map = {
             "text": gr.Textbox,
-            "image": lambda: gr.Radio(choices=["filepath", "nilor collection", "upload"], label="Select Input Type", value="filepath"),
+            "image": create_radio,
             "video": gr.File,
             "bool": gr.Checkbox,
             "float": gr.Number,
             "int": gr.Number  # Special case for int to round
         }
 
-        # Use the mapping to create components based on input_type
-        component_constructor = component_map.get(input_type)
-        if component_constructor:
+
+
+        # print(f"Creating: {component_constructor} for input type: {input_type}")
+
+        if input_type in component_map:
             if input_type == "image":
-                choice = component_constructor()
-                # print(f"Choice: {choice}, Input Label: {input_label}")
-                dynamic_component = render_dynamic_component(choice, input_label, input_key)
-                # print(f"Dynamic component: {dynamic_component}")
-                print(f"\nDynamic component: {dynamic_component}")
-                if dynamic_component:
-                    components.append(dynamic_component)
+                print("!!!!!!!!!!!!!!!!!!!!!!!\nMaking Radio")
+                # Make the radio button
+                radio_component = gr.Radio(choices=["filepath", "nilor collection", "upload"], label="Select Input Type", value="filepath")
+                print(f"Radio Component: {radio_component}\nPerforming initial update")
+                
+                components = update_dynamic_component(radio_component, input_label, input_key, components)
+                
+                print(f"Assigning change function to radio component with inputs: {radio_component}, {input_label}, {input_key}, {components}")
+
+
+                # radio_component.input(
+                #     fn=update_dynamic_component,
+                #     inputs=[radio_component, input_label, input_key, components],
+                #     outputs=components
+                # )
             else:
+                # Use the mapping to create components based on input_type
+                component_constructor = component_map.get(input_type)
+
                 components.append(component_constructor(label=input_label, elem_id=input_key))
         else:
-            print(f"Unsupported input type: {input_type}")
+            print(f"Whoa! Unsupported input type: {input_type}")
+
+
+    print("filtering...")
+    filter_valid_components(components)
+    
+
+    print(f"@@ Components: {components}")
+    for component in components:
+        print(f"@@ Component: {component.label}")
 
     return components, component_data_dict
 
@@ -487,4 +548,6 @@ with gr.Blocks(title="WorkFlower") as demo:
     #                 generate_lora_button.click(
     #                     fn=generate_lora, inputs=lora_collection, outputs=output_lora
     #                 )
+    
+
     demo.launch(favicon_path="favicon.png")
