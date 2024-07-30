@@ -140,3 +140,34 @@ def reorganise_local_files(dir, max_images=None, shuffle=False):
     except Exception as e:
         print(f"Failed to shuffle local files: {e}")
         return None
+    
+def copy_uploaded_files_to_local_dir(files, max_images=None, shuffle=False):
+    """
+    Args:
+        files: list of uploaded files
+    """
+    try:
+        # get each filename of the uploaded items,
+        filenames = [file[0] for file in files]
+        print(filenames)
+        # copy the files to a directory in the comfyui input folder
+        # create a new directory
+        current_datetime = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+        directory = os.path.join(IN_DIR, "uploaded", current_datetime)
+        os.makedirs(directory, exist_ok=True)
+        print(f"Created directory for images: {directory}")
+        # copy files to the directory
+        for i, file in enumerate(filenames):
+            print(f"Copying file {i+1} of {len(filenames)}")
+            src = os.path.join(file)
+            dst = os.path.join(directory, f"image_{i}.png")
+            shutil.copy(src, dst)
+            print(f"Copied file {i+1} to {directory}")
+        # perform reorganisation on local dir
+        # and supply the directory path 
+        return reorganise_local_files(directory, max_images, shuffle)
+
+    except Exception as e:
+        print(f"Failed to copy local files: {e}")
+        return None
+

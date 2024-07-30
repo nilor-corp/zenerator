@@ -8,6 +8,7 @@ import gradio as gr
 from pathlib import Path
 from image_downloader import resolve_online_collection
 from image_downloader import reorganise_local_files
+from image_downloader import copy_uploaded_files_to_local_dir
 from lora_maker import generate_lora
 import asyncio
 import socket
@@ -354,55 +355,61 @@ def update_gif(workflow_name):
         return None
 
 
-
-def create_dynamic_input(selected_input, label, input_key):
-    print(f"Selected input: {selected_input}")
-    val = selected_input
-    if isinstance(val, str):
-        if val == "filepath" or val == "nilor collection":
-            return gr.Textbox(label=label, elem_id=input_key)
-        elif val == "upload":
-            return gr.Gallery(label=label, elem_id=input_key)
-        else:
-            print(f"Unsupported input type: {selected_input}")
-            return None
-
-def render_dynamic_component(choice, label, input_key):
-    print(f"\nAttempting to render dynamic component with choice: {choice}")
-
-    @gr.render(inputs=choice)
-    def render_input(current_choice):
-
-        if isinstance(current_choice, str):
-            print(f"\nCurrent GUI choice: {current_choice}")
-            dynamic_input = create_dynamic_input(current_choice, label, input_key)
-            # print(f"Dynamic input: {dynamic_input}")
-            return dynamic_input
+def select_dynamic_input_option(selected_option, choices):
+    print(f"Selected option: {selected_option}")
+    print(f"Choices: {choices}")
+    updaters = [gr.update(visible=False) for _ in choices]
     
-    return render_input(choice)
+    # Make the corresponding input visible based on the selected option
+    if selected_option in choices:
+        selected_index = choices.index(selected_option)
+        updaters[selected_index] = gr.update(visible=True)
+
+    return updaters
+
+def process_dynamic_input(selected_option, possible_options, *option_values):
+    print("\nProcessing dynamic input")
+    print(f"Selected Option: {selected_option}")
+    print(f"Possible Options: {possible_options}")
+    print(f"Option Values: {option_values}")
+
+    # Get the selected option
+    selected_index = possible_options.index(selected_option)
+    selected_value = option_values[selected_index]
+    print(f"Selected Value: {selected_value}")
+
+    # process the selected value based on the selected option
+    if selected_option == "filepath":
+        return selected_value
+    elif selected_option == "nilor collection":
+        return resolve_online_collection(selected_value, 4, False)
+    elif selected_option == "upload":
+        return copy_uploaded_files_to_local_dir(selected_value, 4, False)
+    else:
+        return None
 
 
-def update_dynamic_component(choice, label, input_key, components):
+def create_dynamic_input(choices, text_label, identifier):
+    selected_option = gr.Radio(choices, label=text_label, value=choices[0])
+    print(f"Choices: {choices}")
+    possible_inputs = [
+        gr.Textbox(label=choices[0], visible=False),
+        gr.Textbox(label=choices[1], visible=False),
+        gr.Gallery(label=choices[2], visible=False)
+    ]
+    output = gr.Textbox(label="Directory", interactive=False, elem_id=identifier)
 
-    @gr.render(inputs= [choice, label, input_key, components])
-    def update_component(choice, label, input_key, components):
-        if isinstance(choice, gr.Radio):
-            print(f"\nChoice: {choice.value}, Label: {label}, Input Key: {input_key}")
-            dynamic_component = render_dynamic_component(choice.value, label, input_key)
-            print(f"\nDynamic component: {dynamic_component}")
-            if dynamic_component:
-                components.append(dynamic_component)
-                print(f"Dynamically added component: {dynamic_component} with label: {dynamic_component.label} and elem_id: {dynamic_component.elem_id}")  
-        else:
-            print(f"Not a Radio: {choice}")
+    # modify visibility of inputs based on selected_option
+    selected_option.input(select_dynamic_input_option, inputs=[selected_option, gr.State(choices)], outputs=possible_inputs)
 
-    update_component(choice, label, input_key, components)
 
-    return components
-
-def create_radio():
-    return gr.Radio(choices=["filepath", "nilor collection", "upload"], label="Select Input Type", value="filepath")
-
+    print(f"Possible Inputs: {possible_inputs}")
+    for input_box in possible_inputs:
+        if isinstance(input_box, gr.Textbox):
+            input_box.submit(process_dynamic_input, inputs=[selected_option, gr.State(choices)] + possible_inputs, outputs=output)
+        elif isinstance(input_box, gr.Gallery):
+            input_box.upload(process_dynamic_input, inputs=[selected_option, gr.State(choices)] + possible_inputs, outputs=output)
+    return selected_option, possible_inputs, output
 
 # Ensure all elements in self.inputs are valid Gradio components
 def filter_valid_components(components):
@@ -431,50 +438,29 @@ def create_tab_interface(workflow_name):
         # Define a mapping of input types to Gradio components
         component_map = {
             "text": gr.Textbox,
-            "image": create_radio,
+            "image": None, # special case for radio selection handled below
             "video": gr.File,
             "bool": gr.Checkbox,
             "float": gr.Number,
-            "int": gr.Number  # Special case for int to round
+            "int": gr.Number  # Special case for int to round?
         }
 
-
-
-        # print(f"Creating: {component_constructor} for input type: {input_type}")
 
         if input_type in component_map:
             if input_type == "image":
                 print("!!!!!!!!!!!!!!!!!!!!!!!\nMaking Radio")
-                # Make the radio button
-                radio_component = gr.Radio(choices=["filepath", "nilor collection", "upload"], label="Select Input Type", value="filepath")
-                print(f"Radio Component: {radio_component}\nPerforming initial update")
-                
-                components = update_dynamic_component(radio_component, input_label, input_key, components)
-                
-                print(f"Assigning change function to radio component with inputs: {radio_component}, {input_label}, {input_key}, {components}")
-
-
-                # radio_component.input(
-                #     fn=update_dynamic_component,
-                #     inputs=[radio_component, input_label, input_key, components],
-                #     outputs=components
-                # )
+                selected_option, inputs, output = create_dynamic_input(
+                    choices=["filepath", "nilor collection", "upload"], text_label="Select Input Type", identifier=input_key
+                )
+                # Only append the output textbox to the components list
+                components.append(output)
             else:
                 # Use the mapping to create components based on input_type
                 component_constructor = component_map.get(input_type)
-
+                # print(f"Component Constructor: {component_constructor}")
                 components.append(component_constructor(label=input_label, elem_id=input_key))
         else:
             print(f"Whoa! Unsupported input type: {input_type}")
-
-
-    print("filtering...")
-    filter_valid_components(components)
-    
-
-    print(f"@@ Components: {components}")
-    for component in components:
-        print(f"@@ Component: {component.label}")
 
     return components, component_data_dict
 
