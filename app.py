@@ -389,15 +389,17 @@ def process_dynamic_input(selected_option, possible_options, *option_values):
         return None
 
 
-def create_dynamic_input(choices, text_label, identifier):
-    selected_option = gr.Radio(choices, label=text_label, value=choices[0])
-    print(f"Choices: {choices}")
-    possible_inputs = [
-        gr.Textbox(label=choices[0], visible=False),
-        gr.Textbox(label=choices[1], visible=False),
-        gr.Gallery(label=choices[2], visible=False)
-    ]
-    output = gr.Textbox(label="Directory", interactive=False, elem_id=identifier)
+def create_dynamic_input(choices, tooltips, text_label, identifier):
+    gr.Markdown("##### Image Input")    
+    with gr.Group():            
+        selected_option = gr.Radio(choices, label=text_label, value=choices[0])
+        print(f"Choices: {choices}")
+        possible_inputs = [
+            gr.Textbox(label=choices[0], show_label=False, visible=False, info=tooltips[0]),
+            gr.Textbox(label=choices[1], show_label=False, visible=False, info=tooltips[1]),
+            gr.Gallery(label=choices[2], show_label=False, visible=False)
+        ]
+        output = gr.Textbox(label="Directory", interactive=False, elem_id=identifier, info="Preview of the directory containing the images, once resolved with one of the above methods")
 
     # modify visibility of inputs based on selected_option
     selected_option.input(select_dynamic_input_option, inputs=[selected_option, gr.State(choices)], outputs=possible_inputs)
@@ -426,14 +428,11 @@ def create_tab_interface(workflow_name):
     component_data_dict = {workflow_name: workflow_definitions[workflow_name]["inputs"]}
     print(f"\nWORKFLOW: {workflow_name}")
 
-
     for input_key in workflow_definitions[workflow_name]["inputs"]:
         input_details = workflow_definitions[workflow_name]["inputs"][input_key]
         input_type = input_details["type"]
         input_label = input_details["label"]
         input_node_id = input_details["node-id"]
-        
-
 
         # Define a mapping of input types to Gradio components
         component_map = {
@@ -445,12 +444,14 @@ def create_tab_interface(workflow_name):
             "int": gr.Number  # Special case for int to round?
         }
 
-
         if input_type in component_map:
             if input_type == "image":
                 print("!!!!!!!!!!!!!!!!!!!!!!!\nMaking Radio")
                 selected_option, inputs, output = create_dynamic_input(
-                    choices=["filepath", "nilor collection", "upload"], text_label="Select Input Type", identifier=input_key
+                    choices=["filepath", "nilor collection", "upload"], 
+                    tooltips=["Enter the path to the directory of images and press Enter to submit", "Enter the name of the Nilor Collection and press Enter to resolve"],
+                    text_label="Select Input Type", 
+                    identifier=input_key
                 )
                 # Only append the output textbox to the components list
                 components.append(output)
@@ -516,24 +517,6 @@ with gr.Blocks(title="WorkFlower") as demo:
                             outputs=[output_player],
                             trigger_mode="multiple",
                         )
-
-
-
-
-
-    #             with gr.TabItem(label="LORA Maker"):
-    #                 with gr.Row():
-    #                     gr.Markdown(
-    #                         "Input name of Nilor Collection to generate a LORA from the images in the collection."
-    #                     )
-    #                     with gr.Column():
-    #                         lora_collection = gr.Textbox(label="Collection Name")
-    #                         generate_lora_button = gr.Button("Generate LORA")
-    #                     output_lora = gr.File(label="Output LORA")
-
-    #                 generate_lora_button.click(
-    #                     fn=generate_lora, inputs=lora_collection, outputs=output_lora
-    #                 )
-    
+   
 
     demo.launch(favicon_path="favicon.png")
