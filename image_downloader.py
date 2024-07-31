@@ -105,7 +105,7 @@ def resolve_online_collection(collection_name, max_images=None, shuffle=False):
         return None
 
 
-def reorganise_local_files(dir, max_images=None, shuffle=False):
+def reorganise_local_files(dir, input_type, max_images=None, shuffle=False):
     try:
         if not os.path.exists(dir):
             print(f"Directory does not exist: {dir}")
@@ -129,8 +129,12 @@ def reorganise_local_files(dir, max_images=None, shuffle=False):
                 break
 
             print(f"Copying file {i+1} of {len(files)}")
-            src = os.path.join(dir, file)
-            dst = os.path.join(directory, f"image_{i}.png")
+            src = os.path.join(file)
+            ext = os.path.splitext(file)[1]
+            index_as_str = format(i, "04") # zero pad
+            new_filename = f"{input_type}_{index_as_str}{ext}"
+            # print(new_filename)
+            dst = os.path.join(directory, f"{new_filename}")
             shutil.copy(src, dst)
             print(f"Copied file {i+1} to {directory}")
 
@@ -141,7 +145,7 @@ def reorganise_local_files(dir, max_images=None, shuffle=False):
         print(f"Failed to shuffle local files: {e}")
         return None
     
-def copy_uploaded_files_to_local_dir(files, max_images=None, shuffle=False):
+def copy_uploaded_files_to_local_dir(files, input_type, max_files=None, shuffle=False):
     """
     Args:
         files: list of uploaded files
@@ -160,12 +164,16 @@ def copy_uploaded_files_to_local_dir(files, max_images=None, shuffle=False):
         for i, file in enumerate(filenames):
             print(f"Copying file {i+1} of {len(filenames)}")
             src = os.path.join(file)
-            dst = os.path.join(directory, f"image_{i}.png")
+            ext = os.path.splitext(file)[1]
+            index_as_str = format(i, "04") # zero pad
+            new_filename = f"{input_type}_{index_as_str}{ext}"
+            # print(new_filename)
+            dst = os.path.join(directory, f"{new_filename}")
             shutil.copy(src, dst)
             print(f"Copied file {i+1} to {directory}")
         # perform reorganisation on local dir
         # and supply the directory path 
-        return reorganise_local_files(directory, max_images, shuffle)
+        return reorganise_local_files(directory, input_type, max_files, shuffle)
 
     except Exception as e:
         print(f"Failed to copy local files: {e}")

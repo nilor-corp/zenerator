@@ -367,7 +367,7 @@ def select_dynamic_input_option(selected_option, choices):
 
     return updaters
 
-def process_dynamic_input(selected_option, possible_options, *option_values):
+def process_dynamic_input(selected_option, possible_options, input_type, *option_values):
     print("\nProcessing dynamic input")
     print(f"Selected Option: {selected_option}")
     print(f"Possible Options: {possible_options}")
@@ -384,7 +384,7 @@ def process_dynamic_input(selected_option, possible_options, *option_values):
     elif selected_option == "nilor collection":
         return resolve_online_collection(selected_value, None, False)
     elif selected_option == "upload":
-        return copy_uploaded_files_to_local_dir(selected_value, None, False)
+        return copy_uploaded_files_to_local_dir(selected_value, input_type, None, False)
     else:
         return None
 
@@ -416,9 +416,9 @@ def create_dynamic_input(input_type, choices, tooltips, text_label, identifier):
     print(f"Possible Inputs: {possible_inputs}")
     for input_box in possible_inputs:
         if isinstance(input_box, gr.Textbox):
-            input_box.submit(process_dynamic_input, inputs=[selected_option, gr.State(choices)] + possible_inputs, outputs=output)
+            input_box.submit(process_dynamic_input, inputs=[selected_option, gr.State(choices), gr.State(input_type)] + possible_inputs, outputs=output)
         elif isinstance(input_box, gr.Gallery):
-            input_box.upload(process_dynamic_input, inputs=[selected_option, gr.State(choices)] + possible_inputs, outputs=output)
+            input_box.upload(process_dynamic_input, inputs=[selected_option, gr.State(choices), gr.State(input_type)] + possible_inputs, outputs=output)
     return selected_option, possible_inputs, output
 
 # Ensure all elements in self.inputs are valid Gradio components
