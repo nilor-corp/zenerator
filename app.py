@@ -7,7 +7,7 @@ from datetime import datetime
 import gradio as gr
 from pathlib import Path
 from image_downloader import resolve_online_collection
-from image_downloader import reorganise_local_files
+from image_downloader import organise_local_files
 from image_downloader import copy_uploaded_files_to_local_dir
 from lora_maker import generate_lora
 import asyncio
@@ -357,7 +357,7 @@ def update_gif(workflow_name):
 
 def select_dynamic_input_option(selected_option, choices):
     print(f"Selected option: {selected_option}")
-    print(f"Choices: {choices}")
+    # print(f"Choices: {choices}")
     updaters = [gr.update(visible=False) for _ in choices]
     
     # Make the corresponding input visible based on the selected option
@@ -403,7 +403,7 @@ def create_dynamic_input(input_type, choices, tooltips, text_label, identifier):
         elif input_type == "video":
             possible_inputs = [
                 gr.Textbox(label=choices[0], show_label=False, visible=False, info=tooltips[0]),
-                gr.File(label=choices[1], show_label=False, visible=False)
+                gr.File(label=choices[1], show_label=False, visible=False, file_count="single", type="filepath", file_types=["video"])
             ]
 
 
@@ -417,7 +417,7 @@ def create_dynamic_input(input_type, choices, tooltips, text_label, identifier):
     for input_box in possible_inputs:
         if isinstance(input_box, gr.Textbox):
             input_box.submit(process_dynamic_input, inputs=[selected_option, gr.State(choices), gr.State(input_type)] + possible_inputs, outputs=output)
-        elif isinstance(input_box, gr.Gallery):
+        elif isinstance(input_box, gr.Gallery) or isinstance(input_box, gr.File):
             input_box.upload(process_dynamic_input, inputs=[selected_option, gr.State(choices), gr.State(input_type)] + possible_inputs, outputs=output)
     return selected_option, possible_inputs, output
 
@@ -454,7 +454,7 @@ def create_tab_interface(workflow_name):
 
         if input_type in component_map:
             if input_type == "images":
-                print("!!!!!!!!!!!!!!!!!!!!!!!\nMaking Radio")
+                # print("!!!!!!!!!!!!!!!!!!!!!!!\nMaking Radio")
                 selected_option, inputs, output = create_dynamic_input(
                     input_type,
                     choices=["filepath", "nilor collection", "upload"], 
@@ -465,7 +465,7 @@ def create_tab_interface(workflow_name):
                 # Only append the output textbox to the components list
                 components.append(output)
             elif input_type == "video":
-                print("!!!!!!!!!!!!!!!!!!!!!!!\nMaking Radio")
+                # print("!!!!!!!!!!!!!!!!!!!!!!!\nMaking Radio")
                 selected_option, inputs, output = create_dynamic_input(
                     input_type,
                     choices=["filepath", "upload"], 
