@@ -48,7 +48,7 @@
         "description": "Creatively interpolate between images",
         "inputs": {
             "images-01": {
-                "type": "image",
+                "type": "images",
                 "label": "Path to Images",
                 "node-id": "[\"662\"][\"inputs\"][\"directory\"]"
             },
@@ -67,7 +67,7 @@
         "description": "Creatively interpolate between images",
         "inputs": {
             "images-01": {
-                "type": "image",
+                "type": "images",
                 "label": "Path to Images",
                 "node-id": "[\"513\"][\"inputs\"][\"string\"]"
             },

@@ -316,7 +316,7 @@ def run_workflow(workflow_name, **kwargs):
             if output_type == "video":
                 previous_content = get_latest_video(output_directory)
                 print(f"Previous video: {previous_content}")
-            elif output_type == "image":
+            elif output_type == "images":
                 previous_content = get_latest_image(output_directory)
                 print(f"Previous image: {previous_content}")
 
@@ -382,27 +382,35 @@ def process_dynamic_input(selected_option, possible_options, *option_values):
     if selected_option == "filepath":
         return selected_value
     elif selected_option == "nilor collection":
-        return resolve_online_collection(selected_value, 4, False)
+        return resolve_online_collection(selected_value, None, False)
     elif selected_option == "upload":
-        return copy_uploaded_files_to_local_dir(selected_value, 4, False)
+        return copy_uploaded_files_to_local_dir(selected_value, None, False)
     else:
         return None
 
 
-def create_dynamic_input(choices, tooltips, text_label, identifier):
-    gr.Markdown("##### Image Input")    
+def create_dynamic_input(input_type, choices, tooltips, text_label, identifier):
+    gr.Markdown(f"##### {input_type.capitalize()} Input")    
     with gr.Group():            
         selected_option = gr.Radio(choices, label=text_label, value=choices[0])
         print(f"Choices: {choices}")
-        possible_inputs = [
-            gr.Textbox(label=choices[0], show_label=False, visible=False, info=tooltips[0]),
-            gr.Textbox(label=choices[1], show_label=False, visible=False, info=tooltips[1]),
-            gr.Gallery(label=choices[2], show_label=False, visible=False)
-        ]
-        output = gr.Textbox(label="Directory", interactive=False, elem_id=identifier, info="Preview of the directory containing the images, once resolved with one of the above methods")
+        if input_type == "images":
+            possible_inputs = [
+                gr.Textbox(label=choices[0], show_label=False, visible=False, info=tooltips[0]),
+                gr.Textbox(label=choices[1], show_label=False, visible=False, info=tooltips[1]),
+                gr.Gallery(label=choices[2], show_label=False, visible=False)
+            ]
+        elif input_type == "video":
+            possible_inputs = [
+                gr.Textbox(label=choices[0], show_label=False, visible=False, info=tooltips[0]),
+                gr.File(label=choices[1], show_label=False, visible=False)
+            ]
+
+
+        output = gr.Textbox(label="Directory", interactive=False, elem_id=identifier, info="Preview of the directory path, once resolved with one of the above methods")
 
     # modify visibility of inputs based on selected_option
-    selected_option.input(select_dynamic_input_option, inputs=[selected_option, gr.State(choices)], outputs=possible_inputs)
+    selected_option.change(select_dynamic_input_option, inputs=[selected_option, gr.State(choices)], outputs=possible_inputs)
 
 
     print(f"Possible Inputs: {possible_inputs}")
@@ -437,19 +445,31 @@ def create_tab_interface(workflow_name):
         # Define a mapping of input types to Gradio components
         component_map = {
             "text": gr.Textbox,
-            "image": None, # special case for radio selection handled below
-            "video": gr.File,
+            "images": None, # special case for radio selection handled below
+            "video": None, # special case for video selection handled below
             "bool": gr.Checkbox,
             "float": gr.Number,
             "int": gr.Number  # Special case for int to round?
         }
 
         if input_type in component_map:
-            if input_type == "image":
+            if input_type == "images":
                 print("!!!!!!!!!!!!!!!!!!!!!!!\nMaking Radio")
                 selected_option, inputs, output = create_dynamic_input(
+                    input_type,
                     choices=["filepath", "nilor collection", "upload"], 
                     tooltips=["Enter the path to the directory of images and press Enter to submit", "Enter the name of the Nilor Collection and press Enter to resolve"],
+                    text_label="Select Input Type", 
+                    identifier=input_key
+                )
+                # Only append the output textbox to the components list
+                components.append(output)
+            elif input_type == "video":
+                print("!!!!!!!!!!!!!!!!!!!!!!!\nMaking Radio")
+                selected_option, inputs, output = create_dynamic_input(
+                    input_type,
+                    choices=["filepath", "upload"], 
+                    tooltips=["Enter the path to the directory of video and press Enter to submit"],
                     text_label="Select Input Type", 
                     identifier=input_key
                 )
