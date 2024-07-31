@@ -115,5 +115,34 @@
         "outputs": {
             "type": "video"
         }
+    },
+    "upscale-video":{
+        "name": "Upscale Video",
+        "description": "Upscale a video",
+        "inputs": {
+            "video-01": {
+                "type": "video",
+                "label": "Path to Video",
+                "node-id": "[\"1\"][\"inputs\"][\"video\"]"
+            },
+            "int-01": {
+                "type": "int",
+                "label": "Width",
+                "node-id": "[\"2\"][\"inputs\"][\"int\"]"
+            },
+            "int-02": {
+                "type": "int",
+                "label": "Height",
+                "node-id": "[\"3\"][\"inputs\"][\"int\"]"
+            },
+            "text-01": {
+                "type": "text",
+                "label": "Output Filename",
+                "node-id": "[\"4\"][\"inputs\"][\"string\"]"
+            }
+        },
+        "outputs": {
+            "type": "video"
+        }
     }
 }
