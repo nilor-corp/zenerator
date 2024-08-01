@@ -132,11 +132,9 @@ def process_files(files, destination, input_type, singular=False, reorganising=F
             shutil.copy(src, dst)
             print(f"Copied file {i+1} to {destination}")
     else:
-        print("we are using a File input")
+        print("We are using a File input")
         print(f"{files}")
         file = files if isinstance(files, str) else files[0]
-
-        print(f"\nOi oi, the file is actually from {source}")
 
         print(f"File: {file}")
         src = os.path.join(file)
