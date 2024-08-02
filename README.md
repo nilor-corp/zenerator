@@ -1,5 +1,5 @@
 ---
-title: WorkFlower
+title: Zenerator
 emoji: 📉
 colorFrom: green
 colorTo: purple
