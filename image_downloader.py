@@ -146,7 +146,11 @@ def process_files(files, destination, input_type, singular=False, reorganising=F
         dst = os.path.join(destination, f"{new_filename}")
         shutil.copy(src, dst)
         print(f"Copied file to {destination}")
-        return destination
+        # when a video is uploaded, we need to append the filename to the destination
+        if input_type == "video":
+            return os.path.join(destination, new_filename)
+        else:
+            return destination
 
 
 
