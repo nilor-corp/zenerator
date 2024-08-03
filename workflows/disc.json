@@ -784,7 +784,7 @@
       "upscale_type": "both",
       "hires_ckpt_name": "(use same)",
       "latent_upscaler": "nearest-exact",
-      "pixel_upscaler": "RealESRGAN_x4plus.pth",
+      "pixel_upscaler": "RealESRGAN_x4.pth",
       "upscale_by": [
         "244",
         0
@@ -795,7 +795,7 @@
       "denoise": 0.45,
       "iterations": 1,
       "use_controlnet": false,
-      "control_net_name": "SD1.5\\animatediff\\controlnetGIF.ckpt",
+      "control_net_name": "motion_controlnet_checkpoint.ckpt",
       "strength": 1,
       "preprocessor": "none",
       "preprocessor_imgs": false
@@ -1420,7 +1420,7 @@
   "380": {
     "inputs": {
       "output_type": "float",
-      "anything": [
+      "*": [
         "371",
         0
       ]
@@ -1522,7 +1522,7 @@
   },
   "391": {
     "inputs": {
-      "video": "..\\nilor-industrial\\masks\\mask_disc_circle_square-static_24fps_15s_360f.mp4",
+      "video": "..\\zenerator\\masks\\mask_disc_circle_square-static_24fps_15s_360f.mp4",
       "force_rate": 0,
       "force_size": "Disabled",
       "custom_width": 512,
@@ -1574,7 +1574,7 @@
   },
   "397": {
     "inputs": {
-      "video": "..\\nilor-industrial\\masks\\mask_disc_circle_zero-to-square_24fps_15s_360f.mp4",
+      "video": "..\\zenerator\\masks\\mask_disc_circle_zero-to-square_24fps_15s_360f.mp4",
       "force_rate": 0,
       "force_size": "Disabled",
       "custom_width": 512,

@@ -1462,7 +1462,7 @@
   },
   "404": {
     "inputs": {
-      "video": "..\\nilor-industrial\\masks\\mask_wide_circle_square-to-wide_24fps_15s_360f.mp4",
+      "video": "..\\zenerator\\masks\\mask_wide_circle_square-to-wide_24fps_15s_360f.mp4",
       "force_rate": 0,
       "force_size": "Disabled",
       "custom_width": 512,
