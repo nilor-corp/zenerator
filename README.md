@@ -1,6 +1,6 @@
 ---
-title: Zenerator
-emoji: 📉
+title: Zenerator 
+emoji: 😎
 colorFrom: green
 colorTo: purple
 sdk: gradio
@@ -34,16 +34,12 @@ python -m venv venv
 
 ### Install comfy-cli
 ```
-git clone https://github.com/Comfy-Org/comfy-cli
-cd comfy-cli
-git checkout e7d5e8a4dab2e32289d32ecf6d01a7aa0705d2de
-python -m pip install .
-cd ..
+pip install comfy-cli
 ```
 
 ### Install ComfyUI
 ```
-comfy --workspace=. install --commit=eecd69b53a896343775bcb02a4f8349e7442ffd1
+comfy --workspace=. install --commit=73ca7800192f6bc2e2194966b316b7cc3028e09a
 comfy set-default .
 mkdir .\ComfyUI\output\WorkFlower
 ```
@@ -53,20 +49,24 @@ mkdir .\ComfyUI\output\WorkFlower
 cd ComfyUI
 rm -rf models #if unix
 rmdir models #if win. Answer yes if prompted
-git clone -b version-0  git@hf.co:datasets/nilor-corp/models
+git clone -b version -0 git@hf.co:nilor-corp/zenerator-models models
 ```
 
 ### Install Workflower
 ```
+git clone git@hf.co:spaces/nilor-corp/zenerator
 cd ..
+------------------
+#TODO
 git clone -b version-0 git@hf.co:spaces/nilor-corp/nilor-industrial
 cp .\nilor-industrial\ComfyUI-Manager-Snapshots\2024-04-30_18-41-53_snapshot.json .\ComfyUI\custom_nodes\ComfyUI-Manager\snapshots\
-cd nilor-industrial
+-------------------
+cd zenerator
 python -m pip install -r requirements.txt
 ```
 
 ### Env Variables
-- (in nilor-industrial root, where you should be if you've been following the above commands) create a .env file and add:
+- (in zenerator root, where you should be if you've been following the above commands) create a .env file and add:
 ``` 
 NILOR_API_KEY=<API KEY>
 NILOR_API_URI=https://api.nilor.cool/api
@@ -88,11 +88,11 @@ After finishing installation, your directory structure should look like this:
 - nilor-corp
     - comfy-cli
     - ComfyUI
-    - nilor-industrial
+    - zenerator
     - venv
 
 ## Run
-You will need to run ComfyUI and nilor industrial in seperate shells
+You will need to run ComfyUI and zenerator in seperate shells
 
 ### Run ComfyUI
 From nilor-corp root:
@@ -100,12 +100,13 @@ From nilor-corp root:
 .\venv\scripts\activate
 comfy launch
 ```
+- If you run into "import torch" error when trying to launch comfy for the first time, [see potential fix here](https://github.com/Comfy-Org/comfy-cli/issues/150) 
 
-### Run nilor industrial 
+### Run Zenerator
 From nilor-corp root:
 ```
 .\venv\scripts\activate
-cd nilor-industrial
+cd zenerator
 gradio ./app.py
 ```
 

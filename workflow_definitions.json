@@ -1,67 +1,65 @@
 {
-    "Debug Video Gen": {
-        "info": "Generate a video from a positive and a negative prompt",
-        "parameters": {
-            "text_1": "[\"6\"][\"inputs\"][\"text\"]",
-            "text_2": "[\"7\"][\"inputs\"][\"text\"]"
+    "upscale-video":{
+        "name": "Upscale Video",
+        "description": "Upscale a video",
+        "inputs": {
+            "video-01": {
+                "type": "video",
+                "label": "Path to Video",
+                "node-id": "[\"358\"][\"inputs\"][\"video\"]"
+            }
         },
-        "labels": {
-            "text_1": "Positive Prompt",
-            "text_2": "Negative Prompt"
-        },
-        "filename": "debug-video-gen",
-        "output_type": "video"
+        "outputs": {
+            "type": "video"
+        }
     },
-    "Promptable Motion": {
-        "info": "Four images will be created from your text prompt, then a video will be made that moves creatively between those images. ETA: 5 mins.",
-        "parameters": {
-            "text_1": "[\"583\"][\"inputs\"][\"text\"]",
-            "text_2": "[\"584\"][\"inputs\"][\"text\"]",
-            "bool_1": "[\"673\"][\"inputs\"][\"boolean\"]",
-            "loras": "[\"722\"][\"inputs\"]"
+    "disc":{
+        "name": "Disc",
+        "description": "Create a disc",
+        "inputs": {
+            "images-01":{ 
+                "type": "images",
+                "label": "Path to Images",
+                "node-id": "[\"389\"][\"inputs\"][\"directory\"]"
+            },
+            "text-01": {
+                "type": "text",
+                "label": "Prompt Schedule (line-break separated prompt * number of images + 1)",
+                "node-id": "[\"103\"][\"inputs\"][\"prompt\"]"
+            },
+            "text-02":{
+                "type": "text",
+                "label": "Negative Prompt",
+                "node-id": "[\"3\"][\"inputs\"][\"text\"]"
+            }
         },
-        "labels": {
-            "text_1": "Positive Prompt",
-            "text_2": "Negative Prompt",
-            "bool_1": "Circular?",
-            "loras": "LORAS"
-        },
-        "filename": "promptable-motion",
-        "output_type": "video"
+        "outputs": {
+            "type": "video"
+        }
     },
-    "Steerable Motion": {
-        "info": "Create a video that moves creatively between the images you provide (maximum 4 images). ETA: 5 mins.",
-        "parameters": {
-            "image_path": "[\"662\"][\"inputs\"][\"directory\"]",
-            "bool_1": "[\"673\"][\"inputs\"][\"boolean\"]",
-            "loras": "[\"722\"][\"inputs\"]"
-
+    "wide":{
+        "name": "Wide",
+        "description": "Create a wide video",
+        "inputs": {
+            "images-01": {
+                "type": "images",
+                "label": "Path to Images",
+                "node-id": "[\"389\"][\"inputs\"][\"directory\"]"
+            },
+            "text-01": {
+                "type": "text",
+                "label": "Prompt Schedule (line-break separated prompt * number of images + 1)",
+                "node-id": "[\"103\"][\"inputs\"][\"prompt\"]"
+            },
+            "text-02": {
+                "type": "text",
+                "label": "Negative Prompt",
+                "node-id": "[\"3\"][\"inputs\"][\"text\"]"
+            }
         },
-        "labels": {
-            "image_path": "Enter Path to Images",
-            "bool_1": "Circular?",
-            "loras": "LORAS"
-
-        },
-        "filename": "steerable-motion",
-        "output_type": "video"
-    },
-    "Sketch Styler": {
-        "info": "Take a sketch input and a style input and generate a new image",
-        "parameters": {
-            "image_filename_1": "[\"75\"][\"inputs\"][\"image\"]",
-            "image_filename_2":"[\"108\"][\"inputs\"][\"image\"]",
-            "text_1": "[\"102\"][\"inputs\"][\"text\"]",
-            "text_2": "[\"103\"][\"inputs\"][\"text\"]"
-
-        },
-        "labels": {
-            "image_filename_1": "Path to Sketch Image",
-            "image_filename_2": "Path to Style Image",
-            "text_1": "Positive Prompt",
-            "text_2": "Negative Prompt"
-        },
-        "filename": "sketch-styler",
-        "output_type": "image"
+        "outputs": {
+            "type": "video"
+        }
     }
+    
 }

@@ -105,14 +105,67 @@ def resolve_online_collection(collection_name, max_images=None, shuffle=False):
         return None
 
 
-def reorganise_local_files(dir, max_images=None, shuffle=False):
+def process_files(files, destination, input_type, singular=False, reorganising=False, source=None):
+    print(f"\nProcessing files: {'Reorganising' if reorganising else 'Organising'}")
+    if not singular:
+        if not reorganising:
+            # get each filename of the uploaded items,
+            filenames = [file[0] for file in files]
+        else:
+            filenames = files
+        
+        # copy files to the directory
+        for i, file in enumerate(filenames):
+            print(f"Copying file {i+1} of {len(filenames)}")
+            if source:
+                src = os.path.join(source, os.path.basename(file))
+            else:
+                src = os.path.join(file)
+            src = os.path.abspath(src)  # Convert to absolute path
+            print(f"Source: {src}")
+            ext = os.path.splitext(file)[1]
+            print(f"Extension: {ext}")
+            index_as_str = format(i, "04") # zero pad
+            new_filename = f"{input_type}_{index_as_str}{ext}"
+            print(new_filename)
+            dst = os.path.join(destination, f"{new_filename}")
+            shutil.copy(src, dst)
+            print(f"Copied file {i+1} to {destination}")
+    else:
+        print("We are using a File input")
+        print(f"{files}")
+        file = files if isinstance(files, str) else files[0]
+
+        print(f"File: {file}")
+        src = os.path.join(file)
+        src = os.path.abspath(src)  # Convert to absolute path
+        print(f"Source: {src}")
+        ext = os.path.splitext(file)[1]
+        new_filename = f"{input_type}{ext}"
+        print(new_filename)
+        dst = os.path.join(destination, f"{new_filename}")
+        shutil.copy(src, dst)
+        print(f"Copied file to {destination}")
+        # when a video is uploaded, we need to append the filename to the destination
+        if input_type == "video":
+            return os.path.join(destination, new_filename)
+        else:
+            return destination
+
+
+
+def organise_local_files(dir, input_type, max_images=None, shuffle=False, reorganising=False):
     try:
+        print("\nOrganising local files")
         if not os.path.exists(dir):
             print(f"Directory does not exist: {dir}")
             return None
 
-        print(f"Listing files in directory: {dir}")
+        print(f"Sorting files in directory: {dir}")
         files = sorted(os.listdir(dir))
+
+        print(f"Sorted files: {files}")
+
         if shuffle:
             random.shuffle(files)
             print(f"Shuffled files in directory {dir}")
@@ -121,22 +174,49 @@ def reorganise_local_files(dir, max_images=None, shuffle=False):
         current_datetime = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
         directory = os.path.join(IN_DIR, sanitized_name, current_datetime)
         os.makedirs(directory, exist_ok=True)
-        print(f"Created directory for images: {directory}")
 
-        for i, file in enumerate(files):
-            if max_images is not None and i >= max_images:
-                print(f"Reached the limit of {max_images} images. Stopping copy.")
-                break
+        print(f"Created directory for {input_type}: {directory}")
+        if input_type == "images":
+            process_files(files, directory, input_type, singular=False, reorganising=reorganising, source=dir)
+        else: # means we are using a File input with exactly one input
+            process_files(files, directory, input_type, singular=True, reorganising=reorganising, source=dir)
 
-            print(f"Copying file {i+1} of {len(files)}")
-            src = os.path.join(dir, file)
-            dst = os.path.join(directory, f"image_{i}.png")
-            shutil.copy(src, dst)
-            print(f"Copied file {i+1} to {directory}")
-
-        print(f"Finished copying images from directory: {dir}")
+        print(f"Finished copying {input_type} from directory: {dir}")
         return directory
 
     except Exception as e:
-        print(f"Failed to shuffle local files: {e}")
+        print(f"Failed to reorganise local files: {e}")
         return None
+    
+
+
+
+def copy_uploaded_files_to_local_dir(files, input_type, max_files=None, shuffle=False):
+    """
+    Args:
+        files: list of uploaded files
+    """
+    try:
+        print("\nCopying uploaded files to local directory")
+
+        # copy the files to a directory in the comfyui input folder
+        # create a new directory
+        current_datetime = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+        directory = os.path.join(IN_DIR, "uploaded", current_datetime)
+        os.makedirs(directory, exist_ok=True)
+        print(f"Created directory for {input_type}: {directory}")
+
+        if input_type == "images":
+            process_files(files, directory, input_type, singular=False, reorganising=False)
+            return organise_local_files(directory, input_type, max_files, shuffle, reorganising=True)
+        else: # means we are using a File input with exactly one input
+            return process_files(files, directory, input_type, singular=True, reorganising=False)
+
+        # perform reorganisation on local dir
+        # and supply the directory path 
+
+
+    except Exception as e:
+        print(f"Failed to copy local files: {e}")
+        return None
+
