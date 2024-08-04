@@ -13,7 +13,7 @@ license: apache-2.0
 Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
 
 
-# Installing nilor industrial
+# Installing Zenerator
 
 ## Dependencies:
 - python
@@ -39,8 +39,8 @@ pip install comfy-cli
 
 ### Install ComfyUI
 ```
-comfy --workspace=. install --commit=73ca7800192f6bc2e2194966b316b7cc3028e09a
-comfy set-default .
+comfy --workspace=ComfyUI install
+comfy set-default ComfyUI
 mkdir .\ComfyUI\output\WorkFlower
 ```
 
@@ -49,7 +49,7 @@ mkdir .\ComfyUI\output\WorkFlower
 cd ComfyUI
 rm -rf models #if unix
 rmdir models #if win. Answer yes if prompted
-git clone -b version -0 git@hf.co:nilor-corp/zenerator-models models
+git clone git@hf.co:nilor-corp/zenerator-models models
 ```
 
 ### Install Workflower
@@ -57,8 +57,6 @@ git clone -b version -0 git@hf.co:nilor-corp/zenerator-models models
 git clone git@hf.co:spaces/nilor-corp/zenerator
 cd ..
 ------------------
-#TODO
-git clone -b version-0 git@hf.co:spaces/nilor-corp/nilor-industrial
 cp .\nilor-industrial\ComfyUI-Manager-Snapshots\2024-04-30_18-41-53_snapshot.json .\ComfyUI\custom_nodes\ComfyUI-Manager\snapshots\
 -------------------
 cd zenerator
