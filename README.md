@@ -57,7 +57,7 @@ git clone git@hf.co:nilor-corp/zenerator-models models
 git clone git@hf.co:spaces/nilor-corp/zenerator
 cd ..
 ------------------
-cp .\nilor-industrial\ComfyUI-Manager-Snapshots\2024-04-30_18-41-53_snapshot.json .\ComfyUI\custom_nodes\ComfyUI-Manager\snapshots\
+cp .\zenerator\ComfyUI-Manager-Snapshots\2024-08-04_20-20-33_snapshot.json .\ComfyUI\custom_nodes\ComfyUI-Manager\snapshots\
 -------------------
 cd zenerator
 python -m pip install -r requirements.txt
