@@ -85,7 +85,7 @@
   },
   "245": {
     "inputs": {
-      "model_name": "AnimateLCM_sd15_t2v.ckpt",
+      "model_name": "animate_lcm_sd15_t2v_beta.ckpt",
       "beta_schedule": "lcm >> sqrt_linear",
       "motion_scale": 1,
       "apply_v2_models_properly": false,
@@ -334,30 +334,12 @@
   },
   "336": {
     "inputs": {
-      "lora_name": "WAS26.safetensors",
+      "name": "WAS26.safetensors",
       "strength": 0.5
     },
     "class_type": "ADE_AnimateDiffLoRALoader",
     "_meta": {
       "title": "Load AnimateDiff LoRA 🎭🅐🅓"
-    }
-  },
-  "338": {
-    "inputs": {
-      "filename_prefix": [
-        "354",
-        0
-      ],
-      "hf_auth_token": "",
-      "repository_id": "nilor-corp/zenon-output",
-      "filenames": [
-        "333",
-        0
-      ]
-    },
-    "class_type": "Nilor Save Video To HF Dataset",
-    "_meta": {
-      "title": "Nilor Save Video To HF Dataset"
     }
   },
   "344": {
