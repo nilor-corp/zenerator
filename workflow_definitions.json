@@ -37,24 +37,24 @@
             "type": "video"
         }
     },
-    "wide":{
-        "name": "Wide",
+    "wide2":{
+        "name": "Wide2",
         "description": "Create a wide video",
         "inputs": {
             "images-01": {
                 "type": "images",
                 "label": "Path to Images",
-                "node-id": "[\"389\"][\"inputs\"][\"directory\"]"
+                "node-id": "[\"142\"][\"inputs\"][\"string\"]"
             },
             "text-01": {
                 "type": "text",
-                "label": "Prompt Schedule (line-break separated prompt * number of images + 1)",
-                "node-id": "[\"103\"][\"inputs\"][\"prompt\"]"
+                "label": "Positive Prompt",
+                "node-id": "[\"6\"][\"inputs\"][\"text\"]"
             },
             "text-02": {
                 "type": "text",
                 "label": "Negative Prompt",
-                "node-id": "[\"3\"][\"inputs\"][\"text\"]"
+                "node-id": "[\"7\"][\"inputs\"][\"text\"]"
             }
         },
         "outputs": {

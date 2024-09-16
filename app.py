@@ -444,6 +444,7 @@ def create_tab_interface(workflow_name):
 
         # Define a mapping of input types to Gradio components
         component_map = {
+            "string": gr.Textbox,
             "text": gr.Textbox,
             "images": None, # special case for radio selection handled below
             "video": None, # special case for video selection handled below
