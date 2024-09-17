@@ -20,6 +20,7 @@ COMFY_URL = config["COMFY_URL"]
 QUEUE_URL = config["COMFY_URL"] + "/prompt"
 OUT_DIR = config["COMFY_ROOT"] + "output/WorkFlower/"
 LORA_DIR = config["COMFY_ROOT"] + "models/loras/"
+INPUTS_DIR = "./inputs/"
 
 output_type = ""
 
@@ -131,183 +132,6 @@ def run_workflow(workflow_name, **kwargs):
             print(f"Updating {current_section[final_key]} to {new_value}")
             current_section[final_key] = new_value
 
-
-
-
-
-
-
-
-
-
-
-
-        # if "loras" in params:
-        #     # now we know loras is there, get the path it should be modifying:
-        #     path = params.get("loras")
-        #     print(f"\n\nLora parameter detected!\nLora path: {path}")
-
-        #     lora_accessors = path.strip("[]").split("][")
-        #     lora_accessors = [key.strip('"') for key in lora_accessors]
-        #     print(f"lora_accessors: {lora_accessors}")
-
-        #     # reset the sub_dict to include all parameters again
-        #     sub_dict = workflow
-
-        #     for key in lora_accessors[:-1]:
-        #         sub_dict = sub_dict[key]
-
-        #     print(f"sub_dict: {sub_dict}")  # Debugging step 1
-
-        #     if "class_type" in sub_dict:  # Debugging step 2
-        #         print(f"class_type: {sub_dict['class_type']}")  # Debugging step 3
-
-        #     if sub_dict.get("class_type") == "CR LoRA Stack":
-        #         # for each lora in the loras array
-        #         for lora in loras:
-        #             print("\n\n")
-        #             # set switch to the value of the checkbox (but make it 'on' or 'off' instead of True or False)
-        #             lora_switch = "On" if kwargs.get(f"Lora_Switch_{lora}") else "Off"
-        #             # get the lora name
-        #             lora_name = kwargs.get(f"Lora_Name_{lora}")
-        #             # set the model_weight to the value of the slider
-        #             lora_weight = kwargs.get(f"Lora_Weight_{lora}")
-        #             print(
-        #                 f"lora_switch: {lora_switch}, lora_name: {lora_name}, lora_weight: {lora_weight}"
-        #             )
-        #             # set the lora details
-        #             switch_key = f"switch_{loras.index(lora) + 1}"
-        #             print(f"Switch Key: {switch_key}")
-        #             print(f"Before: {sub_dict['inputs'].get(switch_key)}")
-        #             sub_dict["inputs"][switch_key] = lora_switch
-        #             print(f"After: {sub_dict['inputs'].get(switch_key)}")
-
-        #             name_key = f"lora_name_{loras.index(lora) + 1}"
-        #             print(f"Name Key: {name_key}")
-        #             print(f"Before: {sub_dict['inputs'].get(name_key)}")
-        #             sub_dict["inputs"][name_key] = lora_name
-        #             print(f"After: {sub_dict['inputs'].get(name_key)}")
-
-        #             model_weight_key = f"model_weight_{loras.index(lora) + 1}"
-        #             # print(f"\nModel Weight Key: {model_weight_key}")
-        #             # print(f"Before: {sub_dict['inputs'].get(model_weight_key)}")
-        #             sub_dict["inputs"][model_weight_key] = lora_weight
-        #             # print(f"After: {sub_dict['inputs'].get(model_weight_key)}")
-
-        #             clip_weight_key = f"clip_weight_{loras.index(lora) + 1}"
-        #             # print(f"\nClip Weight Key: {clip_weight_key}")
-        #             # print(f"Before: {sub_dict['inputs'].get(clip_weight_key)}")
-        #             sub_dict["inputs"][clip_weight_key] = lora_weight
-        #             # print(f"After: {sub_dict['inputs'].get(clip_weight_key)}")
-        # if "image_path" in params:
-        #     # find out where to write the path to eventually
-        #     json_path = params.get("image_path")
-        #     print(f"Image path detected in params! Path: {json_path}")
-
-        #     image_path_accessors = json_path.strip("[]").split("][")
-        #     image_path_accessors = [key.strip('"') for key in image_path_accessors]
-        #     print(f"image_path_accessors: {image_path_accessors}")
-
-        #     # reset the sub_dict to include all parameters again
-        #     sub_dict = workflow
-
-        #     for key in image_path_accessors[:-1]:
-        #         sub_dict = sub_dict[key]
-
-        #     print(f"sub_dict: {sub_dict}")  # Debugging step 1
-
-        #     print(kwargs)
-        #     if kwargs.get("Images Path Type") == "Nilor Collection Name":
-        #         print(
-        #             f"Resolving online collection: {kwargs.get('Collection Name or Directory Path')}"
-        #         )
-        #         path = resolve_online_collection(
-        #             kwargs.get("Collection Name or Directory Path"),
-        #             int(kwargs.get("Max Images")),
-        #             kwargs.get("Shuffle Images"),
-        #         )
-        #         image_count = count_images(path)
-        #         print(f"Detected {image_count} images in the collection.")
-        #         sub_dict["directory"] = path
-        #     else:
-        #         print(
-        #             f"Loading images from local directory: {kwargs.get('Collection Name or Directory Path')}"
-        #         )
-        #         path = kwargs.get("Collection Name or Directory Path")
-        #         image_count = count_images(path)
-        #         print(f"Detected {image_count} images in the collection.")
-        #         path = reorganise_local_files(
-        #             path,
-        #             int(kwargs.get("Max Images")),
-        #             kwargs.get("Shuffle Images"),
-        #         )
-        #         sub_dict["directory"] = path
-
-        # # Process cases where there should be filenames of images submitted, rather than paths
-        # image_filenames = []
-
-        # if "image_filename_1" in params:
-        #     image_filenames.append("image_filename_1")
-        # if "image_filename_2" in params:
-        #     image_filenames.append("image_filename_2")
-
-        # for image_filename in image_filenames:
-        #     print(f"image_filename: {image_filename}")
-        #     if image_filename is None:
-        #         return
-        #     else:
-        #         print(params[image_filename])
-
-        #         # get path for the final image filename to go to
-        #         json_path = params.get(image_filename)
-        #         image_filename_accessors = json_path.strip("[]").split("][")
-        #         image_filename_accessors = [
-        #             key.strip('"') for key in image_filename_accessors
-        #         ]
-        #         print(f"image_filename_accessors: {image_filename_accessors}")
-
-        #         # reset the sub_dict to include all parameters again
-        #         sub_dict = workflow
-
-        #         for key in image_filename_accessors[:-1]:
-        #             sub_dict = sub_dict[key]
-
-        #         print(f"sub_dict: {sub_dict}")  # Debugging step
-
-        #         # take a gradio input and POST it to the api input folder
-        #         img_path = kwargs.get(image_filename)
-        #         post_url = f"{COMFY_URL}/upload/image"
-        #         data = {
-        #             "overwrite": "false",
-        #             "subfolder": "",
-        #         }
-
-        #         print(f"Posting image to {post_url}")
-        #         print(f"Data: {data}")
-
-        #         try:
-        #             with open(img_path, "rb") as img_file:
-        #                 files = {"image": img_file}
-        #                 response = requests.post(post_url, files=files, data=data)
-        #         except ConnectionResetError:
-        #             print(
-        #                 "Connection was reset. The remote host may have forcibly closed the connection."
-        #             )
-        #         except socket.error as e:
-        #             print(f"Socket error: {e}")
-        #         except Exception as e:
-        #             print(f"An unexpected error occurred: {e}")
-
-        #         # get the POST response, which contains the actual filename that comfy can see
-        #         try:
-        #             data = response.json()
-        #             image_filename_from_POST = data["name"]
-        #         except json.JSONDecodeError:
-        #             print("Invalid JSON response:", response.text)
-
-        #         # update the workflow json with the filename
-        #         sub_dict["image"] = image_filename_from_POST
-
         try:
             output_directory = OUT_DIR
 
@@ -330,12 +154,10 @@ def run_workflow(workflow_name, **kwargs):
 
 
 def run_workflow_with_name(workflow_name, raw_components, component_info_dict):
-    
     for component in raw_components:
         print(f"Component: {component.label}")
 
     def wrapper(*args):
-
         # match the component to the arg
         for component, arg in zip(raw_components, args):
             # access the component_info_dict using component.elem_id and add a value field = arg
@@ -408,6 +230,7 @@ def create_dynamic_input(input_type, choices, tooltips, text_label, identifier):
 
 
         output = gr.Textbox(label="Directory", interactive=False, elem_id=identifier, info="Preview of the directory path, once resolved with one of the above methods")
+        # output = os.path.abspath(output)
 
     # modify visibility of inputs based on selected_option
     selected_option.change(select_dynamic_input_option, inputs=[selected_option, gr.State(choices)], outputs=possible_inputs)
@@ -434,24 +257,31 @@ def create_tab_interface(workflow_name):
     gr.Markdown("### Workflow Parameters")
     components = []
     component_data_dict = {workflow_name: workflow_definitions[workflow_name]["inputs"]}
+    
+    #constants = []
+    #constants_data_dict = {workflow_name: workflow_definitions[workflow_name]["constants"]}
+
     print(f"\nWORKFLOW: {workflow_name}")
+
+    # Define a mapping of input types to Gradio components
+    component_map = {
+        "path": gr.Textbox,
+        "string": gr.Textbox,
+        "text": gr.Textbox,
+        "images": None, # special case for radio selection handled below
+        "video": None, # special case for video selection handled below
+        "bool": gr.Checkbox,
+        "float": gr.Number,
+        "int": gr.Number  # Special case for int to round?
+    }
 
     for input_key in workflow_definitions[workflow_name]["inputs"]:
         input_details = workflow_definitions[workflow_name]["inputs"][input_key]
         input_type = input_details["type"]
         input_label = input_details["label"]
         input_node_id = input_details["node-id"]
-
-        # Define a mapping of input types to Gradio components
-        component_map = {
-            "string": gr.Textbox,
-            "text": gr.Textbox,
-            "images": None, # special case for radio selection handled below
-            "video": None, # special case for video selection handled below
-            "bool": gr.Checkbox,
-            "float": gr.Number,
-            "int": gr.Number  # Special case for int to round?
-        }
+        input_value = input_details["value"]
+        input_interactive = input_details["interactive"]
 
         if input_type in component_map:
             if input_type == "images":
@@ -477,10 +307,12 @@ def create_tab_interface(workflow_name):
                 # Only append the output textbox to the components list
                 components.append(output)
             else:
+                if input_type == "path":
+                    input_value = os.path.abspath(input_value)
                 # Use the mapping to create components based on input_type
                 component_constructor = component_map.get(input_type)
                 # print(f"Component Constructor: {component_constructor}")
-                components.append(component_constructor(label=input_label, elem_id=input_key))
+                components.append(component_constructor(label=input_label, elem_id=input_key, value=input_value, interactive=input_interactive))
         else:
             print(f"Whoa! Unsupported input type: {input_type}")
 

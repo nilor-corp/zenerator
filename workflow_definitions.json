@@ -6,7 +6,9 @@
             "video-01": {
                 "type": "video",
                 "label": "Path to Video",
-                "node-id": "[\"358\"][\"inputs\"][\"video\"]"
+                "node-id": "[\"358\"][\"inputs\"][\"video\"]",
+                "value": "",
+                "interactive": true
             }
         },
         "outputs": {
@@ -20,46 +22,99 @@
             "images-01":{ 
                 "type": "images",
                 "label": "Path to Images",
-                "node-id": "[\"389\"][\"inputs\"][\"directory\"]"
+                "node-id": "[\"389\"][\"inputs\"][\"directory\"]",
+                "value": "G:\\Shared drives\\nilor\\Projects\\008_Vivid_Zenon_Site-Visit\\03_Development\\01_Inputs\\Zenon Coral Refs\\v4 magnific reorder",
+                "interactive": true
             },
             "text-01": {
                 "type": "text",
                 "label": "Prompt Schedule (line-break separated prompt * number of images + 1)",
-                "node-id": "[\"103\"][\"inputs\"][\"prompt\"]"
+                "node-id": "[\"103\"][\"inputs\"][\"prompt\"]",
+                "value": "extremely detailed",
+                "interactive": true
             },
             "text-02":{
                 "type": "text",
                 "label": "Negative Prompt",
-                "node-id": "[\"3\"][\"inputs\"][\"text\"]"
+                "node-id": "[\"3\"][\"inputs\"][\"text\"]",
+                "value": "nsfw",
+                "interactive": true
             }
         },
         "outputs": {
             "type": "video"
         }
     },
-    "wide2":{
-        "name": "Wide2",
-        "description": "Create a wide video",
+    "wide":{
+        "name": "Wide",
+        "description": "Create a video for the Wide dining room screens (A, B, C, D, E).",
         "inputs": {
+            "width": {
+                "type": "int",
+                "label": "Output Width",
+                "node-id": "[\"218\"][\"inputs\"][\"int\"]",
+                "value": 1758,
+                "interactive": false
+            },
+            "height": {
+                "type": "int",
+                "label": "Output Height",
+                "node-id": "[\"219\"][\"inputs\"][\"int\"]",
+                "value": 512,
+                "interactive": false
+            },
+            "frame_count": {
+                "type": "int",
+                "label": "Raw Frame Count (final frame count / 3)",
+                "node-id": "[\"111\"][\"inputs\"][\"int\"]",
+                "value": 180,
+                "interactive": false
+            },
+            "image-mask-path": {
+                "type": "path",
+                "label": "Path to Screen Mask Image",
+                "node-id": "[\"136\"][\"inputs\"][\"string\"]",
+                "value": "./inputs/screen-masks/wide_screen-mask.png",
+                "interactive": false
+            },
+            "video-mask-path": {
+                "type": "path",
+                "label": "Path to Animated Mask Video",
+                "node-id": "[\"138\"][\"inputs\"][\"string\"]",
+                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
+                "interactive": false
+            },
+            "image-depth-path": {
+                "type": "path",
+                "label": "Path to Screen Depth Image",
+                "node-id": "[\"139\"][\"inputs\"][\"string\"]",
+                "value": "./inputs/screen-depths/wide_depth.png",
+                "interactive": false
+            },
             "images-01": {
                 "type": "images",
                 "label": "Path to Images",
-                "node-id": "[\"142\"][\"inputs\"][\"string\"]"
+                "node-id": "[\"142\"][\"inputs\"][\"string\"]",
+                "value": "G:\\Shared drives\\nilor\\Projects\\008_Vivid_Zenon_Site-Visit\\03_Development\\01_Inputs\\Zenon Coral Refs\\v4 magnific reorder",
+                "interactive": true
             },
             "text-01": {
                 "type": "text",
                 "label": "Positive Prompt",
-                "node-id": "[\"6\"][\"inputs\"][\"text\"]"
+                "node-id": "[\"6\"][\"inputs\"][\"text\"]",
+                "value": "extremely detailed",
+                "interactive": true
             },
             "text-02": {
                 "type": "text",
                 "label": "Negative Prompt",
-                "node-id": "[\"7\"][\"inputs\"][\"text\"]"
+                "node-id": "[\"7\"][\"inputs\"][\"text\"]",
+                "value": "nsfw",
+                "interactive": true
             }
         },
         "outputs": {
             "type": "video"
         }
     }
-    
 }
