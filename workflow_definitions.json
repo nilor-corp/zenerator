@@ -56,14 +56,14 @@
                 "type": "int",
                 "label": "Output Width",
                 "node-id": "[\"218\"][\"inputs\"][\"int\"]",
-                "value": 1758,
+                "value": 2632,
                 "interactive": false
             },
             "height": {
                 "type": "int",
                 "label": "Output Height",
                 "node-id": "[\"219\"][\"inputs\"][\"int\"]",
-                "value": 512,
+                "value": 768,
                 "interactive": false
             },
             "frame_count": {
@@ -94,11 +94,418 @@
                 "value": "./inputs/screen-depths/wide_depth.png",
                 "interactive": false
             },
+            "filename-prefix": {
+                "type": "string",
+                "label": "Output Video Filename Prefix",
+                "node-id": "[\"191\"][\"inputs\"][\"filename_prefix\"]",
+                "value": "WorkFlower/zenon_wide_rife-1",
+                "interactive": false
+            },
             "images-01": {
                 "type": "images",
                 "label": "Path to Images",
                 "node-id": "[\"142\"][\"inputs\"][\"string\"]",
-                "value": "G:\\Shared drives\\nilor\\Projects\\008_Vivid_Zenon_Site-Visit\\03_Development\\01_Inputs\\Zenon Coral Refs\\v4 magnific reorder",
+                "value": "",
+                "interactive": true
+            },
+            "text-01": {
+                "type": "text",
+                "label": "Positive Prompt",
+                "node-id": "[\"6\"][\"inputs\"][\"text\"]",
+                "value": "extremely detailed",
+                "interactive": true
+            },
+            "text-02": {
+                "type": "text",
+                "label": "Negative Prompt",
+                "node-id": "[\"7\"][\"inputs\"][\"text\"]",
+                "value": "nsfw",
+                "interactive": true
+            }
+        },
+        "outputs": {
+            "type": "video"
+        }
+    },
+    "f":{
+        "name": "F",
+        "filename": "wide.json",
+        "description": "Create a video for the F dining room screen across from the Wide screens.",
+        "inputs": {
+            "width": {
+                "type": "int",
+                "label": "Output Width",
+                "node-id": "[\"218\"][\"inputs\"][\"int\"]",
+                "value": 1024,
+                "interactive": false
+            },
+            "height": {
+                "type": "int",
+                "label": "Output Height",
+                "node-id": "[\"219\"][\"inputs\"][\"int\"]",
+                "value": 922,
+                "interactive": false
+            },
+            "frame_count": {
+                "type": "int",
+                "label": "Raw Frame Count (final frame count / 3)",
+                "node-id": "[\"111\"][\"inputs\"][\"int\"]",
+                "value": 180,
+                "interactive": false
+            },
+            "image-mask-path": {
+                "type": "path",
+                "label": "Path to Screen Mask Image",
+                "node-id": "[\"136\"][\"inputs\"][\"string\"]",
+                "value": "./inputs/screen-masks/f_screen-mask.png",
+                "interactive": false
+            },
+            "video-mask-path": {
+                "type": "path",
+                "label": "Path to Animated Mask Video",
+                "node-id": "[\"138\"][\"inputs\"][\"string\"]",
+                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
+                "interactive": false
+            },
+            "image-depth-path": {
+                "type": "path",
+                "label": "Path to Screen Depth Image",
+                "node-id": "[\"139\"][\"inputs\"][\"string\"]",
+                "value": "./inputs/screen-depths/f_depth.png",
+                "interactive": false
+            },
+            "filename-prefix": {
+                "type": "string",
+                "label": "Output Video Filename Prefix",
+                "node-id": "[\"191\"][\"inputs\"][\"filename_prefix\"]",
+                "value": "WorkFlower/zenon_f_rife-1",
+                "interactive": false
+            },
+            "images-01": {
+                "type": "images",
+                "label": "Path to Images",
+                "node-id": "[\"142\"][\"inputs\"][\"string\"]",
+                "value": "",
+                "interactive": true
+            },
+            "text-01": {
+                "type": "text",
+                "label": "Positive Prompt",
+                "node-id": "[\"6\"][\"inputs\"][\"text\"]",
+                "value": "extremely detailed",
+                "interactive": true
+            },
+            "text-02": {
+                "type": "text",
+                "label": "Negative Prompt",
+                "node-id": "[\"7\"][\"inputs\"][\"text\"]",
+                "value": "nsfw",
+                "interactive": true
+            }
+        },
+        "outputs": {
+            "type": "video"
+        }
+    },
+    "g":{
+        "name": "G",
+        "filename": "wide.json",
+        "description": "Create a video for the tall screens (G1, G2) in the VIP room.",
+        "inputs": {
+            "width": {
+                "type": "int",
+                "label": "Output Width",
+                "node-id": "[\"218\"][\"inputs\"][\"int\"]",
+                "value": 768,
+                "interactive": false
+            },
+            "height": {
+                "type": "int",
+                "label": "Output Height",
+                "node-id": "[\"219\"][\"inputs\"][\"int\"]",
+                "value": 1578,
+                "interactive": false
+            },
+            "frame_count": {
+                "type": "int",
+                "label": "Raw Frame Count (final frame count / 3)",
+                "node-id": "[\"111\"][\"inputs\"][\"int\"]",
+                "value": 180,
+                "interactive": false
+            },
+            "image-mask-path": {
+                "type": "path",
+                "label": "Path to Screen Mask Image",
+                "node-id": "[\"136\"][\"inputs\"][\"string\"]",
+                "value": "./inputs/screen-masks/g_screen-mask.png",
+                "interactive": false
+            },
+            "video-mask-path": {
+                "type": "path",
+                "label": "Path to Animated Mask Video",
+                "node-id": "[\"138\"][\"inputs\"][\"string\"]",
+                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
+                "interactive": false
+            },
+            "image-depth-path": {
+                "type": "path",
+                "label": "Path to Screen Depth Image",
+                "node-id": "[\"139\"][\"inputs\"][\"string\"]",
+                "value": "./inputs/screen-depths/g_depth.png",
+                "interactive": false
+            },
+            "filename-prefix": {
+                "type": "string",
+                "label": "Output Video Filename Prefix",
+                "node-id": "[\"191\"][\"inputs\"][\"filename_prefix\"]",
+                "value": "WorkFlower/zenon_g_rife-1",
+                "interactive": false
+            },
+            "images-01": {
+                "type": "images",
+                "label": "Path to Images",
+                "node-id": "[\"142\"][\"inputs\"][\"string\"]",
+                "value": "",
+                "interactive": true
+            },
+            "text-01": {
+                "type": "text",
+                "label": "Positive Prompt",
+                "node-id": "[\"6\"][\"inputs\"][\"text\"]",
+                "value": "extremely detailed",
+                "interactive": true
+            },
+            "text-02": {
+                "type": "text",
+                "label": "Negative Prompt",
+                "node-id": "[\"7\"][\"inputs\"][\"text\"]",
+                "value": "nsfw",
+                "interactive": true
+            }
+        },
+        "outputs": {
+            "type": "video"
+        }
+    },
+    "h":{
+        "name": "H",
+        "filename": "wide.json",
+        "description": "Create a video for the ceiling screen (H) in the VIP room.",
+        "inputs": {
+            "width": {
+                "type": "int",
+                "label": "Output Width",
+                "node-id": "[\"218\"][\"inputs\"][\"int\"]",
+                "value": 768,
+                "interactive": false
+            },
+            "height": {
+                "type": "int",
+                "label": "Output Height",
+                "node-id": "[\"219\"][\"inputs\"][\"int\"]",
+                "value": 2304,
+                "interactive": false
+            },
+            "frame_count": {
+                "type": "int",
+                "label": "Raw Frame Count (final frame count / 3)",
+                "node-id": "[\"111\"][\"inputs\"][\"int\"]",
+                "value": 180,
+                "interactive": false
+            },
+            "image-mask-path": {
+                "type": "path",
+                "label": "Path to Screen Mask Image",
+                "node-id": "[\"136\"][\"inputs\"][\"string\"]",
+                "value": "./inputs/screen-masks/h_screen-mask.png",
+                "interactive": false
+            },
+            "video-mask-path": {
+                "type": "path",
+                "label": "Path to Animated Mask Video",
+                "node-id": "[\"138\"][\"inputs\"][\"string\"]",
+                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
+                "interactive": false
+            },
+            "image-depth-path": {
+                "type": "path",
+                "label": "Path to Screen Depth Image",
+                "node-id": "[\"139\"][\"inputs\"][\"string\"]",
+                "value": "./inputs/screen-depths/h_depth.png",
+                "interactive": false
+            },
+            "filename-prefix": {
+                "type": "string",
+                "label": "Output Video Filename Prefix",
+                "node-id": "[\"191\"][\"inputs\"][\"filename_prefix\"]",
+                "value": "WorkFlower/zenon_h_rife-1",
+                "interactive": false
+            },
+            "images-01": {
+                "type": "images",
+                "label": "Path to Images",
+                "node-id": "[\"142\"][\"inputs\"][\"string\"]",
+                "value": "",
+                "interactive": true
+            },
+            "text-01": {
+                "type": "text",
+                "label": "Positive Prompt",
+                "node-id": "[\"6\"][\"inputs\"][\"text\"]",
+                "value": "extremely detailed",
+                "interactive": true
+            },
+            "text-02": {
+                "type": "text",
+                "label": "Negative Prompt",
+                "node-id": "[\"7\"][\"inputs\"][\"text\"]",
+                "value": "nsfw",
+                "interactive": true
+            }
+        },
+        "outputs": {
+            "type": "video"
+        }
+    },
+    "medusa":{
+        "name": "Medusa",
+        "filename": "sculpture.json",
+        "description": "Create a video for the Medusa sculpture in the VIP room.",
+        "inputs": {
+            "width": {
+                "type": "int",
+                "label": "Output Width",
+                "node-id": "[\"218\"][\"inputs\"][\"int\"]",
+                "value": 1360,
+                "interactive": false
+            },
+            "height": {
+                "type": "int",
+                "label": "Output Height",
+                "node-id": "[\"219\"][\"inputs\"][\"int\"]",
+                "value": 768,
+                "interactive": false
+            },
+            "frame_count": {
+                "type": "int",
+                "label": "Raw Frame Count (final frame count / 3)",
+                "node-id": "[\"111\"][\"inputs\"][\"int\"]",
+                "value": 180,
+                "interactive": false
+            },
+            "image-mask-path": {
+                "type": "path",
+                "label": "Path to Screen Mask Image",
+                "node-id": "[\"136\"][\"inputs\"][\"string\"]",
+                "value": "./inputs/screen-masks/medusa_screen-mask.png",
+                "interactive": false
+            },
+            "video-lineart-path": {
+                "type": "path",
+                "label": "Path to Animated LineArt Video",
+                "node-id": "[\"260\"][\"inputs\"][\"string\"]",
+                "value": "./inputs/animated-lineart/medusa_lineart.mp4",
+                "interactive": false
+            },
+            "image-depth-path": {
+                "type": "path",
+                "label": "Path to Screen Depth Image",
+                "node-id": "[\"139\"][\"inputs\"][\"string\"]",
+                "value": "./inputs/screen-depths/medusa_depth.png",
+                "interactive": false
+            },
+            "filename-prefix": {
+                "type": "string",
+                "label": "Output Video Filename Prefix",
+                "node-id": "[\"191\"][\"inputs\"][\"filename_prefix\"]",
+                "value": "WorkFlower/zenon_medusa_rife-1",
+                "interactive": false
+            },
+            "images-01": {
+                "type": "images",
+                "label": "Path to Images",
+                "node-id": "[\"142\"][\"inputs\"][\"string\"]",
+                "value": "",
+                "interactive": true
+            },
+            "text-01": {
+                "type": "text",
+                "label": "Positive Prompt",
+                "node-id": "[\"6\"][\"inputs\"][\"text\"]",
+                "value": "extremely detailed",
+                "interactive": true
+            },
+            "text-02": {
+                "type": "text",
+                "label": "Negative Prompt",
+                "node-id": "[\"7\"][\"inputs\"][\"text\"]",
+                "value": "nsfw",
+                "interactive": true
+            }
+        },
+        "outputs": {
+            "type": "video"
+        }
+    },
+    "poseidon":{
+        "name": "Poseidon",
+        "filename": "sculpture.json",
+        "description": "Create a video for the Poseidon sculpture in the VIP room.",
+        "inputs": {
+            "width": {
+                "type": "int",
+                "label": "Output Width",
+                "node-id": "[\"218\"][\"inputs\"][\"int\"]",
+                "value": 1360,
+                "interactive": false
+            },
+            "height": {
+                "type": "int",
+                "label": "Output Height",
+                "node-id": "[\"219\"][\"inputs\"][\"int\"]",
+                "value": 768,
+                "interactive": false
+            },
+            "frame_count": {
+                "type": "int",
+                "label": "Raw Frame Count (final frame count / 3)",
+                "node-id": "[\"111\"][\"inputs\"][\"int\"]",
+                "value": 180,
+                "interactive": false
+            },
+            "image-mask-path": {
+                "type": "path",
+                "label": "Path to Screen Mask Image",
+                "node-id": "[\"136\"][\"inputs\"][\"string\"]",
+                "value": "./inputs/screen-masks/poseidon_screen-mask.png",
+                "interactive": false
+            },
+            "video-lineart-path": {
+                "type": "path",
+                "label": "Path to Animated LineArt Video",
+                "node-id": "[\"260\"][\"inputs\"][\"string\"]",
+                "value": "./inputs/animated-lineart/poseidon_lineart.mp4",
+                "interactive": false
+            },
+            "image-depth-path": {
+                "type": "path",
+                "label": "Path to Screen Depth Image",
+                "node-id": "[\"139\"][\"inputs\"][\"string\"]",
+                "value": "./inputs/screen-depths/poseidon_depth.png",
+                "interactive": false
+            },
+            "filename-prefix": {
+                "type": "string",
+                "label": "Output Video Filename Prefix",
+                "node-id": "[\"191\"][\"inputs\"][\"filename_prefix\"]",
+                "value": "WorkFlower/zenon_poseidon_rife-1",
+                "interactive": false
+            },
+            "images-01": {
+                "type": "images",
+                "label": "Path to Images",
+                "node-id": "[\"142\"][\"inputs\"][\"string\"]",
+                "value": "",
                 "interactive": true
             },
             "text-01": {
