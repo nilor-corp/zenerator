@@ -1,52 +1,4 @@
 {
-    "upscale-video":{
-        "name": "Upscale Video",
-        "filename": "upscale-video.json",
-        "description": "Upscale a video",
-        "inputs": {
-            "video-01": {
-                "type": "video",
-                "label": "Path to Video",
-                "node-id": "[\"358\"][\"inputs\"][\"video\"]",
-                "value": "",
-                "interactive": true
-            }
-        },
-        "outputs": {
-            "type": "video"
-        }
-    },
-    "disc":{
-        "name": "Disc",
-        "filename": "disc.json",
-        "description": "Create a disc",
-        "inputs": {
-            "images-01":{ 
-                "type": "images",
-                "label": "Path to Images",
-                "node-id": "[\"389\"][\"inputs\"][\"directory\"]",
-                "value": "G:\\Shared drives\\nilor\\Projects\\008_Vivid_Zenon_Site-Visit\\03_Development\\01_Inputs\\Zenon Coral Refs\\v4 magnific reorder",
-                "interactive": true
-            },
-            "text-01": {
-                "type": "text",
-                "label": "Prompt Schedule (line-break separated prompt * number of images + 1)",
-                "node-id": "[\"103\"][\"inputs\"][\"prompt\"]",
-                "value": "extremely detailed",
-                "interactive": true
-            },
-            "text-02":{
-                "type": "text",
-                "label": "Negative Prompt",
-                "node-id": "[\"3\"][\"inputs\"][\"text\"]",
-                "value": "nsfw",
-                "interactive": true
-            }
-        },
-        "outputs": {
-            "type": "video"
-        }
-    },
     "wide":{
         "name": "Wide",
         "filename": "wide.json",
@@ -71,25 +23,25 @@
                 "label": "Raw Frame Count (final frame count / 3)",
                 "node-id": "[\"111\"][\"inputs\"][\"int\"]",
                 "value": 180,
-                "interactive": false
+                "interactive": true
             },
             "image-mask-path": {
                 "type": "path",
-                "label": "Path to Screen Mask Image",
+                "label": "Path of Screen Mask Image",
                 "node-id": "[\"136\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-masks/wide_screen-mask.png",
                 "interactive": false
             },
             "video-mask-path": {
                 "type": "path",
-                "label": "Path to Animated Mask Video",
+                "label": "Path of Animated Mask Video",
                 "node-id": "[\"138\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
-                "interactive": false
+                "interactive": true
             },
             "image-depth-path": {
                 "type": "path",
-                "label": "Path to Screen Depth Image",
+                "label": "Path of Screen Depth Image",
                 "node-id": "[\"139\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-depths/wide_depth.png",
                 "interactive": false
@@ -103,7 +55,7 @@
             },
             "images-01": {
                 "type": "images",
-                "label": "Path to Images",
+                "label": "Images",
                 "node-id": "[\"142\"][\"inputs\"][\"string\"]",
                 "value": "",
                 "interactive": true
@@ -119,7 +71,7 @@
                 "type": "text",
                 "label": "Negative Prompt",
                 "node-id": "[\"7\"][\"inputs\"][\"text\"]",
-                "value": "nsfw",
+                "value": "blurry, glitches, artifact, distorted, malformed, nsfw",
                 "interactive": true
             }
         },
@@ -155,21 +107,21 @@
             },
             "image-mask-path": {
                 "type": "path",
-                "label": "Path to Screen Mask Image",
+                "label": "Path of Screen Mask Image",
                 "node-id": "[\"136\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-masks/f_screen-mask.png",
                 "interactive": false
             },
             "video-mask-path": {
                 "type": "path",
-                "label": "Path to Animated Mask Video",
+                "label": "Path of Animated Mask Video",
                 "node-id": "[\"138\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
                 "interactive": false
             },
             "image-depth-path": {
                 "type": "path",
-                "label": "Path to Screen Depth Image",
+                "label": "Path of Screen Depth Image",
                 "node-id": "[\"139\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-depths/f_depth.png",
                 "interactive": false
@@ -183,7 +135,7 @@
             },
             "images-01": {
                 "type": "images",
-                "label": "Path to Images",
+                "label": "Images",
                 "node-id": "[\"142\"][\"inputs\"][\"string\"]",
                 "value": "",
                 "interactive": true
@@ -199,7 +151,7 @@
                 "type": "text",
                 "label": "Negative Prompt",
                 "node-id": "[\"7\"][\"inputs\"][\"text\"]",
-                "value": "nsfw",
+                "value": "blurry, glitches, artifact, distorted, malformed, nsfw",
                 "interactive": true
             }
         },
@@ -235,21 +187,21 @@
             },
             "image-mask-path": {
                 "type": "path",
-                "label": "Path to Screen Mask Image",
+                "label": "Path of Screen Mask Image",
                 "node-id": "[\"136\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-masks/g_screen-mask.png",
                 "interactive": false
             },
             "video-mask-path": {
                 "type": "path",
-                "label": "Path to Animated Mask Video",
+                "label": "Path of Animated Mask Video",
                 "node-id": "[\"138\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
                 "interactive": false
             },
             "image-depth-path": {
                 "type": "path",
-                "label": "Path to Screen Depth Image",
+                "label": "Path of Screen Depth Image",
                 "node-id": "[\"139\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-depths/g_depth.png",
                 "interactive": false
@@ -263,7 +215,7 @@
             },
             "images-01": {
                 "type": "images",
-                "label": "Path to Images",
+                "label": "Images",
                 "node-id": "[\"142\"][\"inputs\"][\"string\"]",
                 "value": "",
                 "interactive": true
@@ -279,7 +231,7 @@
                 "type": "text",
                 "label": "Negative Prompt",
                 "node-id": "[\"7\"][\"inputs\"][\"text\"]",
-                "value": "nsfw",
+                "value": "blurry, glitches, artifact, distorted, malformed, nsfw",
                 "interactive": true
             }
         },
@@ -315,21 +267,21 @@
             },
             "image-mask-path": {
                 "type": "path",
-                "label": "Path to Screen Mask Image",
+                "label": "Path of Screen Mask Image",
                 "node-id": "[\"136\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-masks/h_screen-mask.png",
                 "interactive": false
             },
             "video-mask-path": {
                 "type": "path",
-                "label": "Path to Animated Mask Video",
+                "label": "Path of Animated Mask Video",
                 "node-id": "[\"138\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
                 "interactive": false
             },
             "image-depth-path": {
                 "type": "path",
-                "label": "Path to Screen Depth Image",
+                "label": "Path of Screen Depth Image",
                 "node-id": "[\"139\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-depths/h_depth.png",
                 "interactive": false
@@ -343,7 +295,7 @@
             },
             "images-01": {
                 "type": "images",
-                "label": "Path to Images",
+                "label": "Images",
                 "node-id": "[\"142\"][\"inputs\"][\"string\"]",
                 "value": "",
                 "interactive": true
@@ -359,7 +311,7 @@
                 "type": "text",
                 "label": "Negative Prompt",
                 "node-id": "[\"7\"][\"inputs\"][\"text\"]",
-                "value": "nsfw",
+                "value": "blurry, glitches, artifact, distorted, malformed, nsfw",
                 "interactive": true
             }
         },
@@ -395,21 +347,21 @@
             },
             "image-mask-path": {
                 "type": "path",
-                "label": "Path to Screen Mask Image",
+                "label": "Path of Screen Mask Image",
                 "node-id": "[\"136\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-masks/medusa_screen-mask.png",
                 "interactive": false
             },
             "video-lineart-path": {
                 "type": "path",
-                "label": "Path to Animated LineArt Video",
+                "label": "Path of Animated LineArt Video",
                 "node-id": "[\"260\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/animated-lineart/medusa_lineart.mp4",
                 "interactive": false
             },
             "image-depth-path": {
                 "type": "path",
-                "label": "Path to Screen Depth Image",
+                "label": "Path of Screen Depth Image",
                 "node-id": "[\"139\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-depths/medusa_depth.png",
                 "interactive": false
@@ -423,7 +375,7 @@
             },
             "images-01": {
                 "type": "images",
-                "label": "Path to Images",
+                "label": "Images",
                 "node-id": "[\"142\"][\"inputs\"][\"string\"]",
                 "value": "",
                 "interactive": true
@@ -439,7 +391,7 @@
                 "type": "text",
                 "label": "Negative Prompt",
                 "node-id": "[\"7\"][\"inputs\"][\"text\"]",
-                "value": "nsfw",
+                "value": "blurry, glitches, artifact, distorted, malformed, nsfw",
                 "interactive": true
             }
         },
@@ -475,21 +427,21 @@
             },
             "image-mask-path": {
                 "type": "path",
-                "label": "Path to Screen Mask Image",
+                "label": "Path of Screen Mask Image",
                 "node-id": "[\"136\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-masks/poseidon_screen-mask.png",
                 "interactive": false
             },
             "video-lineart-path": {
                 "type": "path",
-                "label": "Path to Animated LineArt Video",
+                "label": "Path of Animated LineArt Video",
                 "node-id": "[\"260\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/animated-lineart/poseidon_lineart.mp4",
                 "interactive": false
             },
             "image-depth-path": {
                 "type": "path",
-                "label": "Path to Screen Depth Image",
+                "label": "Path of Screen Depth Image",
                 "node-id": "[\"139\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-depths/poseidon_depth.png",
                 "interactive": false
@@ -503,7 +455,7 @@
             },
             "images-01": {
                 "type": "images",
-                "label": "Path to Images",
+                "label": "Images",
                 "node-id": "[\"142\"][\"inputs\"][\"string\"]",
                 "value": "",
                 "interactive": true
@@ -519,8 +471,53 @@
                 "type": "text",
                 "label": "Negative Prompt",
                 "node-id": "[\"7\"][\"inputs\"][\"text\"]",
-                "value": "nsfw",
+                "value": "blurry, glitches, artifact, distorted, malformed, nsfw",
                 "interactive": true
+            }
+        },
+        "outputs": {
+            "type": "video"
+        }
+    },
+    "upscale-video":{
+        "name": "Upscale Video",
+        "filename": "upscale-video.json",
+        "description": "Upscale a video",
+        "inputs": {
+            "video-to-path": {
+                "type": "video",
+                "label": "Video to Upscale",
+                "node-id": "[\"419\"][\"inputs\"][\"string\"]",
+                "value": "",
+                "interactive": true
+            },
+            "text-01": {
+                "type": "string",
+                "label": "Positive Prompt",
+                "node-id": "[\"426\"][\"inputs\"][\"string\"]",
+                "value": "extremely detailed",
+                "interactive": true
+            },
+            "text-02": {
+                "type": "string",
+                "label": "Negative Prompt",
+                "node-id": "[\"427\"][\"inputs\"][\"string\"]",
+                "value": "blurry, glitches, artifact, distorted, malformed, nsfw",
+                "interactive": true
+            },
+            "upscale-by": {
+                "type": "float",
+                "label": "Upscale By (Range: 1.0 - 4.0)",
+                "node-id": "[\"422\"][\"inputs\"][\"float\"]",
+                "value": 3.0,
+                "interactive": true
+            },
+            "steps": {
+                "type": "int",
+                "label": "Steps",
+                "node-id": "[\"525\"][\"inputs\"][\"int\"]",
+                "value": 20,
+                "interactive": false
             }
         },
         "outputs": {
