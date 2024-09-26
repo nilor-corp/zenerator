@@ -10,6 +10,7 @@ from image_downloader import resolve_online_collection
 from image_downloader import organise_local_files
 from image_downloader import copy_uploaded_files_to_local_dir
 from lora_maker import generate_lora
+from tqdm import tqdm
 import asyncio
 import socket
 
@@ -93,7 +94,7 @@ async def wait_for_new_content(previous_content, output_directory):
         await asyncio.sleep(1)
 
 
-def run_workflow(workflow_name, **kwargs):
+def run_workflow(workflow_name, progress=gr.Progress(track_tqdm=True), **kwargs):
     # Print the input arguments for debugging
     print("inside run workflow with kwargs: " + str(kwargs))
     # print("workflow_definitions: " + str(workflow_definitions[workflow_name]))
@@ -153,7 +154,7 @@ def run_workflow(workflow_name, **kwargs):
             return None
 
 
-def run_workflow_with_name(workflow_name, raw_components, component_info_dict):
+def run_workflow_with_name(workflow_name, raw_components, component_info_dict, progress=gr.Progress(track_tqdm=True)):
     for component in raw_components:
         print(f"Component: {component.label}")
 
@@ -163,7 +164,7 @@ def run_workflow_with_name(workflow_name, raw_components, component_info_dict):
             # access the component_info_dict using component.elem_id and add a value field = arg
             component_info_dict[component.elem_id]["value"] = arg
 
-        return run_workflow(workflow_name, **component_info_dict)
+        return run_workflow(workflow_name, progress, **component_info_dict)
 
     return wrapper
 
@@ -252,16 +253,13 @@ def filter_valid_components(components):
             valid_components.append(component)
     return valid_components
 
-
-def create_tab_interface(workflow_name):
-    gr.Markdown("### Workflow Parameters")
-    components = []
-    component_data_dict = {workflow_name: workflow_definitions[workflow_name]["inputs"]}
-    
-    #constants = []
-    #constants_data_dict = {workflow_name: workflow_definitions[workflow_name]["constants"]}
-
-    print(f"\nWORKFLOW: {workflow_name}")
+def process_input(input_key):
+    input_details = workflow_definitions[workflow_name]["inputs"][input_key]
+    input_type = input_details["type"]
+    input_label = input_details["label"]
+    input_node_id = input_details["node-id"]
+    input_value = input_details["value"]
+    input_interactive = input_details["interactive"]
 
     # Define a mapping of input types to Gradio components
     component_map = {
@@ -274,47 +272,80 @@ def create_tab_interface(workflow_name):
         "float": gr.Number,
         "int": gr.Number  # Special case for int to round?
     }
+    
+    component = None
+
+    if input_type in component_map:
+        if input_type == "images":
+            # print("!!!!!!!!!!!!!!!!!!!!!!!\nMaking Radio")
+            selected_option, inputs, output = create_dynamic_input(
+                input_type,
+                choices=["filepath", "nilor collection", "upload"], 
+                tooltips=["Enter the path of the directory of images and press Enter to submit", "Enter the name of the Nilor Collection and press Enter to resolve"],
+                text_label="Select Input Type", 
+                identifier=input_key
+            )
+            # Only append the output textbox to the components list
+            component = output
+        elif input_type == "video":
+            # print("!!!!!!!!!!!!!!!!!!!!!!!\nMaking Radio")
+            selected_option, inputs, output = create_dynamic_input(
+                input_type,
+                choices=["filepath", "upload"], 
+                tooltips=["Enter the path of the directory of video and press Enter to submit"],
+                text_label="Select Input Type", 
+                identifier=input_key
+            )
+            # Only append the output textbox to the components list
+            component = output
+        else:
+            if input_type == "path":
+                input_value = os.path.abspath(input_value)
+            # Use the mapping to create components based on input_type
+            component_constructor = component_map.get(input_type)
+            # print(f"Component Constructor: {component_constructor}")
+            component = component_constructor(label=input_label, elem_id=input_key, value=input_value, interactive=input_interactive)
+    else:
+        print(f"Whoa! Unsupported input type: {input_type}")
+
+    return component
+
+def create_tab_interface(workflow_name):
+    gr.Markdown("### Workflow Parameters")
+    components = []
+    component_data_dict = {workflow_name: workflow_definitions[workflow_name]["inputs"]}
+    
+    #constants = []
+    #constants_data_dict = {workflow_name: workflow_definitions[workflow_name]["constants"]}
+
+    print(f"\nWORKFLOW: {workflow_name}")
+
+    interactive_inputs = []
+    noninteractive_inputs = []
+
+    interactive_components = []
+    noninteractive_components = []
 
     for input_key in workflow_definitions[workflow_name]["inputs"]:
         input_details = workflow_definitions[workflow_name]["inputs"][input_key]
-        input_type = input_details["type"]
-        input_label = input_details["label"]
-        input_node_id = input_details["node-id"]
-        input_value = input_details["value"]
         input_interactive = input_details["interactive"]
 
-        if input_type in component_map:
-            if input_type == "images":
-                # print("!!!!!!!!!!!!!!!!!!!!!!!\nMaking Radio")
-                selected_option, inputs, output = create_dynamic_input(
-                    input_type,
-                    choices=["filepath", "nilor collection", "upload"], 
-                    tooltips=["Enter the path to the directory of images and press Enter to submit", "Enter the name of the Nilor Collection and press Enter to resolve"],
-                    text_label="Select Input Type", 
-                    identifier=input_key
-                )
-                # Only append the output textbox to the components list
-                components.append(output)
-            elif input_type == "video":
-                # print("!!!!!!!!!!!!!!!!!!!!!!!\nMaking Radio")
-                selected_option, inputs, output = create_dynamic_input(
-                    input_type,
-                    choices=["filepath", "upload"], 
-                    tooltips=["Enter the path to the directory of video and press Enter to submit"],
-                    text_label="Select Input Type", 
-                    identifier=input_key
-                )
-                # Only append the output textbox to the components list
-                components.append(output)
-            else:
-                if input_type == "path":
-                    input_value = os.path.abspath(input_value)
-                # Use the mapping to create components based on input_type
-                component_constructor = component_map.get(input_type)
-                # print(f"Component Constructor: {component_constructor}")
-                components.append(component_constructor(label=input_label, elem_id=input_key, value=input_value, interactive=input_interactive))
+        if input_interactive:
+            interactive_inputs.append(input_key)
         else:
-            print(f"Whoa! Unsupported input type: {input_type}")
+            noninteractive_inputs.append(input_key)
+
+    for input_key in interactive_inputs:
+        interactive_components.append(process_input(input_key))
+
+    with gr.Accordion("Constants", open=False):
+        gr.Markdown("You can edit these constants in workflow_definitions.json if you know what you're doing.")
+        
+        for input_key in noninteractive_inputs:
+            noninteractive_components.append(process_input(input_key))
+
+    components.extend(interactive_components)
+    components.extend(noninteractive_components)
 
     return components, component_data_dict
 
@@ -352,6 +383,7 @@ with gr.Blocks(title="WorkFlower") as demo:
                                 run_button = gr.Button("Run Workflow")
                                 # also make a dictionary with the components' data
                                 components, component_dict = create_tab_interface(workflow_name)
+                                #print(f"Components: {components}")
                             # output player construction
                             with gr.Column():
                                 output_type = workflow_definitions[workflow_name]["outputs"].get(
