@@ -523,5 +523,43 @@
         "outputs": {
             "type": "video"
         }
+    },
+    "upscale-video-tensorrt":{
+        "name": "Upscale Video with TensorRT",
+        "filename": "upscale-video-tensorrt.json",
+        "description": "Upscale a video using TensorRT. This is faster than the normal upscaler, but there are limitations:\n* You can only upscale the input video by 4X.\n* Input video width and height must BOTH be less than 1280.",
+        "inputs": {
+            "video-to-path": {
+                "type": "video",
+                "label": "Video to Upscale",
+                "node-id": "[\"419\"][\"inputs\"][\"string\"]",
+                "value": "",
+                "interactive": true
+            },
+            "text-01": {
+                "type": "string",
+                "label": "Positive Prompt",
+                "node-id": "[\"426\"][\"inputs\"][\"string\"]",
+                "value": "extremely detailed",
+                "interactive": true
+            },
+            "text-02": {
+                "type": "string",
+                "label": "Negative Prompt",
+                "node-id": "[\"427\"][\"inputs\"][\"string\"]",
+                "value": "blurry, glitches, artifact, distorted, malformed, nsfw",
+                "interactive": true
+            },
+            "steps": {
+                "type": "int",
+                "label": "Steps",
+                "node-id": "[\"525\"][\"inputs\"][\"int\"]",
+                "value": 20,
+                "interactive": false
+            }
+        },
+        "outputs": {
+            "type": "video"
+        }
     }
 }

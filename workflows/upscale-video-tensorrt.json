@@ -154,7 +154,7 @@
       "ensemble": true,
       "scale_factor": 1,
       "frames": [
-        "516",
+        "528",
         0
       ]
     },
@@ -190,7 +190,7 @@
   "365": {
     "inputs": {
       "value": [
-        "516",
+        "528",
         0
       ]
     },
@@ -223,15 +223,6 @@
     "class_type": "easy showAnything",
     "_meta": {
       "title": "Show Any"
-    }
-  },
-  "370": {
-    "inputs": {
-      "model_name": "4xLexicaDAT2_otf.pth"
-    },
-    "class_type": "Upscale Model Loader",
-    "_meta": {
-      "title": "Upscale Model Loader"
     }
   },
   "407": {
@@ -274,15 +265,6 @@
     "class_type": "Primitive string [Crystools]",
     "_meta": {
       "title": "Input Video"
-    }
-  },
-  "422": {
-    "inputs": {
-      "float": 3
-    },
-    "class_type": "Primitive float [Crystools]",
-    "_meta": {
-      "title": "Upscale By"
     }
   },
   "426": {
@@ -588,13 +570,18 @@
       "title": "Load Video (Path) 🎥🅥🅗🅢"
     }
   },
-  "516": {
+  "525": {
     "inputs": {
-      "upscale_by": [
-        "422",
-        0
-      ],
-      "seed": 1124538428969257,
+      "int": 20
+    },
+    "class_type": "Primitive integer [Crystools]",
+    "_meta": {
+      "title": "Steps"
+    }
+  },
+  "528": {
+    "inputs": {
+      "seed": 172173409385114,
       "steps": [
         "525",
         0
@@ -615,8 +602,8 @@
       "seam_fix_padding": 32,
       "force_uniform_tiles": false,
       "tiled_decode": false,
-      "image": [
-        "509",
+      "upscaled_image": [
+        "529",
         0
       ],
       "model": [
@@ -634,24 +621,25 @@
       "vae": [
         "244",
         4
-      ],
-      "upscale_model": [
-        "370",
+      ]
+    },
+    "class_type": "UltimateSDUpscaleNoUpscale",
+    "_meta": {
+      "title": "Ultimate SD Upscale (No Upscale)"
+    }
+  },
+  "529": {
+    "inputs": {
+      "engine": "realistic.engine",
+      "resize_to": "none",
+      "images": [
+        "509",
         0
       ]
     },
-    "class_type": "UltimateSDUpscale",
+    "class_type": "UpscalerTensorrt",
     "_meta": {
-      "title": "Ultimate SD Upscale"
-    }
-  },
-  "525": {
-    "inputs": {
-      "int": 20
-    },
-    "class_type": "Primitive integer [Crystools]",
-    "_meta": {
-      "title": "Steps"
+      "title": "Upscaler Tensorrt"
     }
   }
 }
