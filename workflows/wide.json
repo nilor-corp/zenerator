@@ -233,7 +233,7 @@
     "inputs": {
       "context_length": 16,
       "context_overlap": 4,
-      "fuse_method": "pyramid",
+      "fuse_method": "gauss-sigma",
       "use_on_equal_length": false,
       "start_percent": 0,
       "guarantee_steps": 1
@@ -255,7 +255,7 @@
         0
       ],
       "context_options": [
-        "56",
+        "248",
         0
       ],
       "sample_settings": [
@@ -328,6 +328,75 @@
       "title": "Multival 🎭🅐🅓"
     }
   },
+  "72": {
+    "inputs": {
+      "value": "a/b",
+      "a": [
+        "218",
+        0
+      ],
+      "b": [
+        "75",
+        0
+      ]
+    },
+    "class_type": "SimpleMath+",
+    "_meta": {
+      "title": "🔧 Simple Math"
+    }
+  },
+  "73": {
+    "inputs": {
+      "text": "1758",
+      "anything": [
+        "72",
+        0
+      ]
+    },
+    "class_type": "easy showAnything",
+    "_meta": {
+      "title": "Show Any"
+    }
+  },
+  "75": {
+    "inputs": {
+      "float": 5.86
+    },
+    "class_type": "Primitive float [Crystools]",
+    "_meta": {
+      "title": "🪛 Primitive float"
+    }
+  },
+  "76": {
+    "inputs": {
+      "value": "a/b",
+      "a": [
+        "219",
+        0
+      ],
+      "b": [
+        "75",
+        0
+      ]
+    },
+    "class_type": "SimpleMath+",
+    "_meta": {
+      "title": "🔧 Simple Math"
+    }
+  },
+  "77": {
+    "inputs": {
+      "text": "512",
+      "anything": [
+        "76",
+        0
+      ]
+    },
+    "class_type": "easy showAnything",
+    "_meta": {
+      "title": "Show Any"
+    }
+  },
   "78": {
     "inputs": {
       "control_net_name": "control_v11f1p_sd15_depth.pth"
@@ -340,11 +409,11 @@
   "80": {
     "inputs": {
       "width": [
-        "218",
+        "72",
         0
       ],
       "height": [
-        "219",
+        "76",
         0
       ],
       "interpolation": "lanczos",
@@ -376,7 +445,10 @@
         0
       ],
       "skip_first_frames": 0,
-      "select_every_nth": 1
+      "select_every_nth": [
+        "253",
+        0
+      ]
     },
     "class_type": "VHS_LoadVideoPath",
     "_meta": {
@@ -386,11 +458,11 @@
   "84": {
     "inputs": {
       "width": [
-        "218",
+        "72",
         0
       ],
       "height": [
-        "219",
+        "76",
         0
       ],
       "interpolation": "lanczos",
@@ -576,7 +648,7 @@
   },
   "103": {
     "inputs": {
-      "text": "28",
+      "text": "111",
       "anything": [
         "98",
         0
@@ -589,7 +661,7 @@
   },
   "104": {
     "inputs": {
-      "text": "10",
+      "text": "37",
       "anything": [
         "96",
         0
@@ -665,7 +737,7 @@
   },
   "113": {
     "inputs": {
-      "text": "6",
+      "text": "28",
       "anything": [
         "115",
         0
@@ -691,7 +763,7 @@
   },
   "116": {
     "inputs": {
-      "text": "48",
+      "text": "180",
       "anything": [
         "108",
         1
@@ -717,7 +789,7 @@
   },
   "118": {
     "inputs": {
-      "text": "38",
+      "text": "148",
       "anything": [
         "49",
         2
@@ -768,11 +840,11 @@
   "129": {
     "inputs": {
       "width": [
-        "218",
+        "72",
         0
       ],
       "height": [
-        "219",
+        "76",
         0
       ],
       "interpolation": "lanczos",
@@ -835,7 +907,7 @@
   },
   "136": {
     "inputs": {
-      "string": "..\\inputs\\screen-masks"
+      "string": "G:\\Shared drives\\nilor\\Projects\\008_Vivid_Zenon_Site-Visit\\02_Research\\Screen Depth\\screen-mask.png"
     },
     "class_type": "Primitive string [Crystools]",
     "_meta": {
@@ -1061,7 +1133,7 @@
   },
   "196": {
     "inputs": {
-      "seed": 3
+      "seed": 106855603699686
     },
     "class_type": "Seed Generator",
     "_meta": {
@@ -1082,7 +1154,7 @@
   },
   "199": {
     "inputs": {
-      "text": "48",
+      "text": "180",
       "anything": [
         "198",
         0
@@ -1107,7 +1179,7 @@
   },
   "201": {
     "inputs": {
-      "text": "142",
+      "text": "359",
       "anything": [
         "200",
         0
@@ -1120,7 +1192,7 @@
   },
   "218": {
     "inputs": {
-      "int": 1758
+      "int": 10300
     },
     "class_type": "Primitive integer [Crystools]",
     "_meta": {
@@ -1129,7 +1201,7 @@
   },
   "219": {
     "inputs": {
-      "int": 512
+      "int": 3000
     },
     "class_type": "Primitive integer [Crystools]",
     "_meta": {
@@ -1143,6 +1215,54 @@
     "class_type": "Primitive integer [Crystools]",
     "_meta": {
       "title": "Enhance Tiles"
+    }
+  },
+  "248": {
+    "inputs": {
+      "context_opts": [
+        "56",
+        0
+      ],
+      "context_extras": [
+        "250",
+        0
+      ]
+    },
+    "class_type": "ADE_ContextExtras_Set",
+    "_meta": {
+      "title": "Set Context Extras 🎭🅐🅓"
+    }
+  },
+  "249": {
+    "inputs": {
+      "sliding_width": 2
+    },
+    "class_type": "ADE_ContextExtras_ContextRef_ModeSliding",
+    "_meta": {
+      "title": "ContextRef Mode◆Sliding 🎭🅐🅓"
+    }
+  },
+  "250": {
+    "inputs": {
+      "start_percent": 0,
+      "end_percent": 0.25,
+      "contextref_mode": [
+        "249",
+        0
+      ]
+    },
+    "class_type": "ADE_ContextExtras_ContextRef",
+    "_meta": {
+      "title": "Context Extras◆ContextRef 🎭🅐🅓"
+    }
+  },
+  "253": {
+    "inputs": {
+      "int": 2
+    },
+    "class_type": "Primitive integer [Crystools]",
+    "_meta": {
+      "title": "Mask Video Select Every Nth"
     }
   }
 }

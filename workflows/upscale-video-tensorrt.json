@@ -126,8 +126,8 @@
       "strength": 0.3,
       "blur": 0,
       "image_optional": [
-        "407",
-        3
+        "509",
+        0
       ]
     },
     "class_type": "IPAdapterNoise",
@@ -145,52 +145,10 @@
       "title": "Load AnimateDiff LoRA 🎭🅐🅓"
     }
   },
-  "356": {
-    "inputs": {
-      "ckpt_name": "rife47.pth",
-      "clear_cache_after_n_frames": 10,
-      "multiplier": 2,
-      "fast_mode": true,
-      "ensemble": true,
-      "scale_factor": 1,
-      "frames": [
-        "528",
-        0
-      ]
-    },
-    "class_type": "RIFE VFI",
-    "_meta": {
-      "title": "RIFE VFI (recommend rife47 and rife49)"
-    }
-  },
-  "357": {
-    "inputs": {
-      "frame_rate": 24,
-      "loop_count": 0,
-      "filename_prefix": [
-        "450",
-        0
-      ],
-      "format": "video/h264-mp4",
-      "pix_fmt": "yuv420p",
-      "crf": 19,
-      "save_metadata": true,
-      "pingpong": false,
-      "save_output": true,
-      "images": [
-        "356",
-        0
-      ]
-    },
-    "class_type": "VHS_VideoCombine",
-    "_meta": {
-      "title": "Video Combine 🎥🅥🅗🅢"
-    }
-  },
   "365": {
     "inputs": {
       "value": [
-        "528",
+        "539",
         0
       ]
     },
@@ -217,39 +175,6 @@
       "text": "7896",
       "anything": [
         "365",
-        2
-      ]
-    },
-    "class_type": "easy showAnything",
-    "_meta": {
-      "title": "Show Any"
-    }
-  },
-  "407": {
-    "inputs": {
-      "weights": "1.0, 0.1",
-      "timing": "linear",
-      "frames": 1,
-      "start_frame": 0,
-      "end_frame": 9999,
-      "add_starting_frames": 0,
-      "add_ending_frames": 0,
-      "method": "full batch",
-      "image": [
-        "462",
-        0
-      ]
-    },
-    "class_type": "IPAdapterWeights",
-    "_meta": {
-      "title": "IPAdapter Weights"
-    }
-  },
-  "415": {
-    "inputs": {
-      "text": "58",
-      "anything": [
-        "407",
         2
       ]
     },
@@ -358,11 +283,11 @@
   "450": {
     "inputs": {
       "a": [
-        "443",
+        "452",
         0
       ],
       "b": [
-        "455",
+        "538",
         0
       ]
     },
@@ -395,7 +320,7 @@
   },
   "454": {
     "inputs": {
-      "text": "Workflower/240925-142735_zenon_research_wide_rife-1_00001_hr_ult_rife",
+      "text": "upscale_research/ipa-batch_was26_cfg-60_denoise-40/frame",
       "anything": [
         "450",
         0
@@ -406,27 +331,48 @@
       "title": "Show Any"
     }
   },
-  "455": {
+  "509": {
     "inputs": {
-      "string": "_hr_ult_rife"
+      "video": [
+        "419",
+        0
+      ],
+      "force_rate": 0,
+      "force_size": "Disabled",
+      "custom_width": 512,
+      "custom_height": 512,
+      "frame_load_cap": 0,
+      "skip_first_frames": 0,
+      "select_every_nth": 2
     },
-    "class_type": "Primitive string [Crystools]",
+    "class_type": "VHS_LoadVideoPath",
     "_meta": {
-      "title": "🪛 Primitive string"
+      "title": "Load Video (Path) 🎥🅥🅗🅢"
     }
   },
-  "456": {
+  "527": {
+    "inputs": {
+      "filename_prefix": [
+        "450",
+        0
+      ],
+      "images": [
+        "539",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "535": {
     "inputs": {
       "weight": 1,
-      "weight_type": "ease in-out",
+      "weight_type": "ease out",
       "start_at": 0,
       "end_at": 0.4,
       "embeds_scaling": "V only",
-      "enhance_tiles": [
-        "460",
-        0
-      ],
-      "enhance_ratio": 0.8,
       "encode_batch_size": 64,
       "model": [
         "245",
@@ -449,26 +395,21 @@
         0
       ]
     },
-    "class_type": "IPAdapterClipVisionEnhancerBatch",
+    "class_type": "IPAdapterBatch",
     "_meta": {
-      "title": "IPAdapter ClipVision Enhancer Batch"
+      "title": "IPAdapter Batch (Adv.)"
     }
   },
-  "457": {
+  "536": {
     "inputs": {
       "weight": 1,
-      "weight_type": "ease in-out",
+      "weight_type": "ease out",
       "start_at": 0.4,
       "end_at": 1,
       "embeds_scaling": "V only",
-      "enhance_tiles": [
-        "460",
-        0
-      ],
-      "enhance_ratio": 0.8,
       "encode_batch_size": 64,
       "model": [
-        "456",
+        "535",
         0
       ],
       "ipadapter": [
@@ -476,8 +417,8 @@
         0
       ],
       "image": [
-        "407",
-        3
+        "509",
+        0
       ],
       "image_negative": [
         "310",
@@ -488,102 +429,25 @@
         0
       ]
     },
-    "class_type": "IPAdapterClipVisionEnhancerBatch",
+    "class_type": "IPAdapterBatch",
     "_meta": {
-      "title": "IPAdapter ClipVision Enhancer Batch"
+      "title": "IPAdapter Batch (Adv.)"
     }
   },
-  "458": {
+  "538": {
     "inputs": {
-      "value": "a*224",
-      "a": [
-        "460",
-        0
-      ]
+      "string": "_hr_ult_rife"
     },
-    "class_type": "SimpleMath+",
+    "class_type": "Primitive string [Crystools]",
     "_meta": {
-      "title": "🔧 Simple Math"
+      "title": "🪛 Primitive string"
     }
   },
-  "460": {
-    "inputs": {
-      "int": 3
-    },
-    "class_type": "Primitive integer [Crystools]",
-    "_meta": {
-      "title": "Enhance Tiles"
-    }
-  },
-  "462": {
-    "inputs": {
-      "width": [
-        "458",
-        0
-      ],
-      "height": [
-        "458",
-        0
-      ],
-      "interpolation": "lanczos",
-      "method": "keep proportion",
-      "condition": "always",
-      "multiple_of": 0,
-      "image": [
-        "509",
-        0
-      ]
-    },
-    "class_type": "ImageResize+",
-    "_meta": {
-      "title": "🔧 Image Resize"
-    }
-  },
-  "485": {
-    "inputs": {
-      "images": [
-        "462",
-        0
-      ]
-    },
-    "class_type": "PreviewImage",
-    "_meta": {
-      "title": "Preview Image"
-    }
-  },
-  "509": {
-    "inputs": {
-      "video": [
-        "419",
-        0
-      ],
-      "force_rate": 0,
-      "force_size": "Disabled",
-      "custom_width": 512,
-      "custom_height": 512,
-      "frame_load_cap": 0,
-      "skip_first_frames": 0,
-      "select_every_nth": 2
-    },
-    "class_type": "VHS_LoadVideoPath",
-    "_meta": {
-      "title": "Load Video (Path) 🎥🅥🅗🅢"
-    }
-  },
-  "525": {
-    "inputs": {
-      "int": 20
-    },
-    "class_type": "Primitive integer [Crystools]",
-    "_meta": {
-      "title": "Steps"
-    }
-  },
-  "528": {
+  "539": {
     "inputs": {
       "seed": 172173409385114,
       "steps": [
-        "525",
+        "541",
         0
       ],
       "cfg": 6,
@@ -603,11 +467,11 @@
       "force_uniform_tiles": false,
       "tiled_decode": false,
       "upscaled_image": [
-        "529",
+        "540",
         0
       ],
       "model": [
-        "457",
+        "536",
         0
       ],
       "positive": [
@@ -628,7 +492,7 @@
       "title": "Ultimate SD Upscale (No Upscale)"
     }
   },
-  "529": {
+  "540": {
     "inputs": {
       "engine": "realistic.engine",
       "resize_to": "none",
@@ -640,6 +504,15 @@
     "class_type": "UpscalerTensorrt",
     "_meta": {
       "title": "Upscaler Tensorrt"
+    }
+  },
+  "541": {
+    "inputs": {
+      "int": 20
+    },
+    "class_type": "Primitive integer [Crystools]",
+    "_meta": {
+      "title": "Steps"
     }
   }
 }

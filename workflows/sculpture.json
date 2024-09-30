@@ -229,85 +229,6 @@
       "title": "IPAdapter ClipVision Enhancer Batch"
     }
   },
-  "56": {
-    "inputs": {
-      "context_length": 16,
-      "context_overlap": 4,
-      "fuse_method": "pyramid",
-      "use_on_equal_length": false,
-      "start_percent": 0,
-      "guarantee_steps": 1
-    },
-    "class_type": "ADE_StandardStaticContextOptions",
-    "_meta": {
-      "title": "Context Options◆Standard Static 🎭🅐🅓"
-    }
-  },
-  "59": {
-    "inputs": {
-      "beta_schedule": "lcm[100_ots]",
-      "model": [
-        "50",
-        0
-      ],
-      "m_models": [
-        "60",
-        0
-      ],
-      "context_options": [
-        "56",
-        0
-      ],
-      "sample_settings": [
-        "62",
-        0
-      ]
-    },
-    "class_type": "ADE_UseEvolvedSampling",
-    "_meta": {
-      "title": "Use Evolved Sampling 🎭🅐🅓②"
-    }
-  },
-  "60": {
-    "inputs": {
-      "start_percent": 0,
-      "end_percent": 1,
-      "motion_model": [
-        "61",
-        0
-      ],
-      "scale_multival": [
-        "67",
-        0
-      ]
-    },
-    "class_type": "ADE_ApplyAnimateDiffModel",
-    "_meta": {
-      "title": "Apply AnimateDiff Model (Adv.) 🎭🅐🅓②"
-    }
-  },
-  "61": {
-    "inputs": {
-      "model_name": "animate_lcm_sd15_t2v_beta.ckpt"
-    },
-    "class_type": "ADE_LoadAnimateDiffModel",
-    "_meta": {
-      "title": "Load AnimateDiff Model 🎭🅐🅓②"
-    }
-  },
-  "62": {
-    "inputs": {
-      "batch_offset": 0,
-      "noise_type": "FreeNoise",
-      "seed_gen": "comfy",
-      "seed_offset": 0,
-      "adapt_denoise_steps": false
-    },
-    "class_type": "ADE_AnimateDiffSamplingSettings",
-    "_meta": {
-      "title": "Sample Settings 🎭🅐🅓"
-    }
-  },
   "66": {
     "inputs": {
       "type": "shuffle",
@@ -317,15 +238,6 @@
     "class_type": "IPAdapterNoise",
     "_meta": {
       "title": "IPAdapter Noise"
-    }
-  },
-  "67": {
-    "inputs": {
-      "float_val": 1.5
-    },
-    "class_type": "ADE_MultivalDynamic",
-    "_meta": {
-      "title": "Multival 🎭🅐🅓"
     }
   },
   "78": {
@@ -813,7 +725,7 @@
       "s1": 0.9,
       "s2": 0.2,
       "model": [
-        "59",
+        "267",
         0
       ]
     },
@@ -1033,7 +945,10 @@
         0
       ],
       "skip_first_frames": 0,
-      "select_every_nth": 1
+      "select_every_nth": [
+        "277",
+        0
+      ]
     },
     "class_type": "VHS_LoadVideoPath",
     "_meta": {
@@ -1054,6 +969,142 @@
     "class_type": "RepeatImageBatch",
     "_meta": {
       "title": "RepeatImageBatch"
+    }
+  },
+  "266": {
+    "inputs": {
+      "context_length": 16,
+      "context_overlap": 4,
+      "fuse_method": "gauss-sigma",
+      "use_on_equal_length": false,
+      "start_percent": 0,
+      "guarantee_steps": 1
+    },
+    "class_type": "ADE_StandardStaticContextOptions",
+    "_meta": {
+      "title": "Context Options◆Standard Static 🎭🅐🅓"
+    }
+  },
+  "267": {
+    "inputs": {
+      "beta_schedule": "lcm[100_ots]",
+      "model": [
+        "50",
+        0
+      ],
+      "m_models": [
+        "268",
+        0
+      ],
+      "context_options": [
+        "274",
+        0
+      ],
+      "sample_settings": [
+        "270",
+        0
+      ]
+    },
+    "class_type": "ADE_UseEvolvedSampling",
+    "_meta": {
+      "title": "Use Evolved Sampling 🎭🅐🅓②"
+    }
+  },
+  "268": {
+    "inputs": {
+      "start_percent": 0,
+      "end_percent": 1,
+      "motion_model": [
+        "269",
+        0
+      ],
+      "scale_multival": [
+        "271",
+        0
+      ]
+    },
+    "class_type": "ADE_ApplyAnimateDiffModel",
+    "_meta": {
+      "title": "Apply AnimateDiff Model (Adv.) 🎭🅐🅓②"
+    }
+  },
+  "269": {
+    "inputs": {
+      "model_name": "animate_lcm_sd15_t2v_beta.ckpt"
+    },
+    "class_type": "ADE_LoadAnimateDiffModel",
+    "_meta": {
+      "title": "Load AnimateDiff Model 🎭🅐🅓②"
+    }
+  },
+  "270": {
+    "inputs": {
+      "batch_offset": 0,
+      "noise_type": "FreeNoise",
+      "seed_gen": "comfy",
+      "seed_offset": 0,
+      "adapt_denoise_steps": false
+    },
+    "class_type": "ADE_AnimateDiffSamplingSettings",
+    "_meta": {
+      "title": "Sample Settings 🎭🅐🅓"
+    }
+  },
+  "271": {
+    "inputs": {
+      "float_val": 1.5
+    },
+    "class_type": "ADE_MultivalDynamic",
+    "_meta": {
+      "title": "Multival 🎭🅐🅓"
+    }
+  },
+  "274": {
+    "inputs": {
+      "context_opts": [
+        "266",
+        0
+      ],
+      "context_extras": [
+        "276",
+        0
+      ]
+    },
+    "class_type": "ADE_ContextExtras_Set",
+    "_meta": {
+      "title": "Set Context Extras 🎭🅐🅓"
+    }
+  },
+  "275": {
+    "inputs": {
+      "sliding_width": 2
+    },
+    "class_type": "ADE_ContextExtras_ContextRef_ModeSliding",
+    "_meta": {
+      "title": "ContextRef Mode◆Sliding 🎭🅐🅓"
+    }
+  },
+  "276": {
+    "inputs": {
+      "start_percent": 0,
+      "end_percent": 0.25,
+      "contextref_mode": [
+        "275",
+        0
+      ]
+    },
+    "class_type": "ADE_ContextExtras_ContextRef",
+    "_meta": {
+      "title": "Context Extras◆ContextRef 🎭🅐🅓"
+    }
+  },
+  "277": {
+    "inputs": {
+      "int": 2
+    },
+    "class_type": "Primitive integer [Crystools]",
+    "_meta": {
+      "title": "Mask Video Select Every Nth"
     }
   }
 }
