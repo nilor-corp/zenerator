@@ -336,75 +336,6 @@
       "title": "Multival 🎭🅐🅓"
     }
   },
-  "72": {
-    "inputs": {
-      "value": "a/b",
-      "a": [
-        "218",
-        0
-      ],
-      "b": [
-        "75",
-        0
-      ]
-    },
-    "class_type": "SimpleMath+",
-    "_meta": {
-      "title": "🔧 Simple Math"
-    }
-  },
-  "73": {
-    "inputs": {
-      "text": "1758",
-      "anything": [
-        "72",
-        0
-      ]
-    },
-    "class_type": "easy showAnything",
-    "_meta": {
-      "title": "Show Any"
-    }
-  },
-  "75": {
-    "inputs": {
-      "float": 5.86
-    },
-    "class_type": "Primitive float [Crystools]",
-    "_meta": {
-      "title": "🪛 Primitive float"
-    }
-  },
-  "76": {
-    "inputs": {
-      "value": "a/b",
-      "a": [
-        "219",
-        0
-      ],
-      "b": [
-        "75",
-        0
-      ]
-    },
-    "class_type": "SimpleMath+",
-    "_meta": {
-      "title": "🔧 Simple Math"
-    }
-  },
-  "77": {
-    "inputs": {
-      "text": "512",
-      "anything": [
-        "76",
-        0
-      ]
-    },
-    "class_type": "easy showAnything",
-    "_meta": {
-      "title": "Show Any"
-    }
-  },
   "78": {
     "inputs": {
       "control_net_name": "control_v11f1p_sd15_depth.pth"
@@ -417,11 +348,11 @@
   "80": {
     "inputs": {
       "width": [
-        "72",
+        "218",
         0
       ],
       "height": [
-        "76",
+        "219",
         0
       ],
       "interpolation": "lanczos",
@@ -466,11 +397,11 @@
   "84": {
     "inputs": {
       "width": [
-        "72",
+        "218",
         0
       ],
       "height": [
-        "76",
+        "219",
         0
       ],
       "interpolation": "lanczos",
@@ -836,11 +767,11 @@
   "129": {
     "inputs": {
       "width": [
-        "72",
+        "218",
         0
       ],
       "height": [
-        "76",
+        "219",
         0
       ],
       "interpolation": "lanczos",
@@ -1200,7 +1131,7 @@
   },
   "218": {
     "inputs": {
-      "int": 10300
+      "int": 2632
     },
     "class_type": "Primitive integer [Crystools]",
     "_meta": {
@@ -1209,7 +1140,7 @@
   },
   "219": {
     "inputs": {
-      "int": 3000
+      "int": 768
     },
     "class_type": "Primitive integer [Crystools]",
     "_meta": {
