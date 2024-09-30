@@ -104,6 +104,10 @@
       "image_negative": [
         "66",
         0
+      ],
+      "clip_vision": [
+        "266",
+        0
       ]
     },
     "class_type": "IPAdapterClipVisionEnhancerBatch",
@@ -221,6 +225,10 @@
       ],
       "image_negative": [
         "66",
+        0
+      ],
+      "clip_vision": [
+        "266",
         0
       ]
     },
@@ -486,7 +494,7 @@
         0
       ],
       "mask": [
-        "131",
+        "254",
         0
       ]
     },
@@ -672,18 +680,6 @@
       "title": "Show Any"
     }
   },
-  "108": {
-    "inputs": {
-      "video_info": [
-        "83",
-        3
-      ]
-    },
-    "class_type": "VHS_VideoInfoLoaded",
-    "_meta": {
-      "title": "Video Info (Loaded) 🎥🅥🅗🅢"
-    }
-  },
   "109": {
     "inputs": {
       "images": [
@@ -700,8 +696,8 @@
     "inputs": {
       "value": "(a-(b*2))/c",
       "a": [
-        "108",
-        1
+        "111",
+        0
       ],
       "b": [
         "112",
@@ -765,8 +761,8 @@
     "inputs": {
       "text": "180",
       "anything": [
-        "108",
-        1
+        "111",
+        0
       ]
     },
     "class_type": "easy showAnything",
@@ -893,10 +889,22 @@
       "title": "MaskComposite"
     }
   },
+  "132": {
+    "inputs": {
+      "mask": [
+        "254",
+        0
+      ]
+    },
+    "class_type": "MaskPreview+",
+    "_meta": {
+      "title": "🔧 Mask Preview"
+    }
+  },
   "133": {
     "inputs": {
       "mask": [
-        "131",
+        "254",
         0
       ]
     },
@@ -993,12 +1001,12 @@
         0
       ],
       "positive": [
-        "92",
+        "262",
         0
       ],
       "negative": [
-        "92",
-        1
+        "263",
+        0
       ],
       "latent_image": [
         "86",
@@ -1263,6 +1271,109 @@
     "class_type": "Primitive integer [Crystools]",
     "_meta": {
       "title": "Mask Video Select Every Nth"
+    }
+  },
+  "254": {
+    "inputs": {
+      "boolean": [
+        "255",
+        0
+      ],
+      "on_true": [
+        "131",
+        0
+      ],
+      "on_false": [
+        "267",
+        1
+      ]
+    },
+    "class_type": "Switch any [Crystools]",
+    "_meta": {
+      "title": "🪛 Switch any"
+    }
+  },
+  "255": {
+    "inputs": {
+      "boolean": true
+    },
+    "class_type": "Primitive boolean [Crystools]",
+    "_meta": {
+      "title": "Use Animated Latent Mask"
+    }
+  },
+  "262": {
+    "inputs": {
+      "boolean": [
+        "264",
+        0
+      ],
+      "on_true": [
+        "92",
+        0
+      ],
+      "on_false": [
+        "6",
+        0
+      ]
+    },
+    "class_type": "Switch any [Crystools]",
+    "_meta": {
+      "title": "🪛 Switch any"
+    }
+  },
+  "263": {
+    "inputs": {
+      "boolean": [
+        "264",
+        0
+      ],
+      "on_true": [
+        "92",
+        1
+      ],
+      "on_false": [
+        "6",
+        0
+      ]
+    },
+    "class_type": "Switch any [Crystools]",
+    "_meta": {
+      "title": "🪛 Switch any"
+    }
+  },
+  "264": {
+    "inputs": {
+      "boolean": true
+    },
+    "class_type": "Primitive boolean [Crystools]",
+    "_meta": {
+      "title": "Use Depth ControlNet"
+    }
+  },
+  "266": {
+    "inputs": {
+      "clip_name": "ip-adapter_image_encoder_sd15.safetensors"
+    },
+    "class_type": "CLIPVisionLoader",
+    "_meta": {
+      "title": "Load CLIP Vision"
+    }
+  },
+  "267": {
+    "inputs": {
+      "multiply_by": [
+        "111",
+        0
+      ],
+      "mask": [
+        "130",
+        0
+      ]
+    },
+    "class_type": "VHS_DuplicateMasks",
+    "_meta": {
+      "title": "Repeat Masks 🎥🅥🅗🅢"
     }
   }
 }

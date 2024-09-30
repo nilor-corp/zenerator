@@ -23,7 +23,7 @@
                 "label": "Raw Frame Count (final frame count / 3)",
                 "node-id": "[\"111\"][\"inputs\"][\"int\"]",
                 "value": 180,
-                "interactive": true
+                "interactive": false
             },
             "image-mask-path": {
                 "type": "path",
@@ -32,18 +32,32 @@
                 "value": "./inputs/screen-masks/wide_screen-mask.png",
                 "interactive": false
             },
+            "use-video-mask": {
+                "type": "bool",
+                "label": "Use Animated Mask Video",
+                "node-id": "[\"255\"][\"inputs\"][\"boolean\"]",
+                "value": true,
+                "interactive": false
+            },
             "video-mask-path": {
                 "type": "path",
                 "label": "Path of Animated Mask Video",
                 "node-id": "[\"138\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
-                "interactive": true
+                "interactive": false
             },
             "video-mask-select-every-nth": {
                 "type": "int",
                 "label": "Select Every Nth Frame of Animated Mask Video",
                 "node-id": "[\"253\"][\"inputs\"][\"int\"]",
                 "value": "2",
+                "interactive": false
+            },
+            "use-image-depth": {
+                "type": "bool",
+                "label": "Use Depth Image",
+                "node-id": "[\"264\"][\"inputs\"][\"boolean\"]",
+                "value": true,
                 "interactive": false
             },
             "image-depth-path": {
@@ -119,6 +133,13 @@
                 "value": "./inputs/screen-masks/f_screen-mask.png",
                 "interactive": false
             },
+            "use-video-mask": {
+                "type": "bool",
+                "label": "Use Animated Mask Video",
+                "node-id": "[\"255\"][\"inputs\"][\"boolean\"]",
+                "value": true,
+                "interactive": false
+            },
             "video-mask-path": {
                 "type": "path",
                 "label": "Path of Animated Mask Video",
@@ -131,6 +152,13 @@
                 "label": "Select Every Nth Frame of Animated Mask Video",
                 "node-id": "[\"253\"][\"inputs\"][\"int\"]",
                 "value": "2",
+                "interactive": false
+            },
+            "use-image-depth": {
+                "type": "bool",
+                "label": "Use Depth Image",
+                "node-id": "[\"264\"][\"inputs\"][\"boolean\"]",
+                "value": true,
                 "interactive": false
             },
             "image-depth-path": {
@@ -206,6 +234,13 @@
                 "value": "./inputs/screen-masks/g_screen-mask.png",
                 "interactive": false
             },
+            "use-video-mask": {
+                "type": "bool",
+                "label": "Use Animated Mask Video",
+                "node-id": "[\"255\"][\"inputs\"][\"boolean\"]",
+                "value": true,
+                "interactive": false
+            },
             "video-mask-path": {
                 "type": "path",
                 "label": "Path of Animated Mask Video",
@@ -218,6 +253,13 @@
                 "label": "Select Every Nth Frame of Animated Mask Video",
                 "node-id": "[\"253\"][\"inputs\"][\"int\"]",
                 "value": "2",
+                "interactive": false
+            },
+            "use-image-depth": {
+                "type": "bool",
+                "label": "Use Depth Image",
+                "node-id": "[\"264\"][\"inputs\"][\"boolean\"]",
+                "value": true,
                 "interactive": false
             },
             "image-depth-path": {
@@ -293,6 +335,13 @@
                 "value": "./inputs/screen-masks/h_screen-mask.png",
                 "interactive": false
             },
+            "use-video-mask": {
+                "type": "bool",
+                "label": "Use Animated Mask Video",
+                "node-id": "[\"255\"][\"inputs\"][\"boolean\"]",
+                "value": true,
+                "interactive": false
+            },
             "video-mask-path": {
                 "type": "path",
                 "label": "Path of Animated Mask Video",
@@ -305,6 +354,13 @@
                 "label": "Select Every Nth Frame of Animated Mask Video",
                 "node-id": "[\"253\"][\"inputs\"][\"int\"]",
                 "value": "2",
+                "interactive": false
+            },
+            "use-image-depth": {
+                "type": "bool",
+                "label": "Use Depth Image",
+                "node-id": "[\"264\"][\"inputs\"][\"boolean\"]",
+                "value": true,
                 "interactive": false
             },
             "image-depth-path": {
@@ -376,8 +432,50 @@
             "image-mask-path": {
                 "type": "path",
                 "label": "Path of Screen Mask Image",
-                "node-id": "[\"136\"][\"inputs\"][\"string\"]",
+                "node-id": "[\"337\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-masks/medusa_screen-mask.png",
+                "interactive": false
+            },
+            "use-video-mask": {
+                "type": "bool",
+                "label": "Use Animated Mask Video",
+                "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
+                "value": false,
+                "interactive": false
+            },
+            "video-mask-path": {
+                "type": "path",
+                "label": "Path of Animated Mask Video",
+                "node-id": "[\"339\"][\"inputs\"][\"string\"]",
+                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
+                "interactive": false
+            },
+            "video-mask-select-every-nth": {
+                "type": "int",
+                "label": "Select Every Nth Frame of Animated Mask Video",
+                "node-id": "[\"348\"][\"inputs\"][\"int\"]",
+                "value": "2",
+                "interactive": false
+            },
+            "use-image-depth": {
+                "type": "bool",
+                "label": "Use Depth Image",
+                "node-id": "[\"319\"][\"inputs\"][\"boolean\"]",
+                "value": true,
+                "interactive": false
+            },
+            "image-depth-path": {
+                "type": "path",
+                "label": "Path of Screen Depth Image",
+                "node-id": "[\"139\"][\"inputs\"][\"string\"]",
+                "value": "./inputs/screen-depths/medusa_depth.png",
+                "interactive": false
+            },
+            "use-video-lineart": {
+                "type": "bool",
+                "label": "Use LineArt Video",
+                "node-id": "[\"325\"][\"inputs\"][\"boolean\"]",
+                "value": true,
                 "interactive": false
             },
             "video-lineart-path": {
@@ -394,19 +492,12 @@
                 "value": "2",
                 "interactive": false
             },
-            "image-depth-path": {
-                "type": "path",
-                "label": "Path of Screen Depth Image",
-                "node-id": "[\"139\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/screen-depths/medusa_depth.png",
-                "interactive": false
-            },
             "filename-prefix": {
                 "type": "string",
                 "label": "Output Video Filename Prefix",
                 "node-id": "[\"191\"][\"inputs\"][\"filename_prefix\"]",
                 "value": "WorkFlower/zenon_medusa_rife-1",
-                "interactive": false
+                "interactive": true
             },
             "images-01": {
                 "type": "images",
@@ -463,8 +554,50 @@
             "image-mask-path": {
                 "type": "path",
                 "label": "Path of Screen Mask Image",
-                "node-id": "[\"136\"][\"inputs\"][\"string\"]",
+                "node-id": "[\"337\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-masks/poseidon_screen-mask.png",
+                "interactive": false
+            },
+            "use-video-mask": {
+                "type": "bool",
+                "label": "Use Animated Mask Video",
+                "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
+                "value": false,
+                "interactive": false
+            },
+            "video-mask-path": {
+                "type": "path",
+                "label": "Path of Animated Mask Video",
+                "node-id": "[\"339\"][\"inputs\"][\"string\"]",
+                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
+                "interactive": false
+            },
+            "video-mask-select-every-nth": {
+                "type": "int",
+                "label": "Select Every Nth Frame of Animated Mask Video",
+                "node-id": "[\"348\"][\"inputs\"][\"int\"]",
+                "value": "2",
+                "interactive": false
+            },
+            "use-image-depth": {
+                "type": "bool",
+                "label": "Use Depth Image",
+                "node-id": "[\"319\"][\"inputs\"][\"boolean\"]",
+                "value": false,
+                "interactive": false
+            },
+            "image-depth-path": {
+                "type": "path",
+                "label": "Path of Screen Depth Image",
+                "node-id": "[\"139\"][\"inputs\"][\"string\"]",
+                "value": "./inputs/screen-depths/poseidon_depth.png",
+                "interactive": false
+            },
+            "use-video-lineart": {
+                "type": "bool",
+                "label": "Use LineArt Video",
+                "node-id": "[\"325\"][\"inputs\"][\"boolean\"]",
+                "value": true,
                 "interactive": false
             },
             "video-lineart-path": {
@@ -479,13 +612,6 @@
                 "label": "Select Every Nth Frame of Animated LineArt Video",
                 "node-id": "[\"277\"][\"inputs\"][\"int\"]",
                 "value": "2",
-                "interactive": false
-            },
-            "image-depth-path": {
-                "type": "path",
-                "label": "Path of Screen Depth Image",
-                "node-id": "[\"139\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/screen-depths/poseidon_depth.png",
                 "interactive": false
             },
             "filename-prefix": {
@@ -598,6 +724,142 @@
                 "node-id": "[\"541\"][\"inputs\"][\"int\"]",
                 "value": 20,
                 "interactive": false
+            }
+        },
+        "outputs": {
+            "type": "video"
+        }
+    },
+    "logo-reveal":{
+        "name": "Logo Reveal",
+        "filename": "sculpture.json",
+        "description": "Create a video for the Medusa sculpture in the VIP room.",
+        "inputs": {
+            "width": {
+                "type": "int",
+                "label": "Output Width",
+                "node-id": "[\"218\"][\"inputs\"][\"int\"]",
+                "value": 768,
+                "interactive": true
+            },
+            "height": {
+                "type": "int",
+                "label": "Output Height",
+                "node-id": "[\"219\"][\"inputs\"][\"int\"]",
+                "value": 768,
+                "interactive": true
+            },
+            "frame_count": {
+                "type": "int",
+                "label": "Raw Frame Count (final frame count / 3)",
+                "node-id": "[\"111\"][\"inputs\"][\"int\"]",
+                "value": 48,
+                "interactive": true
+            },
+            "image-mask-path": {
+                "type": "path",
+                "label": "Path of Screen Mask Image",
+                "node-id": "[\"337\"][\"inputs\"][\"string\"]",
+                "value": "./inputs/screen-masks/square_screen-mask.png",
+                "interactive": true
+            },
+            "use-video-mask": {
+                "type": "bool",
+                "label": "Use Animated Mask Video",
+                "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
+                "value": true,
+                "interactive": true
+            },
+            "video-mask-path": {
+                "type": "path",
+                "label": "Path of Animated Mask Video",
+                "node-id": "[\"339\"][\"inputs\"][\"string\"]",
+                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
+                "interactive": true
+            },
+            "video-mask-select-every-nth": {
+                "type": "int",
+                "label": "Select Every Nth Frame of Animated Mask Video",
+                "node-id": "[\"348\"][\"inputs\"][\"int\"]",
+                "value": "2",
+                "interactive": true
+            },
+            "use-image-depth": {
+                "type": "bool",
+                "label": "Use Depth Image",
+                "node-id": "[\"319\"][\"inputs\"][\"boolean\"]",
+                "value": false,
+                "interactive": true
+            },
+            "image-depth-path": {
+                "type": "path",
+                "label": "Path of Screen Depth Image",
+                "node-id": "[\"139\"][\"inputs\"][\"string\"]",
+                "value": "./inputs/screen-depths/medusa_depth.png",
+                "interactive": true
+            },
+            "use-video-lineart": {
+                "type": "bool",
+                "label": "Use LineArt Video",
+                "node-id": "[\"325\"][\"inputs\"][\"boolean\"]",
+                "value": true,
+                "interactive": true
+            },
+            "video-lineart-path": {
+                "type": "path",
+                "label": "Path of Animated LineArt Video",
+                "node-id": "[\"260\"][\"inputs\"][\"string\"]",
+                "value": "D:\\NILOR\\HUGGINGFACE\\nilor-corp-2\\ComfyUI\\output\\fucker\\emirates_lineart_fucked_00001.mp4",
+                "interactive": true
+            },
+            "video-lineart-select-every-nth": {
+                "type": "int",
+                "label": "Select Every Nth Frame of Animated LineArt Video",
+                "node-id": "[\"277\"][\"inputs\"][\"int\"]",
+                "value": "1",
+                "interactive": true
+            },
+            "video-lineart-strength": {
+                "type": "float",
+                "label": "LineArt Strength",
+                "node-id": "[\"250\"][\"inputs\"][\"strength\"]",
+                "value": "1.0",
+                "interactive": true
+            },
+            "video-lineart-end-percent": {
+                "type": "float",
+                "label": "LineArt End Percent",
+                "node-id": "[\"250\"][\"inputs\"][\"end_percent\"]",
+                "value": "0.75",
+                "interactive": true
+            },
+            "filename-prefix": {
+                "type": "string",
+                "label": "Output Video Filename Prefix",
+                "node-id": "[\"191\"][\"inputs\"][\"filename_prefix\"]",
+                "value": "WorkFlower/zenon_logo-reveal_rife-1",
+                "interactive": true
+            },
+            "images-01": {
+                "type": "images",
+                "label": "Images",
+                "node-id": "[\"142\"][\"inputs\"][\"string\"]",
+                "value": "",
+                "interactive": true
+            },
+            "text-01": {
+                "type": "text",
+                "label": "Positive Prompt",
+                "node-id": "[\"6\"][\"inputs\"][\"text\"]",
+                "value": "extremely detailed",
+                "interactive": true
+            },
+            "text-02": {
+                "type": "text",
+                "label": "Negative Prompt",
+                "node-id": "[\"7\"][\"inputs\"][\"text\"]",
+                "value": "blurry, glitches, artifact, distorted, malformed, nsfw, sun flare, glare, bloom, bokeh",
+                "interactive": true
             }
         },
         "outputs": {
