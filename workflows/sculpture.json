@@ -36,7 +36,7 @@
   },
   "78": {
     "inputs": {
-      "control_net_name": "control_v11f1p_sd15_depth.safetensors"
+      "control_net_name": "control_v11f1p_sd15_depth_fp16.safetensors"
     },
     "class_type": "ControlNetLoaderAdvanced",
     "_meta": {

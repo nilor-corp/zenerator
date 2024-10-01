@@ -14761,7 +14761,7 @@
         "Node name for S&R": "ControlNetLoaderAdvanced"
       },
       "widgets_values": [
-        "control_v11f1p_sd15_depth.safetensors"
+        "control_v11f1p_sd15_depth_fp16.safetensors"
       ],
       "color": "#223",
       "bgcolor": "#335",
