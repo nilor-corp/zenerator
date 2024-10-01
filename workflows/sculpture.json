@@ -910,8 +910,8 @@
   "304": {
     "inputs": {
       "weight": [
-        "303",
-        1
+        "354",
+        0
       ],
       "weight_type": "linear",
       "start_at": 0,
@@ -1348,6 +1348,18 @@
     "class_type": "VHS_DuplicateMasks",
     "_meta": {
       "title": "Repeat Masks 🎥🅥🅗🅢"
+    }
+  },
+  "354": {
+    "inputs": {
+      "list_of_floats": [
+        "303",
+        0
+      ]
+    },
+    "class_type": "Nilor Inverse Map Float List",
+    "_meta": {
+      "title": "👺 Nilor Inverse Map Float List"
     }
   }
 }
