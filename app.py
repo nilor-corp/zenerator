@@ -18,6 +18,16 @@ with open("config.json") as f:
     config = json.load(f)
 
 COMFY_URL = config["COMFY_URL"]
+
+QUEUE_URLS = []
+
+for port in config["COMFY_PORTS"]:
+    QUEUE_URLS.append(config["COMFY_URL"] + port + "/prompt")
+
+selected_port_url = ""
+
+print(QUEUE_URLS)
+
 QUEUE_URL = config["COMFY_URL"] + "/prompt"
 OUT_DIR = config["COMFY_ROOT"] + "output/WorkFlower/"
 LORA_DIR = config["COMFY_ROOT"] + "models/loras/"
@@ -27,10 +37,11 @@ output_type = ""
 
 
 def start_queue(prompt_workflow):
+    print(f"Using URL: {selected_port_url}")
     p = {"prompt": prompt_workflow}
     data = json.dumps(p).encode("utf-8")
     try:
-        requests.post(QUEUE_URL, data=data)
+        requests.post(selected_port_url, data=data)
     except ConnectionResetError:
         print("Connection was reset while trying to start the workflow. Retrying...")
 
@@ -164,7 +175,7 @@ def run_workflow_with_name(workflow_name, raw_components, component_info_dict, p
             # access the component_info_dict using component.elem_id and add a value field = arg
             component_info_dict[component.elem_id]["value"] = arg
 
-        return run_workflow(workflow_name, progress, **component_info_dict)
+        return run_workflow(workflow_name, progress, **component_info_dict, )
 
     return wrapper
 
@@ -350,9 +361,18 @@ def create_tab_interface(workflow_name):
     return components, component_data_dict
 
 
+def select_correct_port(selector):
+    print(f"Selected Port URL: {selector}")
+    global selected_port_url 
+    selected_port_url = selector
+    print(f"Changed Port URL to: {selected_port_url}")
+
 with gr.Blocks(title="WorkFlower") as demo:
     with gr.Row():
         with gr.Column():
+            comfy_url_and_port_selector = gr.Dropdown(label="ComfyUI Prompt URL", choices=QUEUE_URLS, value=QUEUE_URLS[0], interactive=True)
+            print(f"Default Port URL: {comfy_url_and_port_selector.value}")
+            comfy_url_and_port_selector.change(select_correct_port, inputs=[comfy_url_and_port_selector])
             tabs = gr.Tabs()
             with tabs:
                 with gr.TabItem(label="About"):
@@ -398,12 +418,14 @@ with gr.Blocks(title="WorkFlower") as demo:
 
                         # investigate trigger_mode=multiple for run_button.click event
 
-                        run_button.click(
-                            fn=run_workflow_with_name(workflow_filename, components, component_dict[workflow_name]),
-                            inputs=components,
-                            outputs=[output_player],
-                            trigger_mode="multiple",
-                        )
+                        if (selected_port_url is not None) and (components is not None) and (component_dict is not None):
+                                run_button.click(
+                                fn=run_workflow_with_name(workflow_filename, components, component_dict[workflow_name]),
+                                inputs=components,
+                                outputs=[output_player],
+                                trigger_mode="multiple",
+                            )
+                        
    
 
     demo.launch(favicon_path="favicon.png")
