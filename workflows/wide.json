@@ -198,8 +198,8 @@
   "50": {
     "inputs": {
       "weight": [
-        "49",
-        1
+        "273",
+        0
       ],
       "weight_type": "linear",
       "start_at": 0,
@@ -587,7 +587,7 @@
   },
   "103": {
     "inputs": {
-      "text": "111",
+      "text": "114",
       "anything": [
         "98",
         0
@@ -600,7 +600,7 @@
   },
   "104": {
     "inputs": {
-      "text": "37",
+      "text": "38",
       "anything": [
         "96",
         0
@@ -664,7 +664,7 @@
   },
   "113": {
     "inputs": {
-      "text": "28",
+      "text": "24",
       "anything": [
         "115",
         0
@@ -703,7 +703,7 @@
   },
   "117": {
     "inputs": {
-      "text": "6",
+      "text": "7",
       "anything": [
         "109",
         0
@@ -716,7 +716,7 @@
   },
   "118": {
     "inputs": {
-      "text": "148",
+      "text": "152",
       "anything": [
         "49",
         2
@@ -820,18 +820,6 @@
       "title": "MaskComposite"
     }
   },
-  "132": {
-    "inputs": {
-      "mask": [
-        "254",
-        0
-      ]
-    },
-    "class_type": "MaskPreview+",
-    "_meta": {
-      "title": "🔧 Mask Preview"
-    }
-  },
   "133": {
     "inputs": {
       "mask": [
@@ -846,7 +834,7 @@
   },
   "136": {
     "inputs": {
-      "string": "G:\\Shared drives\\nilor\\Projects\\008_Vivid_Zenon_Site-Visit\\02_Research\\Screen Depth\\screen-mask.png"
+      "string": "D:\\NILOR\\HUGGINGFACE\\nilor-corp-2\\zenerator\\inputs\\screen-masks\\square_screen-mask.png"
     },
     "class_type": "Primitive string [Crystools]",
     "_meta": {
@@ -867,7 +855,7 @@
   },
   "138": {
     "inputs": {
-      "string": "G:\\Shared drives\\nilor\\Projects\\008_Vivid_Zenon_Site-Visit\\02_Research\\Vivid Mask Videos\\mask_wide_InkSplatter_24fps_15s_360f.mp4"
+      "string": "D:\\NILOR\\HUGGINGFACE\\nilor-corp-2\\zenerator\\inputs\\animated-masks\\mask_wide_InkSplatter_24fps_15s_360f.mp4"
     },
     "class_type": "Primitive string [Crystools]",
     "_meta": {
@@ -1072,7 +1060,7 @@
   },
   "196": {
     "inputs": {
-      "seed": 106855603699686
+      "seed": 4
     },
     "class_type": "Seed Generator",
     "_meta": {
@@ -1118,7 +1106,7 @@
   },
   "201": {
     "inputs": {
-      "text": "359",
+      "text": "538",
       "anything": [
         "200",
         0
@@ -1131,7 +1119,7 @@
   },
   "218": {
     "inputs": {
-      "int": 2632
+      "int": 768
     },
     "class_type": "Primitive integer [Crystools]",
     "_meta": {
@@ -1305,6 +1293,18 @@
     "class_type": "VHS_DuplicateMasks",
     "_meta": {
       "title": "Repeat Masks 🎥🅥🅗🅢"
+    }
+  },
+  "273": {
+    "inputs": {
+      "list_of_floats": [
+        "49",
+        0
+      ]
+    },
+    "class_type": "Nilor Inverse Map Float List",
+    "_meta": {
+      "title": "👺 Nilor Inverse Map Float List"
     }
   }
 }
