@@ -236,14 +236,14 @@
                 "type": "int",
                 "label": "Output Width",
                 "node-id": "[\"218\"][\"inputs\"][\"int\"]",
-                "value": 2637,
+                "value": 4120,
                 "interactive": false
             },
             "height": {
                 "type": "int",
                 "label": "Output Height",
                 "node-id": "[\"219\"][\"inputs\"][\"int\"]",
-                "value": 768,
+                "value": 1200,
                 "interactive": false
             },
             "frame_count": {
@@ -450,14 +450,14 @@
                 "type": "int",
                 "label": "Output Width",
                 "node-id": "[\"218\"][\"inputs\"][\"int\"]",
-                "value": 768,
+                "value": 680,
                 "interactive": false
             },
             "height": {
                 "type": "int",
                 "label": "Output Height",
                 "node-id": "[\"219\"][\"inputs\"][\"int\"]",
-                "value": 1355,
+                "value": 1200,
                 "interactive": false
             },
             "frame_count": {
@@ -664,14 +664,14 @@
                 "type": "int",
                 "label": "Output Width",
                 "node-id": "[\"218\"][\"inputs\"][\"int\"]",
-                "value": 768,
+                "value": 680,
                 "interactive": false
             },
             "height": {
                 "type": "int",
                 "label": "Output Height",
                 "node-id": "[\"219\"][\"inputs\"][\"int\"]",
-                "value": 1355,
+                "value": 1200,
                 "interactive": false
             },
             "frame_count": {
@@ -878,14 +878,14 @@
                 "type": "int",
                 "label": "Output Width",
                 "node-id": "[\"218\"][\"inputs\"][\"int\"]",
-                "value": 827,
+                "value": 1120,
                 "interactive": false
             },
             "height": {
                 "type": "int",
                 "label": "Output Height",
                 "node-id": "[\"219\"][\"inputs\"][\"int\"]",
-                "value": 768,
+                "value": 1040,
                 "interactive": false
             },
             "frame_count": {
@@ -1092,14 +1092,14 @@
                 "type": "int",
                 "label": "Output Width",
                 "node-id": "[\"218\"][\"inputs\"][\"int\"]",
-                "value": 768,
+                "value": 600,
                 "interactive": false
             },
             "height": {
                 "type": "int",
                 "label": "Output Height",
                 "node-id": "[\"219\"][\"inputs\"][\"int\"]",
-                "value": 1536,
+                "value": 1200,
                 "interactive": false
             },
             "frame_count": {
@@ -1306,14 +1306,14 @@
                 "type": "int",
                 "label": "Output Width",
                 "node-id": "[\"218\"][\"inputs\"][\"int\"]",
-                "value": 768,
+                "value": 1040,
                 "interactive": false
             },
             "height": {
                 "type": "int",
                 "label": "Output Height",
                 "node-id": "[\"219\"][\"inputs\"][\"int\"]",
-                "value": 768,
+                "value": 1040,
                 "interactive": false
             },
             "frame_count": {
@@ -1520,14 +1520,14 @@
                 "type": "int",
                 "label": "Output Width",
                 "node-id": "[\"218\"][\"inputs\"][\"int\"]",
-                "value": 853,
+                "value": 1024,
                 "interactive": false
             },
             "height": {
                 "type": "int",
                 "label": "Output Height",
                 "node-id": "[\"219\"][\"inputs\"][\"int\"]",
-                "value": 768,
+                "value": 922,
                 "interactive": false
             },
             "frame_count": {
@@ -1734,14 +1734,14 @@
                 "type": "int",
                 "label": "Output Width",
                 "node-id": "[\"218\"][\"inputs\"][\"int\"]",
-                "value": 768,
+                "value": 720,
                 "interactive": false
             },
             "height": {
                 "type": "int",
                 "label": "Output Height",
                 "node-id": "[\"219\"][\"inputs\"][\"int\"]",
-                "value": 1579,
+                "value": 1480,
                 "interactive": false
             },
             "frame_count": {
@@ -1948,14 +1948,14 @@
                 "type": "int",
                 "label": "Output Width",
                 "node-id": "[\"218\"][\"inputs\"][\"int\"]",
-                "value": 768,
+                "value": 480,
                 "interactive": false
             },
             "height": {
                 "type": "int",
                 "label": "Output Height",
                 "node-id": "[\"219\"][\"inputs\"][\"int\"]",
-                "value": 2304,
+                "value": 1440,
                 "interactive": false
             },
             "frame_count": {
@@ -2162,14 +2162,14 @@
                 "type": "int",
                 "label": "Output Width",
                 "node-id": "[\"218\"][\"inputs\"][\"int\"]",
-                "value": 768,
+                "value": 600,
                 "interactive": false
             },
             "height": {
                 "type": "int",
                 "label": "Output Height",
                 "node-id": "[\"219\"][\"inputs\"][\"int\"]",
-                "value": 870,
+                "value": 680,
                 "interactive": false
             },
             "frame_count": {
@@ -2376,14 +2376,14 @@
                 "type": "int",
                 "label": "Output Width",
                 "node-id": "[\"218\"][\"inputs\"][\"int\"]",
-                "value": 1365,
+                "value": 1536,
                 "interactive": false
             },
             "height": {
                 "type": "int",
                 "label": "Output Height",
                 "node-id": "[\"219\"][\"inputs\"][\"int\"]",
-                "value": 768,
+                "value": 864,
                 "interactive": false
             },
             "frame_count": {
@@ -2590,14 +2590,14 @@
                 "type": "int",
                 "label": "Output Width",
                 "node-id": "[\"218\"][\"inputs\"][\"int\"]",
-                "value": 1365,
+                "value": 1536,
                 "interactive": false
             },
             "height": {
                 "type": "int",
                 "label": "Output Height",
                 "node-id": "[\"219\"][\"inputs\"][\"int\"]",
-                "value": 768,
+                "value": 864,
                 "interactive": false
             },
             "frame_count": {
@@ -2811,7 +2811,7 @@
                 "type": "float",
                 "label": "Upscale By (Range: 1.0 - 4.0)",
                 "node-id": "[\"422\"][\"inputs\"][\"float\"]",
-                "value": 3.0,
+                "value": 2.5,
                 "interactive": true
             },
             "steps": {
