@@ -159,7 +159,7 @@ def run_workflow(workflow_name, progress=gr.Progress(track_tqdm=True), **kwargs)
             print(f"!!!!!!!!!\nSubmitting workflow:\n{workflow}\n!!!!!!!!!")
             start_queue(workflow)
 
-            asyncio.run(wait_for_new_content(previous_content, output_directory))
+            # asyncio.run(wait_for_new_content(previous_content, output_directory))
         except KeyboardInterrupt:
             print("Interrupted by user. Exiting...")
             return None
