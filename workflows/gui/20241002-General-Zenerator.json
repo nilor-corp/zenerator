@@ -3806,7 +3806,7 @@
       "type": "Reroute (rgthree)",
       "pos": {
         "0": 1616.8653564453125,
-        "1": -1450.9510498046875,
+        "1": -1122,
         "2": 0,
         "3": 0,
         "4": 0,
@@ -4893,248 +4893,6 @@
       ],
       "color": "#432",
       "bgcolor": "#653"
-    },
-    {
-      "id": 302,
-      "type": "IPAdapterClipVisionEnhancerBatch",
-      "pos": {
-        "0": 870,
-        "1": -1122,
-        "2": 0,
-        "3": 0,
-        "4": 0,
-        "5": 0,
-        "6": 0,
-        "7": 0,
-        "8": 0,
-        "9": 0
-      },
-      "size": {
-        "0": 294,
-        "1": 322
-      },
-      "flags": {},
-      "order": 181,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "model",
-          "type": "MODEL",
-          "link": 522
-        },
-        {
-          "name": "ipadapter",
-          "type": "IPADAPTER",
-          "link": 523
-        },
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 524
-        },
-        {
-          "name": "image_negative",
-          "type": "IMAGE",
-          "link": 525
-        },
-        {
-          "name": "attn_mask",
-          "type": "MASK",
-          "link": null
-        },
-        {
-          "name": "clip_vision",
-          "type": "CLIP_VISION",
-          "link": 526
-        },
-        {
-          "name": "enhance_tiles",
-          "type": "INT",
-          "link": 527,
-          "widget": {
-            "name": "enhance_tiles"
-          }
-        },
-        {
-          "name": "weight",
-          "type": "FLOAT",
-          "link": 528,
-          "widget": {
-            "name": "weight"
-          }
-        }
-      ],
-      "outputs": [
-        {
-          "name": "MODEL",
-          "type": "MODEL",
-          "links": [
-            533
-          ],
-          "slot_index": 0,
-          "shape": 3
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "IPAdapterClipVisionEnhancerBatch"
-      },
-      "widgets_values": [
-        0.8,
-        "linear",
-        0,
-        1,
-        "V only",
-        2,
-        0.8,
-        64
-      ]
-    },
-    {
-      "id": 304,
-      "type": "IPAdapterClipVisionEnhancerBatch",
-      "pos": {
-        "0": 1229,
-        "1": -1122,
-        "2": 0,
-        "3": 0,
-        "4": 0,
-        "5": 0,
-        "6": 0,
-        "7": 0,
-        "8": 0,
-        "9": 0
-      },
-      "size": {
-        "0": 294,
-        "1": 320
-      },
-      "flags": {},
-      "order": 184,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "model",
-          "type": "MODEL",
-          "link": 533
-        },
-        {
-          "name": "ipadapter",
-          "type": "IPADAPTER",
-          "link": 534
-        },
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 535
-        },
-        {
-          "name": "image_negative",
-          "type": "IMAGE",
-          "link": 536
-        },
-        {
-          "name": "attn_mask",
-          "type": "MASK",
-          "link": null
-        },
-        {
-          "name": "clip_vision",
-          "type": "CLIP_VISION",
-          "link": 537
-        },
-        {
-          "name": "enhance_tiles",
-          "type": "INT",
-          "link": 538,
-          "widget": {
-            "name": "enhance_tiles"
-          }
-        },
-        {
-          "name": "weight",
-          "type": "FLOAT",
-          "link": 637,
-          "widget": {
-            "name": "weight"
-          }
-        }
-      ],
-      "outputs": [
-        {
-          "name": "MODEL",
-          "type": "MODEL",
-          "links": [
-            542
-          ],
-          "slot_index": 0,
-          "shape": 3
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "IPAdapterClipVisionEnhancerBatch"
-      },
-      "widgets_values": [
-        0.8,
-        "linear",
-        0,
-        1,
-        "V only",
-        2,
-        0.8,
-        64
-      ]
-    },
-    {
-      "id": 354,
-      "type": "Nilor Inverse Map Float List",
-      "pos": {
-        "0": 870,
-        "1": -721.10888671875,
-        "2": 0,
-        "3": 0,
-        "4": 0,
-        "5": 0,
-        "6": 0,
-        "7": 0,
-        "8": 0,
-        "9": 0
-      },
-      "size": {
-        "0": 297.69287109375,
-        "1": 58
-      },
-      "flags": {},
-      "order": 178,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "list_of_floats",
-          "type": "FLOAT",
-          "link": 636,
-          "widget": {
-            "name": "list_of_floats"
-          }
-        }
-      ],
-      "outputs": [
-        {
-          "name": "floats",
-          "type": "FLOAT",
-          "links": [
-            637
-          ],
-          "slot_index": 0,
-          "shape": 3
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "Nilor Inverse Map Float List"
-      },
-      "widgets_values": [
-        0
-      ],
-      "color": "#222",
-      "bgcolor": "#000"
     },
     {
       "id": 327,
@@ -11893,11 +11651,253 @@
       ]
     },
     {
+      "id": 354,
+      "type": "Nilor Inverse Map Float List",
+      "pos": {
+        "0": 870,
+        "1": -721,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0
+      },
+      "size": {
+        "0": 297.69287109375,
+        "1": 58
+      },
+      "flags": {},
+      "order": 178,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "list_of_floats",
+          "type": "FLOAT",
+          "link": 636,
+          "widget": {
+            "name": "list_of_floats"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "floats",
+          "type": "FLOAT",
+          "links": [
+            637
+          ],
+          "slot_index": 0,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Nilor Inverse Map Float List"
+      },
+      "widgets_values": [
+        0
+      ],
+      "color": "#222",
+      "bgcolor": "#000"
+    },
+    {
+      "id": 302,
+      "type": "IPAdapterClipVisionEnhancerBatch",
+      "pos": {
+        "0": 870,
+        "1": -1122,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0
+      },
+      "size": {
+        "0": 294,
+        "1": 322
+      },
+      "flags": {},
+      "order": 181,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 522
+        },
+        {
+          "name": "ipadapter",
+          "type": "IPADAPTER",
+          "link": 523
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 524
+        },
+        {
+          "name": "image_negative",
+          "type": "IMAGE",
+          "link": 525
+        },
+        {
+          "name": "attn_mask",
+          "type": "MASK",
+          "link": null
+        },
+        {
+          "name": "clip_vision",
+          "type": "CLIP_VISION",
+          "link": 526
+        },
+        {
+          "name": "enhance_tiles",
+          "type": "INT",
+          "link": 527,
+          "widget": {
+            "name": "enhance_tiles"
+          }
+        },
+        {
+          "name": "weight",
+          "type": "FLOAT",
+          "link": 528,
+          "widget": {
+            "name": "weight"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            533
+          ],
+          "slot_index": 0,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "IPAdapterClipVisionEnhancerBatch"
+      },
+      "widgets_values": [
+        0.8,
+        "linear",
+        0,
+        1,
+        "V only",
+        2,
+        0.8,
+        64
+      ]
+    },
+    {
+      "id": 304,
+      "type": "IPAdapterClipVisionEnhancerBatch",
+      "pos": {
+        "0": 1229,
+        "1": -1122,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0
+      },
+      "size": {
+        "0": 294,
+        "1": 320
+      },
+      "flags": {},
+      "order": 184,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 533
+        },
+        {
+          "name": "ipadapter",
+          "type": "IPADAPTER",
+          "link": 534
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 535
+        },
+        {
+          "name": "image_negative",
+          "type": "IMAGE",
+          "link": 536
+        },
+        {
+          "name": "attn_mask",
+          "type": "MASK",
+          "link": null
+        },
+        {
+          "name": "clip_vision",
+          "type": "CLIP_VISION",
+          "link": 537
+        },
+        {
+          "name": "enhance_tiles",
+          "type": "INT",
+          "link": 538,
+          "widget": {
+            "name": "enhance_tiles"
+          }
+        },
+        {
+          "name": "weight",
+          "type": "FLOAT",
+          "link": 637,
+          "widget": {
+            "name": "weight"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            542
+          ],
+          "slot_index": 0,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "IPAdapterClipVisionEnhancerBatch"
+      },
+      "widgets_values": [
+        0.8,
+        "linear",
+        0,
+        1,
+        "V only",
+        2,
+        0.8,
+        64
+      ]
+    },
+    {
       "id": 303,
       "type": "IPAdapterWeights",
       "pos": {
-        "0": 319.42657470703125,
-        "1": -1121.6785888671875,
+        "0": 319,
+        "1": -1122,
         "2": 0,
         "3": 0,
         "4": 0,
@@ -12002,7 +12002,7 @@
         "Node name for S&R": "IPAdapterWeights"
       },
       "widgets_values": [
-        "1.0, 0.1",
+        "1.0, 0.2",
         "ease_in_out",
         12,
         0,
@@ -14316,10 +14316,10 @@
   "config": {},
   "extra": {
     "ds": {
-      "scale": 0.6727499949325725,
+      "scale": 0.5054470284993039,
       "offset": [
-        -98.79660215452304,
-        1672.324555581728
+        -158.27686029153875,
+        1916.5934700013515
       ]
     }
   },
