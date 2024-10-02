@@ -22,14 +22,14 @@
                 "type": "int",
                 "label": "Output Width",
                 "node-id": "[\"218\"][\"inputs\"][\"int\"]",
-                "value": 768,
+                "value": 1024,
                 "interactive": true
             },
             "height": {
                 "type": "int",
                 "label": "Output Height",
                 "node-id": "[\"219\"][\"inputs\"][\"int\"]",
-                "value": 768,
+                "value": 1024,
                 "interactive": true
             },
             "frame_count": {
