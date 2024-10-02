@@ -24,7 +24,7 @@ QUEUE_URLS = []
 for port in config["COMFY_PORTS"]:
     QUEUE_URLS.append(config["COMFY_URL"] + port + "/prompt")
 
-selected_port_url = ""
+selected_port_url = QUEUE_URLS[0]
 
 print(QUEUE_URLS)
 
