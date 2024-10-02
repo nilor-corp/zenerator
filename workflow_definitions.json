@@ -131,7 +131,7 @@
                 "type": "path",
                 "label": "Path of Animated Depth Video",
                 "node-id": "[\"357\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/screen-masks/animated-lineart/medusa_lineart.mp4",
+                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
                 "interactive": true
             },
             "video-depth-select-every-nth": {
@@ -153,14 +153,14 @@
             "lineart-strength": {
                 "type": "float",
                 "label": "LineArt Strength",
-                "node-id": "[\"250\"][\"inputs\"][\"strength\"]",
+                "node-id": "[\"448\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
                 "interactive": true
             },
             "lineart-end-percent": {
                 "type": "float",
                 "label": "LineArt End Percent",
-                "node-id": "[\"250\"][\"inputs\"][\"end_percent\"]",
+                "node-id": "[\"448\"][\"inputs\"][\"end_percent\"]",
                 "value": "0.5",
                 "interactive": true
             },
@@ -175,7 +175,7 @@
                 "type": "path",
                 "label": "Path of LineArt Image",
                 "node-id": "[\"453\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/screen-masks/static-lineart/medusa_lineart.png",
+                "value": "./inputs/static-lineart/medusa_lineart.png",
                 "interactive": true
             },
             "use-animated-lineart": {
@@ -189,7 +189,7 @@
                 "type": "path",
                 "label": "Path of Animated LineArt Video",
                 "node-id": "[\"451\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/screen-masks/animated-lineart/medusa_lineart.mp4",
+                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
                 "interactive": true
             },
             "video-lineart-select-every-nth": {
@@ -367,14 +367,14 @@
             "lineart-strength": {
                 "type": "float",
                 "label": "LineArt Strength",
-                "node-id": "[\"250\"][\"inputs\"][\"strength\"]",
+                "node-id": "[\"448\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
                 "interactive": false
             },
             "lineart-end-percent": {
                 "type": "float",
                 "label": "LineArt End Percent",
-                "node-id": "[\"250\"][\"inputs\"][\"end_percent\"]",
+                "node-id": "[\"448\"][\"inputs\"][\"end_percent\"]",
                 "value": "0.5",
                 "interactive": false
             },
@@ -389,7 +389,7 @@
                 "type": "path",
                 "label": "Path of LineArt Image",
                 "node-id": "[\"453\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/screen-masks/static-lineart/medusa_lineart.png",
+                "value": "./inputs/static-lineart/medusa_lineart.png",
                 "interactive": false
             },
             "use-animated-lineart": {
@@ -403,7 +403,7 @@
                 "type": "path",
                 "label": "Path of Animated LineArt Video",
                 "node-id": "[\"451\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/screen-masks/animated-lineart/medusa_lineart.mp4",
+                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
                 "interactive": false
             },
             "video-lineart-select-every-nth": {
@@ -581,14 +581,14 @@
             "lineart-strength": {
                 "type": "float",
                 "label": "LineArt Strength",
-                "node-id": "[\"250\"][\"inputs\"][\"strength\"]",
+                "node-id": "[\"448\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
                 "interactive": false
             },
             "lineart-end-percent": {
                 "type": "float",
                 "label": "LineArt End Percent",
-                "node-id": "[\"250\"][\"inputs\"][\"end_percent\"]",
+                "node-id": "[\"448\"][\"inputs\"][\"end_percent\"]",
                 "value": "0.5",
                 "interactive": false
             },
@@ -603,7 +603,7 @@
                 "type": "path",
                 "label": "Path of LineArt Image",
                 "node-id": "[\"453\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/screen-masks/static-lineart/medusa_lineart.png",
+                "value": "./inputs/static-lineart/medusa_lineart.png",
                 "interactive": false
             },
             "use-animated-lineart": {
@@ -617,7 +617,7 @@
                 "type": "path",
                 "label": "Path of Animated LineArt Video",
                 "node-id": "[\"451\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/screen-masks/animated-lineart/medusa_lineart.mp4",
+                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
                 "interactive": false
             },
             "video-lineart-select-every-nth": {
@@ -795,14 +795,14 @@
             "lineart-strength": {
                 "type": "float",
                 "label": "LineArt Strength",
-                "node-id": "[\"250\"][\"inputs\"][\"strength\"]",
+                "node-id": "[\"448\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
                 "interactive": false
             },
             "lineart-end-percent": {
                 "type": "float",
                 "label": "LineArt End Percent",
-                "node-id": "[\"250\"][\"inputs\"][\"end_percent\"]",
+                "node-id": "[\"448\"][\"inputs\"][\"end_percent\"]",
                 "value": "0.5",
                 "interactive": false
             },
@@ -817,7 +817,7 @@
                 "type": "path",
                 "label": "Path of LineArt Image",
                 "node-id": "[\"453\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/screen-masks/static-lineart/medusa_lineart.png",
+                "value": "./inputs/static-lineart/medusa_lineart.png",
                 "interactive": false
             },
             "use-animated-lineart": {
@@ -831,7 +831,7 @@
                 "type": "path",
                 "label": "Path of Animated LineArt Video",
                 "node-id": "[\"451\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/screen-masks/animated-lineart/medusa_lineart.mp4",
+                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
                 "interactive": false
             },
             "video-lineart-select-every-nth": {
@@ -1009,14 +1009,14 @@
             "lineart-strength": {
                 "type": "float",
                 "label": "LineArt Strength",
-                "node-id": "[\"250\"][\"inputs\"][\"strength\"]",
+                "node-id": "[\"448\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
                 "interactive": false
             },
             "lineart-end-percent": {
                 "type": "float",
                 "label": "LineArt End Percent",
-                "node-id": "[\"250\"][\"inputs\"][\"end_percent\"]",
+                "node-id": "[\"448\"][\"inputs\"][\"end_percent\"]",
                 "value": "0.5",
                 "interactive": false
             },
@@ -1031,7 +1031,7 @@
                 "type": "path",
                 "label": "Path of LineArt Image",
                 "node-id": "[\"453\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/screen-masks/static-lineart/medusa_lineart.png",
+                "value": "./inputs/static-lineart/medusa_lineart.png",
                 "interactive": false
             },
             "use-animated-lineart": {
@@ -1045,7 +1045,7 @@
                 "type": "path",
                 "label": "Path of Animated LineArt Video",
                 "node-id": "[\"451\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/screen-masks/animated-lineart/medusa_lineart.mp4",
+                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
                 "interactive": false
             },
             "video-lineart-select-every-nth": {
@@ -1223,14 +1223,14 @@
             "lineart-strength": {
                 "type": "float",
                 "label": "LineArt Strength",
-                "node-id": "[\"250\"][\"inputs\"][\"strength\"]",
+                "node-id": "[\"448\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
                 "interactive": false
             },
             "lineart-end-percent": {
                 "type": "float",
                 "label": "LineArt End Percent",
-                "node-id": "[\"250\"][\"inputs\"][\"end_percent\"]",
+                "node-id": "[\"448\"][\"inputs\"][\"end_percent\"]",
                 "value": "0.5",
                 "interactive": false
             },
@@ -1245,7 +1245,7 @@
                 "type": "path",
                 "label": "Path of LineArt Image",
                 "node-id": "[\"453\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/screen-masks/static-lineart/medusa_lineart.png",
+                "value": "./inputs/static-lineart/medusa_lineart.png",
                 "interactive": false
             },
             "use-animated-lineart": {
@@ -1259,7 +1259,7 @@
                 "type": "path",
                 "label": "Path of Animated LineArt Video",
                 "node-id": "[\"451\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/screen-masks/animated-lineart/medusa_lineart.mp4",
+                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
                 "interactive": false
             },
             "video-lineart-select-every-nth": {
@@ -1437,14 +1437,14 @@
             "lineart-strength": {
                 "type": "float",
                 "label": "LineArt Strength",
-                "node-id": "[\"250\"][\"inputs\"][\"strength\"]",
+                "node-id": "[\"448\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
                 "interactive": false
             },
             "lineart-end-percent": {
                 "type": "float",
                 "label": "LineArt End Percent",
-                "node-id": "[\"250\"][\"inputs\"][\"end_percent\"]",
+                "node-id": "[\"448\"][\"inputs\"][\"end_percent\"]",
                 "value": "0.5",
                 "interactive": false
             },
@@ -1459,7 +1459,7 @@
                 "type": "path",
                 "label": "Path of LineArt Image",
                 "node-id": "[\"453\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/screen-masks/static-lineart/medusa_lineart.png",
+                "value": "./inputs/static-lineart/medusa_lineart.png",
                 "interactive": false
             },
             "use-animated-lineart": {
@@ -1473,7 +1473,7 @@
                 "type": "path",
                 "label": "Path of Animated LineArt Video",
                 "node-id": "[\"451\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/screen-masks/animated-lineart/medusa_lineart.mp4",
+                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
                 "interactive": false
             },
             "video-lineart-select-every-nth": {
@@ -1651,14 +1651,14 @@
             "lineart-strength": {
                 "type": "float",
                 "label": "LineArt Strength",
-                "node-id": "[\"250\"][\"inputs\"][\"strength\"]",
+                "node-id": "[\"448\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
                 "interactive": false
             },
             "lineart-end-percent": {
                 "type": "float",
                 "label": "LineArt End Percent",
-                "node-id": "[\"250\"][\"inputs\"][\"end_percent\"]",
+                "node-id": "[\"448\"][\"inputs\"][\"end_percent\"]",
                 "value": "0.5",
                 "interactive": false
             },
@@ -1673,7 +1673,7 @@
                 "type": "path",
                 "label": "Path of LineArt Image",
                 "node-id": "[\"453\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/screen-masks/static-lineart/medusa_lineart.png",
+                "value": "./inputs/static-lineart/medusa_lineart.png",
                 "interactive": false
             },
             "use-animated-lineart": {
@@ -1687,7 +1687,7 @@
                 "type": "path",
                 "label": "Path of Animated LineArt Video",
                 "node-id": "[\"451\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/screen-masks/animated-lineart/medusa_lineart.mp4",
+                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
                 "interactive": false
             },
             "video-lineart-select-every-nth": {
@@ -1865,14 +1865,14 @@
             "lineart-strength": {
                 "type": "float",
                 "label": "LineArt Strength",
-                "node-id": "[\"250\"][\"inputs\"][\"strength\"]",
+                "node-id": "[\"448\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
                 "interactive": false
             },
             "lineart-end-percent": {
                 "type": "float",
                 "label": "LineArt End Percent",
-                "node-id": "[\"250\"][\"inputs\"][\"end_percent\"]",
+                "node-id": "[\"448\"][\"inputs\"][\"end_percent\"]",
                 "value": "0.5",
                 "interactive": false
             },
@@ -1887,7 +1887,7 @@
                 "type": "path",
                 "label": "Path of LineArt Image",
                 "node-id": "[\"453\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/screen-masks/static-lineart/medusa_lineart.png",
+                "value": "./inputs/static-lineart/medusa_lineart.png",
                 "interactive": false
             },
             "use-animated-lineart": {
@@ -1901,7 +1901,7 @@
                 "type": "path",
                 "label": "Path of Animated LineArt Video",
                 "node-id": "[\"451\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/screen-masks/animated-lineart/medusa_lineart.mp4",
+                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
                 "interactive": false
             },
             "video-lineart-select-every-nth": {
@@ -2079,14 +2079,14 @@
             "lineart-strength": {
                 "type": "float",
                 "label": "LineArt Strength",
-                "node-id": "[\"250\"][\"inputs\"][\"strength\"]",
+                "node-id": "[\"448\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
                 "interactive": false
             },
             "lineart-end-percent": {
                 "type": "float",
                 "label": "LineArt End Percent",
-                "node-id": "[\"250\"][\"inputs\"][\"end_percent\"]",
+                "node-id": "[\"448\"][\"inputs\"][\"end_percent\"]",
                 "value": "0.5",
                 "interactive": false
             },
@@ -2101,7 +2101,7 @@
                 "type": "path",
                 "label": "Path of LineArt Image",
                 "node-id": "[\"453\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/screen-masks/static-lineart/medusa_lineart.png",
+                "value": "./inputs/static-lineart/medusa_lineart.png",
                 "interactive": false
             },
             "use-animated-lineart": {
@@ -2115,7 +2115,7 @@
                 "type": "path",
                 "label": "Path of Animated LineArt Video",
                 "node-id": "[\"451\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/screen-masks/animated-lineart/medusa_lineart.mp4",
+                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
                 "interactive": false
             },
             "video-lineart-select-every-nth": {
@@ -2293,14 +2293,14 @@
             "lineart-strength": {
                 "type": "float",
                 "label": "LineArt Strength",
-                "node-id": "[\"250\"][\"inputs\"][\"strength\"]",
+                "node-id": "[\"448\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
                 "interactive": false
             },
             "lineart-end-percent": {
                 "type": "float",
                 "label": "LineArt End Percent",
-                "node-id": "[\"250\"][\"inputs\"][\"end_percent\"]",
+                "node-id": "[\"448\"][\"inputs\"][\"end_percent\"]",
                 "value": "0.5",
                 "interactive": false
             },
@@ -2315,7 +2315,7 @@
                 "type": "path",
                 "label": "Path of LineArt Image",
                 "node-id": "[\"453\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/screen-masks/static-lineart/medusa_lineart.png",
+                "value": "./inputs/static-lineart/medusa_lineart.png",
                 "interactive": false
             },
             "use-animated-lineart": {
@@ -2329,7 +2329,7 @@
                 "type": "path",
                 "label": "Path of Animated LineArt Video",
                 "node-id": "[\"451\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/screen-masks/animated-lineart/medusa_lineart.mp4",
+                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
                 "interactive": false
             },
             "video-lineart-select-every-nth": {
@@ -2507,14 +2507,14 @@
             "lineart-strength": {
                 "type": "float",
                 "label": "LineArt Strength",
-                "node-id": "[\"250\"][\"inputs\"][\"strength\"]",
+                "node-id": "[\"448\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
                 "interactive": true
             },
             "lineart-end-percent": {
                 "type": "float",
                 "label": "LineArt End Percent",
-                "node-id": "[\"250\"][\"inputs\"][\"end_percent\"]",
+                "node-id": "[\"448\"][\"inputs\"][\"end_percent\"]",
                 "value": "0.5",
                 "interactive": true
             },
@@ -2529,7 +2529,7 @@
                 "type": "path",
                 "label": "Path of LineArt Image",
                 "node-id": "[\"453\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/screen-masks/static-lineart/medusa_lineart.png",
+                "value": "./inputs/static-lineart/medusa_lineart.png",
                 "interactive": false
             },
             "use-animated-lineart": {
@@ -2543,7 +2543,7 @@
                 "type": "path",
                 "label": "Path of Animated LineArt Video",
                 "node-id": "[\"451\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/screen-masks/animated-lineart/medusa_lineart.mp4",
+                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
                 "interactive": true
             },
             "video-lineart-select-every-nth": {
@@ -2721,14 +2721,14 @@
             "lineart-strength": {
                 "type": "float",
                 "label": "LineArt Strength",
-                "node-id": "[\"250\"][\"inputs\"][\"strength\"]",
+                "node-id": "[\"448\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
                 "interactive": true
             },
             "lineart-end-percent": {
                 "type": "float",
                 "label": "LineArt End Percent",
-                "node-id": "[\"250\"][\"inputs\"][\"end_percent\"]",
+                "node-id": "[\"448\"][\"inputs\"][\"end_percent\"]",
                 "value": "0.5",
                 "interactive": true
             },
@@ -2743,7 +2743,7 @@
                 "type": "path",
                 "label": "Path of LineArt Image",
                 "node-id": "[\"453\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/screen-masks/static-lineart/poseidon_lineart.png",
+                "value": "./inputs/static-lineart/poseidon_lineart.png",
                 "interactive": false
             },
             "use-animated-lineart": {
