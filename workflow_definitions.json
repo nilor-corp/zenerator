@@ -40,10 +40,10 @@
                 "interactive": true
             },
             "images-01": {
-                "type": "images",
+                "type": "path",
                 "label": "Images",
                 "node-id": "[\"142\"][\"inputs\"][\"string\"]",
-                "value": "",
+                "value": "G:\\Shared drives\\nilor\\Projects\\011_Vivid_Zenon_Emirates\\03_Development\\Image Refs\\palmy vibes\\000",
                 "interactive": true
             },
 
