@@ -2543,7 +2543,7 @@
                 "type": "path",
                 "label": "Path of Animated LineArt Video",
                 "node-id": "[\"451\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
+                "value": "./inputs/animated-lineart/medusa_lineart.mp4",
                 "interactive": true
             },
             "video-lineart-select-every-nth": {
@@ -2699,7 +2699,7 @@
                 "type": "path",
                 "label": "Path of Animated Depth Video",
                 "node-id": "[\"357\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/mask_wide_InkSplatter_24fps_15s_360f.mp4",
+                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
                 "interactive": false
             },
             "video-depth-select-every-nth": {
