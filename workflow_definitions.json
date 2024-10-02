@@ -324,7 +324,7 @@
                 "type": "bool",
                 "label": "Use Depth Strength Interpolation",
                 "node-id": "[\"503\"][\"inputs\"][\"boolean\"]",
-                "value": true,
+                "value": false,
                 "interactive": false
             },
             "image-depth-path": {
@@ -538,7 +538,7 @@
                 "type": "bool",
                 "label": "Use Depth Strength Interpolation",
                 "node-id": "[\"503\"][\"inputs\"][\"boolean\"]",
-                "value": true,
+                "value": false,
                 "interactive": true
             },
             "image-depth-path": {
@@ -752,7 +752,7 @@
                 "type": "bool",
                 "label": "Use Depth Strength Interpolation",
                 "node-id": "[\"503\"][\"inputs\"][\"boolean\"]",
-                "value": true,
+                "value": false,
                 "interactive": true
             },
             "image-depth-path": {
@@ -966,7 +966,7 @@
                 "type": "bool",
                 "label": "Use Depth Strength Interpolation",
                 "node-id": "[\"503\"][\"inputs\"][\"boolean\"]",
-                "value": true,
+                "value": false,
                 "interactive": true
             },
             "image-depth-path": {
@@ -1180,7 +1180,7 @@
                 "type": "bool",
                 "label": "Use Depth Strength Interpolation",
                 "node-id": "[\"503\"][\"inputs\"][\"boolean\"]",
-                "value": true,
+                "value": false,
                 "interactive": true
             },
             "image-depth-path": {
@@ -1394,7 +1394,7 @@
                 "type": "bool",
                 "label": "Use Depth Strength Interpolation",
                 "node-id": "[\"503\"][\"inputs\"][\"boolean\"]",
-                "value": true,
+                "value": false,
                 "interactive": true
             },
             "image-depth-path": {
@@ -1608,7 +1608,7 @@
                 "type": "bool",
                 "label": "Use Depth Strength Interpolation",
                 "node-id": "[\"503\"][\"inputs\"][\"boolean\"]",
-                "value": true,
+                "value": false,
                 "interactive": true
             },
             "image-depth-path": {
@@ -1822,7 +1822,7 @@
                 "type": "bool",
                 "label": "Use Depth Strength Interpolation",
                 "node-id": "[\"503\"][\"inputs\"][\"boolean\"]",
-                "value": true,
+                "value": false,
                 "interactive": true
             },
             "image-depth-path": {
@@ -2036,7 +2036,7 @@
                 "type": "bool",
                 "label": "Use Depth Strength Interpolation",
                 "node-id": "[\"503\"][\"inputs\"][\"boolean\"]",
-                "value": true,
+                "value": false,
                 "interactive": true
             },
             "image-depth-path": {
@@ -2250,7 +2250,7 @@
                 "type": "bool",
                 "label": "Use Depth Strength Interpolation",
                 "node-id": "[\"503\"][\"inputs\"][\"boolean\"]",
-                "value": true,
+                "value": false,
                 "interactive": true
             },
             "image-depth-path": {
