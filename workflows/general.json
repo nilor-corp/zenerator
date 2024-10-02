@@ -1409,7 +1409,7 @@
   },
   "447": {
     "inputs": {
-      "control_net_name": "control_v11p_sd15_lineart.pth"
+      "control_net_name": "control_v11p_sd15_lineart_fp16.safetensors"
     },
     "class_type": "ControlNetLoaderAdvanced",
     "_meta": {

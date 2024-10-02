@@ -7088,55 +7088,6 @@
       ]
     },
     {
-      "id": 447,
-      "type": "ControlNetLoaderAdvanced",
-      "pos": {
-        "0": 2932.8193359375,
-        "1": 1935.765869140625,
-        "2": 0,
-        "3": 0,
-        "4": 0,
-        "5": 0,
-        "6": 0,
-        "7": 0,
-        "8": 0,
-        "9": 0
-      },
-      "size": {
-        "0": 327.6000061035156,
-        "1": 58
-      },
-      "flags": {},
-      "order": 21,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "tk_optional",
-          "type": "TIMESTEP_KEYFRAME",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "CONTROL_NET",
-          "type": "CONTROL_NET",
-          "links": [
-            734
-          ],
-          "slot_index": 0,
-          "shape": 3
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "ControlNetLoaderAdvanced"
-      },
-      "widgets_values": [
-        "control_v11p_sd15_lineart.pth"
-      ],
-      "color": "#432",
-      "bgcolor": "#653"
-    },
-    {
       "id": 378,
       "type": "Reroute (rgthree)",
       "pos": {
@@ -12011,6 +11962,55 @@
         4,
         "alternate batches"
       ]
+    },
+    {
+      "id": 447,
+      "type": "ControlNetLoaderAdvanced",
+      "pos": {
+        "0": 2932.8193359375,
+        "1": 1935.765869140625,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0
+      },
+      "size": {
+        "0": 327.6000061035156,
+        "1": 58
+      },
+      "flags": {},
+      "order": 21,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "tk_optional",
+          "type": "TIMESTEP_KEYFRAME",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONTROL_NET",
+          "type": "CONTROL_NET",
+          "links": [
+            734
+          ],
+          "slot_index": 0,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ControlNetLoaderAdvanced"
+      },
+      "widgets_values": [
+        "control_v11p_sd15_lineart_fp16.safetensors"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
     }
   ],
   "links": [
@@ -14316,10 +14316,10 @@
   "config": {},
   "extra": {
     "ds": {
-      "scale": 0.5054470284993039,
+      "scale": 1.3109994191500245,
       "offset": [
-        -158.27686029153875,
-        1916.5934700013515
+        -2700.1302678830457,
+        -1442.843224018235
       ]
     }
   },
