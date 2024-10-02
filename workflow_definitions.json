@@ -147,7 +147,7 @@
                 "type": "bool",
                 "label": "Use LineArt",
                 "node-id": "[\"452\"][\"inputs\"][\"boolean\"]",
-                "value": true,
+                "value": false,
                 "interactive": true
             },
             "lineart-strength": {
