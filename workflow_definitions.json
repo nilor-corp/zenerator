@@ -236,14 +236,14 @@
                 "type": "int",
                 "label": "Output Width",
                 "node-id": "[\"218\"][\"inputs\"][\"int\"]",
-                "value": 4120,
+                "value": 2632,
                 "interactive": false
             },
             "height": {
                 "type": "int",
                 "label": "Output Height",
                 "node-id": "[\"219\"][\"inputs\"][\"int\"]",
-                "value": 1200,
+                "value": 768,
                 "interactive": false
             },
             "frame_count": {
@@ -266,14 +266,14 @@
                 "type": "bool",
                 "label": "Use Latent Mask",
                 "node-id": "[\"461\"][\"inputs\"][\"boolean\"]",
-                "value": false,
+                "value": true,
                 "interactive": true
             },
             "use-animated-mask": {
                 "type": "bool",
                 "label": "Use Animated Mask Video",
                 "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
-                "value": false,
+                "value": true,
                 "interactive": true
             },
             "image-mask-path": {
@@ -294,7 +294,7 @@
                 "type": "int",
                 "label": "Select Every Nth Frame of Animated Mask Video",
                 "node-id": "[\"348\"][\"inputs\"][\"int\"]",
-                "value": "2",
+                "value": "1",
                 "interactive": true
             },
 
@@ -303,7 +303,7 @@
                 "type": "bool",
                 "label": "Use Depth",
                 "node-id": "[\"359\"][\"inputs\"][\"boolean\"]",
-                "value": true,
+                "value": false,
                 "interactive": true
             },
             "depth-strength": {
