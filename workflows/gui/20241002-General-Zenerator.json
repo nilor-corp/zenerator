@@ -465,7 +465,7 @@
         30
       ],
       "flags": {},
-      "order": 194,
+      "order": 190,
       "mode": 0,
       "inputs": [
         {
@@ -520,7 +520,7 @@
         30
       ],
       "flags": {},
-      "order": 193,
+      "order": 189,
       "mode": 0,
       "inputs": [
         {
@@ -575,7 +575,7 @@
         30
       ],
       "flags": {},
-      "order": 177,
+      "order": 184,
       "mode": 0,
       "inputs": [
         {
@@ -1057,7 +1057,7 @@
         "9": 0
       },
       "size": {
-        "0": 225.9013671875,
+        "0": 226.69813537597656,
         "1": 26
       },
       "flags": {},
@@ -1102,7 +1102,7 @@
         "9": 0
       },
       "size": {
-        "0": 225.9013671875,
+        "0": 226.69813537597656,
         "1": 26
       },
       "flags": {},
@@ -1890,7 +1890,7 @@
         "1": 118
       },
       "flags": {},
-      "order": 192,
+      "order": 194,
       "mode": 0,
       "inputs": [
         {
@@ -2157,7 +2157,7 @@
         30
       ],
       "flags": {},
-      "order": 189,
+      "order": 193,
       "mode": 0,
       "inputs": [
         {
@@ -2631,7 +2631,7 @@
         "9": 0
       },
       "size": [
-        242.24609375,
+        243.70057678222656,
         170
       ],
       "flags": {},
@@ -2774,7 +2774,7 @@
         "9": 0
       },
       "size": {
-        "0": 225.9013671875,
+        "0": 226.69813537597656,
         "1": 26
       },
       "flags": {},
@@ -2824,7 +2824,7 @@
         "1": 98
       },
       "flags": {},
-      "order": 152,
+      "order": 153,
       "mode": 0,
       "inputs": [
         {
@@ -2888,7 +2888,7 @@
         "1": 76.0001220703125
       },
       "flags": {},
-      "order": 166,
+      "order": 173,
       "mode": 0,
       "inputs": [
         {
@@ -2927,7 +2927,7 @@
         "1": 82
       },
       "flags": {},
-      "order": 162,
+      "order": 167,
       "mode": 0,
       "inputs": [
         {
@@ -3018,7 +3018,7 @@
         "1": 76
       },
       "flags": {},
-      "order": 153,
+      "order": 154,
       "mode": 0,
       "inputs": [
         {
@@ -3057,7 +3057,7 @@
         "1": 34
       },
       "flags": {},
-      "order": 158,
+      "order": 161,
       "mode": 0,
       "inputs": [
         {
@@ -3449,7 +3449,7 @@
         "1": 80
       },
       "flags": {},
-      "order": 179,
+      "order": 186,
       "mode": 0,
       "inputs": [
         {
@@ -3541,7 +3541,7 @@
         30
       ],
       "flags": {},
-      "order": 170,
+      "order": 177,
       "mode": 0,
       "inputs": [
         {
@@ -3711,7 +3711,7 @@
         30
       ],
       "flags": {},
-      "order": 167,
+      "order": 174,
       "mode": 0,
       "inputs": [
         {
@@ -3821,7 +3821,7 @@
         30
       ],
       "flags": {},
-      "order": 186,
+      "order": 192,
       "mode": 0,
       "inputs": [
         {
@@ -3927,7 +3927,7 @@
         30
       ],
       "flags": {},
-      "order": 180,
+      "order": 187,
       "mode": 0,
       "inputs": [
         {
@@ -4351,7 +4351,7 @@
         "1": 46
       },
       "flags": {},
-      "order": 161,
+      "order": 166,
       "mode": 0,
       "inputs": [
         {
@@ -4581,7 +4581,7 @@
         "1": 26
       },
       "flags": {},
-      "order": 157,
+      "order": 160,
       "mode": 0,
       "inputs": [
         {
@@ -6427,7 +6427,7 @@
         "1": 74
       },
       "flags": {},
-      "order": 187,
+      "order": 178,
       "mode": 0,
       "inputs": [
         {
@@ -6489,7 +6489,7 @@
         "1": 74
       },
       "flags": {},
-      "order": 188,
+      "order": 179,
       "mode": 0,
       "inputs": [
         {
@@ -7107,7 +7107,7 @@
         30
       ],
       "flags": {},
-      "order": 175,
+      "order": 162,
       "mode": 0,
       "inputs": [
         {
@@ -7162,7 +7162,7 @@
         30
       ],
       "flags": {},
-      "order": 176,
+      "order": 163,
       "mode": 0,
       "inputs": [
         {
@@ -7217,7 +7217,7 @@
         30
       ],
       "flags": {},
-      "order": 190,
+      "order": 182,
       "mode": 0,
       "inputs": [
         {
@@ -7272,7 +7272,7 @@
         30
       ],
       "flags": {},
-      "order": 191,
+      "order": 183,
       "mode": 0,
       "inputs": [
         {
@@ -7380,7 +7380,7 @@
         "1": 58
       },
       "flags": {},
-      "order": 22,
+      "order": 21,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -7424,7 +7424,7 @@
         "1": 58
       },
       "flags": {},
-      "order": 23,
+      "order": 22,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -7468,7 +7468,7 @@
         "1": 58
       },
       "flags": {},
-      "order": 24,
+      "order": 23,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -7512,7 +7512,7 @@
         "1": 58
       },
       "flags": {},
-      "order": 25,
+      "order": 24,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -7556,7 +7556,7 @@
         "1": 79.05426788330078
       },
       "flags": {},
-      "order": 26,
+      "order": 25,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -7749,7 +7749,7 @@
         "1": 246
       },
       "flags": {},
-      "order": 148,
+      "order": 149,
       "mode": 0,
       "inputs": [
         {
@@ -7905,7 +7905,7 @@
         "1": 58
       },
       "flags": {},
-      "order": 27,
+      "order": 26,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -7949,7 +7949,7 @@
         "1": 58
       },
       "flags": {},
-      "order": 28,
+      "order": 27,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -7993,7 +7993,7 @@
         "1": 74
       },
       "flags": {},
-      "order": 171,
+      "order": 155,
       "mode": 0,
       "inputs": [
         {
@@ -8055,7 +8055,7 @@
         "1": 74
       },
       "flags": {},
-      "order": 172,
+      "order": 156,
       "mode": 0,
       "inputs": [
         {
@@ -8117,7 +8117,7 @@
         "1": 58
       },
       "flags": {},
-      "order": 29,
+      "order": 28,
       "mode": 0,
       "inputs": [
         {
@@ -8165,7 +8165,7 @@
         "1": 74
       },
       "flags": {},
-      "order": 151,
+      "order": 152,
       "mode": 0,
       "inputs": [
         {
@@ -8463,7 +8463,7 @@
         "1": 46
       },
       "flags": {},
-      "order": 165,
+      "order": 172,
       "mode": 0,
       "inputs": [
         {
@@ -8512,7 +8512,7 @@
         "1": 246
       },
       "flags": {},
-      "order": 156,
+      "order": 159,
       "mode": 0,
       "inputs": [
         {
@@ -8616,7 +8616,7 @@
         30
       ],
       "flags": {},
-      "order": 173,
+      "order": 180,
       "mode": 0,
       "inputs": [
         {
@@ -8781,7 +8781,7 @@
         30
       ],
       "flags": {},
-      "order": 182,
+      "order": 168,
       "mode": 0,
       "inputs": [
         {
@@ -8837,7 +8837,7 @@
         30
       ],
       "flags": {},
-      "order": 183,
+      "order": 169,
       "mode": 0,
       "inputs": [
         {
@@ -8893,7 +8893,7 @@
         "1": 58
       },
       "flags": {},
-      "order": 30,
+      "order": 29,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -8937,7 +8937,7 @@
         "1": 58
       },
       "flags": {},
-      "order": 31,
+      "order": 30,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -8981,7 +8981,7 @@
         "1": 58
       },
       "flags": {},
-      "order": 32,
+      "order": 31,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -9025,7 +9025,7 @@
         "1": 58
       },
       "flags": {},
-      "order": 33,
+      "order": 32,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -9524,7 +9524,7 @@
         "1": 178
       },
       "flags": {},
-      "order": 149,
+      "order": 150,
       "mode": 0,
       "inputs": [
         {
@@ -9593,7 +9593,7 @@
         "1": 74
       },
       "flags": {},
-      "order": 169,
+      "order": 176,
       "mode": 0,
       "inputs": [
         {
@@ -9655,7 +9655,7 @@
         "1": 178
       },
       "flags": {},
-      "order": 154,
+      "order": 157,
       "mode": 0,
       "inputs": [
         {
@@ -9724,7 +9724,7 @@
         "1": 74
       },
       "flags": {},
-      "order": 159,
+      "order": 164,
       "mode": 0,
       "inputs": [
         {
@@ -9899,7 +9899,7 @@
         30
       ],
       "flags": {},
-      "order": 163,
+      "order": 170,
       "mode": 0,
       "inputs": [
         {
@@ -9915,9 +9915,7 @@
         {
           "name": "*",
           "type": "*",
-          "links": [
-            862
-          ],
+          "links": [],
           "slot_index": 0,
           "dir": 4,
           "has_old_label": true,
@@ -9952,7 +9950,7 @@
         "1": 58
       },
       "flags": {},
-      "order": 34,
+      "order": 33,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -9996,7 +9994,7 @@
         "1": 58
       },
       "flags": {},
-      "order": 35,
+      "order": 34,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -10242,7 +10240,7 @@
         "1": 178
       },
       "flags": {},
-      "order": 150,
+      "order": 151,
       "mode": 0,
       "inputs": [
         {
@@ -10368,7 +10366,7 @@
         "1": 178
       },
       "flags": {},
-      "order": 155,
+      "order": 158,
       "mode": 0,
       "inputs": [
         {
@@ -10690,7 +10688,7 @@
         "1": 74
       },
       "flags": {},
-      "order": 160,
+      "order": 165,
       "mode": 0,
       "inputs": [
         {
@@ -10866,7 +10864,7 @@
         "1": 58
       },
       "flags": {},
-      "order": 36,
+      "order": 35,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -10910,7 +10908,7 @@
         30
       ],
       "flags": {},
-      "order": 164,
+      "order": 171,
       "mode": 0,
       "inputs": [
         {
@@ -10926,9 +10924,7 @@
         {
           "name": "*",
           "type": "*",
-          "links": [
-            863
-          ],
+          "links": [],
           "slot_index": 0,
           "dir": 4,
           "has_old_label": true,
@@ -10963,7 +10959,7 @@
         "1": 58
       },
       "flags": {},
-      "order": 37,
+      "order": 36,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -11007,7 +11003,7 @@
         "1": 58
       },
       "flags": {},
-      "order": 38,
+      "order": 37,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -11107,7 +11103,7 @@
         "1": 58
       },
       "flags": {},
-      "order": 39,
+      "order": 38,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -11130,226 +11126,6 @@
       ],
       "color": "#223",
       "bgcolor": "#335"
-    },
-    {
-      "id": 448,
-      "type": "ACN_AdvancedControlNetApply",
-      "pos": {
-        "0": 2934.92236328125,
-        "1": 2066.506591796875,
-        "2": 0,
-        "3": 0,
-        "4": 0,
-        "5": 0,
-        "6": 0,
-        "7": 0,
-        "8": 0,
-        "9": 0
-      },
-      "size": {
-        "0": 325.4971923828125,
-        "1": 286
-      },
-      "flags": {},
-      "order": 185,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "positive",
-          "type": "CONDITIONING",
-          "link": 788
-        },
-        {
-          "name": "negative",
-          "type": "CONDITIONING",
-          "link": 789
-        },
-        {
-          "name": "control_net",
-          "type": "CONTROL_NET",
-          "link": 734
-        },
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 735
-        },
-        {
-          "name": "mask_optional",
-          "type": "MASK",
-          "link": null
-        },
-        {
-          "name": "timestep_kf",
-          "type": "TIMESTEP_KEYFRAME",
-          "link": null
-        },
-        {
-          "name": "latent_kf_override",
-          "type": "LATENT_KEYFRAME",
-          "link": 862
-        },
-        {
-          "name": "weights_override",
-          "type": "CONTROL_NET_WEIGHTS",
-          "link": null
-        },
-        {
-          "name": "model_optional",
-          "type": "MODEL",
-          "link": null
-        },
-        {
-          "name": "vae_optional",
-          "type": "VAE",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "positive",
-          "type": "CONDITIONING",
-          "links": [
-            712
-          ],
-          "slot_index": 0,
-          "shape": 3
-        },
-        {
-          "name": "negative",
-          "type": "CONDITIONING",
-          "links": [
-            715
-          ],
-          "slot_index": 1,
-          "shape": 3
-        },
-        {
-          "name": "model_opt",
-          "type": "MODEL",
-          "links": null,
-          "shape": 3
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "ACN_AdvancedControlNetApply"
-      },
-      "widgets_values": [
-        0.5,
-        0,
-        0.5,
-        ""
-      ]
-    },
-    {
-      "id": 384,
-      "type": "ACN_AdvancedControlNetApply",
-      "pos": {
-        "0": 2894.00830078125,
-        "1": -339.6441650390625,
-        "2": 0,
-        "3": 0,
-        "4": 0,
-        "5": 0,
-        "6": 0,
-        "7": 0,
-        "8": 0,
-        "9": 0
-      },
-      "size": {
-        "0": 325.4971923828125,
-        "1": 286
-      },
-      "flags": {},
-      "order": 168,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "positive",
-          "type": "CONDITIONING",
-          "link": 786
-        },
-        {
-          "name": "negative",
-          "type": "CONDITIONING",
-          "link": 787
-        },
-        {
-          "name": "control_net",
-          "type": "CONTROL_NET",
-          "link": 670
-        },
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 671
-        },
-        {
-          "name": "mask_optional",
-          "type": "MASK",
-          "link": null
-        },
-        {
-          "name": "timestep_kf",
-          "type": "TIMESTEP_KEYFRAME",
-          "link": null
-        },
-        {
-          "name": "latent_kf_override",
-          "type": "LATENT_KEYFRAME",
-          "link": 863
-        },
-        {
-          "name": "weights_override",
-          "type": "CONTROL_NET_WEIGHTS",
-          "link": null
-        },
-        {
-          "name": "model_optional",
-          "type": "MODEL",
-          "link": null
-        },
-        {
-          "name": "vae_optional",
-          "type": "VAE",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "positive",
-          "type": "CONDITIONING",
-          "links": [
-            672
-          ],
-          "slot_index": 0,
-          "shape": 3
-        },
-        {
-          "name": "negative",
-          "type": "CONDITIONING",
-          "links": [
-            673
-          ],
-          "slot_index": 1,
-          "shape": 3
-        },
-        {
-          "name": "model_opt",
-          "type": "MODEL",
-          "links": null,
-          "shape": 3
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "ACN_AdvancedControlNetApply"
-      },
-      "widgets_values": [
-        0.5,
-        0,
-        0.5,
-        ""
-      ]
     },
     {
       "id": 498,
@@ -11621,7 +11397,7 @@
         "1": 58
       },
       "flags": {},
-      "order": 178,
+      "order": 185,
       "mode": 0,
       "inputs": [
         {
@@ -11673,7 +11449,7 @@
         "1": 322
       },
       "flags": {},
-      "order": 181,
+      "order": 188,
       "mode": 0,
       "inputs": [
         {
@@ -11768,7 +11544,7 @@
         "1": 320
       },
       "flags": {},
-      "order": 184,
+      "order": 191,
       "mode": 0,
       "inputs": [
         {
@@ -11863,7 +11639,7 @@
         "1": 360
       },
       "flags": {},
-      "order": 174,
+      "order": 181,
       "mode": 0,
       "inputs": [
         {
@@ -11983,7 +11759,7 @@
         "1": 58
       },
       "flags": {},
-      "order": 21,
+      "order": 39,
       "mode": 0,
       "inputs": [
         {
@@ -12011,6 +11787,226 @@
       ],
       "color": "#432",
       "bgcolor": "#653"
+    },
+    {
+      "id": 384,
+      "type": "ACN_AdvancedControlNetApply",
+      "pos": {
+        "0": 2894.00830078125,
+        "1": -339.6441650390625,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0
+      },
+      "size": {
+        "0": 325.4971923828125,
+        "1": 286
+      },
+      "flags": {},
+      "order": 148,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 786
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 787
+        },
+        {
+          "name": "control_net",
+          "type": "CONTROL_NET",
+          "link": 670
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 671
+        },
+        {
+          "name": "mask_optional",
+          "type": "MASK",
+          "link": null
+        },
+        {
+          "name": "timestep_kf",
+          "type": "TIMESTEP_KEYFRAME",
+          "link": null
+        },
+        {
+          "name": "latent_kf_override",
+          "type": "LATENT_KEYFRAME",
+          "link": null
+        },
+        {
+          "name": "weights_override",
+          "type": "CONTROL_NET_WEIGHTS",
+          "link": null
+        },
+        {
+          "name": "model_optional",
+          "type": "MODEL",
+          "link": null
+        },
+        {
+          "name": "vae_optional",
+          "type": "VAE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "links": [
+            672
+          ],
+          "slot_index": 0,
+          "shape": 3
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "links": [
+            673
+          ],
+          "slot_index": 1,
+          "shape": 3
+        },
+        {
+          "name": "model_opt",
+          "type": "MODEL",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ACN_AdvancedControlNetApply"
+      },
+      "widgets_values": [
+        0.5,
+        0,
+        0.5,
+        ""
+      ]
+    },
+    {
+      "id": 448,
+      "type": "ACN_AdvancedControlNetApply",
+      "pos": {
+        "0": 2934.92236328125,
+        "1": 2066.506591796875,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0
+      },
+      "size": {
+        "0": 325.4971923828125,
+        "1": 286
+      },
+      "flags": {},
+      "order": 175,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 788
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 789
+        },
+        {
+          "name": "control_net",
+          "type": "CONTROL_NET",
+          "link": 734
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 735
+        },
+        {
+          "name": "mask_optional",
+          "type": "MASK",
+          "link": null
+        },
+        {
+          "name": "timestep_kf",
+          "type": "TIMESTEP_KEYFRAME",
+          "link": null
+        },
+        {
+          "name": "latent_kf_override",
+          "type": "LATENT_KEYFRAME",
+          "link": null
+        },
+        {
+          "name": "weights_override",
+          "type": "CONTROL_NET_WEIGHTS",
+          "link": null
+        },
+        {
+          "name": "model_optional",
+          "type": "MODEL",
+          "link": null
+        },
+        {
+          "name": "vae_optional",
+          "type": "VAE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "links": [
+            712
+          ],
+          "slot_index": 0,
+          "shape": 3
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "links": [
+            715
+          ],
+          "slot_index": 1,
+          "shape": 3
+        },
+        {
+          "name": "model_opt",
+          "type": "MODEL",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ACN_AdvancedControlNetApply"
+      },
+      "widgets_values": [
+        0.5,
+        0,
+        0.5,
+        ""
+      ]
     }
   ],
   "links": [
@@ -14095,22 +14091,6 @@
       "*"
     ],
     [
-      862,
-      482,
-      0,
-      448,
-      6,
-      "LATENT_KEYFRAME"
-    ],
-    [
-      863,
-      499,
-      0,
-      384,
-      6,
-      "LATENT_KEYFRAME"
-    ],
-    [
       864,
       498,
       0,
@@ -14316,10 +14296,10 @@
   "config": {},
   "extra": {
     "ds": {
-      "scale": 1.3109994191500245,
+      "scale": 0.4240976183724853,
       "offset": [
-        -2700.1302678830457,
-        -1442.843224018235
+        -1634.260741010914,
+        -1637.2013301697036
       ]
     }
   },

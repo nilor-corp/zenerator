@@ -1263,10 +1263,6 @@
       "image": [
         "381",
         0
-      ],
-      "latent_kf_override": [
-        "501",
-        0
       ]
     },
     "class_type": "ACN_AdvancedControlNetApply",
@@ -1435,10 +1431,6 @@
       ],
       "image": [
         "428",
-        0
-      ],
-      "latent_kf_override": [
-        "485",
         0
       ]
     },
