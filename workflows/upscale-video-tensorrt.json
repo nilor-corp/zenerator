@@ -145,6 +145,48 @@
       "title": "Load AnimateDiff LoRA 🎭🅐🅓"
     }
   },
+  "356": {
+    "inputs": {
+      "ckpt_name": "rife47.pth",
+      "clear_cache_after_n_frames": 10,
+      "multiplier": 2,
+      "fast_mode": true,
+      "ensemble": true,
+      "scale_factor": 1,
+      "frames": [
+        "539",
+        0
+      ]
+    },
+    "class_type": "RIFE VFI",
+    "_meta": {
+      "title": "RIFE VFI (recommend rife47 and rife49)"
+    }
+  },
+  "357": {
+    "inputs": {
+      "frame_rate": 24,
+      "loop_count": 0,
+      "filename_prefix": [
+        "450",
+        0
+      ],
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": true,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "356",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
   "365": {
     "inputs": {
       "value": [
@@ -185,7 +227,7 @@
   },
   "419": {
     "inputs": {
-      "string": "G:\\Shared drives\\nilor\\Projects\\008_Vivid_Zenon_Site-Visit\\03_Development\\02_Outputs\\01_Zenon_Wide-ABCDE\\240925-142735_zenon_research_wide_rife-1_00001.mp4"
+      "string": "G:\\Shared drives\\nilor\\Projects\\011_Vivid_Zenon_Emirates\\03_Development\\Generation Outputs\\141\\zenon_blocky_rife-1_00003.mp4"
     },
     "class_type": "Primitive string [Crystools]",
     "_meta": {
@@ -226,7 +268,7 @@
   },
   "439": {
     "inputs": {
-      "text": "240925-142735_zenon_research_wide_rife-1_00001.mp4",
+      "text": "zenon_blocky_rife-1_00003.mp4",
       "anything": [
         "437",
         1
@@ -269,7 +311,7 @@
   },
   "448": {
     "inputs": {
-      "text": "240925-142735_zenon_research_wide_rife-1_00001",
+      "text": "zenon_blocky_rife-1_00003",
       "anything": [
         "447",
         0
@@ -283,7 +325,7 @@
   "450": {
     "inputs": {
       "a": [
-        "452",
+        "443",
         0
       ],
       "b": [
@@ -307,7 +349,7 @@
   },
   "453": {
     "inputs": {
-      "text": "Workflower/240925-142735_zenon_research_wide_rife-1_00001",
+      "text": "Workflower/zenon_blocky_rife-1_00003",
       "anything": [
         "443",
         0
@@ -320,7 +362,7 @@
   },
   "454": {
     "inputs": {
-      "text": "upscale_research/ipa-batch_was26_cfg-60_denoise-40/frame",
+      "text": "Workflower/_hr_ult_rife",
       "anything": [
         "450",
         0
@@ -348,22 +390,6 @@
     "class_type": "VHS_LoadVideoPath",
     "_meta": {
       "title": "Load Video (Path) 🎥🅥🅗🅢"
-    }
-  },
-  "527": {
-    "inputs": {
-      "filename_prefix": [
-        "450",
-        0
-      ],
-      "images": [
-        "539",
-        0
-      ]
-    },
-    "class_type": "SaveImage",
-    "_meta": {
-      "title": "Save Image"
     }
   },
   "535": {
@@ -445,7 +471,7 @@
   },
   "539": {
     "inputs": {
-      "seed": 172173409385114,
+      "seed": 90560967555642,
       "steps": [
         "541",
         0

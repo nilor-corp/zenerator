@@ -145,6 +145,48 @@
       "title": "Load AnimateDiff LoRA 🎭🅐🅓"
     }
   },
+  "356": {
+    "inputs": {
+      "ckpt_name": "rife47.pth",
+      "clear_cache_after_n_frames": 10,
+      "multiplier": 2,
+      "fast_mode": true,
+      "ensemble": true,
+      "scale_factor": 1,
+      "frames": [
+        "516",
+        0
+      ]
+    },
+    "class_type": "RIFE VFI",
+    "_meta": {
+      "title": "RIFE VFI (recommend rife47 and rife49)"
+    }
+  },
+  "357": {
+    "inputs": {
+      "frame_rate": 24,
+      "loop_count": 0,
+      "filename_prefix": [
+        "450",
+        0
+      ],
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": true,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "356",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
   "365": {
     "inputs": {
       "value": [
@@ -301,7 +343,7 @@
   "450": {
     "inputs": {
       "a": [
-        "452",
+        "443",
         0
       ],
       "b": [
@@ -423,22 +465,6 @@
     "class_type": "UltimateSDUpscale",
     "_meta": {
       "title": "Ultimate SD Upscale"
-    }
-  },
-  "527": {
-    "inputs": {
-      "filename_prefix": [
-        "450",
-        0
-      ],
-      "images": [
-        "516",
-        0
-      ]
-    },
-    "class_type": "SaveImage",
-    "_meta": {
-      "title": "Save Image"
     }
   },
   "535": {

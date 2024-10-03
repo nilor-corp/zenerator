@@ -1,6 +1,6 @@
 {
   "last_node_id": 541,
-  "last_link_id": 870,
+  "last_link_id": 871,
   "nodes": [
     {
       "id": 320,
@@ -92,7 +92,7 @@
         "1": 286
       },
       "flags": {},
-      "order": 28,
+      "order": 26,
       "mode": 0,
       "inputs": [
         {
@@ -206,7 +206,7 @@
         "1": 76
       },
       "flags": {},
-      "order": 42,
+      "order": 41,
       "mode": 0,
       "inputs": [
         {
@@ -328,7 +328,7 @@
         "1": 80
       },
       "flags": {},
-      "order": 26,
+      "order": 24,
       "mode": 0,
       "inputs": [
         {
@@ -342,7 +342,7 @@
         "Node name for S&R": "easy showAnything"
       },
       "widgets_values": [
-        "240925-142735_zenon_research_wide_rife-1_00001.mp4"
+        "zenon_blocky_rife-1_00003.mp4"
       ],
       "color": "#323",
       "bgcolor": "#535"
@@ -367,7 +367,7 @@
         "1": 80
       },
       "flags": {},
-      "order": 31,
+      "order": 29,
       "mode": 0,
       "inputs": [
         {
@@ -381,7 +381,7 @@
         "Node name for S&R": "easy showAnything"
       },
       "widgets_values": [
-        "240925-142735_zenon_research_wide_rife-1_00001"
+        "zenon_blocky_rife-1_00003"
       ],
       "color": "#323",
       "bgcolor": "#535"
@@ -406,7 +406,7 @@
         "1": 126
       },
       "flags": {},
-      "order": 27,
+      "order": 25,
       "mode": 0,
       "inputs": [
         {
@@ -447,65 +447,6 @@
       ]
     },
     {
-      "id": 443,
-      "type": "JWStringConcat",
-      "pos": {
-        "0": 3661.978271484375,
-        "1": -36.53736877441406,
-        "2": 0,
-        "3": 0,
-        "4": 0,
-        "5": 0,
-        "6": 0,
-        "7": 0,
-        "8": 0,
-        "9": 0
-      },
-      "size": {
-        "0": 210,
-        "1": 54
-      },
-      "flags": {},
-      "order": 32,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "a",
-          "type": "STRING",
-          "link": 650,
-          "widget": {
-            "name": "a"
-          }
-        },
-        {
-          "name": "b",
-          "type": "STRING",
-          "link": 651,
-          "widget": {
-            "name": "b"
-          }
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            655
-          ],
-          "slot_index": 0,
-          "shape": 3
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "JWStringConcat"
-      },
-      "widgets_values": [
-        "",
-        ""
-      ]
-    },
-    {
       "id": 453,
       "type": "easy showAnything",
       "pos": {
@@ -525,7 +466,7 @@
         "1": 80
       },
       "flags": {},
-      "order": 34,
+      "order": 32,
       "mode": 0,
       "inputs": [
         {
@@ -539,7 +480,7 @@
         "Node name for S&R": "easy showAnything"
       },
       "widgets_values": [
-        "Workflower/240925-142735_zenon_research_wide_rife-1_00001"
+        "Workflower/zenon_blocky_rife-1_00003"
       ],
       "color": "#323",
       "bgcolor": "#535"
@@ -620,7 +561,7 @@
         "1": 126
       },
       "flags": {},
-      "order": 22,
+      "order": 21,
       "mode": 0,
       "inputs": [
         {
@@ -900,7 +841,7 @@
         "1": 82
       },
       "flags": {},
-      "order": 20,
+      "order": 19,
       "mode": 4,
       "inputs": [
         {
@@ -957,7 +898,7 @@
       "flags": {
         "collapsed": false
       },
-      "order": 43,
+      "order": 42,
       "mode": 0,
       "inputs": [
         {
@@ -1174,51 +1115,6 @@
       "shape": 1
     },
     {
-      "id": 419,
-      "type": "Primitive string [Crystools]",
-      "pos": {
-        "0": 657,
-        "1": 718,
-        "2": 0,
-        "3": 0,
-        "4": 0,
-        "5": 0,
-        "6": 0,
-        "7": 0,
-        "8": 0,
-        "9": 0
-      },
-      "size": {
-        "0": 315,
-        "1": 58
-      },
-      "flags": {},
-      "order": 8,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "string",
-          "type": "STRING",
-          "links": [
-            682,
-            684
-          ],
-          "slot_index": 0,
-          "shape": 3
-        }
-      ],
-      "title": "Input Video",
-      "properties": {
-        "Node name for S&R": "Primitive string [Crystools]"
-      },
-      "widgets_values": [
-        "G:\\Shared drives\\nilor\\Projects\\008_Vivid_Zenon_Site-Visit\\03_Development\\02_Outputs\\01_Zenon_Wide-ABCDE\\240925-142735_zenon_research_wide_rife-1_00001.mp4"
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
       "id": 356,
       "type": "RIFE VFI",
       "pos": {
@@ -1239,7 +1135,7 @@
       },
       "flags": {},
       "order": 38,
-      "mode": 4,
+      "mode": 0,
       "inputs": [
         {
           "name": "frames",
@@ -1295,8 +1191,8 @@
         306
       ],
       "flags": {},
-      "order": 41,
-      "mode": 4,
+      "order": 40,
+      "mode": 0,
       "inputs": [
         {
           "name": "images",
@@ -1386,13 +1282,13 @@
         "1": 54
       },
       "flags": {},
-      "order": 19,
+      "order": 33,
       "mode": 0,
       "inputs": [
         {
           "name": "a",
           "type": "STRING",
-          "link": 818,
+          "link": 871,
           "widget": {
             "name": "a"
           }
@@ -1412,8 +1308,7 @@
           "type": "STRING",
           "links": [
             654,
-            656,
-            816
+            656
           ],
           "slot_index": 0,
           "shape": 3
@@ -1462,8 +1357,7 @@
           "type": "IMAGE",
           "links": [
             549,
-            551,
-            817
+            551
           ],
           "slot_index": 0
         }
@@ -1472,51 +1366,6 @@
         "showOutputText": true,
         "horizontal": false
       }
-    },
-    {
-      "id": 527,
-      "type": "SaveImage",
-      "pos": {
-        "0": 4610,
-        "1": 325,
-        "2": 0,
-        "3": 0,
-        "4": 0,
-        "5": 0,
-        "6": 0,
-        "7": 0,
-        "8": 0,
-        "9": 0
-      },
-      "size": {
-        "0": 315,
-        "1": 58
-      },
-      "flags": {},
-      "order": 40,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 817
-        },
-        {
-          "name": "filename_prefix",
-          "type": "STRING",
-          "link": 816,
-          "widget": {
-            "name": "filename_prefix"
-          }
-        }
-      ],
-      "outputs": [],
-      "properties": {
-        "Node name for S&R": "SaveImage"
-      },
-      "widgets_values": [
-        "ComfyUI"
-      ]
     },
     {
       "id": 254,
@@ -1538,7 +1387,7 @@
         "1": 58
       },
       "flags": {},
-      "order": 9,
+      "order": 8,
       "mode": 0,
       "inputs": [
         {
@@ -1586,7 +1435,7 @@
         "1": 82
       },
       "flags": {},
-      "order": 10,
+      "order": 9,
       "mode": 0,
       "inputs": [
         {
@@ -1642,7 +1491,7 @@
         "1": 80
       },
       "flags": {},
-      "order": 23,
+      "order": 35,
       "mode": 0,
       "inputs": [
         {
@@ -1656,7 +1505,7 @@
         "Node name for S&R": "easy showAnything"
       },
       "widgets_values": [
-        "upscale_research/ipa-batch_was26_cfg-60_denoise-40/frame"
+        "Workflower/_hr_ult_rife"
       ],
       "color": "#323",
       "bgcolor": "#535"
@@ -1681,7 +1530,7 @@
         "1": 230
       },
       "flags": {},
-      "order": 24,
+      "order": 22,
       "mode": 0,
       "inputs": [
         {
@@ -1760,7 +1609,7 @@
         "1": 58
       },
       "flags": {},
-      "order": 11,
+      "order": 10,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -1804,7 +1653,7 @@
         "1": 58
       },
       "flags": {},
-      "order": 12,
+      "order": 11,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -1848,7 +1697,7 @@
         26
       ],
       "flags": {},
-      "order": 25,
+      "order": 23,
       "mode": 0,
       "inputs": [
         {
@@ -1895,7 +1744,7 @@
         "1": 106
       },
       "flags": {},
-      "order": 29,
+      "order": 27,
       "mode": 0,
       "inputs": [
         {
@@ -1948,7 +1797,7 @@
         "1": 278
       },
       "flags": {},
-      "order": 35,
+      "order": 34,
       "mode": 0,
       "inputs": [
         {
@@ -2025,7 +1874,7 @@
         "1": 278
       },
       "flags": {},
-      "order": 33,
+      "order": 31,
       "mode": 0,
       "inputs": [
         {
@@ -2081,106 +1930,6 @@
         "V only",
         64
       ]
-    },
-    {
-      "id": 509,
-      "type": "VHS_LoadVideoPath",
-      "pos": {
-        "0": 1337.310302734375,
-        "1": 713.362060546875,
-        "2": 0,
-        "3": 0,
-        "4": 0,
-        "5": 0,
-        "6": 0,
-        "7": 0,
-        "8": 0,
-        "9": 0
-      },
-      "size": [
-        231.8896484375,
-        214
-      ],
-      "flags": {},
-      "order": 21,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "meta_batch",
-          "type": "VHS_BatchManager",
-          "link": null
-        },
-        {
-          "name": "vae",
-          "type": "VAE",
-          "link": null
-        },
-        {
-          "name": "video",
-          "type": "STRING",
-          "link": 770,
-          "widget": {
-            "name": "video"
-          }
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            771
-          ],
-          "shape": 3
-        },
-        {
-          "name": "frame_count",
-          "type": "INT",
-          "links": null,
-          "shape": 3
-        },
-        {
-          "name": "audio",
-          "type": "AUDIO",
-          "links": null,
-          "shape": 3
-        },
-        {
-          "name": "video_info",
-          "type": "VHS_VIDEOINFO",
-          "links": null,
-          "shape": 3
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "VHS_LoadVideoPath"
-      },
-      "widgets_values": {
-        "video": "",
-        "force_rate": 0,
-        "force_size": "Disabled",
-        "custom_width": 512,
-        "custom_height": 512,
-        "frame_load_cap": 0,
-        "skip_first_frames": 0,
-        "select_every_nth": 2,
-        "videopreview": {
-          "hidden": false,
-          "paused": false,
-          "params": {
-            "frame_load_cap": 0,
-            "skip_first_frames": 0,
-            "force_rate": 0,
-            "filename": "",
-            "type": "path",
-            "format": "video/",
-            "select_every_nth": 2
-          },
-          "muted": false
-        }
-      },
-      "color": "#432",
-      "bgcolor": "#653"
     },
     {
       "id": 464,
@@ -2258,7 +2007,7 @@
         "1": 58
       },
       "flags": {},
-      "order": 13,
+      "order": 12,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -2299,7 +2048,7 @@
         "1": 58
       },
       "flags": {},
-      "order": 14,
+      "order": 13,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -2307,8 +2056,7 @@
           "name": "string",
           "type": "STRING",
           "links": [
-            650,
-            818
+            650
           ],
           "slot_index": 0,
           "shape": 3
@@ -2341,7 +2089,7 @@
         "1": 59.54592514038086
       },
       "flags": {},
-      "order": 15,
+      "order": 14,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -2385,7 +2133,7 @@
         "1": 82
       },
       "flags": {},
-      "order": 30,
+      "order": 28,
       "mode": 0,
       "inputs": [
         {
@@ -2487,7 +2235,7 @@
         "Node name for S&R": "UltimateSDUpscaleNoUpscale"
       },
       "widgets_values": [
-        172173409385114,
+        90560967555642,
         "randomize",
         9,
         6,
@@ -2509,6 +2257,211 @@
       ],
       "color": "#2a363b",
       "bgcolor": "#3f5159"
+    },
+    {
+      "id": 443,
+      "type": "JWStringConcat",
+      "pos": {
+        "0": 3661.978271484375,
+        "1": -36.53736877441406,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0
+      },
+      "size": {
+        "0": 210,
+        "1": 54
+      },
+      "flags": {},
+      "order": 30,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "a",
+          "type": "STRING",
+          "link": 650,
+          "widget": {
+            "name": "a"
+          }
+        },
+        {
+          "name": "b",
+          "type": "STRING",
+          "link": 651,
+          "widget": {
+            "name": "b"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            655,
+            871
+          ],
+          "slot_index": 0,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "JWStringConcat"
+      },
+      "widgets_values": [
+        "",
+        ""
+      ]
+    },
+    {
+      "id": 419,
+      "type": "Primitive string [Crystools]",
+      "pos": {
+        "0": 657,
+        "1": 718,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0
+      },
+      "size": {
+        "0": 315,
+        "1": 58
+      },
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "string",
+          "type": "STRING",
+          "links": [
+            682,
+            684
+          ],
+          "slot_index": 0,
+          "shape": 3
+        }
+      ],
+      "title": "Input Video",
+      "properties": {
+        "Node name for S&R": "Primitive string [Crystools]"
+      },
+      "widgets_values": [
+        "G:\\Shared drives\\nilor\\Projects\\011_Vivid_Zenon_Emirates\\03_Development\\Generation Outputs\\141\\zenon_blocky_rife-1_00003.mp4"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 509,
+      "type": "VHS_LoadVideoPath",
+      "pos": {
+        "0": 1337.310302734375,
+        "1": 713.362060546875,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0
+      },
+      "size": [
+        234.69961547851562,
+        214
+      ],
+      "flags": {},
+      "order": 20,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "meta_batch",
+          "type": "VHS_BatchManager",
+          "link": null
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": null
+        },
+        {
+          "name": "video",
+          "type": "STRING",
+          "link": 770,
+          "widget": {
+            "name": "video"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            771
+          ],
+          "shape": 3
+        },
+        {
+          "name": "frame_count",
+          "type": "INT",
+          "links": null,
+          "shape": 3
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": null,
+          "shape": 3
+        },
+        {
+          "name": "video_info",
+          "type": "VHS_VIDEOINFO",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VHS_LoadVideoPath"
+      },
+      "widgets_values": {
+        "video": "",
+        "force_rate": 0,
+        "force_size": "Disabled",
+        "custom_width": 512,
+        "custom_height": 512,
+        "frame_load_cap": 0,
+        "skip_first_frames": 0,
+        "select_every_nth": 2,
+        "videopreview": {
+          "hidden": false,
+          "paused": false,
+          "params": {
+            "frame_load_cap": 0,
+            "skip_first_frames": 0,
+            "force_rate": 0,
+            "filename": "",
+            "type": "path",
+            "format": "video/",
+            "select_every_nth": 2
+          },
+          "muted": false
+        }
+      },
+      "color": "#432",
+      "bgcolor": "#653"
     }
   ],
   "links": [
@@ -2745,30 +2698,6 @@
       "*"
     ],
     [
-      816,
-      450,
-      0,
-      527,
-      1,
-      "STRING"
-    ],
-    [
-      817,
-      371,
-      0,
-      527,
-      0,
-      "IMAGE"
-    ],
-    [
-      818,
-      452,
-      0,
-      450,
-      0,
-      "STRING"
-    ],
-    [
       846,
       245,
       0,
@@ -2919,6 +2848,14 @@
       371,
       0,
       "*"
+    ],
+    [
+      871,
+      443,
+      0,
+      450,
+      0,
+      "STRING"
     ]
   ],
   "groups": [
@@ -3034,10 +2971,10 @@
   "config": {},
   "extra": {
     "ds": {
-      "scale": 0.6934334949441548,
+      "scale": 0.7400249944258177,
       "offset": [
-        -2478.3705928906693,
-        -148.351059153491
+        -574.4437634953292,
+        -345.210093854147
       ]
     }
   },
