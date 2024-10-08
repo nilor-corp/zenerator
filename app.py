@@ -296,7 +296,8 @@ def process_input(input_key):
                 text_label="Select Input Type", 
                 identifier=input_key
             )
-            # Only append the output textbox to the components list
+
+            # Only append the output (Markdown element) to the components list
             component = output
         elif input_type == "video":
             # print("!!!!!!!!!!!!!!!!!!!!!!!\nMaking Radio")
@@ -307,19 +308,25 @@ def process_input(input_key):
                 text_label="Select Input Type", 
                 identifier=input_key
             )
-            # Only append the output textbox to the components list
+
+            # Only append the output (Markdown element) to the components list
             component = output
         elif input_type == "float" or input_type == "int":
             input_minimum = input_details.get("minimum", None)
             input_maximum = input_details.get("maximum", None)
             input_step = input_details.get("step", 1)
+            
+            # Use the mapping to create components based on input_type
+            component_constructor = component_map.get(input_type)
 
-            component = component_map[input_type](label=input_label, elem_id=input_key, value=input_value, minimum=input_minimum, maximum=input_maximum, step=input_step, interactive=input_interactive)
+            # print(f"Component Constructor: {component_constructor}")
+            component = component_constructor(label=input_label, elem_id=input_key, value=input_value, minimum=input_minimum, maximum=input_maximum, step=input_step, interactive=input_interactive)
         else:
             if input_type == "path":
                 input_value = os.path.abspath(input_value)
             # Use the mapping to create components based on input_type
             component_constructor = component_map.get(input_type)
+
             # print(f"Component Constructor: {component_constructor}")
             component = component_constructor(label=input_label, elem_id=input_key, value=input_value, interactive=input_interactive)
     else:
@@ -427,7 +434,7 @@ with gr.Blocks(title="WorkFlower") as demo:
                                 # elif output_type == "image":
                                 #     output_player = gr.Image(label="Output Image")
 
-                        # investigate trigger_mode=multiple for run_button.click event
+                        # TODO: investigate trigger_mode=multiple for run_button.click event
 
                         if (selected_port_url is not None) and (components is not None) and (component_dict is not None):
                                 run_button.click(

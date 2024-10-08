@@ -12,7 +12,7 @@
     "inputs": {
       "text": "extremely detailed",
       "clip": [
-        "4",
+        "507",
         1
       ]
     },
@@ -25,7 +25,7 @@
     "inputs": {
       "text": "blurry, glitches, artifact, distorted, malformed, nsfw, teeth",
       "clip": [
-        "4",
+        "507",
         1
       ]
     },
@@ -382,7 +382,7 @@
   },
   "271": {
     "inputs": {
-      "float_val": 1.5
+      "float_val": 1.1
     },
     "class_type": "ADE_MultivalDynamic",
     "_meta": {
@@ -606,7 +606,7 @@
     "inputs": {
       "preset": "PLUS (high strength)",
       "model": [
-        "4",
+        "507",
         0
       ]
     },
@@ -659,7 +659,7 @@
   },
   "303": {
     "inputs": {
-      "weights": "1.0, 0.2",
+      "weights": "1.0, 0.0",
       "timing": "ease_in_out",
       "frames": [
         "291",
@@ -1979,6 +1979,25 @@
     "class_type": "LatentKeyframeTiming",
     "_meta": {
       "title": "Latent Keyframe Interp. 🛂🅐🅒🅝"
+    }
+  },
+  "507": {
+    "inputs": {
+      "resadapter_name": "resadapter_v2_sd1.5",
+      "strength_model": 1,
+      "strength_clip": 1,
+      "model": [
+        "4",
+        0
+      ],
+      "clip": [
+        "4",
+        1
+      ]
+    },
+    "class_type": "ResAdapterLoader",
+    "_meta": {
+      "title": "Load ResAdapter"
     }
   }
 }
