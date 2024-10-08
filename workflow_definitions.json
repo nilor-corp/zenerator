@@ -15,7 +15,7 @@
                 "type": "text",
                 "label": "Negative Prompt",
                 "node-id": "[\"7\"][\"inputs\"][\"text\"]",
-                "value": "blurry, glitches, artifact, distorted, malformed, nsfw, sun flare, glare, bloom, bokeh",
+                "value": "blurry, glitches, artifact, distorted, malformed, nsfw, lens flare, glare, bloom, bokeh",
                 "interactive": true
             },
             "width": {
