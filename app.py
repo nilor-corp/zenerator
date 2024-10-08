@@ -309,6 +309,12 @@ def process_input(input_key):
             )
             # Only append the output textbox to the components list
             component = output
+        elif input_type == "float" or input_type == "int":
+            input_minimum = input_details.get("minimum", None)
+            input_maximum = input_details.get("maximum", None)
+            input_step = input_details.get("step", 1)
+
+            component = component_map[input_type](label=input_label, elem_id=input_key, value=input_value, minimum=input_minimum, maximum=input_maximum, step=input_step, interactive=input_interactive)
         else:
             if input_type == "path":
                 input_value = os.path.abspath(input_value)
