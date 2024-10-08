@@ -396,31 +396,36 @@ with gr.Blocks(title="WorkFlower") as demo:
                     with gr.TabItem(label=workflow_definitions[workflow_name]["name"]):
                         with gr.Row():
                             with gr.Column():
-                                with gr.Row():
-                                    preview_gif = gr.Image(
-                                        label="Preview GIF",
-                                        value=update_gif(workflow_name),
-                                    )
+                                # TODO: Figure out what this was supposed to do in the first place
+                                # with gr.Row():
+                                #     preview_gif = gr.Image(
+                                #         label="Preview GIF",
+                                #         value=update_gif(workflow_name),
+                                #     )
                                 info = gr.Markdown(
                                     workflow_definitions[workflow_name].get("description", "")
                                 )
+                            
                             # main input construction
                             with gr.Column():
                                 run_button = gr.Button("Run Workflow")
                                 # also make a dictionary with the components' data
                                 components, component_dict = create_tab_interface(workflow_name)
                                 #print(f"Components: {components}")
+                            
+                            # TODO: Add support for video/image preview of output, as well as real progress bar
                             # output player construction
-                            with gr.Column():
-                                output_type = workflow_definitions[workflow_name]["outputs"].get(
-                                    "type", ""
-                                )
-                                if output_type == "video":
-                                    output_player = gr.Video(
-                                        label="Output Video", autoplay=True
-                                    )
-                                elif output_type == "image":
-                                    output_player = gr.Image(label="Output Image")
+                            #with gr.Column():
+                                # output_type = workflow_definitions[workflow_name]["outputs"].get(
+                                #     "type", ""
+                                # )
+
+                                # if output_type == "video":
+                                #     output_player = gr.Video(
+                                #         label="Output Video", autoplay=True
+                                #     )
+                                # elif output_type == "image":
+                                #     output_player = gr.Image(label="Output Image")
 
                         # investigate trigger_mode=multiple for run_button.click event
 
@@ -428,7 +433,8 @@ with gr.Blocks(title="WorkFlower") as demo:
                                 run_button.click(
                                 fn=run_workflow_with_name(workflow_filename, components, component_dict[workflow_name]),
                                 inputs=components,
-                                outputs=[output_player],
+                                # TODO: Add support for video/image preview of output, as well as real progress bar
+                                #outputs=[output_player],
                                 trigger_mode="multiple",
                             )
                         
