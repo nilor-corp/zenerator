@@ -301,7 +301,7 @@
                 "type": "int",
                 "label": "Select Every Nth Frame of Animated Mask Video",
                 "node-id": "[\"348\"][\"inputs\"][\"int\"]",
-                "value": 1,
+                "value": 2,
                 "minimum": 1,
                 "interactive": true
             },
@@ -499,7 +499,7 @@
                 "label": "Path of Screen Mask Image",
                 "node-id": "[\"337\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-masks/square_screen-mask.png",
-                "interactive": false
+                "interactive": true
             },
             "use-animated-mask": {
                 "type": "bool",
@@ -529,7 +529,7 @@
                 "type": "bool",
                 "label": "Use Depth",
                 "node-id": "[\"359\"][\"inputs\"][\"boolean\"]",
-                "value": true,
+                "value": false,
                 "interactive": true
             },
             "depth-strength": {
@@ -557,14 +557,14 @@
                 "label": "Path of Depth Image",
                 "node-id": "[\"360\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-depths/f_depth.png",
-                "interactive": false
+                "interactive": true
             },
             "use-animated-depth": {
                 "type": "bool",
                 "label": "Use Animated Depth Video",
                 "node-id": "[\"356\"][\"inputs\"][\"boolean\"]",
-                "value": true,
-                "interactive": false
+                "value": false,
+                "interactive": true
             },
             "video-depth-path": {
                 "type": "path",
@@ -717,13 +717,6 @@
                 "label": "Path of Screen Mask Image",
                 "node-id": "[\"337\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-masks/square_screen-mask.png",
-                "interactive": false
-            },
-            "video-mask-path": {
-                "type": "path",
-                "label": "Path of Animated Mask Video",
-                "node-id": "[\"339\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
                 "interactive": true
             },
             "use-animated-mask": {
@@ -731,6 +724,13 @@
                 "label": "Use Animated Mask Video",
                 "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
                 "value": true,
+                "interactive": true
+            },
+            "video-mask-path": {
+                "type": "path",
+                "label": "Path of Animated Mask Video",
+                "node-id": "[\"339\"][\"inputs\"][\"string\"]",
+                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
                 "interactive": true
             },
             "video-mask-select-every-nth": {
@@ -747,7 +747,7 @@
                 "type": "bool",
                 "label": "Use Depth",
                 "node-id": "[\"359\"][\"inputs\"][\"boolean\"]",
-                "value": true,
+                "value": false,
                 "interactive": true
             },
             "depth-strength": {
@@ -775,14 +775,14 @@
                 "label": "Path of Depth Image",
                 "node-id": "[\"360\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-depths/f_depth.png",
-                "interactive": false
+                "interactive": true
             },
             "use-animated-depth": {
                 "type": "bool",
                 "label": "Use Animated Depth Video",
                 "node-id": "[\"356\"][\"inputs\"][\"boolean\"]",
-                "value": true,
-                "interactive": false
+                "value": false,
+                "interactive": true
             },
             "video-depth-path": {
                 "type": "path",
@@ -935,7 +935,7 @@
                 "label": "Path of Screen Mask Image",
                 "node-id": "[\"337\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-masks/square_screen-mask.png",
-                "interactive": false
+                "interactive": true
             },
             "use-animated-mask": {
                 "type": "bool",
@@ -965,7 +965,7 @@
                 "type": "bool",
                 "label": "Use Depth",
                 "node-id": "[\"359\"][\"inputs\"][\"boolean\"]",
-                "value": true,
+                "value": false,
                 "interactive": true
             },
             "depth-strength": {
@@ -993,14 +993,14 @@
                 "label": "Path of Depth Image",
                 "node-id": "[\"360\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-depths/f_depth.png",
-                "interactive": false
+                "interactive": true
             },
             "use-animated-depth": {
                 "type": "bool",
                 "label": "Use Animated Depth Video",
                 "node-id": "[\"356\"][\"inputs\"][\"boolean\"]",
-                "value": true,
-                "interactive": false
+                "value": false,
+                "interactive": true
             },
             "video-depth-path": {
                 "type": "path",
@@ -1153,7 +1153,7 @@
                 "label": "Path of Screen Mask Image",
                 "node-id": "[\"337\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-masks/square_screen-mask.png",
-                "interactive": false
+                "interactive": true
             },
             "use-animated-mask": {
                 "type": "bool",
@@ -1183,7 +1183,7 @@
                 "type": "bool",
                 "label": "Use Depth",
                 "node-id": "[\"359\"][\"inputs\"][\"boolean\"]",
-                "value": true,
+                "value": false,
                 "interactive": true
             },
             "depth-strength": {
@@ -1211,14 +1211,14 @@
                 "label": "Path of Depth Image",
                 "node-id": "[\"360\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-depths/f_depth.png",
-                "interactive": false
+                "interactive": true
             },
             "use-animated-depth": {
                 "type": "bool",
                 "label": "Use Animated Depth Video",
                 "node-id": "[\"356\"][\"inputs\"][\"boolean\"]",
-                "value": true,
-                "interactive": false
+                "value": false,
+                "interactive": true
             },
             "video-depth-path": {
                 "type": "path",
@@ -1371,7 +1371,7 @@
                 "label": "Path of Screen Mask Image",
                 "node-id": "[\"337\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-masks/square_screen-mask.png",
-                "interactive": false
+                "interactive": true
             },
             "use-animated-mask": {
                 "type": "bool",
@@ -1401,7 +1401,7 @@
                 "type": "bool",
                 "label": "Use Depth",
                 "node-id": "[\"359\"][\"inputs\"][\"boolean\"]",
-                "value": true,
+                "value": false,
                 "interactive": true
             },
             "depth-strength": {
@@ -1429,14 +1429,14 @@
                 "label": "Path of Depth Image",
                 "node-id": "[\"360\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-depths/f_depth.png",
-                "interactive": false
+                "interactive": true
             },
             "use-animated-depth": {
                 "type": "bool",
                 "label": "Use Animated Depth Video",
                 "node-id": "[\"356\"][\"inputs\"][\"boolean\"]",
-                "value": true,
-                "interactive": false
+                "value": false,
+                "interactive": true
             },
             "video-depth-path": {
                 "type": "path",
@@ -1589,7 +1589,7 @@
                 "label": "Path of Screen Mask Image",
                 "node-id": "[\"337\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-masks/f_screen-mask.png",
-                "interactive": false
+                "interactive": true
             },
             "use-animated-mask": {
                 "type": "bool",
@@ -1619,7 +1619,7 @@
                 "type": "bool",
                 "label": "Use Depth",
                 "node-id": "[\"359\"][\"inputs\"][\"boolean\"]",
-                "value": true,
+                "value": false,
                 "interactive": true
             },
             "depth-strength": {
@@ -1647,21 +1647,21 @@
                 "label": "Path of Depth Image",
                 "node-id": "[\"360\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-depths/f_depth.png",
-                "interactive": false
+                "interactive": true
             },
             "use-animated-depth": {
                 "type": "bool",
                 "label": "Use Animated Depth Video",
                 "node-id": "[\"356\"][\"inputs\"][\"boolean\"]",
-                "value": true,
-                "interactive": false
+                "value": false,
+                "interactive": true
             },
             "video-depth-path": {
                 "type": "path",
                 "label": "Path of Animated Depth Video",
                 "node-id": "[\"357\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
-                "interactive": false
+                "interactive": true
             },
             "video-depth-select-every-nth": {
                 "type": "int",
@@ -1669,7 +1669,7 @@
                 "node-id": "[\"363\"][\"inputs\"][\"int\"]",
                 "value": 1,
                 "minimum": 1,
-                "interactive": false
+                "interactive": true
             },
 
 
@@ -1807,7 +1807,7 @@
                 "label": "Path of Screen Mask Image",
                 "node-id": "[\"337\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-masks/g_screen-mask.png",
-                "interactive": false
+                "interactive": true
             },
             "use-animated-mask": {
                 "type": "bool",
@@ -1837,7 +1837,7 @@
                 "type": "bool",
                 "label": "Use Depth",
                 "node-id": "[\"359\"][\"inputs\"][\"boolean\"]",
-                "value": true,
+                "value": false,
                 "interactive": true
             },
             "depth-strength": {
@@ -1865,14 +1865,14 @@
                 "label": "Path of Depth Image",
                 "node-id": "[\"360\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-depths/g_depth.png",
-                "interactive": false
+                "interactive": true
             },
             "use-animated-depth": {
                 "type": "bool",
                 "label": "Use Animated Depth Video",
                 "node-id": "[\"356\"][\"inputs\"][\"boolean\"]",
-                "value": true,
-                "interactive": false
+                "value": false,
+                "interactive": true
             },
             "video-depth-path": {
                 "type": "path",
@@ -2025,7 +2025,7 @@
                 "label": "Path of Screen Mask Image",
                 "node-id": "[\"337\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-masks/h_screen-mask.png",
-                "interactive": false
+                "interactive": true
             },
             "use-animated-mask": {
                 "type": "bool",
@@ -2055,7 +2055,7 @@
                 "type": "bool",
                 "label": "Use Depth",
                 "node-id": "[\"359\"][\"inputs\"][\"boolean\"]",
-                "value": true,
+                "value": false,
                 "interactive": true
             },
             "depth-strength": {
@@ -2083,14 +2083,14 @@
                 "label": "Path of Depth Image",
                 "node-id": "[\"360\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-depths/h_depth.png",
-                "interactive": false
+                "interactive": true
             },
             "use-animated-depth": {
                 "type": "bool",
                 "label": "Use Animated Depth Video",
                 "node-id": "[\"356\"][\"inputs\"][\"boolean\"]",
-                "value": true,
-                "interactive": false
+                "value": false,
+                "interactive": true
             },
             "video-depth-path": {
                 "type": "path",
@@ -2243,7 +2243,7 @@
                 "label": "Path of Screen Mask Image",
                 "node-id": "[\"337\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-masks/square_screen-mask.png",
-                "interactive": false
+                "interactive": true
             },
             "use-animated-mask": {
                 "type": "bool",
@@ -2273,7 +2273,7 @@
                 "type": "bool",
                 "label": "Use Depth",
                 "node-id": "[\"359\"][\"inputs\"][\"boolean\"]",
-                "value": true,
+                "value": false,
                 "interactive": true
             },
             "depth-strength": {
@@ -2301,14 +2301,14 @@
                 "label": "Path of Depth Image",
                 "node-id": "[\"360\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-depths/f_depth.png",
-                "interactive": false
+                "interactive": true
             },
             "use-animated-depth": {
                 "type": "bool",
                 "label": "Use Animated Depth Video",
                 "node-id": "[\"356\"][\"inputs\"][\"boolean\"]",
-                "value": true,
-                "interactive": false
+                "value": false,
+                "interactive": true
             },
             "video-depth-path": {
                 "type": "path",
