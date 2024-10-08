@@ -116,13 +116,6 @@
                 "step": 0.05,
                 "interactive": true
             },
-            "use-depth-strength-interp": {
-                "type": "bool",
-                "label": "Use Depth Strength Interpolation",
-                "node-id": "[\"503\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "interactive": true
-            },
             "image-depth-path": {
                 "type": "path",
                 "label": "Path of Depth Image",
@@ -181,13 +174,6 @@
                 "step": 0.05,
                 "interactive": true
             },
-            "use-lineart-strength-interp": {
-                "type": "bool",
-                "label": "Use LineArt Strength Interpolation",
-                "node-id": "[\"487\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "interactive": true
-            },
             "image-lineart-path": {
                 "type": "path",
                 "label": "Path of LineArt Image",
@@ -223,7 +209,7 @@
                 "type": "string",
                 "label": "Output Video Filename Prefix",
                 "node-id": "[\"191\"][\"inputs\"][\"filename_prefix\"]",
-                "value": "WorkFlower/zenon_general_rife-1",
+                "value": "WorkFlower/zenon_general",
                 "interactive": true
             }
         },
@@ -348,13 +334,6 @@
                 "step": 0.05,
                 "interactive": true
             },
-            "use-depth-strength-interp": {
-                "type": "bool",
-                "label": "Use Depth Strength Interpolation",
-                "node-id": "[\"503\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "interactive": true
-            },
             "image-depth-path": {
                 "type": "path",
                 "label": "Path of Depth Image",
@@ -413,13 +392,6 @@
                 "step": 0.05,
                 "interactive": false
             },
-            "use-lineart-strength-interp": {
-                "type": "bool",
-                "label": "Use LineArt Strength Interpolation",
-                "node-id": "[\"487\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "interactive": false
-            },
             "image-lineart-path": {
                 "type": "path",
                 "label": "Path of LineArt Image",
@@ -455,7 +427,7 @@
                 "type": "string",
                 "label": "Output Video Filename Prefix",
                 "node-id": "[\"191\"][\"inputs\"][\"filename_prefix\"]",
-                "value": "WorkFlower/zenon_wide_rife-1",
+                "value": "WorkFlower/zenon_wide",
                 "interactive": true
             }
         },
@@ -580,13 +552,6 @@
                 "step": 0.05,
                 "interactive": true
             },
-            "use-depth-strength-interp": {
-                "type": "bool",
-                "label": "Use Depth Strength Interpolation",
-                "node-id": "[\"503\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "interactive": true
-            },
             "image-depth-path": {
                 "type": "path",
                 "label": "Path of Depth Image",
@@ -645,13 +610,6 @@
                 "step": 0.05,
                 "interactive": false
             },
-            "use-lineart-strength-interp": {
-                "type": "bool",
-                "label": "Use LineArt Strength Interpolation",
-                "node-id": "[\"487\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "interactive": false
-            },
             "image-lineart-path": {
                 "type": "path",
                 "label": "Path of LineArt Image",
@@ -687,7 +645,7 @@
                 "type": "string",
                 "label": "Output Video Filename Prefix",
                 "node-id": "[\"191\"][\"inputs\"][\"filename_prefix\"]",
-                "value": "WorkFlower/zenon_a_rife-1",
+                "value": "WorkFlower/zenon_a",
                 "interactive": true
             }
         },
@@ -812,13 +770,6 @@
                 "step": 0.05,
                 "interactive": true
             },
-            "use-depth-strength-interp": {
-                "type": "bool",
-                "label": "Use Depth Strength Interpolation",
-                "node-id": "[\"503\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "interactive": true
-            },
             "image-depth-path": {
                 "type": "path",
                 "label": "Path of Depth Image",
@@ -877,13 +828,6 @@
                 "step": 0.05,
                 "interactive": false
             },
-            "use-lineart-strength-interp": {
-                "type": "bool",
-                "label": "Use LineArt Strength Interpolation",
-                "node-id": "[\"487\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "interactive": false
-            },
             "image-lineart-path": {
                 "type": "path",
                 "label": "Path of LineArt Image",
@@ -919,7 +863,7 @@
                 "type": "string",
                 "label": "Output Video Filename Prefix",
                 "node-id": "[\"191\"][\"inputs\"][\"filename_prefix\"]",
-                "value": "WorkFlower/zenon_b_rife-1",
+                "value": "WorkFlower/zenon_b",
                 "interactive": true
             }
         },
@@ -1044,13 +988,6 @@
                 "step": 0.05,
                 "interactive": true
             },
-            "use-depth-strength-interp": {
-                "type": "bool",
-                "label": "Use Depth Strength Interpolation",
-                "node-id": "[\"503\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "interactive": true
-            },
             "image-depth-path": {
                 "type": "path",
                 "label": "Path of Depth Image",
@@ -1109,13 +1046,6 @@
                 "step": 0.05,
                 "interactive": false
             },
-            "use-lineart-strength-interp": {
-                "type": "bool",
-                "label": "Use LineArt Strength Interpolation",
-                "node-id": "[\"487\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "interactive": false
-            },
             "image-lineart-path": {
                 "type": "path",
                 "label": "Path of LineArt Image",
@@ -1151,7 +1081,7 @@
                 "type": "string",
                 "label": "Output Video Filename Prefix",
                 "node-id": "[\"191\"][\"inputs\"][\"filename_prefix\"]",
-                "value": "WorkFlower/zenon_c_rife-1",
+                "value": "WorkFlower/zenon_c",
                 "interactive": true
             }
         },
@@ -1276,13 +1206,6 @@
                 "step": 0.05,
                 "interactive": true
             },
-            "use-depth-strength-interp": {
-                "type": "bool",
-                "label": "Use Depth Strength Interpolation",
-                "node-id": "[\"503\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "interactive": true
-            },
             "image-depth-path": {
                 "type": "path",
                 "label": "Path of Depth Image",
@@ -1341,13 +1264,6 @@
                 "step": 0.05,
                 "interactive": false
             },
-            "use-lineart-strength-interp": {
-                "type": "bool",
-                "label": "Use LineArt Strength Interpolation",
-                "node-id": "[\"487\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "interactive": false
-            },
             "image-lineart-path": {
                 "type": "path",
                 "label": "Path of LineArt Image",
@@ -1383,7 +1299,7 @@
                 "type": "string",
                 "label": "Output Video Filename Prefix",
                 "node-id": "[\"191\"][\"inputs\"][\"filename_prefix\"]",
-                "value": "WorkFlower/zenon_d_rife-1",
+                "value": "WorkFlower/zenon_d",
                 "interactive": true
             }
         },
@@ -1508,13 +1424,6 @@
                 "step": 0.05,
                 "interactive": true
             },
-            "use-depth-strength-interp": {
-                "type": "bool",
-                "label": "Use Depth Strength Interpolation",
-                "node-id": "[\"503\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "interactive": true
-            },
             "image-depth-path": {
                 "type": "path",
                 "label": "Path of Depth Image",
@@ -1573,13 +1482,6 @@
                 "step": 0.05,
                 "interactive": false
             },
-            "use-lineart-strength-interp": {
-                "type": "bool",
-                "label": "Use LineArt Strength Interpolation",
-                "node-id": "[\"487\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "interactive": false
-            },
             "image-lineart-path": {
                 "type": "path",
                 "label": "Path of LineArt Image",
@@ -1615,7 +1517,7 @@
                 "type": "string",
                 "label": "Output Video Filename Prefix",
                 "node-id": "[\"191\"][\"inputs\"][\"filename_prefix\"]",
-                "value": "WorkFlower/zenon_e_rife-1",
+                "value": "WorkFlower/zenon_e",
                 "interactive": true
             }
         },
@@ -1740,13 +1642,6 @@
                 "step": 0.05,
                 "interactive": true
             },
-            "use-depth-strength-interp": {
-                "type": "bool",
-                "label": "Use Depth Strength Interpolation",
-                "node-id": "[\"503\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "interactive": true
-            },
             "image-depth-path": {
                 "type": "path",
                 "label": "Path of Depth Image",
@@ -1805,13 +1700,6 @@
                 "step": 0.05,
                 "interactive": false
             },
-            "use-lineart-strength-interp": {
-                "type": "bool",
-                "label": "Use LineArt Strength Interpolation",
-                "node-id": "[\"487\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "interactive": false
-            },
             "image-lineart-path": {
                 "type": "path",
                 "label": "Path of LineArt Image",
@@ -1847,7 +1735,7 @@
                 "type": "string",
                 "label": "Output Video Filename Prefix",
                 "node-id": "[\"191\"][\"inputs\"][\"filename_prefix\"]",
-                "value": "WorkFlower/zenon_f_rife-1",
+                "value": "WorkFlower/zenon_f",
                 "interactive": true
             }
         },
@@ -1972,13 +1860,6 @@
                 "step": 0.05,
                 "interactive": true
             },
-            "use-depth-strength-interp": {
-                "type": "bool",
-                "label": "Use Depth Strength Interpolation",
-                "node-id": "[\"503\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "interactive": true
-            },
             "image-depth-path": {
                 "type": "path",
                 "label": "Path of Depth Image",
@@ -2037,13 +1918,6 @@
                 "step": 0.05,
                 "interactive": false
             },
-            "use-lineart-strength-interp": {
-                "type": "bool",
-                "label": "Use LineArt Strength Interpolation",
-                "node-id": "[\"487\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "interactive": false
-            },
             "image-lineart-path": {
                 "type": "path",
                 "label": "Path of LineArt Image",
@@ -2079,7 +1953,7 @@
                 "type": "string",
                 "label": "Output Video Filename Prefix",
                 "node-id": "[\"191\"][\"inputs\"][\"filename_prefix\"]",
-                "value": "WorkFlower/zenon_g_rife-1",
+                "value": "WorkFlower/zenon_g",
                 "interactive": true
             }
         },
@@ -2204,13 +2078,6 @@
                 "step": 0.05,
                 "interactive": true
             },
-            "use-depth-strength-interp": {
-                "type": "bool",
-                "label": "Use Depth Strength Interpolation",
-                "node-id": "[\"503\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "interactive": true
-            },
             "image-depth-path": {
                 "type": "path",
                 "label": "Path of Depth Image",
@@ -2269,13 +2136,6 @@
                 "step": 0.05,
                 "interactive": false
             },
-            "use-lineart-strength-interp": {
-                "type": "bool",
-                "label": "Use LineArt Strength Interpolation",
-                "node-id": "[\"487\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "interactive": false
-            },
             "image-lineart-path": {
                 "type": "path",
                 "label": "Path of LineArt Image",
@@ -2311,7 +2171,7 @@
                 "type": "string",
                 "label": "Output Video Filename Prefix",
                 "node-id": "[\"191\"][\"inputs\"][\"filename_prefix\"]",
-                "value": "WorkFlower/zenon_h_rife-1",
+                "value": "WorkFlower/zenon_h",
                 "interactive": true
             }
         },
@@ -2436,13 +2296,6 @@
                 "step": 0.05,
                 "interactive": true
             },
-            "use-depth-strength-interp": {
-                "type": "bool",
-                "label": "Use Depth Strength Interpolation",
-                "node-id": "[\"503\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "interactive": true
-            },
             "image-depth-path": {
                 "type": "path",
                 "label": "Path of Depth Image",
@@ -2501,13 +2354,6 @@
                 "step": 0.05,
                 "interactive": false
             },
-            "use-lineart-strength-interp": {
-                "type": "bool",
-                "label": "Use LineArt Strength Interpolation",
-                "node-id": "[\"487\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "interactive": false
-            },
             "image-lineart-path": {
                 "type": "path",
                 "label": "Path of LineArt Image",
@@ -2543,7 +2389,7 @@
                 "type": "string",
                 "label": "Output Video Filename Prefix",
                 "node-id": "[\"191\"][\"inputs\"][\"filename_prefix\"]",
-                "value": "WorkFlower/zenon_r_rife-1",
+                "value": "WorkFlower/zenon_r",
                 "interactive": true
             }
         },
@@ -2668,13 +2514,6 @@
                 "step": 0.05,
                 "interactive": true
             },
-            "use-depth-strength-interp": {
-                "type": "bool",
-                "label": "Use Depth Strength Interpolation",
-                "node-id": "[\"503\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "interactive": true
-            },
             "image-depth-path": {
                 "type": "path",
                 "label": "Path of Depth Image",
@@ -2733,13 +2572,6 @@
                 "step": 0.05,
                 "interactive": true
             },
-            "use-lineart-strength-interp": {
-                "type": "bool",
-                "label": "Use LineArt Strength Interpolation",
-                "node-id": "[\"487\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "interactive": false
-            },
             "image-lineart-path": {
                 "type": "path",
                 "label": "Path of LineArt Image",
@@ -2775,7 +2607,7 @@
                 "type": "string",
                 "label": "Output Video Filename Prefix",
                 "node-id": "[\"191\"][\"inputs\"][\"filename_prefix\"]",
-                "value": "WorkFlower/zenon_medusa_rife-1",
+                "value": "WorkFlower/zenon_medusa",
                 "interactive": true
             }
         },
@@ -2900,13 +2732,6 @@
                 "step": 0.05,
                 "interactive": true
             },
-            "use-depth-strength-interp": {
-                "type": "bool",
-                "label": "Use Depth Strength Interpolation",
-                "node-id": "[\"503\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "interactive": true
-            },
             "image-depth-path": {
                 "type": "path",
                 "label": "Path of Depth Image",
@@ -2965,13 +2790,6 @@
                 "step": 0.05,
                 "interactive": true
             },
-            "use-lineart-strength-interp": {
-                "type": "bool",
-                "label": "Use LineArt Strength Interpolation",
-                "node-id": "[\"487\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "interactive": false
-            },
             "image-lineart-path": {
                 "type": "path",
                 "label": "Path of LineArt Image",
@@ -3007,7 +2825,7 @@
                 "type": "string",
                 "label": "Output Video Filename Prefix",
                 "node-id": "[\"191\"][\"inputs\"][\"filename_prefix\"]",
-                "value": "WorkFlower/zenon_poseidon_rife-1",
+                "value": "WorkFlower/zenon_poseidon",
                 "interactive": true
             }
         },
