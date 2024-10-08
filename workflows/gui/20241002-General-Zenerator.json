@@ -1599,7 +1599,7 @@
       },
       "size": [
         467.89605712890625,
-        310
+        726.4066138267517
       ],
       "flags": {},
       "order": 201,
@@ -8917,7 +8917,7 @@
       },
       "flags": {},
       "order": 144,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "prev_latent_kf",
@@ -8986,7 +8986,7 @@
       },
       "flags": {},
       "order": 135,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "prev_latent_kf",
@@ -9055,7 +9055,7 @@
       },
       "flags": {},
       "order": 106,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "a",
@@ -9119,7 +9119,7 @@
       },
       "flags": {},
       "order": 103,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "a",
@@ -9183,7 +9183,7 @@
       },
       "flags": {},
       "order": 104,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "a",
@@ -9247,7 +9247,7 @@
       },
       "flags": {},
       "order": 105,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "a",
@@ -9311,7 +9311,7 @@
       },
       "flags": {},
       "order": 123,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "prev_latent_kf",
@@ -9372,7 +9372,7 @@
       },
       "flags": {},
       "order": 151,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "prev_latent_kf",
@@ -9503,7 +9503,7 @@
       },
       "flags": {},
       "order": 158,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "prev_latent_kf",
@@ -9572,7 +9572,7 @@
       },
       "flags": {},
       "order": 165,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "on_true",
@@ -9634,7 +9634,7 @@
       ],
       "flags": {},
       "order": 89,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "",
@@ -9691,7 +9691,7 @@
       ],
       "flags": {},
       "order": 67,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "",
@@ -9747,7 +9747,7 @@
       ],
       "flags": {},
       "order": 171,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "",
@@ -9886,7 +9886,7 @@
       },
       "flags": {},
       "order": 136,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "prev_latent_kf",
@@ -9955,7 +9955,7 @@
       },
       "flags": {},
       "order": 108,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "a",
@@ -10019,7 +10019,7 @@
       },
       "flags": {},
       "order": 145,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "prev_latent_kf",
@@ -10088,7 +10088,7 @@
       },
       "flags": {},
       "order": 152,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "prev_latent_kf",
@@ -10157,7 +10157,7 @@
       ],
       "flags": {},
       "order": 90,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "",
@@ -10214,7 +10214,7 @@
       },
       "flags": {},
       "order": 159,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "prev_latent_kf",
@@ -10283,7 +10283,7 @@
       },
       "flags": {},
       "order": 125,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "prev_latent_kf",
@@ -10344,7 +10344,7 @@
       },
       "flags": {},
       "order": 109,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "a",
@@ -10408,7 +10408,7 @@
       },
       "flags": {},
       "order": 110,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "a",
@@ -10472,7 +10472,7 @@
       },
       "flags": {},
       "order": 111,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "a",
@@ -10536,7 +10536,7 @@
       },
       "flags": {},
       "order": 166,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "on_true",
@@ -10598,7 +10598,7 @@
       ],
       "flags": {},
       "order": 66,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "",
@@ -10756,7 +10756,7 @@
       ],
       "flags": {},
       "order": 172,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "",
@@ -10995,7 +10995,7 @@
       },
       "flags": {},
       "order": 112,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "a",
@@ -11059,7 +11059,7 @@
       },
       "flags": {},
       "order": 107,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "a",
@@ -11123,7 +11123,7 @@
       },
       "flags": {},
       "order": 126,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "prev_latent_kf",
@@ -11184,7 +11184,7 @@
       },
       "flags": {},
       "order": 124,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "prev_latent_kf",
@@ -12049,8 +12049,8 @@
           "links": [
             870
           ],
-          "shape": 3,
-          "slot_index": 0
+          "slot_index": 0,
+          "shape": 3
         },
         {
           "name": "CLIP",
@@ -12058,8 +12058,8 @@
           "links": [
             871
           ],
-          "shape": 3,
-          "slot_index": 1
+          "slot_index": 1,
+          "shape": 3
         }
       ],
       "properties": {
@@ -14375,10 +14375,10 @@
   "config": {},
   "extra": {
     "ds": {
-      "scale": 0.611590904484147,
+      "scale": 0.10000000000000007,
       "offset": [
-        2500.5223000756023,
-        853.3882251694702
+        2518.6737559211974,
+        5709.641053084913
       ]
     }
   },
