@@ -394,7 +394,7 @@ with gr.Blocks(title="WorkFlower") as demo:
                             "WorkFlower is a tool for creating and running workflows. "
                             "Select a workflow from the tabs above and fill in the parameters. "
                             "Click 'Run Workflow' to start the workflow. "
-                            "The output video will be displayed below."
+                            #"The output video will be displayed below."
                         )
                 for workflow_name in workflow_definitions.keys():
                     workflow_filename = workflow_definitions[workflow_name]["filename"]
