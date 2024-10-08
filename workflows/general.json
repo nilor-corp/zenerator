@@ -12,7 +12,7 @@
     "inputs": {
       "text": "extremely detailed",
       "clip": [
-        "507",
+        "4",
         1
       ]
     },
@@ -25,7 +25,7 @@
     "inputs": {
       "text": "blurry, glitches, artifact, distorted, malformed, nsfw, teeth",
       "clip": [
-        "507",
+        "4",
         1
       ]
     },
@@ -606,7 +606,7 @@
     "inputs": {
       "preset": "PLUS (high strength)",
       "model": [
-        "507",
+        "4",
         0
       ]
     },
@@ -1549,25 +1549,6 @@
     "class_type": "Primitive boolean [Crystools]",
     "_meta": {
       "title": "Use Depth Strength Interpolation"
-    }
-  },
-  "507": {
-    "inputs": {
-      "resadapter_name": "resadapter_v2_sd1.5",
-      "strength_model": 1,
-      "strength_clip": 1,
-      "model": [
-        "4",
-        0
-      ],
-      "clip": [
-        "4",
-        1
-      ]
-    },
-    "class_type": "ResAdapterLoader",
-    "_meta": {
-      "title": "Load ResAdapter"
     }
   }
 }
