@@ -23,6 +23,7 @@
                 "label": "Output Width",
                 "node-id": "[\"218\"][\"inputs\"][\"int\"]",
                 "value": 1024,
+                "minimum": 1,
                 "interactive": true
             },
             "height": {
@@ -30,6 +31,7 @@
                 "label": "Output Height",
                 "node-id": "[\"219\"][\"inputs\"][\"int\"]",
                 "value": 1024,
+                "minimum": 1,
                 "interactive": true
             },
             "frame_count": {
@@ -37,6 +39,7 @@
                 "label": "Raw Frame Count (final frame count / 3)",
                 "node-id": "[\"111\"][\"inputs\"][\"int\"]",
                 "value": 180,
+                "minimum": 12,
                 "interactive": true
             },
             "images-01": {
@@ -55,18 +58,18 @@
                 "value": true,
                 "interactive": true
             },
-            "use-animated-mask": {
-                "type": "bool",
-                "label": "Use Animated Mask Video",
-                "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
-                "value": true,
-                "interactive": true
-            },
             "image-mask-path": {
                 "type": "path",
                 "label": "Path of Screen Mask Image",
                 "node-id": "[\"337\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-masks/square_screen-mask.png",
+                "interactive": true
+            },
+            "use-animated-mask": {
+                "type": "bool",
+                "label": "Use Animated Mask Video",
+                "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
+                "value": true,
                 "interactive": true
             },
             "video-mask-path": {
@@ -81,6 +84,7 @@
                 "label": "Select Every Nth Frame of Animated Mask Video",
                 "node-id": "[\"348\"][\"inputs\"][\"int\"]",
                 "value": "2",
+                "minimum": 1,
                 "interactive": true
             },
 
@@ -97,6 +101,9 @@
                 "label": "Depth Strength",
                 "node-id": "[\"384\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
+                "minimum": -3.0,
+                "maximum": 3.0,
+                "step": 0.05,
                 "interactive": true
             },
             "depth-end-percent": {
@@ -142,6 +149,7 @@
                 "label": "Select Every Nth Frame of Animated Depth Video",
                 "node-id": "[\"363\"][\"inputs\"][\"int\"]",
                 "value": "2",
+                "minimum": 1,
                 "interactive": true
             },
 
@@ -158,6 +166,9 @@
                 "label": "LineArt Strength",
                 "node-id": "[\"448\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
+                "minimum": -3.0,
+                "maximum": 3.0,
+                "step": 0.05,
                 "interactive": true
             },
             "lineart-end-percent": {
@@ -203,6 +214,7 @@
                 "label": "Select Every Nth Frame of Animated LineArt Video",
                 "node-id": "[\"454\"][\"inputs\"][\"int\"]",
                 "value": "2",
+                "minimum": 1,
                 "interactive": true
             },
 
@@ -243,6 +255,7 @@
                 "label": "Output Width",
                 "node-id": "[\"218\"][\"inputs\"][\"int\"]",
                 "value": 2632,
+                "minimum": 1,
                 "interactive": false
             },
             "height": {
@@ -250,6 +263,7 @@
                 "label": "Output Height",
                 "node-id": "[\"219\"][\"inputs\"][\"int\"]",
                 "value": 768,
+                "minimum": 1,
                 "interactive": false
             },
             "frame_count": {
@@ -257,6 +271,7 @@
                 "label": "Raw Frame Count (final frame count / 3)",
                 "node-id": "[\"111\"][\"inputs\"][\"int\"]",
                 "value": 180,
+                "minimum": 12,
                 "interactive": true
             },
             "images-01": {
@@ -275,18 +290,18 @@
                 "value": true,
                 "interactive": true
             },
-            "use-animated-mask": {
-                "type": "bool",
-                "label": "Use Animated Mask Video",
-                "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
-                "value": true,
-                "interactive": true
-            },
             "image-mask-path": {
                 "type": "path",
                 "label": "Path of Screen Mask Image",
                 "node-id": "[\"337\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-masks/wide_screen-mask.png",
+                "interactive": true
+            },
+            "use-animated-mask": {
+                "type": "bool",
+                "label": "Use Animated Mask Video",
+                "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
+                "value": true,
                 "interactive": true
             },
             "video-mask-path": {
@@ -301,6 +316,7 @@
                 "label": "Select Every Nth Frame of Animated Mask Video",
                 "node-id": "[\"348\"][\"inputs\"][\"int\"]",
                 "value": "1",
+                "minimum": 1,
                 "interactive": true
             },
 
@@ -317,6 +333,9 @@
                 "label": "Depth Strength",
                 "node-id": "[\"384\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
+                "minimum": -3.0,
+                "maximum": 3.0,
+                "step": 0.05,
                 "interactive": true
             },
             "depth-end-percent": {
@@ -362,6 +381,7 @@
                 "label": "Select Every Nth Frame of Animated Depth Video",
                 "node-id": "[\"363\"][\"inputs\"][\"int\"]",
                 "value": "1",
+                "minimum": 1,
                 "interactive": true
             },
 
@@ -378,6 +398,9 @@
                 "label": "LineArt Strength",
                 "node-id": "[\"448\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
+                "minimum": -3.0,
+                "maximum": 3.0,
+                "step": 0.05,
                 "interactive": false
             },
             "lineart-end-percent": {
@@ -423,6 +446,7 @@
                 "label": "Select Every Nth Frame of Animated LineArt Video",
                 "node-id": "[\"454\"][\"inputs\"][\"int\"]",
                 "value": "1",
+                "minimum": 1,
                 "interactive": false
             },
 
@@ -463,6 +487,7 @@
                 "label": "Output Width",
                 "node-id": "[\"218\"][\"inputs\"][\"int\"]",
                 "value": 680,
+                "minimum": 1,
                 "interactive": false
             },
             "height": {
@@ -470,6 +495,7 @@
                 "label": "Output Height",
                 "node-id": "[\"219\"][\"inputs\"][\"int\"]",
                 "value": 1200,
+                "minimum": 1,
                 "interactive": false
             },
             "frame_count": {
@@ -477,6 +503,7 @@
                 "label": "Raw Frame Count (final frame count / 3)",
                 "node-id": "[\"111\"][\"inputs\"][\"int\"]",
                 "value": 180,
+                "minimum": 12,
                 "interactive": true
             },
             "images-01": {
@@ -495,19 +522,19 @@
                 "value": true,
                 "interactive": true
             },
-            "use-animated-mask": {
-                "type": "bool",
-                "label": "Use Animated Mask Video",
-                "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
-                "value": true,
-                "interactive": true
-            },
             "image-mask-path": {
                 "type": "path",
                 "label": "Path of Screen Mask Image",
                 "node-id": "[\"337\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-masks/square_screen-mask.png",
                 "interactive": false
+            },
+            "use-animated-mask": {
+                "type": "bool",
+                "label": "Use Animated Mask Video",
+                "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
+                "value": true,
+                "interactive": true
             },
             "video-mask-path": {
                 "type": "path",
@@ -521,6 +548,7 @@
                 "label": "Select Every Nth Frame of Animated Mask Video",
                 "node-id": "[\"348\"][\"inputs\"][\"int\"]",
                 "value": "2",
+                "minimum": 1,
                 "interactive": true
             },
 
@@ -537,6 +565,9 @@
                 "label": "Depth Strength",
                 "node-id": "[\"384\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
+                "minimum": -3.0,
+                "maximum": 3.0,
+                "step": 0.05,
                 "interactive": true
             },
             "depth-end-percent": {
@@ -582,6 +613,7 @@
                 "label": "Select Every Nth Frame of Animated Depth Video",
                 "node-id": "[\"363\"][\"inputs\"][\"int\"]",
                 "value": "1",
+                "minimum": 1,
                 "interactive": true
             },
 
@@ -598,6 +630,9 @@
                 "label": "LineArt Strength",
                 "node-id": "[\"448\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
+                "minimum": -3.0,
+                "maximum": 3.0,
+                "step": 0.05,
                 "interactive": false
             },
             "lineart-end-percent": {
@@ -643,6 +678,7 @@
                 "label": "Select Every Nth Frame of Animated LineArt Video",
                 "node-id": "[\"454\"][\"inputs\"][\"int\"]",
                 "value": "1",
+                "minimum": 1,
                 "interactive": false
             },
 
@@ -683,6 +719,7 @@
                 "label": "Output Width",
                 "node-id": "[\"218\"][\"inputs\"][\"int\"]",
                 "value": 680,
+                "minimum": 1,
                 "interactive": false
             },
             "height": {
@@ -690,6 +727,7 @@
                 "label": "Output Height",
                 "node-id": "[\"219\"][\"inputs\"][\"int\"]",
                 "value": 1200,
+                "minimum": 1,
                 "interactive": false
             },
             "frame_count": {
@@ -697,6 +735,7 @@
                 "label": "Raw Frame Count (final frame count / 3)",
                 "node-id": "[\"111\"][\"inputs\"][\"int\"]",
                 "value": 180,
+                "minimum": 12,
                 "interactive": true
             },
             "images-01": {
@@ -715,13 +754,6 @@
                 "value": true,
                 "interactive": true
             },
-            "use-animated-mask": {
-                "type": "bool",
-                "label": "Use Animated Mask Video",
-                "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
-                "value": true,
-                "interactive": true
-            },
             "image-mask-path": {
                 "type": "path",
                 "label": "Path of Screen Mask Image",
@@ -736,11 +768,19 @@
                 "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
                 "interactive": true
             },
+            "use-animated-mask": {
+                "type": "bool",
+                "label": "Use Animated Mask Video",
+                "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
+                "value": true,
+                "interactive": true
+            },
             "video-mask-select-every-nth": {
                 "type": "int",
                 "label": "Select Every Nth Frame of Animated Mask Video",
                 "node-id": "[\"348\"][\"inputs\"][\"int\"]",
                 "value": "2",
+                "minimum": 1,
                 "interactive": true
             },
 
@@ -757,6 +797,9 @@
                 "label": "Depth Strength",
                 "node-id": "[\"384\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
+                "minimum": -3.0,
+                "maximum": 3.0,
+                "step": 0.05,
                 "interactive": true
             },
             "depth-end-percent": {
@@ -802,6 +845,7 @@
                 "label": "Select Every Nth Frame of Animated Depth Video",
                 "node-id": "[\"363\"][\"inputs\"][\"int\"]",
                 "value": "1",
+                "minimum": 1,
                 "interactive": true
             },
 
@@ -818,6 +862,9 @@
                 "label": "LineArt Strength",
                 "node-id": "[\"448\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
+                "minimum": -3.0,
+                "maximum": 3.0,
+                "step": 0.05,
                 "interactive": false
             },
             "lineart-end-percent": {
@@ -863,6 +910,7 @@
                 "label": "Select Every Nth Frame of Animated LineArt Video",
                 "node-id": "[\"454\"][\"inputs\"][\"int\"]",
                 "value": "1",
+                "minimum": 1,
                 "interactive": false
             },
 
@@ -903,6 +951,7 @@
                 "label": "Output Width",
                 "node-id": "[\"218\"][\"inputs\"][\"int\"]",
                 "value": 1120,
+                "minimum": 1,
                 "interactive": false
             },
             "height": {
@@ -910,6 +959,7 @@
                 "label": "Output Height",
                 "node-id": "[\"219\"][\"inputs\"][\"int\"]",
                 "value": 1040,
+                "minimum": 1,
                 "interactive": false
             },
             "frame_count": {
@@ -917,6 +967,7 @@
                 "label": "Raw Frame Count (final frame count / 3)",
                 "node-id": "[\"111\"][\"inputs\"][\"int\"]",
                 "value": 180,
+                "minimum": 12,
                 "interactive": true
             },
             "images-01": {
@@ -935,19 +986,19 @@
                 "value": true,
                 "interactive": true
             },
-            "use-animated-mask": {
-                "type": "bool",
-                "label": "Use Animated Mask Video",
-                "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
-                "value": true,
-                "interactive": true
-            },
             "image-mask-path": {
                 "type": "path",
                 "label": "Path of Screen Mask Image",
                 "node-id": "[\"337\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-masks/square_screen-mask.png",
                 "interactive": false
+            },
+            "use-animated-mask": {
+                "type": "bool",
+                "label": "Use Animated Mask Video",
+                "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
+                "value": true,
+                "interactive": true
             },
             "video-mask-path": {
                 "type": "path",
@@ -961,6 +1012,7 @@
                 "label": "Select Every Nth Frame of Animated Mask Video",
                 "node-id": "[\"348\"][\"inputs\"][\"int\"]",
                 "value": "2",
+                "minimum": 1,
                 "interactive": true
             },
 
@@ -977,6 +1029,9 @@
                 "label": "Depth Strength",
                 "node-id": "[\"384\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
+                "minimum": -3.0,
+                "maximum": 3.0,
+                "step": 0.05,
                 "interactive": true
             },
             "depth-end-percent": {
@@ -1022,6 +1077,7 @@
                 "label": "Select Every Nth Frame of Animated Depth Video",
                 "node-id": "[\"363\"][\"inputs\"][\"int\"]",
                 "value": "1",
+                "minimum": 1,
                 "interactive": true
             },
 
@@ -1038,6 +1094,9 @@
                 "label": "LineArt Strength",
                 "node-id": "[\"448\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
+                "minimum": -3.0,
+                "maximum": 3.0,
+                "step": 0.05,
                 "interactive": false
             },
             "lineart-end-percent": {
@@ -1083,6 +1142,7 @@
                 "label": "Select Every Nth Frame of Animated LineArt Video",
                 "node-id": "[\"454\"][\"inputs\"][\"int\"]",
                 "value": "1",
+                "minimum": 1,
                 "interactive": false
             },
 
@@ -1123,6 +1183,7 @@
                 "label": "Output Width",
                 "node-id": "[\"218\"][\"inputs\"][\"int\"]",
                 "value": 600,
+                "minimum": 1,
                 "interactive": false
             },
             "height": {
@@ -1130,6 +1191,7 @@
                 "label": "Output Height",
                 "node-id": "[\"219\"][\"inputs\"][\"int\"]",
                 "value": 1200,
+                "minimum": 1,
                 "interactive": false
             },
             "frame_count": {
@@ -1137,6 +1199,7 @@
                 "label": "Raw Frame Count (final frame count / 3)",
                 "node-id": "[\"111\"][\"inputs\"][\"int\"]",
                 "value": 180,
+                "minimum": 12,
                 "interactive": true
             },
             "images-01": {
@@ -1155,19 +1218,19 @@
                 "value": true,
                 "interactive": true
             },
-            "use-animated-mask": {
-                "type": "bool",
-                "label": "Use Animated Mask Video",
-                "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
-                "value": true,
-                "interactive": true
-            },
             "image-mask-path": {
                 "type": "path",
                 "label": "Path of Screen Mask Image",
                 "node-id": "[\"337\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-masks/square_screen-mask.png",
                 "interactive": false
+            },
+            "use-animated-mask": {
+                "type": "bool",
+                "label": "Use Animated Mask Video",
+                "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
+                "value": true,
+                "interactive": true
             },
             "video-mask-path": {
                 "type": "path",
@@ -1181,6 +1244,7 @@
                 "label": "Select Every Nth Frame of Animated Mask Video",
                 "node-id": "[\"348\"][\"inputs\"][\"int\"]",
                 "value": "2",
+                "minimum": 1,
                 "interactive": true
             },
 
@@ -1197,6 +1261,9 @@
                 "label": "Depth Strength",
                 "node-id": "[\"384\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
+                "minimum": -3.0,
+                "maximum": 3.0,
+                "step": 0.05,
                 "interactive": true
             },
             "depth-end-percent": {
@@ -1242,6 +1309,7 @@
                 "label": "Select Every Nth Frame of Animated Depth Video",
                 "node-id": "[\"363\"][\"inputs\"][\"int\"]",
                 "value": "1",
+                "minimum": 1,
                 "interactive": true
             },
 
@@ -1258,6 +1326,9 @@
                 "label": "LineArt Strength",
                 "node-id": "[\"448\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
+                "minimum": -3.0,
+                "maximum": 3.0,
+                "step": 0.05,
                 "interactive": false
             },
             "lineart-end-percent": {
@@ -1303,6 +1374,7 @@
                 "label": "Select Every Nth Frame of Animated LineArt Video",
                 "node-id": "[\"454\"][\"inputs\"][\"int\"]",
                 "value": "1",
+                "minimum": 1,
                 "interactive": false
             },
 
@@ -1343,6 +1415,7 @@
                 "label": "Output Width",
                 "node-id": "[\"218\"][\"inputs\"][\"int\"]",
                 "value": 1040,
+                "minimum": 1,
                 "interactive": false
             },
             "height": {
@@ -1350,6 +1423,7 @@
                 "label": "Output Height",
                 "node-id": "[\"219\"][\"inputs\"][\"int\"]",
                 "value": 1040,
+                "minimum": 1,
                 "interactive": false
             },
             "frame_count": {
@@ -1357,6 +1431,7 @@
                 "label": "Raw Frame Count (final frame count / 3)",
                 "node-id": "[\"111\"][\"inputs\"][\"int\"]",
                 "value": 180,
+                "minimum": 12,
                 "interactive": true
             },
             "images-01": {
@@ -1375,19 +1450,19 @@
                 "value": true,
                 "interactive": true
             },
-            "use-animated-mask": {
-                "type": "bool",
-                "label": "Use Animated Mask Video",
-                "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
-                "value": true,
-                "interactive": true
-            },
             "image-mask-path": {
                 "type": "path",
                 "label": "Path of Screen Mask Image",
                 "node-id": "[\"337\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-masks/square_screen-mask.png",
                 "interactive": false
+            },
+            "use-animated-mask": {
+                "type": "bool",
+                "label": "Use Animated Mask Video",
+                "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
+                "value": true,
+                "interactive": true
             },
             "video-mask-path": {
                 "type": "path",
@@ -1401,6 +1476,7 @@
                 "label": "Select Every Nth Frame of Animated Mask Video",
                 "node-id": "[\"348\"][\"inputs\"][\"int\"]",
                 "value": "2",
+                "minimum": 1,
                 "interactive": true
             },
 
@@ -1417,6 +1493,9 @@
                 "label": "Depth Strength",
                 "node-id": "[\"384\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
+                "minimum": -3.0,
+                "maximum": 3.0,
+                "step": 0.05,
                 "interactive": true
             },
             "depth-end-percent": {
@@ -1462,6 +1541,7 @@
                 "label": "Select Every Nth Frame of Animated Depth Video",
                 "node-id": "[\"363\"][\"inputs\"][\"int\"]",
                 "value": "1",
+                "minimum": 1,
                 "interactive": true
             },
 
@@ -1478,6 +1558,9 @@
                 "label": "LineArt Strength",
                 "node-id": "[\"448\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
+                "minimum": -3.0,
+                "maximum": 3.0,
+                "step": 0.05,
                 "interactive": false
             },
             "lineart-end-percent": {
@@ -1523,6 +1606,7 @@
                 "label": "Select Every Nth Frame of Animated LineArt Video",
                 "node-id": "[\"454\"][\"inputs\"][\"int\"]",
                 "value": "1",
+                "minimum": 1,
                 "interactive": false
             },
 
@@ -1563,6 +1647,7 @@
                 "label": "Output Width",
                 "node-id": "[\"218\"][\"inputs\"][\"int\"]",
                 "value": 1024,
+                "minimum": 1,
                 "interactive": false
             },
             "height": {
@@ -1570,6 +1655,7 @@
                 "label": "Output Height",
                 "node-id": "[\"219\"][\"inputs\"][\"int\"]",
                 "value": 922,
+                "minimum": 1,
                 "interactive": false
             },
             "frame_count": {
@@ -1577,6 +1663,7 @@
                 "label": "Raw Frame Count (final frame count / 3)",
                 "node-id": "[\"111\"][\"inputs\"][\"int\"]",
                 "value": 180,
+                "minimum": 12,
                 "interactive": true
             },
             "images-01": {
@@ -1595,19 +1682,19 @@
                 "value": true,
                 "interactive": true
             },
-            "use-animated-mask": {
-                "type": "bool",
-                "label": "Use Animated Mask Video",
-                "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
-                "value": true,
-                "interactive": true
-            },
             "image-mask-path": {
                 "type": "path",
                 "label": "Path of Screen Mask Image",
                 "node-id": "[\"337\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-masks/f_screen-mask.png",
                 "interactive": false
+            },
+            "use-animated-mask": {
+                "type": "bool",
+                "label": "Use Animated Mask Video",
+                "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
+                "value": true,
+                "interactive": true
             },
             "video-mask-path": {
                 "type": "path",
@@ -1621,6 +1708,7 @@
                 "label": "Select Every Nth Frame of Animated Mask Video",
                 "node-id": "[\"348\"][\"inputs\"][\"int\"]",
                 "value": "2",
+                "minimum": 1,
                 "interactive": true
             },
 
@@ -1637,6 +1725,9 @@
                 "label": "Depth Strength",
                 "node-id": "[\"384\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
+                "minimum": -3.0,
+                "maximum": 3.0,
+                "step": 0.05,
                 "interactive": true
             },
             "depth-end-percent": {
@@ -1682,6 +1773,7 @@
                 "label": "Select Every Nth Frame of Animated Depth Video",
                 "node-id": "[\"363\"][\"inputs\"][\"int\"]",
                 "value": "1",
+                "minimum": 1,
                 "interactive": false
             },
 
@@ -1698,6 +1790,9 @@
                 "label": "LineArt Strength",
                 "node-id": "[\"448\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
+                "minimum": -3.0,
+                "maximum": 3.0,
+                "step": 0.05,
                 "interactive": false
             },
             "lineart-end-percent": {
@@ -1743,6 +1838,7 @@
                 "label": "Select Every Nth Frame of Animated LineArt Video",
                 "node-id": "[\"454\"][\"inputs\"][\"int\"]",
                 "value": "1",
+                "minimum": 1,
                 "interactive": false
             },
 
@@ -1783,6 +1879,7 @@
                 "label": "Output Width",
                 "node-id": "[\"218\"][\"inputs\"][\"int\"]",
                 "value": 720,
+                "minimum": 1,
                 "interactive": false
             },
             "height": {
@@ -1790,6 +1887,7 @@
                 "label": "Output Height",
                 "node-id": "[\"219\"][\"inputs\"][\"int\"]",
                 "value": 1480,
+                "minimum": 1,
                 "interactive": false
             },
             "frame_count": {
@@ -1797,6 +1895,7 @@
                 "label": "Raw Frame Count (final frame count / 3)",
                 "node-id": "[\"111\"][\"inputs\"][\"int\"]",
                 "value": 180,
+                "minimum": 12,
                 "interactive": true
             },
             "images-01": {
@@ -1815,19 +1914,19 @@
                 "value": true,
                 "interactive": true
             },
-            "use-animated-mask": {
-                "type": "bool",
-                "label": "Use Animated Mask Video",
-                "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
-                "value": true,
-                "interactive": true
-            },
             "image-mask-path": {
                 "type": "path",
                 "label": "Path of Screen Mask Image",
                 "node-id": "[\"337\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-masks/g_screen-mask.png",
                 "interactive": false
+            },
+            "use-animated-mask": {
+                "type": "bool",
+                "label": "Use Animated Mask Video",
+                "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
+                "value": true,
+                "interactive": true
             },
             "video-mask-path": {
                 "type": "path",
@@ -1841,6 +1940,7 @@
                 "label": "Select Every Nth Frame of Animated Mask Video",
                 "node-id": "[\"348\"][\"inputs\"][\"int\"]",
                 "value": "2",
+                "minimum": 1,
                 "interactive": true
             },
 
@@ -1857,6 +1957,9 @@
                 "label": "Depth Strength",
                 "node-id": "[\"384\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
+                "minimum": -3.0,
+                "maximum": 3.0,
+                "step": 0.05,
                 "interactive": true
             },
             "depth-end-percent": {
@@ -1902,6 +2005,7 @@
                 "label": "Select Every Nth Frame of Animated Depth Video",
                 "node-id": "[\"363\"][\"inputs\"][\"int\"]",
                 "value": "1",
+                "minimum": 1,
                 "interactive": true
             },
 
@@ -1918,6 +2022,9 @@
                 "label": "LineArt Strength",
                 "node-id": "[\"448\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
+                "minimum": -3.0,
+                "maximum": 3.0,
+                "step": 0.05,
                 "interactive": false
             },
             "lineart-end-percent": {
@@ -1963,6 +2070,7 @@
                 "label": "Select Every Nth Frame of Animated LineArt Video",
                 "node-id": "[\"454\"][\"inputs\"][\"int\"]",
                 "value": "1",
+                "minimum": 1,
                 "interactive": false
             },
 
@@ -2003,6 +2111,7 @@
                 "label": "Output Width",
                 "node-id": "[\"218\"][\"inputs\"][\"int\"]",
                 "value": 480,
+                "minimum": 1,
                 "interactive": false
             },
             "height": {
@@ -2010,6 +2119,7 @@
                 "label": "Output Height",
                 "node-id": "[\"219\"][\"inputs\"][\"int\"]",
                 "value": 1440,
+                "minimum": 1,
                 "interactive": false
             },
             "frame_count": {
@@ -2017,6 +2127,7 @@
                 "label": "Raw Frame Count (final frame count / 3)",
                 "node-id": "[\"111\"][\"inputs\"][\"int\"]",
                 "value": 180,
+                "minimum": 12,
                 "interactive": true
             },
             "images-01": {
@@ -2035,19 +2146,19 @@
                 "value": true,
                 "interactive": true
             },
-            "use-animated-mask": {
-                "type": "bool",
-                "label": "Use Animated Mask Video",
-                "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
-                "value": true,
-                "interactive": true
-            },
             "image-mask-path": {
                 "type": "path",
                 "label": "Path of Screen Mask Image",
                 "node-id": "[\"337\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-masks/h_screen-mask.png",
                 "interactive": false
+            },
+            "use-animated-mask": {
+                "type": "bool",
+                "label": "Use Animated Mask Video",
+                "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
+                "value": true,
+                "interactive": true
             },
             "video-mask-path": {
                 "type": "path",
@@ -2061,6 +2172,7 @@
                 "label": "Select Every Nth Frame of Animated Mask Video",
                 "node-id": "[\"348\"][\"inputs\"][\"int\"]",
                 "value": "2",
+                "minimum": 1,
                 "interactive": true
             },
 
@@ -2077,6 +2189,9 @@
                 "label": "Depth Strength",
                 "node-id": "[\"384\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
+                "minimum": -3.0,
+                "maximum": 3.0,
+                "step": 0.05,
                 "interactive": true
             },
             "depth-end-percent": {
@@ -2122,6 +2237,7 @@
                 "label": "Select Every Nth Frame of Animated Depth Video",
                 "node-id": "[\"363\"][\"inputs\"][\"int\"]",
                 "value": "1",
+                "minimum": 1,
                 "interactive": true
             },
 
@@ -2138,6 +2254,9 @@
                 "label": "LineArt Strength",
                 "node-id": "[\"448\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
+                "minimum": -3.0,
+                "maximum": 3.0,
+                "step": 0.05,
                 "interactive": false
             },
             "lineart-end-percent": {
@@ -2183,6 +2302,7 @@
                 "label": "Select Every Nth Frame of Animated LineArt Video",
                 "node-id": "[\"454\"][\"inputs\"][\"int\"]",
                 "value": "1",
+                "minimum": 1,
                 "interactive": false
             },
 
@@ -2223,6 +2343,7 @@
                 "label": "Output Width",
                 "node-id": "[\"218\"][\"inputs\"][\"int\"]",
                 "value": 600,
+                "minimum": 1,
                 "interactive": false
             },
             "height": {
@@ -2230,6 +2351,7 @@
                 "label": "Output Height",
                 "node-id": "[\"219\"][\"inputs\"][\"int\"]",
                 "value": 680,
+                "minimum": 1,
                 "interactive": false
             },
             "frame_count": {
@@ -2237,6 +2359,7 @@
                 "label": "Raw Frame Count (final frame count / 3)",
                 "node-id": "[\"111\"][\"inputs\"][\"int\"]",
                 "value": 180,
+                "minimum": 12,
                 "interactive": true
             },
             "images-01": {
@@ -2255,19 +2378,19 @@
                 "value": true,
                 "interactive": true
             },
-            "use-animated-mask": {
-                "type": "bool",
-                "label": "Use Animated Mask Video",
-                "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
-                "value": true,
-                "interactive": true
-            },
             "image-mask-path": {
                 "type": "path",
                 "label": "Path of Screen Mask Image",
                 "node-id": "[\"337\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-masks/square_screen-mask.png",
                 "interactive": false
+            },
+            "use-animated-mask": {
+                "type": "bool",
+                "label": "Use Animated Mask Video",
+                "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
+                "value": true,
+                "interactive": true
             },
             "video-mask-path": {
                 "type": "path",
@@ -2281,6 +2404,7 @@
                 "label": "Select Every Nth Frame of Animated Mask Video",
                 "node-id": "[\"348\"][\"inputs\"][\"int\"]",
                 "value": "2",
+                "minimum": 1,
                 "interactive": true
             },
 
@@ -2297,6 +2421,9 @@
                 "label": "Depth Strength",
                 "node-id": "[\"384\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
+                "minimum": -3.0,
+                "maximum": 3.0,
+                "step": 0.05,
                 "interactive": true
             },
             "depth-end-percent": {
@@ -2342,6 +2469,7 @@
                 "label": "Select Every Nth Frame of Animated Depth Video",
                 "node-id": "[\"363\"][\"inputs\"][\"int\"]",
                 "value": "1",
+                "minimum": 1,
                 "interactive": true
             },
 
@@ -2358,6 +2486,9 @@
                 "label": "LineArt Strength",
                 "node-id": "[\"448\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
+                "minimum": -3.0,
+                "maximum": 3.0,
+                "step": 0.05,
                 "interactive": false
             },
             "lineart-end-percent": {
@@ -2403,6 +2534,7 @@
                 "label": "Select Every Nth Frame of Animated LineArt Video",
                 "node-id": "[\"454\"][\"inputs\"][\"int\"]",
                 "value": "1",
+                "minimum": 1,
                 "interactive": false
             },
 
@@ -2443,6 +2575,7 @@
                 "label": "Output Width",
                 "node-id": "[\"218\"][\"inputs\"][\"int\"]",
                 "value": 1536,
+                "minimum": 1,
                 "interactive": false
             },
             "height": {
@@ -2450,6 +2583,7 @@
                 "label": "Output Height",
                 "node-id": "[\"219\"][\"inputs\"][\"int\"]",
                 "value": 864,
+                "minimum": 1,
                 "interactive": false
             },
             "frame_count": {
@@ -2457,6 +2591,7 @@
                 "label": "Raw Frame Count (final frame count / 3)",
                 "node-id": "[\"111\"][\"inputs\"][\"int\"]",
                 "value": 180,
+                "minimum": 12,
                 "interactive": true
             },
             "images-01": {
@@ -2475,18 +2610,18 @@
                 "value": true,
                 "interactive": false
             },
-            "use-animated-mask": {
-                "type": "bool",
-                "label": "Use Animated Mask Video",
-                "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "interactive": false
-            },
             "image-mask-path": {
                 "type": "path",
                 "label": "Path of Screen Mask Image",
                 "node-id": "[\"337\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-masks/medusa_screen-mask.png",
+                "interactive": false
+            },
+            "use-animated-mask": {
+                "type": "bool",
+                "label": "Use Animated Mask Video",
+                "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
+                "value": false,
                 "interactive": false
             },
             "video-mask-path": {
@@ -2501,6 +2636,7 @@
                 "label": "Select Every Nth Frame of Animated Mask Video",
                 "node-id": "[\"348\"][\"inputs\"][\"int\"]",
                 "value": "2",
+                "minimum": 1,
                 "interactive": false
             },
 
@@ -2517,6 +2653,9 @@
                 "label": "Depth Strength",
                 "node-id": "[\"384\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
+                "minimum": -3.0,
+                "maximum": 3.0,
+                "step": 0.05,
                 "interactive": true
             },
             "depth-end-percent": {
@@ -2562,6 +2701,7 @@
                 "label": "Select Every Nth Frame of Animated Depth Video",
                 "node-id": "[\"363\"][\"inputs\"][\"int\"]",
                 "value": "1",
+                "minimum": 1,
                 "interactive": false
             },
 
@@ -2578,6 +2718,9 @@
                 "label": "LineArt Strength",
                 "node-id": "[\"448\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
+                "minimum": -3.0,
+                "maximum": 3.0,
+                "step": 0.05,
                 "interactive": true
             },
             "lineart-end-percent": {
@@ -2623,6 +2766,7 @@
                 "label": "Select Every Nth Frame of Animated LineArt Video",
                 "node-id": "[\"454\"][\"inputs\"][\"int\"]",
                 "value": "1",
+                "minimum": 1,
                 "interactive": true
             },
 
@@ -2663,6 +2807,7 @@
                 "label": "Output Width",
                 "node-id": "[\"218\"][\"inputs\"][\"int\"]",
                 "value": 1536,
+                "minimum": 1,
                 "interactive": false
             },
             "height": {
@@ -2670,6 +2815,7 @@
                 "label": "Output Height",
                 "node-id": "[\"219\"][\"inputs\"][\"int\"]",
                 "value": 864,
+                "minimum": 1,
                 "interactive": false
             },
             "frame_count": {
@@ -2677,6 +2823,7 @@
                 "label": "Raw Frame Count (final frame count / 3)",
                 "node-id": "[\"111\"][\"inputs\"][\"int\"]",
                 "value": 180,
+                "minimum": 12,
                 "interactive": true
             },
             "images-01": {
@@ -2695,18 +2842,18 @@
                 "value": true,
                 "interactive": false
             },
-            "use-animated-mask": {
-                "type": "bool",
-                "label": "Use Animated Mask Video",
-                "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "interactive": false
-            },
             "image-mask-path": {
                 "type": "path",
                 "label": "Path of Screen Mask Image",
                 "node-id": "[\"337\"][\"inputs\"][\"string\"]",
                 "value": "./inputs/screen-masks/poseidon_screen-mask.png",
+                "interactive": false
+            },
+            "use-animated-mask": {
+                "type": "bool",
+                "label": "Use Animated Mask Video",
+                "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
+                "value": false,
                 "interactive": false
             },
             "video-mask-path": {
@@ -2721,6 +2868,7 @@
                 "label": "Select Every Nth Frame of Animated Mask Video",
                 "node-id": "[\"348\"][\"inputs\"][\"int\"]",
                 "value": "2",
+                "minimum": 1,
                 "interactive": false
             },
 
@@ -2737,6 +2885,9 @@
                 "label": "Depth Strength",
                 "node-id": "[\"384\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
+                "minimum": -3.0,
+                "maximum": 3.0,
+                "step": 0.05,
                 "interactive": true
             },
             "depth-end-percent": {
@@ -2782,6 +2933,7 @@
                 "label": "Select Every Nth Frame of Animated Depth Video",
                 "node-id": "[\"363\"][\"inputs\"][\"int\"]",
                 "value": "1",
+                "minimum": 1,
                 "interactive": false
             },
 
@@ -2798,6 +2950,9 @@
                 "label": "LineArt Strength",
                 "node-id": "[\"448\"][\"inputs\"][\"strength\"]",
                 "value": "0.5",
+                "minimum": -3.0,
+                "maximum": 3.0,
+                "step": 0.05,
                 "interactive": true
             },
             "lineart-end-percent": {
@@ -2843,6 +2998,7 @@
                 "label": "Select Every Nth Frame of Animated LineArt Video",
                 "node-id": "[\"454\"][\"inputs\"][\"int\"]",
                 "value": "1",
+                "minimum": 1,
                 "interactive": true
             },
 
