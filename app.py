@@ -241,7 +241,7 @@ def create_dynamic_input(input_type, choices, tooltips, text_label, identifier):
             ]
 
 
-        output = gr.Textbox(label="Directory", interactive=False, elem_id=identifier, info="Preview of the directory path, once resolved with one of the above methods")
+        output = gr.Markdown(elem_id=identifier)
         # output = os.path.abspath(output)
 
     # modify visibility of inputs based on selected_option
