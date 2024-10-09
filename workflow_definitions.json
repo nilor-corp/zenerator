@@ -55,7 +55,7 @@
                 "type": "bool",
                 "label": "Use Latent Mask",
                 "node-id": "[\"461\"][\"inputs\"][\"boolean\"]",
-                "value": true,
+                "value": false,
                 "interactive": true
             },
             "image-mask-path": {
@@ -69,7 +69,7 @@
                 "type": "bool",
                 "label": "Use Animated Mask Video",
                 "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
-                "value": true,
+                "value": false,
                 "interactive": true
             },
             "video-mask-path": {
@@ -93,7 +93,7 @@
                 "type": "bool",
                 "label": "Use Depth",
                 "node-id": "[\"359\"][\"inputs\"][\"boolean\"]",
-                "value": true,
+                "value": false,
                 "interactive": true
             },
             "depth-strength": {
@@ -127,7 +127,7 @@
                 "type": "bool",
                 "label": "Use Animated Depth Video",
                 "node-id": "[\"356\"][\"inputs\"][\"boolean\"]",
-                "value": true,
+                "value": false,
                 "interactive": true
             },
             "video-depth-path": {
@@ -185,7 +185,7 @@
                 "type": "bool",
                 "label": "Use Animated LineArt Video",
                 "node-id": "[\"450\"][\"inputs\"][\"boolean\"]",
-                "value": true,
+                "value": false,
                 "interactive": true
             },
             "video-lineart-path": {
