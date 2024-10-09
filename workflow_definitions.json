@@ -2624,7 +2624,7 @@
                 "type": "text",
                 "label": "Positive Prompt",
                 "node-id": "[\"6\"][\"inputs\"][\"text\"]",
-                "value": "extremely detailed",
+                "value": "extremely detailed, poseidon",
                 "interactive": true
             },
             "text-02": {
