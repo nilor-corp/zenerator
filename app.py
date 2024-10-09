@@ -196,6 +196,7 @@ def select_dynamic_input_option(selected_option, choices):
     
     # Make the corresponding input visible based on the selected option
     if selected_option in choices:
+        #print(f"Reveal option input: {selected_option}")
         selected_index = choices.index(selected_option)
         updaters[selected_index] = gr.update(visible=True)
 
@@ -230,13 +231,13 @@ def create_dynamic_input(input_type, choices, tooltips, text_label, identifier):
         print(f"Choices: {choices}")
         if input_type == "images":
             possible_inputs = [
-                gr.Textbox(label=choices[0], show_label=False, visible=False, info=tooltips[0]),
+                gr.Textbox(label=choices[0], show_label=False, visible=True, info=tooltips[0]),
                 gr.Textbox(label=choices[1], show_label=False, visible=False, info=tooltips[1]),
                 gr.Gallery(label=choices[2], show_label=False, visible=False)
             ]
         elif input_type == "video":
             possible_inputs = [
-                gr.Textbox(label=choices[0], show_label=False, visible=False, info=tooltips[0]),
+                gr.Textbox(label=choices[0], show_label=False, visible=True, info=tooltips[0]),
                 gr.File(label=choices[1], show_label=False, visible=False, file_count="single", type="filepath", file_types=["video"])
             ]
 
@@ -247,6 +248,7 @@ def create_dynamic_input(input_type, choices, tooltips, text_label, identifier):
     # modify visibility of inputs based on selected_option
     selected_option.change(select_dynamic_input_option, inputs=[selected_option, gr.State(choices)], outputs=possible_inputs)
 
+    #possible_inputs = select_dynamic_input_option(selected_option.value, choices)
 
     print(f"Possible Inputs: {possible_inputs}")
     for input_box in possible_inputs:
