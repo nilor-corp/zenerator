@@ -230,13 +230,13 @@ def create_dynamic_input(input_type, choices, tooltips, text_label, identifier):
         print(f"Choices: {choices}")
         if input_type == "images":
             possible_inputs = [
-                gr.Textbox(label=choices[0], show_label=False, visible=False, info=tooltips[0]),
+                gr.Textbox(label=choices[0], show_label=False, visible=True, info=tooltips[0]),
                 gr.Textbox(label=choices[1], show_label=False, visible=False, info=tooltips[1]),
                 gr.Gallery(label=choices[2], show_label=False, visible=False)
             ]
         elif input_type == "video":
             possible_inputs = [
-                gr.Textbox(label=choices[0], show_label=False, visible=False, info=tooltips[0]),
+                gr.Textbox(label=choices[0], show_label=False, visible=True, info=tooltips[0]),
                 gr.File(label=choices[1], show_label=False, visible=False, file_count="single", type="filepath", file_types=["video"])
             ]
 
