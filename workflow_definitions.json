@@ -57,8 +57,7 @@
                 "node-id": "[\"461\"][\"inputs\"][\"boolean\"]",
                 "value": false,
                 "interactive": true, 
-                "inputs": 
-                {
+                "inputs": {
                     "image-mask-path": {
                         "type": "path",
                         "label": "Path of Screen Mask Image",
@@ -93,120 +92,124 @@
 
 
             "use-depth-controlnet": {
-                "type": "bool",
-                "label": "Use Depth",
+                "type": "toggle-group",
+                "label": "Use Depth ControlNet",
                 "node-id": "[\"359\"][\"inputs\"][\"boolean\"]",
                 "value": false,
-                "interactive": true
+                "interactive": true,
+                "inputs": {
+                    "depth-strength": {
+                        "type": "float",
+                        "label": "Depth Strength",
+                        "node-id": "[\"384\"][\"inputs\"][\"strength\"]",
+                        "value": 0.5,
+                        "minimum": -3.0,
+                        "maximum": 3.0,
+                        "step": 0.05,
+                        "interactive": true
+                    },
+                    "depth-end-percent": {
+                        "type": "float",
+                        "label": "Depth End Percent",
+                        "node-id": "[\"384\"][\"inputs\"][\"end_percent\"]",
+                        "value": 0.5,
+                        "minimum": 0.0,
+                        "maximum": 1.0,
+                        "step": 0.05,
+                        "interactive": true
+                    },
+                    "image-depth-path": {
+                        "type": "path",
+                        "label": "Path of Depth Image",
+                        "node-id": "[\"360\"][\"inputs\"][\"string\"]",
+                        "value": "./inputs/screen-depths/medusa_depth.png",
+                        "interactive": true
+                    },
+                    "use-animated-depth": {
+                        "type": "bool",
+                        "label": "Use Animated Depth Video",
+                        "node-id": "[\"356\"][\"inputs\"][\"boolean\"]",
+                        "value": false,
+                        "interactive": true
+                    },
+                    "video-depth-path": {
+                        "type": "path",
+                        "label": "Path of Animated Depth Video",
+                        "node-id": "[\"357\"][\"inputs\"][\"string\"]",
+                        "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
+                        "interactive": true
+                    },
+                    "video-depth-select-every-nth": {
+                        "type": "int",
+                        "label": "Select Every Nth Frame of Animated Depth Video",
+                        "node-id": "[\"363\"][\"inputs\"][\"int\"]",
+                        "value": 2,
+                        "minimum": 1,
+                        "interactive": true
+                    }
+                }
             },
-            "depth-strength": {
-                "type": "float",
-                "label": "Depth Strength",
-                "node-id": "[\"384\"][\"inputs\"][\"strength\"]",
-                "value": 0.5,
-                "minimum": -3.0,
-                "maximum": 3.0,
-                "step": 0.05,
-                "interactive": true
-            },
-            "depth-end-percent": {
-                "type": "float",
-                "label": "Depth End Percent",
-                "node-id": "[\"384\"][\"inputs\"][\"end_percent\"]",
-                "value": 0.5,
-                "minimum": 0.0,
-                "maximum": 1.0,
-                "step": 0.05,
-                "interactive": true
-            },
-            "image-depth-path": {
-                "type": "path",
-                "label": "Path of Depth Image",
-                "node-id": "[\"360\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/screen-depths/medusa_depth.png",
-                "interactive": true
-            },
-            "use-animated-depth": {
-                "type": "bool",
-                "label": "Use Animated Depth Video",
-                "node-id": "[\"356\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "interactive": true
-            },
-            "video-depth-path": {
-                "type": "path",
-                "label": "Path of Animated Depth Video",
-                "node-id": "[\"357\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
-                "interactive": true
-            },
-            "video-depth-select-every-nth": {
-                "type": "int",
-                "label": "Select Every Nth Frame of Animated Depth Video",
-                "node-id": "[\"363\"][\"inputs\"][\"int\"]",
-                "value": 2,
-                "minimum": 1,
-                "interactive": true
-            },
-
-
+            
+            
             "use-lineart-controlnet": {
-                "type": "bool",
+                "type": "toggle-group",
                 "label": "Use LineArt",
                 "node-id": "[\"452\"][\"inputs\"][\"boolean\"]",
                 "value": false,
-                "interactive": true
+                "interactive": true,
+                "inputs": {
+                    "lineart-strength": {
+                        "type": "float",
+                        "label": "LineArt Strength",
+                        "node-id": "[\"448\"][\"inputs\"][\"strength\"]",
+                        "value": 0.5,
+                        "minimum": -3.0,
+                        "maximum": 3.0,
+                        "step": 0.05,
+                        "interactive": true
+                    },
+                    "lineart-end-percent": {
+                        "type": "float",
+                        "label": "LineArt End Percent",
+                        "node-id": "[\"448\"][\"inputs\"][\"end_percent\"]",
+                        "value": 0.5,
+                        "minimum": 0.0,
+                        "maximum": 1.0,
+                        "step": 0.05,
+                        "interactive": true
+                    },
+                    "image-lineart-path": {
+                        "type": "path",
+                        "label": "Path of LineArt Image",
+                        "node-id": "[\"453\"][\"inputs\"][\"string\"]",
+                        "value": "./inputs/static-lineart/medusa_lineart.png",
+                        "interactive": true
+                    },
+                    "use-animated-lineart": {
+                        "type": "bool",
+                        "label": "Use Animated LineArt Video",
+                        "node-id": "[\"450\"][\"inputs\"][\"boolean\"]",
+                        "value": false,
+                        "interactive": true
+                    },
+                    "video-lineart-path": {
+                        "type": "path",
+                        "label": "Path of Animated LineArt Video",
+                        "node-id": "[\"451\"][\"inputs\"][\"string\"]",
+                        "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
+                        "interactive": true
+                    },
+                    "video-lineart-select-every-nth": {
+                        "type": "int",
+                        "label": "Select Every Nth Frame of Animated LineArt Video",
+                        "node-id": "[\"454\"][\"inputs\"][\"int\"]",
+                        "value": 2,
+                        "minimum": 1,
+                        "interactive": true
+                    }
+                }
             },
-            "lineart-strength": {
-                "type": "float",
-                "label": "LineArt Strength",
-                "node-id": "[\"448\"][\"inputs\"][\"strength\"]",
-                "value": 0.5,
-                "minimum": -3.0,
-                "maximum": 3.0,
-                "step": 0.05,
-                "interactive": true
-            },
-            "lineart-end-percent": {
-                "type": "float",
-                "label": "LineArt End Percent",
-                "node-id": "[\"448\"][\"inputs\"][\"end_percent\"]",
-                "value": 0.5,
-                "minimum": 0.0,
-                "maximum": 1.0,
-                "step": 0.05,
-                "interactive": true
-            },
-            "image-lineart-path": {
-                "type": "path",
-                "label": "Path of LineArt Image",
-                "node-id": "[\"453\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/static-lineart/medusa_lineart.png",
-                "interactive": true
-            },
-            "use-animated-lineart": {
-                "type": "bool",
-                "label": "Use Animated LineArt Video",
-                "node-id": "[\"450\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "interactive": true
-            },
-            "video-lineart-path": {
-                "type": "path",
-                "label": "Path of Animated LineArt Video",
-                "node-id": "[\"451\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
-                "interactive": true
-            },
-            "video-lineart-select-every-nth": {
-                "type": "int",
-                "label": "Select Every Nth Frame of Animated LineArt Video",
-                "node-id": "[\"454\"][\"inputs\"][\"int\"]",
-                "value": 2,
-                "minimum": 1,
-                "interactive": true
-            },
-
+            
             
             "filename-prefix": {
                 "type": "string",
