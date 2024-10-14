@@ -264,13 +264,20 @@ def filter_valid_components(components):
             valid_components.append(component)
     return valid_components
 
-def process_input(input_key):
-    input_details = workflow_definitions[workflow_name]["inputs"][input_key]
+def toggle_group(checkbox_value):
+    # If checkbox is selected, the group of inputs will be visible
+    if checkbox_value:
+        return gr.update(visible=True)
+    else:
+        return gr.update(visible=False)
+
+def process_input(input_context, input_key):
+    input_details = input_context.get(input_key, None)
     input_type = input_details["type"]
     input_label = input_details["label"]
-    input_node_id = input_details["node-id"]
+    input_node_id = input_details.get("node-id", None)
     input_value = input_details["value"]
-    input_interactive = input_details["interactive"]
+    input_interactive = input_details.get("interactive", False)
 
     # Define a mapping of input types to Gradio components
     component_map = {
@@ -281,13 +288,39 @@ def process_input(input_key):
         "video": None, # special case for video selection handled below
         "bool": gr.Checkbox,
         "float": gr.Number,
-        "int": gr.Number  # Special case for int to round?
+        "int": gr.Number,  # Special case for int to round?
+        "toggle-group": gr.Checkbox  # Special case for groups
     }
     
-    component = None
+    components = []
+    components_dict = {}
 
     if input_type in component_map:
-        if input_type == "images":
+        if input_type == "toggle-group":
+            #gr.Markdown("---")
+
+            with gr.Group():
+                # Checkbox component which enables Group
+                component_constructor = component_map.get(input_type)
+                group_toggle = component_constructor(label=input_label, elem_id=input_key, value=input_value, interactive=input_interactive)
+                
+                # Group of inputs (initially hidden)
+                with gr.Group(visible=group_toggle.value) as input_group:
+                    # Use the mapping to create components based on input_type
+                    components.append(group_toggle)
+                    components_dict[input_key] = input_details
+
+                    sub_context = input_context[input_key]["inputs"]
+                    for group_input_key in sub_context:
+                        [sub_components, sub_dict_values] = process_input(sub_context, group_input_key)
+                        components.extend(sub_components)
+                        components_dict.update(sub_dict_values)
+
+            # Update the group visibility based on the checkbox
+            group_toggle.change(fn=toggle_group, inputs=group_toggle, outputs=input_group)
+
+            #gr.Markdown("---")
+        elif input_type == "images":
             # print("!!!!!!!!!!!!!!!!!!!!!!!\nMaking Radio")
             selected_option, inputs, output = create_dynamic_input(
                 input_type,
@@ -298,7 +331,8 @@ def process_input(input_key):
             )
 
             # Only append the output (Markdown element) to the components list
-            component = output
+            components.append(output)
+            components_dict[input_key] = input_details
         elif input_type == "video":
             # print("!!!!!!!!!!!!!!!!!!!!!!!\nMaking Radio")
             selected_option, inputs, output = create_dynamic_input(
@@ -310,7 +344,8 @@ def process_input(input_key):
             )
 
             # Only append the output (Markdown element) to the components list
-            component = output
+            component = components.append(output)
+            components_dict[input_key] = input_details
         elif input_type == "float" or input_type == "int":
             input_minimum = input_details.get("minimum", None)
             input_maximum = input_details.get("maximum", None)
@@ -320,7 +355,8 @@ def process_input(input_key):
             component_constructor = component_map.get(input_type)
 
             # print(f"Component Constructor: {component_constructor}")
-            component = component_constructor(label=input_label, elem_id=input_key, value=input_value, minimum=input_minimum, maximum=input_maximum, step=input_step, interactive=input_interactive)
+            components.append(component_constructor(label=input_label, elem_id=input_key, value=input_value, minimum=input_minimum, maximum=input_maximum, step=input_step, interactive=input_interactive))
+            components_dict[input_key] = input_details
         else:
             if input_type == "path":
                 input_value = os.path.abspath(input_value)
@@ -328,16 +364,21 @@ def process_input(input_key):
             component_constructor = component_map.get(input_type)
 
             # print(f"Component Constructor: {component_constructor}")
-            component = component_constructor(label=input_label, elem_id=input_key, value=input_value, interactive=input_interactive)
+            components.append(component_constructor(label=input_label, elem_id=input_key, value=input_value, interactive=input_interactive))
+            components_dict[input_key] = input_details
     else:
         print(f"Whoa! Unsupported input type: {input_type}")
 
-    return component
+    return [components, components_dict]
+    #return components
 
 def create_tab_interface(workflow_name):
     gr.Markdown("### Workflow Parameters")
+    
+    key_context = workflow_definitions[workflow_name]["inputs"]
+
     components = []
-    component_data_dict = {workflow_name: workflow_definitions[workflow_name]["inputs"]}
+    component_data_dict = {}
     
     #constants = []
     #constants_data_dict = {workflow_name: workflow_definitions[workflow_name]["constants"]}
@@ -350,8 +391,8 @@ def create_tab_interface(workflow_name):
     interactive_components = []
     noninteractive_components = []
 
-    for input_key in workflow_definitions[workflow_name]["inputs"]:
-        input_details = workflow_definitions[workflow_name]["inputs"][input_key]
+    for input_key in key_context:
+        input_details = key_context[input_key]
         input_interactive = input_details["interactive"]
 
         if input_interactive:
@@ -360,13 +401,17 @@ def create_tab_interface(workflow_name):
             noninteractive_inputs.append(input_key)
 
     for input_key in interactive_inputs:
-        interactive_components.append(process_input(input_key))
+        [sub_components, sub_dict_values] = process_input(key_context, input_key)
+        interactive_components.extend(sub_components)
+        component_data_dict.update(sub_dict_values)
 
     with gr.Accordion("Constants", open=False):
         gr.Markdown("You can edit these constants in workflow_definitions.json if you know what you're doing.")
         
         for input_key in noninteractive_inputs:
-            noninteractive_components.append(process_input(input_key))
+            [sub_components, sub_dict_values] = process_input(key_context, input_key)
+            noninteractive_components.extend(sub_components)
+            component_data_dict.update(sub_dict_values)
 
     components.extend(interactive_components)
     components.extend(noninteractive_components)
@@ -438,7 +483,7 @@ with gr.Blocks(title="WorkFlower") as demo:
 
                         if (selected_port_url is not None) and (components is not None) and (component_dict is not None):
                                 run_button.click(
-                                fn=run_workflow_with_name(workflow_filename, components, component_dict[workflow_name]),
+                                fn=run_workflow_with_name(workflow_filename, components, component_dict),
                                 inputs=components,
                                 # TODO: Add support for video/image preview of output, as well as real progress bar
                                 #outputs=[output_player],
