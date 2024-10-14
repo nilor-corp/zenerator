@@ -153,7 +153,7 @@
             
             "use-lineart-controlnet": {
                 "type": "toggle-group",
-                "label": "Use LineArt",
+                "label": "Use LineArt ControlNet",
                 "node-id": "[\"452\"][\"inputs\"][\"boolean\"]",
                 "value": false,
                 "interactive": true,
