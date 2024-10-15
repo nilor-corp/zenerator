@@ -66,26 +66,28 @@
                         "interactive": true
                     },
                     "use-animated-mask": {
-                        "type": "bool",
+                        "type": "toggle-group",
                         "label": "Use Animated Mask Video",
                         "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
                         "value": false,
-                        "interactive": true
-                    },
-                    "video-mask-path": {
-                        "type": "path",
-                        "label": "Path of Animated Mask Video",
-                        "node-id": "[\"339\"][\"inputs\"][\"string\"]",
-                        "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
-                        "interactive": true
-                    },
-                    "video-mask-select-every-nth": {
-                        "type": "int",
-                        "label": "Select Every Nth Frame of Animated Mask Video",
-                        "node-id": "[\"348\"][\"inputs\"][\"int\"]",
-                        "value": 2,
-                        "minimum": 1,
-                        "interactive": true
+                        "interactive": true,
+                        "inputs": {
+                            "video-mask-path": {
+                            "type": "path",
+                            "label": "Path of Animated Mask Video",
+                            "node-id": "[\"339\"][\"inputs\"][\"string\"]",
+                            "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
+                            "interactive": true
+                            },
+                            "video-mask-select-every-nth": {
+                                "type": "int",
+                                "label": "Select Every Nth Frame of Animated Mask Video",
+                                "node-id": "[\"348\"][\"inputs\"][\"int\"]",
+                                "value": 2,
+                                "minimum": 1,
+                                "interactive": true
+                            }
+                        }
                     }
                 }
             },
@@ -126,26 +128,28 @@
                         "interactive": true
                     },
                     "use-animated-depth": {
-                        "type": "bool",
+                        "type": "toggle-group",
                         "label": "Use Animated Depth Video",
                         "node-id": "[\"356\"][\"inputs\"][\"boolean\"]",
                         "value": false,
-                        "interactive": true
-                    },
-                    "video-depth-path": {
-                        "type": "path",
-                        "label": "Path of Animated Depth Video",
-                        "node-id": "[\"357\"][\"inputs\"][\"string\"]",
-                        "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
-                        "interactive": true
-                    },
-                    "video-depth-select-every-nth": {
-                        "type": "int",
-                        "label": "Select Every Nth Frame of Animated Depth Video",
-                        "node-id": "[\"363\"][\"inputs\"][\"int\"]",
-                        "value": 2,
-                        "minimum": 1,
-                        "interactive": true
+                        "interactive": true,
+                        "inputs": {
+                            "video-depth-path": {
+                                "type": "path",
+                                "label": "Path of Animated Depth Video",
+                                "node-id": "[\"357\"][\"inputs\"][\"string\"]",
+                                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
+                                "interactive": true
+                            },
+                            "video-depth-select-every-nth": {
+                                "type": "int",
+                                "label": "Select Every Nth Frame of Animated Depth Video",
+                                "node-id": "[\"363\"][\"inputs\"][\"int\"]",
+                                "value": 2,
+                                "minimum": 1,
+                                "interactive": true
+                            }
+                        }
                     }
                 }
             },
@@ -186,26 +190,28 @@
                         "interactive": true
                     },
                     "use-animated-lineart": {
-                        "type": "bool",
+                        "type": "toggle-group",
                         "label": "Use Animated LineArt Video",
                         "node-id": "[\"450\"][\"inputs\"][\"boolean\"]",
                         "value": false,
-                        "interactive": true
-                    },
-                    "video-lineart-path": {
-                        "type": "path",
-                        "label": "Path of Animated LineArt Video",
-                        "node-id": "[\"451\"][\"inputs\"][\"string\"]",
-                        "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
-                        "interactive": true
-                    },
-                    "video-lineart-select-every-nth": {
-                        "type": "int",
-                        "label": "Select Every Nth Frame of Animated LineArt Video",
-                        "node-id": "[\"454\"][\"inputs\"][\"int\"]",
-                        "value": 2,
-                        "minimum": 1,
-                        "interactive": true
+                        "interactive": true,
+                        "inputs": {
+                            "video-lineart-path": {
+                                "type": "path",
+                                "label": "Path of Animated LineArt Video",
+                                "node-id": "[\"451\"][\"inputs\"][\"string\"]",
+                                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
+                                "interactive": true
+                            },
+                            "video-lineart-select-every-nth": {
+                                "type": "int",
+                                "label": "Select Every Nth Frame of Animated LineArt Video",
+                                "node-id": "[\"454\"][\"inputs\"][\"int\"]",
+                                "value": 2,
+                                "minimum": 1,
+                                "interactive": true
+                            }
+                        }
                     }
                 }
             },

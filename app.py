@@ -271,23 +271,30 @@ def toggle_group(checkbox_value):
     else:
         return gr.update(visible=False)
 
-
 def watch_input(component, default_value, elem_id):
     #print(f"Equals Default Value? {component == default_value}")
     if component != default_value:
         # Return HTML to change the background color to red when value changes
-        return f"<style>#{elem_id}  {{ background: #30435d; }}</style>"
+        output = f"<style>#{elem_id}  {{ background: #30435d; }}"
+        return output, gr.update(visible=True)
     else:
         # Return HTML to reset background color when value matches default
-        return "<style>#{elem_id}  {{ background: var(--input-background-fill); }}</style>"
+        output = f"<style>#{elem_id}  {{ background: var(--input-background-fill); }}"
+        return output, gr.update(visible=False)
+
+def reset_input(default_value):
+    return default_value
 
 def process_input(input_context, input_key):
     input_details = input_context.get(input_key, None)
-    input_type = input_details["type"]
-    input_label = input_details["label"]
+    input_type = input_details.get("type", None)
+    input_label = input_details.get("label", None)
     input_node_id = input_details.get("node-id", None)
-    input_value = input_details["value"]
+    input_value = input_details.get("value", None)
     input_interactive = input_details.get("interactive", False)
+    input_minimum = input_details.get("minimum", None)
+    input_maximum = input_details.get("maximum", None)
+    input_step = input_details.get("step", 1)
 
     # Define a mapping of input types to Gradio components
     component_map = {
@@ -305,91 +312,106 @@ def process_input(input_context, input_key):
     components = []
     components_dict = {}
 
-    if input_type in component_map:
-        if input_type == "toggle-group":
-            #gr.Markdown("---")
+    with gr.Group():
+        if input_type in component_map:
+            if input_type == "toggle-group":
+                with gr.Group():
+                    with gr.Row():
+                        # Checkbox component which enables Group
+                        component_constructor = component_map.get(input_type)
+                        group_toggle = component_constructor(label=input_label, elem_id=input_key, value=input_value, interactive=input_interactive, scale=100)
+                        
+                        # Compact Reset button with reduced width, initially hidden
+                        reset_button = gr.Button("Reset", visible=False, elem_id="reset-button", scale=1, variant="stop", min_width=50)
+                        # Trigger the reset function when the button is clicked
+                        reset_button.click(fn=reset_input, inputs=[gr.State(input_value)], outputs=group_toggle, queue=False)
 
-            with gr.Group():
-                # Checkbox component which enables Group
-                component_constructor = component_map.get(input_type)
-                group_toggle = component_constructor(label=input_label, elem_id=input_key, value=input_value, interactive=input_interactive)
+                    # Group of inputs (initially hidden)
+                    with gr.Group(visible=group_toggle.value) as input_group:
+                        # Use the mapping to create components based on input_type
+                        components.append(group_toggle)
+                        components_dict[input_key] = input_details
 
-                # Group of inputs (initially hidden)
-                with gr.Group(visible=group_toggle.value) as input_group:
-                    # Use the mapping to create components based on input_type
-                    components.append(group_toggle)
-                    components_dict[input_key] = input_details
+                        sub_context = input_context[input_key]["inputs"]
+                        for group_input_key in sub_context:
+                            [sub_components, sub_dict_values] = process_input(sub_context, group_input_key)
+                            components.extend(sub_components)
+                            components_dict.update(sub_dict_values)
 
-                    sub_context = input_context[input_key]["inputs"]
-                    for group_input_key in sub_context:
-                        [sub_components, sub_dict_values] = process_input(sub_context, group_input_key)
-                        components.extend(sub_components)
-                        components_dict.update(sub_dict_values)
-
-            # Update the group visibility based on the checkbox
-            group_toggle.change(fn=toggle_group, inputs=group_toggle, outputs=input_group)
-            
-            # Trigger the check when the value of the input changes
-            group_toggle.change(fn=watch_input, inputs=[group_toggle, gr.State(input_value), gr.State(input_key)], outputs=gr.HTML())
-
-            #gr.Markdown("---")
-        elif input_type == "images":
-            # print("!!!!!!!!!!!!!!!!!!!!!!!\nMaking Radio")
-            selected_option, inputs, output = create_dynamic_input(
-                input_type,
-                choices=["filepath", "nilor collection", "upload"], 
-                tooltips=["Enter the path of the directory of images and press Enter to submit", "Enter the name of the Nilor Collection and press Enter to resolve"],
-                text_label="Select Input Type", 
-                identifier=input_key
-            )
-
-            # Only append the output (Markdown element) to the components list
-            components.append(output)
-            components_dict[input_key] = input_details
-        elif input_type == "video":
-            # print("!!!!!!!!!!!!!!!!!!!!!!!\nMaking Radio")
-            selected_option, inputs, output = create_dynamic_input(
-                input_type,
-                choices=["filepath", "upload"], 
-                tooltips=["Enter the path of the directory of video and press Enter to submit"],
-                text_label="Select Input Type", 
-                identifier=input_key
-            )
-
-            # Only append the output (Markdown element) to the components list
-            component = components.append(output)
-            components_dict[input_key] = input_details
-        elif input_type == "float" or input_type == "int":
-            input_minimum = input_details.get("minimum", None)
-            input_maximum = input_details.get("maximum", None)
-            input_step = input_details.get("step", 1)
-            
-            # Use the mapping to create components based on input_type
-            component_constructor = component_map.get(input_type)
-            component = component_constructor(label=input_label, elem_id=input_key, value=input_value, minimum=input_minimum, maximum=input_maximum, step=input_step, interactive=input_interactive)
-
-            # Trigger the check when the value of the input changes
-            component.change(fn=watch_input, inputs=[component, gr.State(input_value), gr.State(input_key)], outputs=gr.HTML())
-
-            # print(f"Component Constructor: {component_constructor}")
-            components.append(component)
-            components_dict[input_key] = input_details
-        else:
-            if input_type == "path":
-                input_value = os.path.abspath(input_value)
+                # Update the group visibility based on the checkbox
+                group_toggle.change(fn=toggle_group, inputs=group_toggle, outputs=input_group, queue=False)
                 
-            # Use the mapping to create components based on input_type
-            component_constructor = component_map.get(input_type)
-            component = component_constructor(label=input_label, elem_id=input_key, value=input_value, interactive=input_interactive)
+                # Trigger the check when the value of the input changes
+                group_toggle.change(fn=watch_input, inputs=[group_toggle, gr.State(input_value), gr.State(input_key)], outputs=[gr.HTML(), reset_button], queue=False)
+            elif input_type == "images":
+                # print("!!!!!!!!!!!!!!!!!!!!!!!\nMaking Radio")
+                selected_option, inputs, output = create_dynamic_input(
+                    input_type,
+                    choices=["filepath", "nilor collection", "upload"], 
+                    tooltips=["Enter the path of the directory of images and press Enter to submit", "Enter the name of the Nilor Collection and press Enter to resolve"],
+                    text_label="Select Input Type", 
+                    identifier=input_key
+                )
 
-            # Trigger the check when the value of the input changes
-            component.change(fn=watch_input, inputs=[component, gr.State(input_value), gr.State(input_key)], outputs=gr.HTML())
+                # Only append the output (Markdown element) to the components list
+                components.append(output)
+                components_dict[input_key] = input_details
+            elif input_type == "video":
+                # print("!!!!!!!!!!!!!!!!!!!!!!!\nMaking Radio")
+                selected_option, inputs, output = create_dynamic_input(
+                    input_type,
+                    choices=["filepath", "upload"], 
+                    tooltips=["Enter the path of the directory of video and press Enter to submit"],
+                    text_label="Select Input Type", 
+                    identifier=input_key
+                )
 
-            # print(f"Component Constructor: {component_constructor}")
-            components.append(component)
-            components_dict[input_key] = input_details
-    else:
-        print(f"Whoa! Unsupported input type: {input_type}")
+                # Only append the output (Markdown element) to the components list
+                component = components.append(output)
+                components_dict[input_key] = input_details
+            elif input_type == "float" or input_type == "int":
+                with gr.Row():
+                    #gr.Markdown(f"{input_label}")
+                    # Use the mapping to create components based on input_type
+                    component_constructor = component_map.get(input_type)
+                    component = component_constructor(label=input_label, elem_id=input_key, value=input_value, minimum=input_minimum, maximum=input_maximum, step=input_step, interactive=input_interactive, scale=100)
+
+                    # Compact Reset button with reduced width, initially hidden
+                    reset_button = gr.Button("Reset", visible=False, elem_id="reset-button", scale=1, variant="stop", min_width=50)
+
+                # Trigger the reset function when the button is clicked
+                reset_button.click(fn=reset_input, inputs=[gr.State(input_value)], outputs=component, queue=False)
+
+                # Trigger the check when the value of the input changes
+                component.change(fn=watch_input, inputs=[component, gr.State(input_value), gr.State(input_key)], outputs=[gr.HTML(), reset_button], queue=False)
+
+                components.append(component)
+                components_dict[input_key] = input_details
+
+                # print(f"Component Constructor: {component_constructor}")
+            else:
+                if input_type == "path":
+                    input_value = os.path.abspath(input_value)
+                    
+                with gr.Row():
+                    # Use the mapping to create components based on input_type
+                    component_constructor = component_map.get(input_type)
+                    component = component_constructor(label=input_label, elem_id=input_key, value=input_value, interactive=input_interactive, scale=100)
+
+                    # Compact Reset button with reduced width, initially hidden
+                    reset_button = gr.Button("Reset", visible=False, elem_id="reset-button", scale=1, variant="stop", min_width=50)
+
+                # Trigger the reset function when the button is clicked
+                reset_button.click(fn=reset_input, inputs=[gr.State(input_value)], outputs=component, queue=False)
+
+                # Trigger the check when the value of the input changes
+                component.change(fn=watch_input, inputs=[component, gr.State(input_value), gr.State(input_key)], outputs=[gr.HTML(), reset_button], queue=False)
+
+                # print(f"Component Constructor: {component_constructor}")
+                components.append(component)
+                components_dict[input_key] = input_details
+        else:
+            print(f"Whoa! Unsupported input type: {input_type}")
 
     return [components, components_dict]
     #return components
