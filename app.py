@@ -291,7 +291,7 @@ def process_input(input_context, input_key):
     input_label = input_details.get("label", None)
     input_node_id = input_details.get("node-id", None)
     input_value = input_details.get("value", None)
-    input_interactive = input_details.get("interactive", False)
+    input_interactive = input_details.get("interactive", True)
     input_minimum = input_details.get("minimum", None)
     input_maximum = input_details.get("maximum", None)
     input_step = input_details.get("step", 1)
@@ -305,8 +305,9 @@ def process_input(input_context, input_key):
         "video": None, # special case for video selection handled below
         "bool": gr.Checkbox,
         "float": gr.Number,
-        "int": gr.Number,  # Special case for int to round?
-        "toggle-group": gr.Checkbox  # Special case for groups
+        "int": gr.Number,
+        "group": None,
+        "toggle-group": gr.Checkbox
     }
     
     components = []
@@ -314,7 +315,18 @@ def process_input(input_context, input_key):
 
     with gr.Group():
         if input_type in component_map:
-            if input_type == "toggle-group":
+            if input_type == "group":
+                gr.Markdown(f"##### {input_label}")    
+                with gr.Group():
+                    # Group of inputs
+                    with gr.Group():
+                        sub_context = input_context[input_key]["inputs"]
+                        for group_input_key in sub_context:
+                            [sub_components, sub_dict_values] = process_input(sub_context, group_input_key)
+
+                            components.extend(sub_components)
+                            components_dict.update(sub_dict_values)
+            elif input_type == "toggle-group":
                 with gr.Group():
                     with gr.Row():
                         # Checkbox component which enables Group
@@ -340,8 +352,7 @@ def process_input(input_context, input_key):
 
                 # Update the group visibility based on the checkbox
                 group_toggle.change(fn=toggle_group, inputs=group_toggle, outputs=input_group, queue=False)
-                
-                # Trigger the check when the value of the input changes
+                # Trigger the reset check when the value of the input changes
                 group_toggle.change(fn=watch_input, inputs=[group_toggle, gr.State(input_value), gr.State(input_key)], outputs=[gr.HTML(), reset_button], queue=False)
             elif input_type == "images":
                 # print("!!!!!!!!!!!!!!!!!!!!!!!\nMaking Radio")
@@ -378,11 +389,10 @@ def process_input(input_context, input_key):
 
                     # Compact Reset button with reduced width, initially hidden
                     reset_button = gr.Button("Reset", visible=False, elem_id="reset-button", scale=1, variant="stop", min_width=50)
+                    # Trigger the reset function when the button is clicked
+                    reset_button.click(fn=reset_input, inputs=[gr.State(input_value)], outputs=component, queue=False)
 
-                # Trigger the reset function when the button is clicked
-                reset_button.click(fn=reset_input, inputs=[gr.State(input_value)], outputs=component, queue=False)
-
-                # Trigger the check when the value of the input changes
+                # Trigger the reset check when the value of the input changes
                 component.change(fn=watch_input, inputs=[component, gr.State(input_value), gr.State(input_key)], outputs=[gr.HTML(), reset_button], queue=False)
 
                 components.append(component)
@@ -400,16 +410,16 @@ def process_input(input_context, input_key):
 
                     # Compact Reset button with reduced width, initially hidden
                     reset_button = gr.Button("Reset", visible=False, elem_id="reset-button", scale=1, variant="stop", min_width=50)
+                    # Trigger the reset function when the button is clicked
+                    reset_button.click(fn=reset_input, inputs=[gr.State(input_value)], outputs=component, queue=False)
 
-                # Trigger the reset function when the button is clicked
-                reset_button.click(fn=reset_input, inputs=[gr.State(input_value)], outputs=component, queue=False)
-
-                # Trigger the check when the value of the input changes
+                # Trigger the reset check when the value of the input changes
                 component.change(fn=watch_input, inputs=[component, gr.State(input_value), gr.State(input_key)], outputs=[gr.HTML(), reset_button], queue=False)
 
-                # print(f"Component Constructor: {component_constructor}")
                 components.append(component)
                 components_dict[input_key] = input_details
+
+                # print(f"Component Constructor: {component_constructor}")
         else:
             print(f"Whoa! Unsupported input type: {input_type}")
 
@@ -437,7 +447,7 @@ def create_tab_interface(workflow_name):
 
     for input_key in key_context:
         input_details = key_context[input_key]
-        input_interactive = input_details["interactive"]
+        input_interactive = input_details.get("interactive", True)
 
         if input_interactive:
             interactive_inputs.append(input_key)
