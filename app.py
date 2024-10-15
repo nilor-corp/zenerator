@@ -313,7 +313,7 @@ def process_input(input_context, input_key):
                 # Checkbox component which enables Group
                 component_constructor = component_map.get(input_type)
                 group_toggle = component_constructor(label=input_label, elem_id=input_key, value=input_value, interactive=input_interactive)
-                
+
                 # Group of inputs (initially hidden)
                 with gr.Group(visible=group_toggle.value) as input_group:
                     # Use the mapping to create components based on input_type
@@ -328,6 +328,9 @@ def process_input(input_context, input_key):
 
             # Update the group visibility based on the checkbox
             group_toggle.change(fn=toggle_group, inputs=group_toggle, outputs=input_group)
+            
+            # Trigger the check when the value of the input changes
+            group_toggle.change(fn=watch_input, inputs=[group_toggle, gr.State(input_value), gr.State(input_key)], outputs=gr.HTML())
 
             #gr.Markdown("---")
         elif input_type == "images":
@@ -365,11 +368,8 @@ def process_input(input_context, input_key):
             component_constructor = component_map.get(input_type)
             component = component_constructor(label=input_label, elem_id=input_key, value=input_value, minimum=input_minimum, maximum=input_maximum, step=input_step, interactive=input_interactive)
 
-            # HTML placeholder to inject dynamic CSS
-            css_placeholder = gr.HTML()
-
             # Trigger the check when the value of the input changes
-            component.input(fn=watch_input, inputs=[component, gr.State(input_value), gr.State(input_key)], outputs=css_placeholder)
+            component.change(fn=watch_input, inputs=[component, gr.State(input_value), gr.State(input_key)], outputs=gr.HTML())
 
             # print(f"Component Constructor: {component_constructor}")
             components.append(component)
@@ -381,6 +381,9 @@ def process_input(input_context, input_key):
             # Use the mapping to create components based on input_type
             component_constructor = component_map.get(input_type)
             component = component_constructor(label=input_label, elem_id=input_key, value=input_value, interactive=input_interactive)
+
+            # Trigger the check when the value of the input changes
+            component.change(fn=watch_input, inputs=[component, gr.State(input_value), gr.State(input_key)], outputs=gr.HTML())
 
             # print(f"Component Constructor: {component_constructor}")
             components.append(component)
