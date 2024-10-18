@@ -4,32 +4,6 @@
         "filename": "general.json",
         "description": "Create a video for any screen using fully exposed parameters.",
         "inputs": {
-            "prompting": {
-                "type": "group",
-                "label": "Output Width",
-                "inputs": {
-                    "text-01": {
-                        "type": "text",
-                        "label": "Positive",
-                        "node-id": "[\"6\"][\"inputs\"][\"text\"]",
-                        "value": "extremely detailed"
-                    },
-                    "text-02": {
-                        "type": "text",
-                        "label": "Negative",
-                        "node-id": "[\"7\"][\"inputs\"][\"text\"]",
-                        "value": "blurry, glitches, artifact, distorted, malformed, nsfw, lens flare, glare, bloom, bokeh"
-                    }
-                }
-            },
-
-            "images-01": {
-                "type": "images",
-                "label": "Images",
-                "node-id": "[\"142\"][\"inputs\"][\"string\"]",
-                "value": ""
-            },
-
             "output-specifications": {
                 "type": "group",
                 "label": "Output Specifications",
@@ -63,7 +37,32 @@
                     }
                 }
             },
+            
+            "prompting": {
+                "type": "group",
+                "label": "Prompting",
+                "inputs": {
+                    "text-01": {
+                        "type": "text",
+                        "label": "Positive",
+                        "node-id": "[\"6\"][\"inputs\"][\"text\"]",
+                        "value": "extremely detailed"
+                    },
+                    "text-02": {
+                        "type": "text",
+                        "label": "Negative",
+                        "node-id": "[\"7\"][\"inputs\"][\"text\"]",
+                        "value": "blurry, glitches, artifact, distorted, malformed, nsfw, lens flare, glare, bloom, bokeh"
+                    }
+                }
+            },
 
+            "images-01": {
+                "type": "images",
+                "label": "Images",
+                "node-id": "[\"142\"][\"inputs\"][\"string\"]",
+                "value": ""
+            },
 
             "use-latent-mask": {
                 "type": "toggle-group",
