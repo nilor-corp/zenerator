@@ -207,13 +207,12 @@ def check_for_new_content():
     print(f"Checking for new content in: {OUT_DIR}\n")
 
     latest_content = ""
-    output_player = gr.Video(label="Output Video", autoplay=True)
-    if output_type == "video":
-        latest_content = get_latest_video(OUT_DIR)
-        output_player = gr.Video(label=f"Output Video", show_label=True, autoplay=True, loop=True, value=latest_content)
-    elif output_type == "image":
+
+    latest_content = get_latest_video(OUT_DIR)
+    output_player = gr.Video(label=f"Output Video", show_label=False, autoplay=True, loop=True, value=latest_content)
+    if output_type == "image":
         latest_content = get_latest_image(OUT_DIR)
-        output_player = gr.Image(label="Output Image", value=latest_content)
+        output_player = gr.Image(label="Output Image", show_label=False, value=latest_content)
 
     if latest_content != previous_content:
         print(f"New content created: {latest_content}")
@@ -634,6 +633,8 @@ def create_tab_interface(workflow_name):
 
 
 with gr.Blocks(title="WorkFlower") as demo:
+    tick_timer = gr.Timer(value=1.0)
+
     with gr.Row():
         with gr.Column():
             comfy_url_and_port_selector = gr.Dropdown(label="ComfyUI Prompt URL", choices=QUEUE_URLS, value=QUEUE_URLS[0], interactive=True)
@@ -654,17 +655,31 @@ with gr.Blocks(title="WorkFlower") as demo:
 
                     # make a tab for each workflow
                     with gr.TabItem(label=workflow_definitions[workflow_name]["name"]):
+                        info = gr.Markdown(workflow_definitions[workflow_name].get("description", ""))
+
                         with gr.Row():
+                            # main input construction
                             with gr.Column():
-                                # TODO: Figure out what this was supposed to do in the first place
+                                # also make a dictionary with the components' data
+                                components, component_dict = create_tab_interface(workflow_name)
+                                run_button = gr.Button("Run Workflow", variant="primary")
+
+                            with gr.Column():
+                                # TODO: Decide whether it's worth having to make a gif for each workflow tab
                                 # with gr.Row():
                                 #     preview_gif = gr.Image(
                                 #         label="Preview GIF",
                                 #         value=update_gif(workflow_name),
                                 #     )
-                                info = gr.Markdown(
-                                    workflow_definitions[workflow_name].get("description", "")
-                                )
+
+                                # TODO: is it possible to preview only an output that was produced by this workflow tab? otherwise this should probably exist outside of the workflow tab
+                                gr.Markdown("### Output Preview")
+                                with gr.Group():
+                                    output_player = gr.Video()
+                                    if output_type == "image":
+                                        output_player = gr.Image()
+                                    output_filepath_component = gr.Markdown("Output Filepath: N/A")
+                                    tick_timer.tick(fn=check_for_new_content, outputs=[output_player, output_filepath_component])
 
                                 gr.Markdown("### Queue Info")
                                 with gr.Group():
@@ -672,37 +687,16 @@ with gr.Blocks(title="WorkFlower") as demo:
                                     queue_pending_component = gr.Markdown(f"Queue pending: N/A")
                                     queue_history_component = gr.Markdown(f"Queue history: N/A")
                                     queue_failed_component = gr.Markdown(f"Queue failed: N/A")
+                                tick_timer.tick(fn=update_queue_info, outputs=[queue_running_component, queue_pending_component, queue_failed_component, queue_history_component])
 
-                                         
                                 gr.Markdown("### System Stats")
                                 with gr.Group():       
                                     vram_usage_component = gr.Markdown(f"VRAM Usage: N/A")
-
-                                tick_timer = gr.Timer(value=1.0)
-
-                                tick_timer.tick(fn=update_queue_info, outputs=[queue_running_component, queue_pending_component, queue_failed_component, queue_history_component])
                                 tick_timer.tick(fn=update_system_stats, outputs=[vram_usage_component])
                             
                                 output_type = workflow_definitions[workflow_name]["outputs"].get(
                                     "type", ""
                                 )
-
-                                gr.Markdown("### Output Preview")
-                                with gr.Group():
-                                    if output_type == "video":
-                                        output_player = gr.Video(autoplay=True)
-                                    elif output_type == "image":
-                                        output_player = gr.Image()
-                                    output_filepath_component = gr.Markdown("Output Filepath: N/A")
-
-                                tick_timer.tick(fn=check_for_new_content, outputs=[output_player, output_filepath_component])
-
-                            # main input construction
-                            with gr.Column():
-                                run_button = gr.Button("Run Workflow")
-                                # also make a dictionary with the components' data
-                                components, component_dict = create_tab_interface(workflow_name)
-                                #print(f"Components: {components}")
 
                         # TODO: investigate trigger_mode=multiple for run_button.click event
 
