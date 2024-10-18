@@ -22,29 +22,138 @@ COMFY_URL = config["COMFY_URL"]
 QUEUE_URLS = []
 
 for port in config["COMFY_PORTS"]:
-    QUEUE_URLS.append(config["COMFY_URL"] + port + "/prompt")
+    QUEUE_URLS.append(config["COMFY_URL"] + port)
 
 selected_port_url = QUEUE_URLS[0]
 
 print(QUEUE_URLS)
 
-QUEUE_URL = config["COMFY_URL"] + "/prompt"
-OUT_DIR = config["COMFY_ROOT"] + "output/WorkFlower/"
-LORA_DIR = config["COMFY_ROOT"] + "models/loras/"
-INPUTS_DIR = "./inputs/"
+OUT_DIR = os.path.abspath(config["COMFY_ROOT"] + "output/WorkFlower/")
+LORA_DIR = os.path.abspath(config["COMFY_ROOT"] + "models/loras/")
+INPUTS_DIR = os.path.abspath("./inputs/")
 
 output_type = ""
 
+def select_correct_port(selector):
+    print(f"Selected Port URL: {selector}")
+    global selected_port_url 
+    selected_port_url = selector
+    print(f"Changed Port URL to: {selected_port_url}")
 
-def start_queue(prompt_workflow):
-    print(f"Using URL: {selected_port_url}")
-    p = {"prompt": prompt_workflow}
-    data = json.dumps(p).encode("utf-8")
+queue = []
+queue_running = []
+queue_pending = []
+queue_failed = []
+
+history = {}
+
+prompt = {}
+status = {}
+
+system_stats = {}
+devices = []
+
+previous_content = ""
+
+#region POST REQUESTS
+def comfy_POST(endpoint, message):
+    post_url = selected_port_url + "/" + endpoint
+    data = json.dumps(message).encode("utf-8")
+    print(f"POST {endpoint} on: {post_url}")
     try:
-        requests.post(selected_port_url, data=data)
+        return requests.post(post_url, data=data)
     except ConnectionResetError:
         print("Connection was reset while trying to start the workflow. Retrying...")
+    except requests.RequestException as e:
+        print(f"Error polling the GET {endpoint}: ", e)
 
+def post_prompt(prompt_workflow):
+    message = {"prompt": prompt_workflow}
+    comfy_POST("prompt", message)
+
+def post_history_clear():
+    p = {"clear": True}
+    data = json.dumps(p).encode("utf-8")
+#endregion
+
+#region GET REQUESTS
+def comfy_GET(endpoint):
+    get_url = selected_port_url + "/" + endpoint
+    print(f"GET {endpoint} on: {get_url}\n")
+    try:
+        return requests.get(get_url).json()
+    except ConnectionResetError:
+        print("Connection was reset while trying to start the workflow. Retrying...")
+    except requests.RequestException as e:
+        print(f"Error polling the POST {endpoint}: ", e)
+        
+def get_queue():
+    global queue, queue_running, queue_pending, queue_failed
+
+    queue = comfy_GET("queue")
+    if (queue is None):
+        print("/queue GET response is empty")
+        return [[], [], []]
+    
+    queue_running = queue.get("queue_running", [])
+    print(f"queue_running: {len(queue_running)}")
+    
+    queue_pending = queue.get("queue_pending", [])
+    print(f"queue_pending: {len(queue_pending)}")
+
+    queue_failed = queue.get("queue_failed", [])
+    print(f"queue_failed: {len(queue_failed)}")
+
+    return [queue_running, queue_pending, queue_failed]
+    
+def get_status():
+    global prompt, status
+
+    prompt = comfy_GET("prompt")
+    if (prompt is None):
+        print("/prompt GET response is empty")
+        return "N/A"
+    
+    status = prompt.get("status", "N/A")
+    print(f"status: {status}")
+
+    return status
+
+def get_history():
+    global history
+
+    history = comfy_GET("history")
+    if (history is None):
+        print("/history GET response is empty")
+        return {}
+
+    print(f"history: {len(history)}")
+
+    return history
+
+def get_system_stats():
+    global system_stats, devices
+
+    system_stats = comfy_GET("system_stats")
+    if (system_stats is None):
+        print("/system_stats GET response is empty")
+        return [[], []]
+    
+    devices = system_stats.get("devices")
+    if (devices is None):
+        return [system_stats, []]
+    
+    print(f"devices: {devices}")
+
+    for device in devices:
+        #print(f"device: {device}")
+        print(f"device['name']: {device.get("name")}")
+        print(f"device['vram_free']: {device.get("vram_free")}")
+        print(f"device['vram_total']: {device.get("vram_total")}")
+
+    return [system_stats, devices]
+#endregion
+    
 
 with open("workflow_definitions.json") as f:
     workflow_definitions = json.load(f)
@@ -92,20 +201,30 @@ def count_images(directory):
     return image_count
 
 
-async def wait_for_new_content(previous_content, output_directory):
-    while True:
-        latest_content = ""
-        if output_type == "video":
-            latest_content = get_latest_video(output_directory)
-        elif output_type == "image":
-            latest_content = get_latest_image(output_directory)
-        if latest_content != previous_content:
-            print(f"New content created: {latest_content}")
-            return latest_content
-        await asyncio.sleep(1)
+def check_for_new_content():
+    global latest_content, previous_content
+
+    print(f"Checking for new content in: {OUT_DIR}\n")
+
+    latest_content = ""
+    output_player = gr.Video(label="Output Video", autoplay=True)
+    if output_type == "video":
+        latest_content = get_latest_video(OUT_DIR)
+        output_player = gr.Video(label=f"Output Video ({latest_content})", show_label=True, autoplay=True, loop=True, value=latest_content)
+    elif output_type == "image":
+        latest_content = get_latest_image(OUT_DIR)
+        output_player = gr.Image(label="Output Image", value=latest_content)
+
+    if latest_content != previous_content:
+        print(f"New content created: {latest_content}")
+        previous_content = latest_content
+    
+    return output_player
 
 
-def run_workflow(workflow_name, progress=gr.Progress(track_tqdm=True), **kwargs):
+def run_workflow(workflow_name, progress, **kwargs):
+    global previous_content
+
     # Print the input arguments for debugging
     print("inside run workflow with kwargs: " + str(kwargs))
     # print("workflow_definitions: " + str(workflow_definitions[workflow_name]))
@@ -145,21 +264,19 @@ def run_workflow(workflow_name, progress=gr.Progress(track_tqdm=True), **kwargs)
             current_section[final_key] = new_value
 
         try:
-            output_directory = OUT_DIR
-
             previous_content = ""
 
             if output_type == "video":
-                previous_content = get_latest_video(output_directory)
+                previous_content = get_latest_video(OUT_DIR)
                 print(f"Previous video: {previous_content}")
             elif output_type == "images":
-                previous_content = get_latest_image(output_directory)
+                previous_content = get_latest_image(OUT_DIR)
                 print(f"Previous image: {previous_content}")
 
             print(f"!!!!!!!!!\nSubmitting workflow:\n{workflow}\n!!!!!!!!!")
-            start_queue(workflow)
+            post_prompt(workflow)
 
-            # asyncio.run(wait_for_new_content(previous_content, output_directory))
+            # asyncio.run(check_for_new_content(output_directory))
         except KeyboardInterrupt:
             print("Interrupted by user. Exiting...")
             return None
@@ -317,6 +434,7 @@ def process_input(input_context, input_key):
         if input_type in component_map:
             if input_type == "group":
                 gr.Markdown(f"##### {input_label}")    
+                
                 with gr.Group():
                     # Group of inputs
                     with gr.Group():
@@ -368,7 +486,6 @@ def process_input(input_context, input_key):
                 components.append(output)
                 components_dict[input_key] = input_details
             elif input_type == "video":
-                # print("!!!!!!!!!!!!!!!!!!!!!!!\nMaking Radio")
                 selected_option, inputs, output = create_dynamic_input(
                     input_type,
                     choices=["filepath", "upload"], 
@@ -426,9 +543,50 @@ def process_input(input_context, input_key):
     return [components, components_dict]
     #return components
 
+timer_active = False
+
+# start and stop timer are used for live updating the preview and progress
+# no point in keeping the timer ticking if it's not currently generating
+def start_timer(): 
+    global timer_active
+    timer_active = True
+    return gr.Timer(active=True)
+
+def stop_timer():
+    global timer_active
+    timer_active = False
+    return gr.Timer(active=False)
+
+def update_queue_info():
+    print("TICK queue info")
+    
+    [queue_running, queue_pending, queue_failed] = get_queue()
+    queue_running_component = gr.Markdown(f"Queue running: {len(queue_running)}")
+    queue_pending_component = gr.Markdown(f"Queue pending: {len(queue_pending)}")
+    queue_failed_component = gr.Markdown(f"Queue failed: {len(queue_failed)}")
+
+    queue_history = get_history()
+    queue_history_component = gr.Markdown(f"Queue history: {len(queue_history)}")
+
+    return [queue_running_component, queue_pending_component, queue_failed_component, queue_history_component]
+
+def update_system_stats():
+    print("TICK stats")
+    
+    [system_stats, devices] = get_system_stats()
+    
+    vram_usage = "N/A"
+    if (len(devices) > 0):
+        vram_used = (1.0 - devices[0].get("vram_free") / devices[0].get("vram_total")) * 100.0
+        vram_usage = "{:.2f}".format(vram_used) + "%"
+        
+    vram_usage_component = gr.Markdown(f"VRAM usage: {vram_usage}")
+
+    return vram_usage_component
+
 def create_tab_interface(workflow_name):
     gr.Markdown("### Workflow Parameters")
-    
+
     key_context = workflow_definitions[workflow_name]["inputs"]
 
     components = []
@@ -469,15 +627,9 @@ def create_tab_interface(workflow_name):
 
     components.extend(interactive_components)
     components.extend(noninteractive_components)
-
+    
     return components, component_data_dict
 
-
-def select_correct_port(selector):
-    print(f"Selected Port URL: {selector}")
-    global selected_port_url 
-    selected_port_url = selector
-    print(f"Changed Port URL to: {selected_port_url}")
 
 with gr.Blocks(title="WorkFlower") as demo:
     with gr.Row():
@@ -511,6 +663,23 @@ with gr.Blocks(title="WorkFlower") as demo:
                                 info = gr.Markdown(
                                     workflow_definitions[workflow_name].get("description", "")
                                 )
+
+                                gr.Markdown("### Queue Info")
+                                with gr.Group():
+                                    queue_running_component = gr.Markdown(f"Queue running: N/A")
+                                    queue_pending_component = gr.Markdown(f"Queue pending: N/A")
+                                    queue_history_component = gr.Markdown(f"Queue history: N/A")
+                                    queue_failed_component = gr.Markdown(f"Queue failed: N/A")
+
+                                         
+                                gr.Markdown("### System Stats")
+                                with gr.Group():       
+                                    vram_usage_component = gr.Markdown(f"VRAM Usage: N/A")
+
+                                tick_timer = gr.Timer(value=1.0)
+
+                                tick_timer.tick(fn=update_queue_info, outputs=[queue_running_component, queue_pending_component, queue_failed_component, queue_history_component])
+                                tick_timer.tick(fn=update_system_stats, outputs=[vram_usage_component])
                             
                             # main input construction
                             with gr.Column():
@@ -521,17 +690,19 @@ with gr.Blocks(title="WorkFlower") as demo:
                             
                             # TODO: Add support for video/image preview of output, as well as real progress bar
                             # output player construction
-                            #with gr.Column():
-                                # output_type = workflow_definitions[workflow_name]["outputs"].get(
-                                #     "type", ""
-                                # )
+                            with gr.Column():
+                                output_type = workflow_definitions[workflow_name]["outputs"].get(
+                                    "type", ""
+                                )
 
-                                # if output_type == "video":
-                                #     output_player = gr.Video(
-                                #         label="Output Video", autoplay=True
-                                #     )
-                                # elif output_type == "image":
-                                #     output_player = gr.Image(label="Output Image")
+                                tick_timer2 = gr.Timer(value=1.0)  
+                                if output_type == "video":
+                                    output_player = gr.Video(label="Output Video", autoplay=True)
+                                elif output_type == "image":
+                                    output_player = gr.Image(label="Output Image")
+                                tick_timer2.tick(fn=check_for_new_content, outputs=output_player)
+
+                                temp = ""
 
                         # TODO: investigate trigger_mode=multiple for run_button.click event
 
@@ -540,10 +711,10 @@ with gr.Blocks(title="WorkFlower") as demo:
                                 fn=run_workflow_with_name(workflow_filename, components, component_dict),
                                 inputs=components,
                                 # TODO: Add support for video/image preview of output, as well as real progress bar
-                                #outputs=[output_player],
+                                outputs=[output_player],
                                 trigger_mode="multiple",
                             )
-                        
-   
 
-    demo.launch(favicon_path="favicon.png")
+
+    demo.launch(allowed_paths=[".."], favicon_path="favicon.png")
+
