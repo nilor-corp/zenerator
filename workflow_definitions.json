@@ -208,15 +208,6 @@
                         }
                     }
                 }
-            },
-            
-            
-            "filename-prefix": {
-                "type": "string",
-                "label": "Output Video Filename Prefix",
-                "node-id": "[\"191\"][\"inputs\"][\"filename_prefix\"]",
-                "value": "WorkFlower/zenon_general",
-                "interactive": true
             }
         },
         "outputs": {

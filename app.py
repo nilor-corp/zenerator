@@ -210,7 +210,7 @@ def check_for_new_content():
     output_player = gr.Video(label="Output Video", autoplay=True)
     if output_type == "video":
         latest_content = get_latest_video(OUT_DIR)
-        output_player = gr.Video(label=f"Output Video ({latest_content})", show_label=True, autoplay=True, loop=True, value=latest_content)
+        output_player = gr.Video(label=f"Output Video", show_label=True, autoplay=True, loop=True, value=latest_content)
     elif output_type == "image":
         latest_content = get_latest_image(OUT_DIR)
         output_player = gr.Image(label="Output Image", value=latest_content)
@@ -218,8 +218,10 @@ def check_for_new_content():
     if latest_content != previous_content:
         print(f"New content created: {latest_content}")
         previous_content = latest_content
+
+    output_filepath_component = gr.Markdown(f"{latest_content}")
     
-    return output_player
+    return [output_player, output_filepath_component]
 
 
 def run_workflow(workflow_name, progress, **kwargs):
@@ -681,28 +683,26 @@ with gr.Blocks(title="WorkFlower") as demo:
                                 tick_timer.tick(fn=update_queue_info, outputs=[queue_running_component, queue_pending_component, queue_failed_component, queue_history_component])
                                 tick_timer.tick(fn=update_system_stats, outputs=[vram_usage_component])
                             
+                                output_type = workflow_definitions[workflow_name]["outputs"].get(
+                                    "type", ""
+                                )
+
+                                gr.Markdown("### Output Preview")
+                                with gr.Group():
+                                    if output_type == "video":
+                                        output_player = gr.Video(autoplay=True)
+                                    elif output_type == "image":
+                                        output_player = gr.Image()
+                                    output_filepath_component = gr.Markdown("Output Filepath: N/A")
+
+                                tick_timer.tick(fn=check_for_new_content, outputs=[output_player, output_filepath_component])
+
                             # main input construction
                             with gr.Column():
                                 run_button = gr.Button("Run Workflow")
                                 # also make a dictionary with the components' data
                                 components, component_dict = create_tab_interface(workflow_name)
                                 #print(f"Components: {components}")
-                            
-                            # TODO: Add support for video/image preview of output, as well as real progress bar
-                            # output player construction
-                            with gr.Column():
-                                output_type = workflow_definitions[workflow_name]["outputs"].get(
-                                    "type", ""
-                                )
-
-                                tick_timer2 = gr.Timer(value=1.0)  
-                                if output_type == "video":
-                                    output_player = gr.Video(label="Output Video", autoplay=True)
-                                elif output_type == "image":
-                                    output_player = gr.Image(label="Output Image")
-                                tick_timer2.tick(fn=check_for_new_content, outputs=output_player)
-
-                                temp = ""
 
                         # TODO: investigate trigger_mode=multiple for run_button.click event
 
@@ -710,8 +710,8 @@ with gr.Blocks(title="WorkFlower") as demo:
                                 run_button.click(
                                 fn=run_workflow_with_name(workflow_filename, components, component_dict),
                                 inputs=components,
-                                # TODO: Add support for video/image preview of output, as well as real progress bar
-                                outputs=[output_player],
+                                # TODO: Add support for real progress bar
+                                #outputs=[output_player],
                                 trigger_mode="multiple",
                             )
 
