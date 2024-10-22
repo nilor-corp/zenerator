@@ -13,21 +13,31 @@
                         "label": "Output Width",
                         "node-id": "[\"218\"][\"inputs\"][\"int\"]",
                         "value": 1024,
-                        "minimum": 1
+                        "minimum": 256,
+                        "maximum": 4096
                     },
                     "height": {
                         "type": "int",
                         "label": "Output Height",
                         "node-id": "[\"219\"][\"inputs\"][\"int\"]",
                         "value": 1024,
-                        "minimum": 1
+                        "minimum": 256,
+                        "maximum": 4096
                     },
-                    "frame_count": {
+                    "raw_frame_count": {
                         "type": "int",
-                        "label": "Raw Frame Count (final frame count / 3)",
+                        "label": "Raw Frame Count",
                         "node-id": "[\"111\"][\"inputs\"][\"int\"]",
                         "value": 180,
                         "minimum": 12
+                    },
+                    "frame_interp": {
+                        "type": "int",
+                        "label": "Frame Interpolation",
+                        "node-id": "[\"190\"][\"inputs\"][\"multiplier\"]",
+                        "value": 3,
+                        "minimum": 1,
+                        "maximum": 10
                     },
                     "filename-prefix": {
                         "type": "string",

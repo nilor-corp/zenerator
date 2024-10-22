@@ -13,6 +13,7 @@ from lora_maker import generate_lora
 from tqdm import tqdm
 import asyncio
 import socket
+import math
 
 with open("config.json") as f:
     config = json.load(f)
@@ -41,17 +42,9 @@ def select_correct_port(selector):
     print(f"Changed Port URL to: {selected_port_url}")
 
 queue = []
-queue_running = []
-queue_pending = []
-queue_failed = []
-
-history = {}
 
 prompt = {}
 status = {}
-
-system_stats = {}
-devices = []
 
 previous_content = ""
 
@@ -79,7 +72,7 @@ def post_history_clear():
 #region GET REQUESTS
 def comfy_GET(endpoint):
     get_url = selected_port_url + "/" + endpoint
-    print(f"GET {endpoint} on: {get_url}\n")
+    #print(f"GET {endpoint} on: {get_url}\n")
     try:
         return requests.get(get_url).json()
     except ConnectionResetError:
@@ -96,13 +89,13 @@ def get_queue():
         return [[], [], []]
     
     queue_running = queue.get("queue_running", [])
-    print(f"queue_running: {len(queue_running)}")
+    #print(f"queue_running: {len(queue_running)}")
     
     queue_pending = queue.get("queue_pending", [])
-    print(f"queue_pending: {len(queue_pending)}")
+    #print(f"queue_pending: {len(queue_pending)}")
 
     queue_failed = queue.get("queue_failed", [])
-    print(f"queue_failed: {len(queue_failed)}")
+    #print(f"queue_failed: {len(queue_failed)}")
 
     return [queue_running, queue_pending, queue_failed]
     
@@ -115,7 +108,7 @@ def get_status():
         return "N/A"
     
     status = prompt.get("status", "N/A")
-    print(f"status: {status}")
+    #print(f"status: {status}")
 
     return status
 
@@ -127,7 +120,7 @@ def get_history():
         print("/history GET response is empty")
         return {}
 
-    print(f"history: {len(history)}")
+    #print(f"history: {len(history)}")
 
     return history
 
@@ -143,21 +136,18 @@ def get_system_stats():
     if (devices is None):
         return [system_stats, []]
     
-    print(f"devices: {devices}")
+    #print(f"devices: {devices}")
 
-    for device in devices:
-        #print(f"device: {device}")
-        print(f"device['name']: {device.get("name")}")
-        print(f"device['vram_free']: {device.get("vram_free")}")
-        print(f"device['vram_total']: {device.get("vram_total")}")
+    #for device in devices:
+        #print(f"device['name']: {device.get("name")}")
+        #print(f"device['torch_vram_free']: {device.get("torch_vram_free")}")
+        #print(f"device['torch_vram_total']: {device.get("torch_vram_total")}")
 
     return [system_stats, devices]
 #endregion
     
-
 with open("workflow_definitions.json") as f:
     workflow_definitions = json.load(f)
-
 
 def get_lora_filenames(directory):
     # Get all files in the directory
@@ -170,57 +160,83 @@ def get_lora_filenames(directory):
 
     return filenames
 
-
 # Replace with the actual path to the Loras.
 loras = get_lora_filenames(LORA_DIR)
 
+# def count_images(directory):
+#     extensions = ["*.png", "*.jpg", "*.jpeg", "*.gif", "*.bmp", "*.tiff"]
+#     image_count = sum(
+#         len(glob.glob(os.path.join(directory, ext))) for ext in extensions
+#     )
+#     return image_count
 
-def get_latest_image(folder):
+def get_all_images(folder):
     files = os.listdir(folder)
     image_files = [
         f for f in files if f.lower().endswith(("png", "jpg", "jpeg", "gif"))
+    ]
+    image_files.sort(key=lambda x: os.path.getmtime(os.path.join(folder, x)))
+    return image_files
+
+def get_latest_image(folder):
+    image_files = get_all_images(folder)
+    image_files.sort(key=lambda x: os.path.getmtime(os.path.join(folder, x)))
+    latest_image = os.path.join(folder, image_files[-1]) if image_files else None
+    return latest_image
+
+def get_latest_image_with_prefix(folder, prefix):
+    image_files = get_all_images(folder)
+    image_files = [
+        f for f in image_files if f.lower().startswith(prefix)
     ]
     image_files.sort(key=lambda x: os.path.getmtime(os.path.join(folder, x)))
     latest_image = os.path.join(folder, image_files[-1]) if image_files else None
     return latest_image
 
 
-def get_latest_video(folder):
+def get_all_videos(folder):
     files = os.listdir(folder)
-    video_files = [f for f in files if f.lower().endswith(("mp4", "mov"))]
+    video_files = [
+        f for f in files if f.lower().endswith(("mp4", "mov"))
+    ]
+    video_files.sort(key=lambda x: os.path.getmtime(os.path.join(folder, x)))
+    return video_files
+
+def get_latest_video(folder):
+    video_files = get_all_videos(folder)
+    latest_video = os.path.join(folder, video_files[-1]) if video_files else None
+    return latest_video
+
+def get_latest_video_with_prefix(folder, prefix):
+    video_files = get_all_videos(folder)
+    video_files = [
+        f for f in video_files if f.lower().startswith(prefix)
+    ]
     video_files.sort(key=lambda x: os.path.getmtime(os.path.join(folder, x)))
     latest_video = os.path.join(folder, video_files[-1]) if video_files else None
     return latest_video
 
 
-def count_images(directory):
-    extensions = ["*.png", "*.jpg", "*.jpeg", "*.gif", "*.bmp", "*.tiff"]
-    image_count = sum(
-        len(glob.glob(os.path.join(directory, ext))) for ext in extensions
-    )
-    return image_count
-
-
 def check_for_new_content():
     global latest_content, previous_content
-
-    print(f"Checking for new content in: {OUT_DIR}\n")
+    #print(f"Checking for new content in: {OUT_DIR}\n")
 
     latest_content = ""
-
-    latest_content = get_latest_video(OUT_DIR)
-    output_player = gr.Video(label=f"Output Video", show_label=False, autoplay=True, loop=True, value=latest_content)
     if output_type == "image":
         latest_content = get_latest_image(OUT_DIR)
-        output_player = gr.Image(label="Output Image", show_label=False, value=latest_content)
+        #output_player = gr.Image(label="Output Image", show_label=False, value=latest_content)
+    else:
+        latest_content = get_latest_video(OUT_DIR)
+        #output_player = gr.Video(label=f"Output Video", show_label=False, autoplay=True, loop=True, value=latest_content)
 
     if latest_content != previous_content:
-        print(f"New content created: {latest_content}")
+        print(f"New content found: {latest_content}")
         previous_content = latest_content
 
     output_filepath_component = gr.Markdown(f"{latest_content}")
     
-    return [output_player, output_filepath_component]
+    return gr.update(value=latest_content)
+    #return [gr.update(value=latest_content), gr.update(value=f"{latest_content}", visible="False")]
 
 
 def run_workflow(workflow_name, progress, **kwargs):
@@ -265,19 +281,8 @@ def run_workflow(workflow_name, progress, **kwargs):
             current_section[final_key] = new_value
 
         try:
-            previous_content = ""
-
-            if output_type == "video":
-                previous_content = get_latest_video(OUT_DIR)
-                print(f"Previous video: {previous_content}")
-            elif output_type == "images":
-                previous_content = get_latest_image(OUT_DIR)
-                print(f"Previous image: {previous_content}")
-
             print(f"!!!!!!!!!\nSubmitting workflow:\n{workflow}\n!!!!!!!!!")
             post_prompt(workflow)
-
-            # asyncio.run(check_for_new_content(output_directory))
         except KeyboardInterrupt:
             print("Interrupted by user. Exiting...")
             return None
@@ -500,7 +505,6 @@ def process_input(input_context, input_key):
                 components_dict[input_key] = input_details
             elif input_type == "float" or input_type == "int":
                 with gr.Row():
-                    #gr.Markdown(f"{input_label}")
                     # Use the mapping to create components based on input_type
                     component_constructor = component_map.get(input_type)
                     component = component_constructor(label=input_label, elem_id=input_key, value=input_value, minimum=input_minimum, maximum=input_maximum, step=input_step, interactive=input_interactive, scale=100)
@@ -558,32 +562,52 @@ def stop_timer():
     timer_active = False
     return gr.Timer(active=False)
 
-def update_queue_info():
-    print("TICK queue info")
-    
-    [queue_running, queue_pending, queue_failed] = get_queue()
-    queue_running_component = gr.Markdown(f"Queue running: {len(queue_running)}")
-    queue_pending_component = gr.Markdown(f"Queue pending: {len(queue_pending)}")
-    queue_failed_component = gr.Markdown(f"Queue failed: {len(queue_failed)}")
+async def make_visible():
+    return gr.update(visible=True)
 
-    queue_history = get_history()
-    queue_history_component = gr.Markdown(f"Queue history: {len(queue_history)}")
 
-    return [queue_running_component, queue_pending_component, queue_failed_component, queue_history_component]
+check_vram_running = False
+async def check_vram(progress=gr.Progress()):
+    global check_vram_running
 
-def update_system_stats():
-    print("TICK stats")
-    
-    [system_stats, devices] = get_system_stats()
-    
-    vram_usage = "N/A"
-    if (len(devices) > 0):
-        vram_used = (1.0 - devices[0].get("vram_free") / devices[0].get("vram_total")) * 100.0
-        vram_usage = "{:.2f}".format(vram_used) + "%"
-        
-    vram_usage_component = gr.Markdown(f"VRAM usage: {vram_usage}")
+    if (not check_vram_running):
+        while True:
+            [system_stats, devices] = get_system_stats()
+            
+            vram_used = 0.0
+            if (len(devices) > 0):
+                vram_free = devices[0].get("torch_vram_free")
+                vram_total = devices[0].get("torch_vram_total")
+                if (vram_total > 0):
+                    vram_used = (1.0 - vram_free / vram_total)# * 100.0
 
-    return vram_usage_component
+            #print(f"vram_used: {vram_used}")
+            progress(progress=vram_used, unit="%")
+            
+            check_vram_running = True
+            await asyncio.sleep(1.0)
+    return
+
+check_queue_running = False
+async def check_queue(progress=gr.Progress()):
+    global check_queue_running
+
+    if (not check_queue_running):
+        [queue_running, queue_pending, queue_failed] = get_queue()
+
+        while True:
+            [queue_running, queue_pending, queue_failed] = get_queue()
+            queue_history = get_history()
+            
+            queue_finished = len(queue_history)
+            queue_total = queue_finished + len(queue_running) + len(queue_pending)
+                
+            progress(progress=(queue_finished, queue_total), unit="gens")
+
+            check_queue_running = True
+            await asyncio.sleep(1.0)
+
+    return ""
 
 def create_tab_interface(workflow_name):
     gr.Markdown("### Workflow Parameters")
@@ -675,33 +699,42 @@ with gr.Blocks(title="WorkFlower") as demo:
                                 # TODO: is it possible to preview only an output that was produced by this workflow tab? otherwise this should probably exist outside of the workflow tab
                                 gr.Markdown("### Output Preview")
                                 with gr.Group():
-                                    output_player = gr.Video()
+                                    output_player = gr.Video(show_label=False, autoplay=True, loop=True, interactive=False)
                                     if output_type == "image":
-                                        output_player = gr.Image()
-                                    output_filepath_component = gr.Markdown("Output Filepath: N/A")
-                                    tick_timer.tick(fn=check_for_new_content, outputs=[output_player, output_filepath_component])
-
-                                gr.Markdown("### Queue Info")
+                                        output_player = gr.Image(show_label=False, interactive=False)
+                                    #output_filepath_component = gr.Markdown("N/A")
+                                    
+                                    tick_timer.tick(
+                                        fn=check_for_new_content,
+                                        outputs=[output_player],
+                                        show_progress="hidden"
+                                    )
+                                    
                                 with gr.Group():
-                                    queue_running_component = gr.Markdown(f"Queue running: N/A")
-                                    queue_pending_component = gr.Markdown(f"Queue pending: N/A")
-                                    queue_history_component = gr.Markdown(f"Queue history: N/A")
-                                    queue_failed_component = gr.Markdown(f"Queue failed: N/A")
-                                tick_timer.tick(fn=update_queue_info, outputs=[queue_running_component, queue_pending_component, queue_failed_component, queue_history_component])
+                                    queue_info_component = gr.Textbox(label="Queue Info", interactive=False, visible=True)
 
-                                gr.Markdown("### System Stats")
-                                with gr.Group():       
-                                    vram_usage_component = gr.Markdown(f"VRAM Usage: N/A")
-                                tick_timer.tick(fn=update_system_stats, outputs=[vram_usage_component])
-                            
-                                output_type = workflow_definitions[workflow_name]["outputs"].get(
-                                    "type", ""
-                                )
+                                    tick_timer.tick(
+                                        fn=check_queue, 
+                                        outputs=queue_info_component, 
+                                        show_progress="full"
+                                    )
+
+                                with gr.Group():
+                                    vram_usage_component = gr.Textbox(label="VRAM Usage", interactive=False, visible=True)
+                                    
+                                    tick_timer.tick(
+                                        fn=check_vram, 
+                                        outputs=[vram_usage_component], 
+                                        show_progress="full"
+                                    ) 
+
+                                output_type = workflow_definitions[workflow_name]["outputs"].get("type", "")
+                                output_prefix = workflow_definitions[workflow_name]["inputs"]["output-specifications"]["inputs"]["filename-prefix"].get("value", "")
 
                         # TODO: investigate trigger_mode=multiple for run_button.click event
 
                         if (selected_port_url is not None) and (components is not None) and (component_dict is not None):
-                                run_button.click(
+                            run_button.click(
                                 fn=run_workflow_with_name(workflow_filename, components, component_dict),
                                 inputs=components,
                                 # TODO: Add support for real progress bar
