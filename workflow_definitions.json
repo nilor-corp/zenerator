@@ -50,7 +50,7 @@
             
             "prompting": {
                 "type": "group",
-                "label": "Prompting",
+                "label": "Text Prompting",
                 "inputs": {
                     "text-01": {
                         "type": "text",
@@ -62,7 +62,7 @@
                         "type": "text",
                         "label": "Negative",
                         "node-id": "[\"7\"][\"inputs\"][\"text\"]",
-                        "value": "blurry, glitches, artifact, distorted, malformed, nsfw, lens flare, glare, bloom, bokeh"
+                        "value": "blurry, glitches, artefact, distorted, malformed, nsfw, lens flare, glare, bloom, bokeh"
                     }
                 }
             },

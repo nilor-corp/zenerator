@@ -1,7 +1,7 @@
 import json
 import requests
 import os
-import glob
+#import glob
 import time
 from datetime import datetime
 import gradio as gr
@@ -12,18 +12,22 @@ from image_downloader import copy_uploaded_files_to_local_dir
 from lora_maker import generate_lora
 from tqdm import tqdm
 import asyncio
-import socket
-import math
+import threading
+
+import websocket
+import uuid
+#import urllib.request
+#import urllib.parse
 
 with open("config.json") as f:
     config = json.load(f)
 
-COMFY_URL = config["COMFY_URL"]
+COMFY_IP = config["COMFY_IP"]
 
 QUEUE_URLS = []
 
 for port in config["COMFY_PORTS"]:
-    QUEUE_URLS.append(config["COMFY_URL"] + port)
+    QUEUE_URLS.append(f"http://{config["COMFY_IP"]}:{port}")
 
 selected_port_url = QUEUE_URLS[0]
 
@@ -47,18 +51,145 @@ prompt = {}
 status = {}
 
 previous_content = ""
+post_response = None
+
+#region WEBSOCKET
+client_id = str(uuid.uuid4())
+
+def connect_to_websocket(client_id):
+    ws = websocket.WebSocket()
+    try:
+        #TODO: make this work for multiple ports
+        ws.connect(f"ws://{config["COMFY_IP"]}:{config["COMFY_PORTS"][0]}/ws?clientId={client_id}")
+        print("Connected to WebSocket!")
+    except ConnectionResetError as e:
+        print(f"Connection was reset: {e}")
+        return None
+    return ws
+
+def reconnect(ws, client_id, max_retries=5):
+    retries = 0
+    while retries < max_retries:
+        print(f"Attempting to reconnect ({retries + 1}/{max_retries})...")
+        ws = connect_to_websocket(client_id)
+        if ws:
+            return ws
+        retries += 1
+        time.sleep(2)  # Wait before retrying
+    print("Max retries reached. Could not reconnect.")
+    return None
+
+# def queue_prompt(prompt):
+#     p = {"prompt": prompt, "client_id": client_id}
+#     data = json.dumps(p).encode('utf-8')
+#     req = urllib.request.Request(f"{selected_port_url}/prompt", data=data)
+#     return json.loads(urllib.request.urlopen(req).read())
+
+def send_heartbeat(ws):
+    while True:
+        try:
+            ws.ping()
+            print("Heartbeat")
+            time.sleep(10)  # Send a ping every 30 seconds
+        except Exception as e:
+            print(f"Heartbeat failed: {e}")
+            break
+
+check_get_images = False
+current_progress_data = {}
+def get_images(ws):
+    global check_get_images, current_progress_data
+
+    check_get_images = True
+    #prompt_id = queue_prompt(prompt)['prompt_id']
+    output_images = {}
+    progress_time = time.time()
+    #print(f"Time: {progress_time}")
+
+    while check_get_images:
+        out = ws.recv()
+        if isinstance(out, str):
+            message = json.loads(out)
+            #print(f"Message: {message}")
+            if message['type'] == 'executing':
+                data = message['data']
+                #if data['node'] is None and data['prompt_id'] == prompt_id:
+                #    check_get_images = False
+                #    break #Execution is done
+            elif message['type'] == 'status':
+                data = message['data']
+                queue_remaining = data['status']['exec_info']['queue_remaining']
+                print("Queue remaining: " + str(queue_remaining))
+            elif message['type'] == 'execution_start':
+                executing = True
+                print("Executing!")
+            elif message['type'] == 'executed':
+                data = message['data']
+                prompt_id = data['prompt_id']
+                print("Executed : " + prompt_id)
+                #task: Task = self._tasks.get(prompt_id)
+
+            elif message['type'] == 'progress':
+                data = message['data']
+                current_progress_data = data
+                #progress_time_used = str(round((time.time() - start_time) / 60, 2))
+                
+                #print(f"Progress: {data}")
+                #print("Progress is " + str(data['value']) + "/" + str(data['max']) + "time " + progress_time_used + " min")
+                #print("Progress is " + str(data['value']) + "/" + str(data['max']))
+                progress_time = time.time()
+        else:
+            continue #previews are binary data
+
+        #asyncio.sleep(1.0)
+
+    # history = get_history(prompt_id)[prompt_id]
+    # for o in history['outputs']:
+    #     for node_id in history['outputs']:
+    #         node_output = history['outputs'][node_id]
+    #         if 'images' in node_output:
+    #             images_output = []
+    #             for image in node_output['images']:
+    #                 image_data = get_image(image['filename'], image['subfolder'], image['type'])
+    #                 images_output.append(image_data)
+    #         output_images[node_id] = images_output
+
+    return output_images
+
+ws = connect_to_websocket(client_id)
+
+# Start heartbeat thread after connecting
+if ws:
+    threading.Thread(target=send_heartbeat, args=(ws,), daemon=True).start()
+
+if ws:
+    try:
+        # Start your threading or other logic here
+        print(f"WebSocket connection attempt")
+        threading.Thread(target=get_images, args=(ws,), daemon=True).start()
+        #get_images()
+    except websocket.WebSocketConnectionClosedException as e:
+        print(f"WebSocket connection closed: {e}")
+        ws = reconnect(ws, client_id)
+    except Exception as e:
+        print(f"An error occurred: {e}")
+#endregion
 
 #region POST REQUESTS
 def comfy_POST(endpoint, message):
+    global post_response
     post_url = selected_port_url + "/" + endpoint
     data = json.dumps(message).encode("utf-8")
     print(f"POST {endpoint} on: {post_url}")
     try:
-        return requests.post(post_url, data=data)
+        post_response = requests.post(post_url, data=data)
+        #post_response.raise_for_status()
+        #print(f"status {post_response}")
+        return post_response
     except ConnectionResetError:
         print("Connection was reset while trying to start the workflow. Retrying...")
     except requests.RequestException as e:
-        print(f"Error polling the GET {endpoint}: ", e)
+        print(f"Error querying the GET endpoint {endpoint}: ", e)
 
 def post_prompt(prompt_workflow):
     message = {"prompt": prompt_workflow}
@@ -78,7 +209,7 @@ def comfy_GET(endpoint):
     except ConnectionResetError:
         print("Connection was reset while trying to start the workflow. Retrying...")
     except requests.RequestException as e:
-        print(f"Error polling the POST {endpoint}: ", e)
+        print(f"Error querying the POST endpoint {endpoint}: ", e)
         
 def get_queue():
     global queue, queue_running, queue_pending, queue_failed
@@ -98,6 +229,16 @@ def get_queue():
     #print(f"queue_failed: {len(queue_failed)}")
 
     return [queue_running, queue_pending, queue_failed]
+
+def get_running_prompt_id():
+    [queue_running, queue_pending, queue_failed] = get_queue()
+
+    if (len(queue_running) > 0):
+        prompt_id = queue_running[0][1]
+        print(f"current running prompt id: {prompt_id}")
+        return prompt_id
+    else:
+        return None
     
 def get_status():
     global prompt, status
@@ -163,12 +304,8 @@ def get_lora_filenames(directory):
 # Replace with the actual path to the Loras.
 loras = get_lora_filenames(LORA_DIR)
 
-# def count_images(directory):
-#     extensions = ["*.png", "*.jpg", "*.jpeg", "*.gif", "*.bmp", "*.tiff"]
-#     image_count = sum(
-#         len(glob.glob(os.path.join(directory, ext))) for ext in extensions
-#     )
-#     return image_count
+
+#region Content Getters
 
 def get_all_images(folder):
     files = os.listdir(folder)
@@ -193,6 +330,12 @@ def get_latest_image_with_prefix(folder, prefix):
     latest_image = os.path.join(folder, image_files[-1]) if image_files else None
     return latest_image
 
+# def count_images(directory):
+#     extensions = ["*.png", "*.jpg", "*.jpeg", "*.gif", "*.bmp", "*.tiff"]
+#     image_count = sum(
+#         len(glob.glob(os.path.join(directory, ext))) for ext in extensions
+#     )
+#     return image_count
 
 def get_all_videos(folder):
     files = os.listdir(folder)
@@ -215,8 +358,9 @@ def get_latest_video_with_prefix(folder, prefix):
     video_files.sort(key=lambda x: os.path.getmtime(os.path.join(folder, x)))
     latest_video = os.path.join(folder, video_files[-1]) if video_files else None
     return latest_video
+#endregion
 
-
+#region Info Checkers
 def check_for_new_content():
     global latest_content, previous_content
     #print(f"Checking for new content in: {OUT_DIR}\n")
@@ -224,20 +368,89 @@ def check_for_new_content():
     latest_content = ""
     if output_type == "image":
         latest_content = get_latest_image(OUT_DIR)
-        #output_player = gr.Image(label="Output Image", show_label=False, value=latest_content)
     else:
         latest_content = get_latest_video(OUT_DIR)
-        #output_player = gr.Video(label=f"Output Video", show_label=False, autoplay=True, loop=True, value=latest_content)
 
     if latest_content != previous_content:
         print(f"New content found: {latest_content}")
         previous_content = latest_content
 
-    output_filepath_component = gr.Markdown(f"{latest_content}")
-    
-    return gr.update(value=latest_content)
-    #return [gr.update(value=latest_content), gr.update(value=f"{latest_content}", visible="False")]
+    #output_filepath_component = gr.Markdown(f"{latest_content}")
 
+    return gr.update(value=latest_content)
+
+previous_vram_used = -1.0
+check_vram_running = False
+async def check_vram(progress=gr.Progress()):
+    global check_vram_running, previous_vram_used
+
+    check_vram_running = True
+
+    while check_vram_running:
+        [system_stats, devices] = get_system_stats()
+        
+        vram_used = 1.0
+        if (len(devices) > 0):
+            vram_free = devices[0].get("vram_free")
+            vram_total = devices[0].get("vram_total")
+            if (vram_total > 0):
+                vram_used = (vram_total - vram_free) / vram_total
+
+        #print(f"vram_used: {vram_used}")
+        
+        if (vram_used != previous_vram_used):
+            progress(progress=vram_used)
+            previous_vram_used = vram_used
+
+        await asyncio.sleep(1.0)
+
+previous_queue_info = [-1, -1, -1, -1]
+check_queue_running = False
+async def check_queue(progress=gr.Progress()):
+    global check_queue_running, previous_queue_info, post_response
+
+    check_queue_running = True
+
+    while check_queue_running:
+        [queue_running, queue_pending, queue_failed] = get_queue()
+        queue_history = get_history()
+        
+        queue_finished = len(queue_history)
+        queue_total = queue_finished + len(queue_running) + len(queue_pending)
+
+        #print(f"queue_progress: {queue_finished} out of {queue_total}")
+        
+        queue_info = [queue_finished, queue_total, queue_failed, queue_history]
+        if queue_total < 1:
+            progress(progress=0.0)
+            #return gr.update(visible=False)
+        elif (queue_info != previous_queue_info):
+            previous_queue_info = queue_info
+            progress(progress=(queue_finished, queue_total), unit="generations")
+            #return gr.update(visible=True)
+
+        await asyncio.sleep(1.0)
+
+check_progress_running = False
+previous_progress_data = {}
+async def check_progress(progress=gr.Progress()):
+    global check_progress_running, current_progress_data, previous_progress_data
+    
+    check_progress_running = True
+
+    while check_progress_running:
+        try:
+            if current_progress_data != previous_progress_data:
+                previous_progress_data = current_progress_data
+
+            progress(progress=(current_progress_data["value"], current_progress_data["max"]), unit="steps", desc=current_progress_data["prompt_id"][:8])
+            #return gr.update(visible=True)
+        except:
+            progress(progress=0.0)
+            #return gr.update(visible=False)
+        
+        await asyncio.sleep(1.0)
+#endregion
 
 def run_workflow(workflow_name, progress, **kwargs):
     global previous_content
@@ -245,7 +458,6 @@ def run_workflow(workflow_name, progress, **kwargs):
     # Print the input arguments for debugging
     print("inside run workflow with kwargs: " + str(kwargs))
     # print("workflow_definitions: " + str(workflow_definitions[workflow_name]))
-
 
     # Construct the path to the workflow JSON file
     workflow_json = (
@@ -282,7 +494,9 @@ def run_workflow(workflow_name, progress, **kwargs):
 
         try:
             print(f"!!!!!!!!!\nSubmitting workflow:\n{workflow}\n!!!!!!!!!")
+
             post_prompt(workflow)
+
         except KeyboardInterrupt:
             print("Interrupted by user. Exiting...")
             return None
@@ -345,7 +559,6 @@ def process_dynamic_input(selected_option, possible_options, input_type, *option
     else:
         return None
 
-
 def create_dynamic_input(input_type, choices, tooltips, text_label, identifier):
     gr.Markdown(f"##### {input_type.capitalize()} Input")    
     with gr.Group():            
@@ -393,6 +606,9 @@ def toggle_group(checkbox_value):
         return gr.update(visible=True)
     else:
         return gr.update(visible=False)
+    
+def make_visible():
+    return gr.update(visible=True)
 
 def watch_input(component, default_value, elem_id):
     #print(f"Equals Default Value? {component == default_value}")
@@ -536,7 +752,7 @@ def process_input(input_context, input_key):
                     reset_button.click(fn=reset_input, inputs=[gr.State(input_value)], outputs=component, queue=False)
 
                 # Trigger the reset check when the value of the input changes
-                component.change(fn=watch_input, inputs=[component, gr.State(input_value), gr.State(input_key)], outputs=[gr.HTML(), reset_button], queue=False)
+                component.change(fn=watch_input, inputs=[component, gr.State(input_value), gr.State(input_key)], outputs=[gr.HTML(), reset_button], queue=False, show_progress="hidden")
 
                 components.append(component)
                 components_dict[input_key] = input_details
@@ -547,67 +763,6 @@ def process_input(input_context, input_key):
 
     return [components, components_dict]
     #return components
-
-timer_active = False
-
-# start and stop timer are used for live updating the preview and progress
-# no point in keeping the timer ticking if it's not currently generating
-def start_timer(): 
-    global timer_active
-    timer_active = True
-    return gr.Timer(active=True)
-
-def stop_timer():
-    global timer_active
-    timer_active = False
-    return gr.Timer(active=False)
-
-async def make_visible():
-    return gr.update(visible=True)
-
-
-check_vram_running = False
-async def check_vram(progress=gr.Progress()):
-    global check_vram_running
-
-    if (not check_vram_running):
-        while True:
-            [system_stats, devices] = get_system_stats()
-            
-            vram_used = 0.0
-            if (len(devices) > 0):
-                vram_free = devices[0].get("torch_vram_free")
-                vram_total = devices[0].get("torch_vram_total")
-                if (vram_total > 0):
-                    vram_used = (1.0 - vram_free / vram_total)# * 100.0
-
-            #print(f"vram_used: {vram_used}")
-            progress(progress=vram_used, unit="%")
-            
-            check_vram_running = True
-            await asyncio.sleep(1.0)
-    return
-
-check_queue_running = False
-async def check_queue(progress=gr.Progress()):
-    global check_queue_running
-
-    if (not check_queue_running):
-        [queue_running, queue_pending, queue_failed] = get_queue()
-
-        while True:
-            [queue_running, queue_pending, queue_failed] = get_queue()
-            queue_history = get_history()
-            
-            queue_finished = len(queue_history)
-            queue_total = queue_finished + len(queue_running) + len(queue_pending)
-                
-            progress(progress=(queue_finished, queue_total), unit="gens")
-
-            check_queue_running = True
-            await asyncio.sleep(1.0)
-
-    return ""
 
 def create_tab_interface(workflow_name):
     gr.Markdown("### Workflow Parameters")
@@ -699,9 +854,10 @@ with gr.Blocks(title="WorkFlower") as demo:
                                 # TODO: is it possible to preview only an output that was produced by this workflow tab? otherwise this should probably exist outside of the workflow tab
                                 gr.Markdown("### Output Preview")
                                 with gr.Group():
-                                    output_player = gr.Video(show_label=False, autoplay=True, loop=True, interactive=False)
                                     if output_type == "image":
                                         output_player = gr.Image(show_label=False, interactive=False)
+                                    else:
+                                        output_player = gr.Video(show_label=False, autoplay=True, loop=True, interactive=False)
                                     #output_filepath_component = gr.Markdown("N/A")
                                     
                                     tick_timer.tick(
@@ -710,6 +866,15 @@ with gr.Blocks(title="WorkFlower") as demo:
                                         show_progress="hidden"
                                     )
                                     
+                                with gr.Group():
+                                    gen_component = gr.Textbox(label="Generation Progress", interactive=False, visible=True)
+                                
+                                    tick_timer.tick(
+                                        fn=check_progress, 
+                                        outputs=gen_component, 
+                                        show_progress="full"
+                                    )
+
                                 with gr.Group():
                                     queue_info_component = gr.Textbox(label="Queue Info", interactive=False, visible=True)
 
@@ -731,17 +896,14 @@ with gr.Blocks(title="WorkFlower") as demo:
                                 output_type = workflow_definitions[workflow_name]["outputs"].get("type", "")
                                 output_prefix = workflow_definitions[workflow_name]["inputs"]["output-specifications"]["inputs"]["filename-prefix"].get("value", "")
 
-                        # TODO: investigate trigger_mode=multiple for run_button.click event
-
                         if (selected_port_url is not None) and (components is not None) and (component_dict is not None):
                             run_button.click(
                                 fn=run_workflow_with_name(workflow_filename, components, component_dict),
                                 inputs=components,
-                                # TODO: Add support for real progress bar
-                                #outputs=[output_player],
+                                #outputs=[gen_component],
                                 trigger_mode="multiple",
+                                #show_progress="full"
                             )
 
 
     demo.launch(allowed_paths=[".."], favicon_path="favicon.png")
-
