@@ -51,7 +51,6 @@ prompt = {}
 status = {}
 
 previous_content = ""
-post_response = None
 
 #region WEBSOCKET
 client_id = str(uuid.uuid4())
@@ -64,10 +63,11 @@ def connect_to_websocket(client_id):
         print("Connected to WebSocket!")
     except ConnectionResetError as e:
         print(f"Connection was reset: {e}")
+        #reconnect(client_id, 20)
         return None
     return ws
 
-def reconnect(ws, client_id, max_retries=5):
+def reconnect(client_id, max_retries=5):
     retries = 0
     while retries < max_retries:
         print(f"Attempting to reconnect ({retries + 1}/{max_retries})...")
@@ -86,36 +86,36 @@ def reconnect(ws, client_id, max_retries=5):
 #     return json.loads(urllib.request.urlopen(req).read())
 
 def send_heartbeat(ws):
-    while True:
+    while ws.connected:
         try:
             ws.ping()
             print("Heartbeat")
-            time.sleep(10)  # Send a ping every 30 seconds
+            time.sleep(1)  # Send a ping every 30 seconds
         except Exception as e:
             print(f"Heartbeat failed: {e}")
             break
 
-check_get_images = False
+check_current_progress_running = False
 current_progress_data = {}
-def get_images(ws):
-    global check_get_images, current_progress_data
+def check_current_progress(ws):
+    global check_current_progress_running, current_progress_data
 
-    check_get_images = True
+    check_current_progress_running = True
     #prompt_id = queue_prompt(prompt)['prompt_id']
     output_images = {}
     progress_time = time.time()
     #print(f"Time: {progress_time}")
 
-    while check_get_images:
+    while check_current_progress_running:
         out = ws.recv()
         if isinstance(out, str):
             message = json.loads(out)
             #print(f"Message: {message}")
             if message['type'] == 'executing':
                 data = message['data']
-                #if data['node'] is None and data['prompt_id'] == prompt_id:
-                #    check_get_images = False
-                #    break #Execution is done
+                if data['node'] is None and data['prompt_id'] == prompt_id:
+                   check_current_progress_running = False
+                   break #Execution is done
             elif message['type'] == 'status':
                 data = message['data']
                 queue_remaining = data['status']['exec_info']['queue_remaining']
@@ -128,7 +128,6 @@ def get_images(ws):
                 prompt_id = data['prompt_id']
                 print("Executed : " + prompt_id)
                 #task: Task = self._tasks.get(prompt_id)
-
             elif message['type'] == 'progress':
                 data = message['data']
                 current_progress_data = data
@@ -140,8 +139,6 @@ def get_images(ws):
                 progress_time = time.time()
         else:
             continue #previews are binary data
-
-        #asyncio.sleep(1.0)
 
     # history = get_history(prompt_id)[prompt_id]
     # for o in history['outputs']:
@@ -155,29 +152,10 @@ def get_images(ws):
     #         output_images[node_id] = images_output
 
     return output_images
-
-ws = connect_to_websocket(client_id)
-
-# Start heartbeat thread after connecting
-if ws:
-    threading.Thread(target=send_heartbeat, args=(ws,), daemon=True).start()
-
-if ws:
-    try:
-        # Start your threading or other logic here
-        print(f"WebSocket connection attempt")
-        threading.Thread(target=get_images, args=(ws,), daemon=True).start()
-        #get_images()
-    except websocket.WebSocketConnectionClosedException as e:
-        print(f"WebSocket connection closed: {e}")
-        ws = reconnect(ws, client_id)
-    except Exception as e:
-        print(f"An error occurred: {e}")
 #endregion
 
 #region POST REQUESTS
 def comfy_POST(endpoint, message):
-    global post_response
     post_url = selected_port_url + "/" + endpoint
     data = json.dumps(message).encode("utf-8")
     print(f"POST {endpoint} on: {post_url}")
@@ -193,11 +171,22 @@ def comfy_POST(endpoint, message):
 
 def post_prompt(prompt_workflow):
     message = {"prompt": prompt_workflow}
-    comfy_POST("prompt", message)
+    return comfy_POST("prompt", message)
+
+def post_interrupt():
+    global current_progress_data, check_current_progress_running
+    current_progress_data = {}
+
+    message = ""
+    return comfy_POST("interrupt", message)
 
 def post_history_clear():
-    p = {"clear": True}
-    data = json.dumps(p).encode("utf-8")
+    message = {"clear": True}
+    return comfy_POST("history", message)
+
+def post_history_delete(prompt_id):
+    message = {"delete": prompt_id}
+    return comfy_POST("history", message)
 #endregion
 
 #region GET REQUESTS
@@ -381,7 +370,7 @@ def check_for_new_content():
 
 previous_vram_used = -1.0
 check_vram_running = False
-async def check_vram(progress=gr.Progress()):
+def check_vram(progress=gr.Progress()):
     global check_vram_running, previous_vram_used
 
     check_vram_running = True
@@ -402,12 +391,13 @@ async def check_vram(progress=gr.Progress()):
             progress(progress=vram_used)
             previous_vram_used = vram_used
 
-        await asyncio.sleep(1.0)
+        time.sleep(1.0)
 
-previous_queue_info = [-1, -1, -1, -1]
+previous_queue_info = [-1, -1, -1, -1, -1, -1]
+current_queue_info = [-1, -1, -1, -1, -1, -1]
 check_queue_running = False
-async def check_queue(progress=gr.Progress()):
-    global check_queue_running, previous_queue_info, post_response
+def check_queue(progress=gr.Progress()):
+    global check_queue_running, previous_queue_info, current_queue_info
 
     check_queue_running = True
 
@@ -420,21 +410,21 @@ async def check_queue(progress=gr.Progress()):
 
         #print(f"queue_progress: {queue_finished} out of {queue_total}")
         
-        queue_info = [queue_finished, queue_total, queue_failed, queue_history]
+        current_queue_info = [queue_finished, queue_total, queue_failed, queue_history, len(queue_pending), len(queue_running)]
         if queue_total < 1:
             progress(progress=0.0)
             #return gr.update(visible=False)
-        elif (queue_info != previous_queue_info):
-            previous_queue_info = queue_info
+        elif (current_queue_info != previous_queue_info):
+            previous_queue_info = current_queue_info
             progress(progress=(queue_finished, queue_total), unit="generations")
             #return gr.update(visible=True)
 
-        await asyncio.sleep(1.0)
+        time.sleep(1.0)
 
 check_progress_running = False
 previous_progress_data = {}
-async def check_progress(progress=gr.Progress()):
-    global check_progress_running, current_progress_data, previous_progress_data
+def check_progress(progress=gr.Progress()):
+    global check_progress_running, current_progress_data, previous_progress_data, ws
     
     check_progress_running = True
 
@@ -443,13 +433,48 @@ async def check_progress(progress=gr.Progress()):
             if current_progress_data != previous_progress_data:
                 previous_progress_data = current_progress_data
 
-            progress(progress=(current_progress_data["value"], current_progress_data["max"]), unit="steps", desc=current_progress_data["prompt_id"][:8])
+            progress_tuple = (current_progress_data.get("value", 0), current_progress_data.get("max",0))
+            prompt_id = current_progress_data.get("prompt_id", "N/A")
+            if prompt_id != "N/A":
+                prompt_id_short = prompt_id[:8]
+                progress(progress=progress_tuple, unit="steps", desc=prompt_id_short)
+            else:
+                progress(progress=0.0)
             #return gr.update(visible=True)
         except:
             progress(progress=0.0)
             #return gr.update(visible=False)
+
+        if not ws.connected:
+            break
         
-        await asyncio.sleep(1.0)
+        time.sleep(1.0)
+
+def check_gen_progress_visibility():
+    global current_progress_data, current_queue_info
+    try: 
+        prompt_id = current_progress_data.get("prompt_id", None)
+        current_step = current_progress_data.get("value", None)
+
+        #print(f"Prompt ID: {prompt_id}, Current Step: {current_step}")
+        visibility = (current_step != None)
+    except:
+        visibility = False
+    return gr.update(visible=visibility)
+
+def check_interrupt_visibility():
+    global current_progress_data, current_queue_info
+    try: 
+        prompt_id = current_progress_data.get("prompt_id", None)
+        current_step = current_progress_data.get("value", None)
+
+        queue_running = current_queue_info[5]
+
+        #print(f"Prompt ID: {prompt_id}, Current Step: {current_step}, Queue Running: {queue_running}")
+        visibility = (current_progress_data != None) or (queue_running > 0)
+    except:
+        visibility = False
+    return gr.update(visible=visibility)
 #endregion
 
 def run_workflow(workflow_name, progress, **kwargs):
@@ -674,7 +699,7 @@ def process_input(input_context, input_key):
                         group_toggle = component_constructor(label=input_label, elem_id=input_key, value=input_value, interactive=input_interactive, scale=100)
                         
                         # Compact Reset button with reduced width, initially hidden
-                        reset_button = gr.Button("Reset", visible=False, elem_id="reset-button", scale=1, variant="stop", min_width=50)
+                        reset_button = gr.Button("↺", visible=False, elem_id="reset-button", scale=1, variant="secondary", min_width=5)
                         # Trigger the reset function when the button is clicked
                         reset_button.click(fn=reset_input, inputs=[gr.State(input_value)], outputs=group_toggle, queue=False)
 
@@ -726,7 +751,7 @@ def process_input(input_context, input_key):
                     component = component_constructor(label=input_label, elem_id=input_key, value=input_value, minimum=input_minimum, maximum=input_maximum, step=input_step, interactive=input_interactive, scale=100)
 
                     # Compact Reset button with reduced width, initially hidden
-                    reset_button = gr.Button("Reset", visible=False, elem_id="reset-button", scale=1, variant="stop", min_width=50)
+                    reset_button = gr.Button("↺", visible=False, elem_id="reset-button", scale=1, variant="secondary", min_width=5)
                     # Trigger the reset function when the button is clicked
                     reset_button.click(fn=reset_input, inputs=[gr.State(input_value)], outputs=component, queue=False)
 
@@ -747,7 +772,7 @@ def process_input(input_context, input_key):
                     component = component_constructor(label=input_label, elem_id=input_key, value=input_value, interactive=input_interactive, scale=100)
 
                     # Compact Reset button with reduced width, initially hidden
-                    reset_button = gr.Button("Reset", visible=False, elem_id="reset-button", scale=1, variant="stop", min_width=50)
+                    reset_button = gr.Button("↺", visible=False, elem_id="reset-button", scale=1, variant="secondary", min_width=5)
                     # Trigger the reset function when the button is clicked
                     reset_button.click(fn=reset_input, inputs=[gr.State(input_value)], outputs=component, queue=False)
 
@@ -811,8 +836,59 @@ def create_tab_interface(workflow_name):
     return components, component_data_dict
 
 
+def load_demo():
+    global ws, tick_timer, check_vram_running, previous_vram_used, check_queue_running, previous_queue_info, current_queue_info, check_progress_running, previous_progress_data
+    print("Loading the demo!!!")
+
+    tick_timer = gr.Timer(value=1.0)
+    ws = connect_to_websocket(client_id)
+
+    if ws:
+        try:
+            # Start threading after connecting
+            print(f"WebSocket connection attempt")
+            threading.Thread(target=send_heartbeat, args=(ws,), daemon=True).start()
+            threading.Thread(target=check_current_progress, args=(ws,), daemon=True).start()
+        except websocket.WebSocketConnectionClosedException as e:
+            print(f"WebSocket connection closed: {e}")
+            ws = reconnect(ws, client_id)
+        except Exception as e:
+            print(f"An error occurred: {e}")
+
+    check_vram_running = False
+    previous_vram_used = -1.0
+
+    check_queue_running = False
+    previous_queue_info = [-1, -1, -1, -1, -1, -1]
+    current_queue_info = [-1, -1, -1, -1, -1, -1]
+
+    check_progress_running = False
+    previous_progress_data = {}
+
+def unload_demo():
+    global ws, tick_timer, check_vram_running, previous_vram_used, check_queue_running, previous_queue_info, current_queue_info, check_progress_running, previous_progress_data
+    print("Unloading the demo...")
+
+    tick_timer.active = False
+    ws.close()
+
+    check_vram_running = False
+    previous_vram_used = -1.0
+
+    check_queue_running = False
+    previous_queue_info = [-1, -1, -1, -1, -1, -1]
+    current_queue_info = [-1, -1, -1, -1, -1, -1]
+
+    check_progress_running = False
+    previous_progress_data = {}
+
+    time.sleep(2.0)
+
 with gr.Blocks(title="WorkFlower") as demo:
     tick_timer = gr.Timer(value=1.0)
+    demo.load(fn=load_demo)
+
+    demo.unload(fn=unload_demo)
 
     with gr.Row():
         with gr.Column():
@@ -866,16 +942,22 @@ with gr.Blocks(title="WorkFlower") as demo:
                                         show_progress="hidden"
                                     )
                                     
-                                with gr.Group():
+                                with gr.Group(visible=False) as gen_progress_group:
                                     gen_component = gr.Textbox(label="Generation Progress", interactive=False, visible=True)
                                 
                                     tick_timer.tick(
-                                        fn=check_progress, 
+                                        fn=check_progress,
                                         outputs=gen_component, 
                                         show_progress="full"
                                     )
 
-                                with gr.Group():
+                                tick_timer.tick(
+                                    fn=check_gen_progress_visibility, 
+                                    outputs=gen_progress_group,
+                                    show_progress="hidden"
+                                )
+
+                                with gr.Group(visible=False) as queue_progress_group:
                                     queue_info_component = gr.Textbox(label="Queue Info", interactive=False, visible=True)
 
                                     tick_timer.tick(
@@ -883,6 +965,12 @@ with gr.Blocks(title="WorkFlower") as demo:
                                         outputs=queue_info_component, 
                                         show_progress="full"
                                     )
+                                    
+                                tick_timer.tick(
+                                    fn=check_interrupt_visibility, 
+                                    outputs=queue_progress_group,
+                                    show_progress="hidden"
+                                )
 
                                 with gr.Group():
                                     vram_usage_component = gr.Textbox(label="VRAM Usage", interactive=False, visible=True)
@@ -891,7 +979,17 @@ with gr.Blocks(title="WorkFlower") as demo:
                                         fn=check_vram, 
                                         outputs=[vram_usage_component], 
                                         show_progress="full"
-                                    ) 
+                                    )
+
+                                with gr.Group() as interrupt_group:
+                                    interrupt_button = gr.Button("Interrupt", visible=True, variant="stop")
+                                    interrupt_button.click(fn=post_interrupt)
+                                
+                                tick_timer.tick(
+                                    fn=check_interrupt_visibility, 
+                                    outputs=interrupt_group, 
+                                    show_progress="hidden"
+                                )
 
                                 output_type = workflow_definitions[workflow_name]["outputs"].get("type", "")
                                 output_prefix = workflow_definitions[workflow_name]["inputs"]["output-specifications"]["inputs"]["filename-prefix"].get("value", "")
@@ -904,6 +1002,5 @@ with gr.Blocks(title="WorkFlower") as demo:
                                 trigger_mode="multiple",
                                 #show_progress="full"
                             )
-
 
     demo.launch(allowed_paths=[".."], favicon_path="favicon.png")
