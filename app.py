@@ -23,11 +23,11 @@ with open("config.json") as f:
     config = json.load(f)
 
 COMFY_IP = config["COMFY_IP"]
-
+COMFY_PORTS = config["COMFY_PORTS"]
 QUEUE_URLS = []
 
-for port in config["COMFY_PORTS"]:
-    QUEUE_URLS.append(f"http://{config["COMFY_IP"]}:{port}")
+for port in COMFY_PORTS:
+    QUEUE_URLS.append(f"http://{COMFY_IP}:{port}")
 
 selected_port_url = QUEUE_URLS[0]
 
@@ -42,7 +42,7 @@ output_type = ""
 def select_correct_port(selector):
     print(f"Selected Port URL: {selector}")
     global selected_port_url 
-    selected_port_url = selector
+    selected_port_url = f"http://{COMFY_IP}:{selector}"
     print(f"Changed Port URL to: {selected_port_url}")
 
 queue = []
@@ -53,6 +53,7 @@ status = {}
 previous_content = ""
 
 #region WEBSOCKET
+ws = None
 client_id = str(uuid.uuid4())
 
 def connect_to_websocket(client_id):
@@ -445,7 +446,7 @@ def check_progress(progress=gr.Progress()):
             progress(progress=0.0)
             #return gr.update(visible=False)
 
-        if not ws.connected:
+        if not ws or not ws.connected:
             break
         
         time.sleep(1.0)
@@ -456,8 +457,10 @@ def check_gen_progress_visibility():
         prompt_id = current_progress_data.get("prompt_id", None)
         current_step = current_progress_data.get("value", None)
 
+        queue_running = current_queue_info[5]
+
         #print(f"Prompt ID: {prompt_id}, Current Step: {current_step}")
-        visibility = (current_step != None)
+        visibility = (current_step != None) and (queue_running > 0)
     except:
         visibility = False
     return gr.update(visible=visibility)
@@ -894,9 +897,7 @@ with gr.Blocks(title="WorkFlower") as demo:
 
     with gr.Row():
         with gr.Column():
-            comfy_url_and_port_selector = gr.Dropdown(label="ComfyUI Prompt URL", choices=QUEUE_URLS, value=QUEUE_URLS[0], interactive=True)
-            print(f"Default Port URL: {comfy_url_and_port_selector.value}")
-            comfy_url_and_port_selector.change(select_correct_port, inputs=[comfy_url_and_port_selector])
+
             tabs = gr.Tabs()
             with tabs:
                 with gr.TabItem(label="About"):
@@ -919,90 +920,88 @@ with gr.Blocks(title="WorkFlower") as demo:
                             with gr.Column():
                                 # also make a dictionary with the components' data
                                 components, component_dict = create_tab_interface(workflow_name)
-                                run_button = gr.Button("Run Workflow", variant="primary")
 
-                            with gr.Column():
-                                # TODO: Decide whether it's worth having to make a gif for each workflow tab
-                                # with gr.Row():
-                                #     preview_gif = gr.Image(
-                                #         label="Preview GIF",
-                                #         value=update_gif(workflow_name),
-                                #     )
+                            comfy_url_and_port_selector = gr.Dropdown(label="ComfyUI Port", choices=COMFY_PORTS, value=COMFY_PORTS[0], interactive=True)
+                            print(f"Default ComfyUI Port: {comfy_url_and_port_selector.value}")
+                            comfy_url_and_port_selector.change(select_correct_port, inputs=[comfy_url_and_port_selector])
 
-                                # TODO: is it possible to preview only an output that was produced by this workflow tab? otherwise this should probably exist outside of the workflow tab
-                                gr.Markdown("### Output Preview")
-                                with gr.Group():
-                                    if output_type == "image":
-                                        output_player = gr.Image(show_label=False, interactive=False)
-                                    else:
-                                        output_player = gr.Video(show_label=False, autoplay=True, loop=True, interactive=False)
-                                    #output_filepath_component = gr.Markdown("N/A")
-                                    
-                                    tick_timer.tick(
-                                        fn=check_for_new_content,
-                                        outputs=[output_player],
-                                        show_progress="hidden"
-                                    )
-                                    
-                                with gr.Group(visible=False) as gen_progress_group:
-                                    gen_component = gr.Textbox(label="Generation Progress", interactive=False, visible=True)
-                                
-                                    tick_timer.tick(
-                                        fn=check_progress,
-                                        outputs=gen_component, 
-                                        show_progress="full"
-                                    )
-
-                                tick_timer.tick(
-                                    fn=check_gen_progress_visibility, 
-                                    outputs=gen_progress_group,
-                                    show_progress="hidden"
+                            run_button = gr.Button("Run Workflow", variant="primary")
+                        
+                            if (selected_port_url is not None) and (components is not None) and (component_dict is not None):
+                                run_button.click(
+                                    fn=run_workflow_with_name(workflow_filename, components, component_dict),
+                                    inputs=components,
+                                    #outputs=[gen_component],
+                                    trigger_mode="multiple",
+                                    #show_progress="full"
                                 )
 
-                                with gr.Group(visible=False) as queue_progress_group:
-                                    queue_info_component = gr.Textbox(label="Queue Info", interactive=False, visible=True)
+                            output_type = workflow_definitions[workflow_name]["outputs"].get("type", "")
+                            output_prefix = workflow_definitions[workflow_name]["inputs"]["output-specifications"]["inputs"]["filename-prefix"].get("value", "")
+                        
+        with gr.Column():
+            # TODO: is it possible to preview only an output that was produced by this workflow tab? otherwise this should probably exist outside of the workflow tab
+            gr.Markdown("### Output Preview")
+            with gr.Group():
+                if output_type == "image":
+                    output_player = gr.Image(show_label=False, interactive=False)
+                else:
+                    output_player = gr.Video(show_label=False, autoplay=True, loop=True, interactive=False)
+                #output_filepath_component = gr.Markdown("N/A")
+                
+                tick_timer.tick(
+                    fn=check_for_new_content,
+                    outputs=[output_player],
+                    show_progress="hidden"
+                )
+                
+            with gr.Group(visible=False) as gen_progress_group:
+                gen_component = gr.Textbox(label="Generation Progress", interactive=False, visible=True)
+            
+                tick_timer.tick(
+                    fn=check_progress,
+                    outputs=gen_component, 
+                    show_progress="full"
+                )
 
-                                    tick_timer.tick(
-                                        fn=check_queue, 
-                                        outputs=queue_info_component, 
-                                        show_progress="full"
-                                    )
-                                    
-                                tick_timer.tick(
-                                    fn=check_interrupt_visibility, 
-                                    outputs=queue_progress_group,
-                                    show_progress="hidden"
-                                )
+            tick_timer.tick(
+                fn=check_gen_progress_visibility, 
+                outputs=gen_progress_group,
+                show_progress="hidden"
+            )
 
-                                with gr.Group():
-                                    vram_usage_component = gr.Textbox(label="VRAM Usage", interactive=False, visible=True)
-                                    
-                                    tick_timer.tick(
-                                        fn=check_vram, 
-                                        outputs=[vram_usage_component], 
-                                        show_progress="full"
-                                    )
+            with gr.Group(visible=False) as queue_progress_group:
+                queue_info_component = gr.Textbox(label="Queue Info", interactive=False, visible=True)
 
-                                with gr.Group() as interrupt_group:
-                                    interrupt_button = gr.Button("Interrupt", visible=True, variant="stop")
-                                    interrupt_button.click(fn=post_interrupt)
-                                
-                                tick_timer.tick(
-                                    fn=check_interrupt_visibility, 
-                                    outputs=interrupt_group, 
-                                    show_progress="hidden"
-                                )
+                tick_timer.tick(
+                    fn=check_queue, 
+                    outputs=queue_info_component, 
+                    show_progress="full"
+                )
+                
+            tick_timer.tick(
+                fn=check_interrupt_visibility, 
+                outputs=queue_progress_group,
+                show_progress="hidden"
+            )
 
-                                output_type = workflow_definitions[workflow_name]["outputs"].get("type", "")
-                                output_prefix = workflow_definitions[workflow_name]["inputs"]["output-specifications"]["inputs"]["filename-prefix"].get("value", "")
+            with gr.Group():
+                vram_usage_component = gr.Textbox(label="VRAM Usage", interactive=False, visible=True)
+                
+                tick_timer.tick(
+                    fn=check_vram, 
+                    outputs=[vram_usage_component], 
+                    show_progress="full"
+                )
 
-                        if (selected_port_url is not None) and (components is not None) and (component_dict is not None):
-                            run_button.click(
-                                fn=run_workflow_with_name(workflow_filename, components, component_dict),
-                                inputs=components,
-                                #outputs=[gen_component],
-                                trigger_mode="multiple",
-                                #show_progress="full"
-                            )
+            with gr.Group() as interrupt_group:
+                interrupt_button = gr.Button("Interrupt", visible=True, variant="stop")
+                interrupt_button.click(fn=post_interrupt)
+            
+            tick_timer.tick(
+                fn=check_interrupt_visibility, 
+                outputs=interrupt_group, 
+                show_progress="hidden"
+            )
 
     demo.launch(allowed_paths=[".."], favicon_path="favicon.png")
