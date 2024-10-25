@@ -296,7 +296,6 @@ loras = get_lora_filenames(LORA_DIR)
 
 
 #region Content Getters
-
 def get_all_images(folder):
     files = os.listdir(folder)
     image_files = [
@@ -474,7 +473,7 @@ def check_interrupt_visibility():
         queue_running = current_queue_info[5]
 
         #print(f"Prompt ID: {prompt_id}, Current Step: {current_step}, Queue Running: {queue_running}")
-        visibility = (current_progress_data != None) or (queue_running > 0)
+        visibility = (current_step != None) and (queue_running > 0)
     except:
         visibility = False
     return gr.update(visible=visibility)
@@ -641,15 +640,15 @@ def make_visible():
     return gr.update(visible=True)
 
 def watch_input(component, default_value, elem_id):
-    #print(f"Equals Default Value? {component == default_value}")
+    print(f"Equals Default Value? {component == default_value}")
     if component != default_value:
-        # Return HTML to change the background color to red when value changes
-        output = f"<style>#{elem_id}  {{ background: #30435d; }}"
-        return output, gr.update(visible=True)
+        # Return HTML to change the background color when value changes
+        html = f"<style>#{elem_id}  {{ background: #30435d; }}"
+        return gr.update(value=html, visible=True), gr.update(visible=True)
     else:
         # Return HTML to reset background color when value matches default
-        output = f"<style>#{elem_id}  {{ background: var(--input-background-fill); }}"
-        return output, gr.update(visible=False)
+        html = f"<style>#{elem_id}  {{ background: var(--input-background-fill); }}"
+        return gr.update(value=html, visible=False), gr.update(visible=False)
 
 def reset_input(default_value):
     return default_value
@@ -706,8 +705,11 @@ def process_input(input_context, input_key):
                         # Compact Reset button with reduced width, initially hidden
                         reset_button = gr.Button("↺", visible=False, elem_id="reset-button", scale=1, variant="secondary", min_width=5)
                         # Trigger the reset function when the button is clicked
-                        reset_button.click(fn=reset_input, inputs=[gr.State(input_value)], outputs=group_toggle, queue=False)
+                        reset_button.click(fn=reset_input, inputs=[gr.State(input_value)], outputs=group_toggle, queue=False, show_progress="hidden")
 
+                        # Trigger the reset check when the value of the input changes
+                        html_output = gr.HTML(visible=False)
+                        group_toggle.change(fn=watch_input, inputs=[group_toggle, gr.State(input_value), gr.State(input_key)], outputs=[html_output, reset_button], queue=False, show_progress="hidden")
                     # Group of inputs (initially hidden)
                     with gr.Group(visible=group_toggle.value) as input_group:
                         # Use the mapping to create components based on input_type
@@ -721,9 +723,7 @@ def process_input(input_context, input_key):
                             components_dict.update(sub_dict_values)
 
                 # Update the group visibility based on the checkbox
-                group_toggle.change(fn=toggle_group, inputs=group_toggle, outputs=input_group, queue=False)
-                # Trigger the reset check when the value of the input changes
-                group_toggle.change(fn=watch_input, inputs=[group_toggle, gr.State(input_value), gr.State(input_key)], outputs=[gr.HTML(), reset_button], queue=False)
+                group_toggle.change(fn=toggle_group, inputs=group_toggle, outputs=input_group, queue=False, show_progress="hidden")
             elif input_type == "images":
                 # print("!!!!!!!!!!!!!!!!!!!!!!!\nMaking Radio")
                 selected_option, inputs, output = create_dynamic_input(
@@ -758,10 +758,11 @@ def process_input(input_context, input_key):
                     # Compact Reset button with reduced width, initially hidden
                     reset_button = gr.Button("↺", visible=False, elem_id="reset-button", scale=1, variant="secondary", min_width=5)
                     # Trigger the reset function when the button is clicked
-                    reset_button.click(fn=reset_input, inputs=[gr.State(input_value)], outputs=component, queue=False)
+                    reset_button.click(fn=reset_input, inputs=[gr.State(input_value)], outputs=component, queue=False, show_progress="hidden")
 
                 # Trigger the reset check when the value of the input changes
-                component.change(fn=watch_input, inputs=[component, gr.State(input_value), gr.State(input_key)], outputs=[gr.HTML(), reset_button], queue=False)
+                html_output = gr.HTML(visible=False)
+                component.change(fn=watch_input, inputs=[component, gr.State(input_value), gr.State(input_key)], outputs=[html_output, reset_button], queue=False, show_progress="hidden")
 
                 components.append(component)
                 components_dict[input_key] = input_details
@@ -779,10 +780,11 @@ def process_input(input_context, input_key):
                     # Compact Reset button with reduced width, initially hidden
                     reset_button = gr.Button("↺", visible=False, elem_id="reset-button", scale=1, variant="secondary", min_width=5)
                     # Trigger the reset function when the button is clicked
-                    reset_button.click(fn=reset_input, inputs=[gr.State(input_value)], outputs=component, queue=False)
+                    reset_button.click(fn=reset_input, inputs=[gr.State(input_value)], outputs=component, queue=False, show_progress="hidden")
 
                 # Trigger the reset check when the value of the input changes
-                component.change(fn=watch_input, inputs=[component, gr.State(input_value), gr.State(input_key)], outputs=[gr.HTML(), reset_button], queue=False, show_progress="hidden")
+                html_output = gr.HTML(visible=False)
+                component.change(fn=watch_input, inputs=[component, gr.State(input_value), gr.State(input_key)], outputs=[html_output, reset_button], queue=False, show_progress="hidden")
 
                 components.append(component)
                 components_dict[input_key] = input_details
@@ -937,7 +939,7 @@ with gr.Blocks(title="WorkFlower") as demo:
                                 )
 
                             output_type = workflow_definitions[workflow_name]["outputs"].get("type", "")
-                            output_prefix = workflow_definitions[workflow_name]["inputs"]["output-specifications"]["inputs"]["filename-prefix"].get("value", "")
+                            #output_prefix = workflow_definitions[workflow_name]["inputs"]["output-specifications"]["inputs"]["filename-prefix"].get("value", "")
                         
         with gr.Column():
             # TODO: is it possible to preview only an output that was produced by this workflow tab? otherwise this should probably exist outside of the workflow tab
@@ -995,7 +997,7 @@ with gr.Blocks(title="WorkFlower") as demo:
                 )
 
             with gr.Group() as interrupt_group:
-                interrupt_button = gr.Button("Interrupt", visible=True, variant="stop")
+                interrupt_button = gr.Button("Interrupt", visible=False, variant="stop")
                 interrupt_button.click(fn=post_interrupt)
             
             tick_timer.tick(

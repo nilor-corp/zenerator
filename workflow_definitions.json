@@ -1,5 +1,5 @@
 {
-    "Square":{
+    "square":{
         "name": "Square",
         "filename": "general.json",
         "description": "Create a video for a square screen using fully exposed parameters.",
@@ -223,8 +223,8 @@
             "type": "video"
         }
     },
-    "Wide":{
-        "name": "Wide 16:9",
+    "wide":{
+        "name": "Wide",
         "filename": "general.json",
         "description": "Create a video for a 16:9 screen using fully exposed parameters.",
         "inputs": {
@@ -441,6 +441,102 @@
                         }
                     }
                 }
+            }
+        },
+        "outputs": {
+            "type": "video"
+        }
+    },
+    "upscale-video":{
+        "name": "Upscale Video",
+        "filename": "upscale-video.json",
+        "description": "Upscale a video.",
+        "inputs": {
+            "video-to-uscale-path": {
+                "type": "video",
+                "label": "Video to Upscale",
+                "node-id": "[\"419\"][\"inputs\"][\"string\"]",
+                "value": ""
+            },
+            
+            "prompting": {
+                "type": "group",
+                "label": "Text Prompting",
+                "inputs": {
+                    "text-01": {
+                        "type": "text",
+                        "label": "Positive",
+                        "node-id": "[\"426\"][\"inputs\"][\"string\"]",
+                        "value": "extremely detailed"
+                    },
+                    "text-02": {
+                        "type": "text",
+                        "label": "Negative",
+                        "node-id": "[\"427\"][\"inputs\"][\"string\"]",
+                        "value": "blurry, glitches, artefact, distorted, malformed, nsfw, lens flare, glare, bloom, bokeh"
+                    }
+                }
+            },
+
+            "upscale-by": {
+                "type": "float",
+                "label": "Upscale By",
+                "node-id": "[\"422\"][\"inputs\"][\"float\"]",
+                "value": 2.5,
+                "minimum": 1.0,
+                "maximum": 4.0,
+                "step": 0.25
+            },
+
+            "steps": {
+                "type": "int",
+                "label": "Steps",
+                "node-id": "[\"540\"][\"inputs\"][\"int\"]",
+                "value": 20,
+                "interactive": false
+            }
+        },
+        "outputs": {
+            "type": "video"
+        }
+    },
+    "upscale-video-tensorrt":{
+        "name": "Upscale Video (TensorRT)",
+        "filename": "upscale-video-tensorrt.json",
+        "description": "Upscale a video using TensorRT. This is faster than the normal upscaler, but there are limitations:\n* You can only upscale the input video by 4X.\n* Input video width and height must BOTH be less than 1280.",
+        "inputs": {
+            "video-to-path": {
+                "type": "video",
+                "label": "Video to Upscale",
+                "node-id": "[\"419\"][\"inputs\"][\"string\"]",
+                "value": ""
+            },
+            
+            "prompting": {
+                "type": "group",
+                "label": "Text Prompting",
+                "inputs": {
+                    "text-01": {
+                        "type": "text",
+                        "label": "Positive",
+                        "node-id": "[\"426\"][\"inputs\"][\"string\"]",
+                        "value": "extremely detailed"
+                    },
+                    "text-02": {
+                        "type": "text",
+                        "label": "Negative",
+                        "node-id": "[\"427\"][\"inputs\"][\"string\"]",
+                        "value": "blurry, glitches, artefact, distorted, malformed, nsfw, lens flare, glare, bloom, bokeh"
+                    }
+                }
+            },
+
+            "steps": {
+                "type": "int",
+                "label": "Steps",
+                "node-id": "[\"541\"][\"inputs\"][\"int\"]",
+                "value": 20,
+                "interactive": false
             }
         },
         "outputs": {
