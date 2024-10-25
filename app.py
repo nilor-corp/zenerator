@@ -1,7 +1,7 @@
 import json
 import requests
 import os
-import glob
+#import glob
 import time
 from datetime import datetime
 import gradio as gr
@@ -12,43 +12,272 @@ from image_downloader import copy_uploaded_files_to_local_dir
 from lora_maker import generate_lora
 from tqdm import tqdm
 import asyncio
-import socket
+import threading
+
+import websocket
+import uuid
+#import urllib.request
+#import urllib.parse
 
 with open("config.json") as f:
     config = json.load(f)
 
-COMFY_URL = config["COMFY_URL"]
+COMFY_IP = config["COMFY_IP"]
 
 QUEUE_URLS = []
 
 for port in config["COMFY_PORTS"]:
-    QUEUE_URLS.append(config["COMFY_URL"] + port + "/prompt")
+    QUEUE_URLS.append(f"http://{config["COMFY_IP"]}:{port}")
 
 selected_port_url = QUEUE_URLS[0]
 
 print(QUEUE_URLS)
 
-QUEUE_URL = config["COMFY_URL"] + "/prompt"
-OUT_DIR = config["COMFY_ROOT"] + "output/WorkFlower/"
-LORA_DIR = config["COMFY_ROOT"] + "models/loras/"
-INPUTS_DIR = "./inputs/"
+OUT_DIR = os.path.abspath(config["COMFY_ROOT"] + "output/WorkFlower/")
+LORA_DIR = os.path.abspath(config["COMFY_ROOT"] + "models/loras/")
+INPUTS_DIR = os.path.abspath("./inputs/")
 
 output_type = ""
 
+def select_correct_port(selector):
+    print(f"Selected Port URL: {selector}")
+    global selected_port_url 
+    selected_port_url = selector
+    print(f"Changed Port URL to: {selected_port_url}")
 
-def start_queue(prompt_workflow):
-    print(f"Using URL: {selected_port_url}")
-    p = {"prompt": prompt_workflow}
-    data = json.dumps(p).encode("utf-8")
+queue = []
+
+prompt = {}
+status = {}
+
+previous_content = ""
+
+#region WEBSOCKET
+client_id = str(uuid.uuid4())
+
+def connect_to_websocket(client_id):
+    ws = websocket.WebSocket()
     try:
-        requests.post(selected_port_url, data=data)
+        #TODO: make this work for multiple ports
+        ws.connect(f"ws://{config["COMFY_IP"]}:{config["COMFY_PORTS"][0]}/ws?clientId={client_id}")
+        print("Connected to WebSocket!")
+    except ConnectionResetError as e:
+        print(f"Connection was reset: {e}")
+        #reconnect(client_id, 20)
+        return None
+    return ws
+
+def reconnect(client_id, max_retries=5):
+    retries = 0
+    while retries < max_retries:
+        print(f"Attempting to reconnect ({retries + 1}/{max_retries})...")
+        ws = connect_to_websocket(client_id)
+        if ws:
+            return ws
+        retries += 1
+        time.sleep(2)  # Wait before retrying
+    print("Max retries reached. Could not reconnect.")
+    return None
+
+# def queue_prompt(prompt):
+#     p = {"prompt": prompt, "client_id": client_id}
+#     data = json.dumps(p).encode('utf-8')
+#     req = urllib.request.Request(f"{selected_port_url}/prompt", data=data)
+#     return json.loads(urllib.request.urlopen(req).read())
+
+def send_heartbeat(ws):
+    while ws.connected:
+        try:
+            ws.ping()
+            print("Heartbeat")
+            time.sleep(1)  # Send a ping every 30 seconds
+        except Exception as e:
+            print(f"Heartbeat failed: {e}")
+            break
+
+check_current_progress_running = False
+current_progress_data = {}
+def check_current_progress(ws):
+    global check_current_progress_running, current_progress_data
+
+    check_current_progress_running = True
+    #prompt_id = queue_prompt(prompt)['prompt_id']
+    output_images = {}
+    progress_time = time.time()
+    #print(f"Time: {progress_time}")
+
+    while check_current_progress_running:
+        out = ws.recv()
+        if isinstance(out, str):
+            message = json.loads(out)
+            #print(f"Message: {message}")
+            if message['type'] == 'executing':
+                data = message['data']
+                if data['node'] is None and data['prompt_id'] == prompt_id:
+                   check_current_progress_running = False
+                   break #Execution is done
+            elif message['type'] == 'status':
+                data = message['data']
+                queue_remaining = data['status']['exec_info']['queue_remaining']
+                print("Queue remaining: " + str(queue_remaining))
+            elif message['type'] == 'execution_start':
+                executing = True
+                print("Executing!")
+            elif message['type'] == 'executed':
+                data = message['data']
+                prompt_id = data['prompt_id']
+                print("Executed : " + prompt_id)
+                #task: Task = self._tasks.get(prompt_id)
+            elif message['type'] == 'progress':
+                data = message['data']
+                current_progress_data = data
+                #progress_time_used = str(round((time.time() - start_time) / 60, 2))
+                
+                #print(f"Progress: {data}")
+                #print("Progress is " + str(data['value']) + "/" + str(data['max']) + "time " + progress_time_used + " min")
+                #print("Progress is " + str(data['value']) + "/" + str(data['max']))
+                progress_time = time.time()
+        else:
+            continue #previews are binary data
+
+    # history = get_history(prompt_id)[prompt_id]
+    # for o in history['outputs']:
+    #     for node_id in history['outputs']:
+    #         node_output = history['outputs'][node_id]
+    #         if 'images' in node_output:
+    #             images_output = []
+    #             for image in node_output['images']:
+    #                 image_data = get_image(image['filename'], image['subfolder'], image['type'])
+    #                 images_output.append(image_data)
+    #         output_images[node_id] = images_output
+
+    return output_images
+#endregion
+
+#region POST REQUESTS
+def comfy_POST(endpoint, message):
+    post_url = selected_port_url + "/" + endpoint
+    data = json.dumps(message).encode("utf-8")
+    print(f"POST {endpoint} on: {post_url}")
+    try:
+        post_response = requests.post(post_url, data=data)
+        #post_response.raise_for_status()
+        #print(f"status {post_response}")
+        return post_response
     except ConnectionResetError:
         print("Connection was reset while trying to start the workflow. Retrying...")
+    except requests.RequestException as e:
+        print(f"Error querying the GET endpoint {endpoint}: ", e)
 
+def post_prompt(prompt_workflow):
+    message = {"prompt": prompt_workflow}
+    return comfy_POST("prompt", message)
 
+def post_interrupt():
+    global current_progress_data, check_current_progress_running
+    current_progress_data = {}
+
+    message = ""
+    return comfy_POST("interrupt", message)
+
+def post_history_clear():
+    message = {"clear": True}
+    return comfy_POST("history", message)
+
+def post_history_delete(prompt_id):
+    message = {"delete": prompt_id}
+    return comfy_POST("history", message)
+#endregion
+
+#region GET REQUESTS
+def comfy_GET(endpoint):
+    get_url = selected_port_url + "/" + endpoint
+    #print(f"GET {endpoint} on: {get_url}\n")
+    try:
+        return requests.get(get_url).json()
+    except ConnectionResetError:
+        print("Connection was reset while trying to start the workflow. Retrying...")
+    except requests.RequestException as e:
+        print(f"Error querying the POST endpoint {endpoint}: ", e)
+        
+def get_queue():
+    global queue, queue_running, queue_pending, queue_failed
+
+    queue = comfy_GET("queue")
+    if (queue is None):
+        print("/queue GET response is empty")
+        return [[], [], []]
+    
+    queue_running = queue.get("queue_running", [])
+    #print(f"queue_running: {len(queue_running)}")
+    
+    queue_pending = queue.get("queue_pending", [])
+    #print(f"queue_pending: {len(queue_pending)}")
+
+    queue_failed = queue.get("queue_failed", [])
+    #print(f"queue_failed: {len(queue_failed)}")
+
+    return [queue_running, queue_pending, queue_failed]
+
+def get_running_prompt_id():
+    [queue_running, queue_pending, queue_failed] = get_queue()
+
+    if (len(queue_running) > 0):
+        prompt_id = queue_running[0][1]
+        print(f"current running prompt id: {prompt_id}")
+        return prompt_id
+    else:
+        return None
+    
+def get_status():
+    global prompt, status
+
+    prompt = comfy_GET("prompt")
+    if (prompt is None):
+        print("/prompt GET response is empty")
+        return "N/A"
+    
+    status = prompt.get("status", "N/A")
+    #print(f"status: {status}")
+
+    return status
+
+def get_history():
+    global history
+
+    history = comfy_GET("history")
+    if (history is None):
+        print("/history GET response is empty")
+        return {}
+
+    #print(f"history: {len(history)}")
+
+    return history
+
+def get_system_stats():
+    global system_stats, devices
+
+    system_stats = comfy_GET("system_stats")
+    if (system_stats is None):
+        print("/system_stats GET response is empty")
+        return [[], []]
+    
+    devices = system_stats.get("devices")
+    if (devices is None):
+        return [system_stats, []]
+    
+    #print(f"devices: {devices}")
+
+    #for device in devices:
+        #print(f"device['name']: {device.get("name")}")
+        #print(f"device['torch_vram_free']: {device.get("torch_vram_free")}")
+        #print(f"device['torch_vram_total']: {device.get("torch_vram_total")}")
+
+    return [system_stats, devices]
+#endregion
+    
 with open("workflow_definitions.json") as f:
     workflow_definitions = json.load(f)
-
 
 def get_lora_filenames(directory):
     # Get all files in the directory
@@ -61,55 +290,199 @@ def get_lora_filenames(directory):
 
     return filenames
 
-
 # Replace with the actual path to the Loras.
 loras = get_lora_filenames(LORA_DIR)
 
 
-def get_latest_image(folder):
+#region Content Getters
+
+def get_all_images(folder):
     files = os.listdir(folder)
     image_files = [
         f for f in files if f.lower().endswith(("png", "jpg", "jpeg", "gif"))
     ]
     image_files.sort(key=lambda x: os.path.getmtime(os.path.join(folder, x)))
+    return image_files
+
+def get_latest_image(folder):
+    image_files = get_all_images(folder)
+    image_files.sort(key=lambda x: os.path.getmtime(os.path.join(folder, x)))
     latest_image = os.path.join(folder, image_files[-1]) if image_files else None
     return latest_image
 
+def get_latest_image_with_prefix(folder, prefix):
+    image_files = get_all_images(folder)
+    image_files = [
+        f for f in image_files if f.lower().startswith(prefix)
+    ]
+    image_files.sort(key=lambda x: os.path.getmtime(os.path.join(folder, x)))
+    latest_image = os.path.join(folder, image_files[-1]) if image_files else None
+    return latest_image
+
+# def count_images(directory):
+#     extensions = ["*.png", "*.jpg", "*.jpeg", "*.gif", "*.bmp", "*.tiff"]
+#     image_count = sum(
+#         len(glob.glob(os.path.join(directory, ext))) for ext in extensions
+#     )
+#     return image_count
+
+def get_all_videos(folder):
+    files = os.listdir(folder)
+    video_files = [
+        f for f in files if f.lower().endswith(("mp4", "mov"))
+    ]
+    video_files.sort(key=lambda x: os.path.getmtime(os.path.join(folder, x)))
+    return video_files
 
 def get_latest_video(folder):
-    files = os.listdir(folder)
-    video_files = [f for f in files if f.lower().endswith(("mp4", "mov"))]
-    video_files.sort(key=lambda x: os.path.getmtime(os.path.join(folder, x)))
+    video_files = get_all_videos(folder)
     latest_video = os.path.join(folder, video_files[-1]) if video_files else None
     return latest_video
 
+def get_latest_video_with_prefix(folder, prefix):
+    video_files = get_all_videos(folder)
+    video_files = [
+        f for f in video_files if f.lower().startswith(prefix)
+    ]
+    video_files.sort(key=lambda x: os.path.getmtime(os.path.join(folder, x)))
+    latest_video = os.path.join(folder, video_files[-1]) if video_files else None
+    return latest_video
+#endregion
 
-def count_images(directory):
-    extensions = ["*.png", "*.jpg", "*.jpeg", "*.gif", "*.bmp", "*.tiff"]
-    image_count = sum(
-        len(glob.glob(os.path.join(directory, ext))) for ext in extensions
-    )
-    return image_count
+#region Info Checkers
+def check_for_new_content():
+    global latest_content, previous_content
+    #print(f"Checking for new content in: {OUT_DIR}\n")
 
+    latest_content = ""
+    if output_type == "image":
+        latest_content = get_latest_image(OUT_DIR)
+    else:
+        latest_content = get_latest_video(OUT_DIR)
 
-async def wait_for_new_content(previous_content, output_directory):
-    while True:
-        latest_content = ""
-        if output_type == "video":
-            latest_content = get_latest_video(output_directory)
-        elif output_type == "image":
-            latest_content = get_latest_image(output_directory)
-        if latest_content != previous_content:
-            print(f"New content created: {latest_content}")
-            return latest_content
-        await asyncio.sleep(1)
+    if latest_content != previous_content:
+        print(f"New content found: {latest_content}")
+        previous_content = latest_content
 
+    #output_filepath_component = gr.Markdown(f"{latest_content}")
 
-def run_workflow(workflow_name, progress=gr.Progress(track_tqdm=True), **kwargs):
+    return gr.update(value=latest_content)
+
+previous_vram_used = -1.0
+check_vram_running = False
+def check_vram(progress=gr.Progress()):
+    global check_vram_running, previous_vram_used
+
+    check_vram_running = True
+
+    while check_vram_running:
+        [system_stats, devices] = get_system_stats()
+        
+        vram_used = 1.0
+        if (len(devices) > 0):
+            vram_free = devices[0].get("vram_free")
+            vram_total = devices[0].get("vram_total")
+            if (vram_total > 0):
+                vram_used = (vram_total - vram_free) / vram_total
+
+        #print(f"vram_used: {vram_used}")
+        
+        if (vram_used != previous_vram_used):
+            progress(progress=vram_used)
+            previous_vram_used = vram_used
+
+        time.sleep(1.0)
+
+previous_queue_info = [-1, -1, -1, -1, -1, -1]
+current_queue_info = [-1, -1, -1, -1, -1, -1]
+check_queue_running = False
+def check_queue(progress=gr.Progress()):
+    global check_queue_running, previous_queue_info, current_queue_info
+
+    check_queue_running = True
+
+    while check_queue_running:
+        [queue_running, queue_pending, queue_failed] = get_queue()
+        queue_history = get_history()
+        
+        queue_finished = len(queue_history)
+        queue_total = queue_finished + len(queue_running) + len(queue_pending)
+
+        #print(f"queue_progress: {queue_finished} out of {queue_total}")
+        
+        current_queue_info = [queue_finished, queue_total, queue_failed, queue_history, len(queue_pending), len(queue_running)]
+        if queue_total < 1:
+            progress(progress=0.0)
+            #return gr.update(visible=False)
+        elif (current_queue_info != previous_queue_info):
+            previous_queue_info = current_queue_info
+            progress(progress=(queue_finished, queue_total), unit="generations")
+            #return gr.update(visible=True)
+
+        time.sleep(1.0)
+
+check_progress_running = False
+previous_progress_data = {}
+def check_progress(progress=gr.Progress()):
+    global check_progress_running, current_progress_data, previous_progress_data, ws
+    
+    check_progress_running = True
+
+    while check_progress_running:
+        try:
+            if current_progress_data != previous_progress_data:
+                previous_progress_data = current_progress_data
+
+            progress_tuple = (current_progress_data.get("value", 0), current_progress_data.get("max",0))
+            prompt_id = current_progress_data.get("prompt_id", "N/A")
+            if prompt_id != "N/A":
+                prompt_id_short = prompt_id[:8]
+                progress(progress=progress_tuple, unit="steps", desc=prompt_id_short)
+            else:
+                progress(progress=0.0)
+            #return gr.update(visible=True)
+        except:
+            progress(progress=0.0)
+            #return gr.update(visible=False)
+
+        if not ws.connected:
+            break
+        
+        time.sleep(1.0)
+
+def check_gen_progress_visibility():
+    global current_progress_data, current_queue_info
+    try: 
+        prompt_id = current_progress_data.get("prompt_id", None)
+        current_step = current_progress_data.get("value", None)
+
+        #print(f"Prompt ID: {prompt_id}, Current Step: {current_step}")
+        visibility = (current_step != None)
+    except:
+        visibility = False
+    return gr.update(visible=visibility)
+
+def check_interrupt_visibility():
+    global current_progress_data, current_queue_info
+    try: 
+        prompt_id = current_progress_data.get("prompt_id", None)
+        current_step = current_progress_data.get("value", None)
+
+        queue_running = current_queue_info[5]
+
+        #print(f"Prompt ID: {prompt_id}, Current Step: {current_step}, Queue Running: {queue_running}")
+        visibility = (current_progress_data != None) or (queue_running > 0)
+    except:
+        visibility = False
+    return gr.update(visible=visibility)
+#endregion
+
+def run_workflow(workflow_name, progress, **kwargs):
+    global previous_content
+
     # Print the input arguments for debugging
     print("inside run workflow with kwargs: " + str(kwargs))
     # print("workflow_definitions: " + str(workflow_definitions[workflow_name]))
-
 
     # Construct the path to the workflow JSON file
     workflow_json = (
@@ -145,21 +518,10 @@ def run_workflow(workflow_name, progress=gr.Progress(track_tqdm=True), **kwargs)
             current_section[final_key] = new_value
 
         try:
-            output_directory = OUT_DIR
-
-            previous_content = ""
-
-            if output_type == "video":
-                previous_content = get_latest_video(output_directory)
-                print(f"Previous video: {previous_content}")
-            elif output_type == "images":
-                previous_content = get_latest_image(output_directory)
-                print(f"Previous image: {previous_content}")
-
             print(f"!!!!!!!!!\nSubmitting workflow:\n{workflow}\n!!!!!!!!!")
-            start_queue(workflow)
 
-            # asyncio.run(wait_for_new_content(previous_content, output_directory))
+            post_prompt(workflow)
+
         except KeyboardInterrupt:
             print("Interrupted by user. Exiting...")
             return None
@@ -223,7 +585,6 @@ def process_dynamic_input(selected_option, possible_options, input_type, *option
     else:
         return None
 
-
 def create_dynamic_input(input_type, choices, tooltips, text_label, identifier):
     gr.Markdown(f"##### {input_type.capitalize()} Input")    
     with gr.Group():            
@@ -266,13 +627,40 @@ def filter_valid_components(components):
             valid_components.append(component)
     return valid_components
 
-def process_input(input_key):
-    input_details = workflow_definitions[workflow_name]["inputs"][input_key]
-    input_type = input_details["type"]
-    input_label = input_details["label"]
-    input_node_id = input_details["node-id"]
-    input_value = input_details["value"]
-    input_interactive = input_details["interactive"]
+def toggle_group(checkbox_value):
+    # If checkbox is selected, the group of inputs will be visible
+    if checkbox_value:
+        return gr.update(visible=True)
+    else:
+        return gr.update(visible=False)
+    
+def make_visible():
+    return gr.update(visible=True)
+
+def watch_input(component, default_value, elem_id):
+    #print(f"Equals Default Value? {component == default_value}")
+    if component != default_value:
+        # Return HTML to change the background color to red when value changes
+        output = f"<style>#{elem_id}  {{ background: #30435d; }}"
+        return output, gr.update(visible=True)
+    else:
+        # Return HTML to reset background color when value matches default
+        output = f"<style>#{elem_id}  {{ background: var(--input-background-fill); }}"
+        return output, gr.update(visible=False)
+
+def reset_input(default_value):
+    return default_value
+
+def process_input(input_context, input_key):
+    input_details = input_context.get(input_key, None)
+    input_type = input_details.get("type", None)
+    input_label = input_details.get("label", None)
+    input_node_id = input_details.get("node-id", None)
+    input_value = input_details.get("value", None)
+    input_interactive = input_details.get("interactive", True)
+    input_minimum = input_details.get("minimum", None)
+    input_maximum = input_details.get("maximum", None)
+    input_step = input_details.get("step", 1)
 
     # Define a mapping of input types to Gradio components
     component_map = {
@@ -283,63 +671,133 @@ def process_input(input_key):
         "video": None, # special case for video selection handled below
         "bool": gr.Checkbox,
         "float": gr.Number,
-        "int": gr.Number  # Special case for int to round?
+        "int": gr.Number,
+        "group": None,
+        "toggle-group": gr.Checkbox
     }
     
-    component = None
+    components = []
+    components_dict = {}
 
-    if input_type in component_map:
-        if input_type == "images":
-            # print("!!!!!!!!!!!!!!!!!!!!!!!\nMaking Radio")
-            selected_option, inputs, output = create_dynamic_input(
-                input_type,
-                choices=["filepath", "nilor collection", "upload"], 
-                tooltips=["Enter the path of the directory of images and press Enter to submit", "Enter the name of the Nilor Collection and press Enter to resolve"],
-                text_label="Select Input Type", 
-                identifier=input_key
-            )
+    with gr.Group():
+        if input_type in component_map:
+            if input_type == "group":
+                gr.Markdown(f"##### {input_label}")    
+                
+                with gr.Group():
+                    # Group of inputs
+                    with gr.Group():
+                        sub_context = input_context[input_key]["inputs"]
+                        for group_input_key in sub_context:
+                            [sub_components, sub_dict_values] = process_input(sub_context, group_input_key)
 
-            # Only append the output (Markdown element) to the components list
-            component = output
-        elif input_type == "video":
-            # print("!!!!!!!!!!!!!!!!!!!!!!!\nMaking Radio")
-            selected_option, inputs, output = create_dynamic_input(
-                input_type,
-                choices=["filepath", "upload"], 
-                tooltips=["Enter the path of the directory of video and press Enter to submit"],
-                text_label="Select Input Type", 
-                identifier=input_key
-            )
+                            components.extend(sub_components)
+                            components_dict.update(sub_dict_values)
+            elif input_type == "toggle-group":
+                with gr.Group():
+                    with gr.Row():
+                        # Checkbox component which enables Group
+                        component_constructor = component_map.get(input_type)
+                        group_toggle = component_constructor(label=input_label, elem_id=input_key, value=input_value, interactive=input_interactive, scale=100)
+                        
+                        # Compact Reset button with reduced width, initially hidden
+                        reset_button = gr.Button("↺", visible=False, elem_id="reset-button", scale=1, variant="secondary", min_width=5)
+                        # Trigger the reset function when the button is clicked
+                        reset_button.click(fn=reset_input, inputs=[gr.State(input_value)], outputs=group_toggle, queue=False)
 
-            # Only append the output (Markdown element) to the components list
-            component = output
-        elif input_type == "float" or input_type == "int":
-            input_minimum = input_details.get("minimum", None)
-            input_maximum = input_details.get("maximum", None)
-            input_step = input_details.get("step", 1)
-            
-            # Use the mapping to create components based on input_type
-            component_constructor = component_map.get(input_type)
+                    # Group of inputs (initially hidden)
+                    with gr.Group(visible=group_toggle.value) as input_group:
+                        # Use the mapping to create components based on input_type
+                        components.append(group_toggle)
+                        components_dict[input_key] = input_details
 
-            # print(f"Component Constructor: {component_constructor}")
-            component = component_constructor(label=input_label, elem_id=input_key, value=input_value, minimum=input_minimum, maximum=input_maximum, step=input_step, interactive=input_interactive)
+                        sub_context = input_context[input_key]["inputs"]
+                        for group_input_key in sub_context:
+                            [sub_components, sub_dict_values] = process_input(sub_context, group_input_key)
+                            components.extend(sub_components)
+                            components_dict.update(sub_dict_values)
+
+                # Update the group visibility based on the checkbox
+                group_toggle.change(fn=toggle_group, inputs=group_toggle, outputs=input_group, queue=False)
+                # Trigger the reset check when the value of the input changes
+                group_toggle.change(fn=watch_input, inputs=[group_toggle, gr.State(input_value), gr.State(input_key)], outputs=[gr.HTML(), reset_button], queue=False)
+            elif input_type == "images":
+                # print("!!!!!!!!!!!!!!!!!!!!!!!\nMaking Radio")
+                selected_option, inputs, output = create_dynamic_input(
+                    input_type,
+                    choices=["filepath", "nilor collection", "upload"], 
+                    tooltips=["Enter the path of the directory of images and press Enter to submit", "Enter the name of the Nilor Collection and press Enter to resolve"],
+                    text_label="Select Input Type", 
+                    identifier=input_key
+                )
+
+                # Only append the output (Markdown element) to the components list
+                components.append(output)
+                components_dict[input_key] = input_details
+            elif input_type == "video":
+                selected_option, inputs, output = create_dynamic_input(
+                    input_type,
+                    choices=["filepath", "upload"], 
+                    tooltips=["Enter the path of the directory of video and press Enter to submit"],
+                    text_label="Select Input Type", 
+                    identifier=input_key
+                )
+
+                # Only append the output (Markdown element) to the components list
+                component = components.append(output)
+                components_dict[input_key] = input_details
+            elif input_type == "float" or input_type == "int":
+                with gr.Row():
+                    # Use the mapping to create components based on input_type
+                    component_constructor = component_map.get(input_type)
+                    component = component_constructor(label=input_label, elem_id=input_key, value=input_value, minimum=input_minimum, maximum=input_maximum, step=input_step, interactive=input_interactive, scale=100)
+
+                    # Compact Reset button with reduced width, initially hidden
+                    reset_button = gr.Button("↺", visible=False, elem_id="reset-button", scale=1, variant="secondary", min_width=5)
+                    # Trigger the reset function when the button is clicked
+                    reset_button.click(fn=reset_input, inputs=[gr.State(input_value)], outputs=component, queue=False)
+
+                # Trigger the reset check when the value of the input changes
+                component.change(fn=watch_input, inputs=[component, gr.State(input_value), gr.State(input_key)], outputs=[gr.HTML(), reset_button], queue=False)
+
+                components.append(component)
+                components_dict[input_key] = input_details
+
+                # print(f"Component Constructor: {component_constructor}")
+            else:
+                if input_type == "path":
+                    input_value = os.path.abspath(input_value)
+                    
+                with gr.Row():
+                    # Use the mapping to create components based on input_type
+                    component_constructor = component_map.get(input_type)
+                    component = component_constructor(label=input_label, elem_id=input_key, value=input_value, interactive=input_interactive, scale=100)
+
+                    # Compact Reset button with reduced width, initially hidden
+                    reset_button = gr.Button("↺", visible=False, elem_id="reset-button", scale=1, variant="secondary", min_width=5)
+                    # Trigger the reset function when the button is clicked
+                    reset_button.click(fn=reset_input, inputs=[gr.State(input_value)], outputs=component, queue=False)
+
+                # Trigger the reset check when the value of the input changes
+                component.change(fn=watch_input, inputs=[component, gr.State(input_value), gr.State(input_key)], outputs=[gr.HTML(), reset_button], queue=False, show_progress="hidden")
+
+                components.append(component)
+                components_dict[input_key] = input_details
+
+                # print(f"Component Constructor: {component_constructor}")
         else:
-            if input_type == "path":
-                input_value = os.path.abspath(input_value)
-            # Use the mapping to create components based on input_type
-            component_constructor = component_map.get(input_type)
+            print(f"Whoa! Unsupported input type: {input_type}")
 
-            # print(f"Component Constructor: {component_constructor}")
-            component = component_constructor(label=input_label, elem_id=input_key, value=input_value, interactive=input_interactive)
-    else:
-        print(f"Whoa! Unsupported input type: {input_type}")
-
-    return component
+    return [components, components_dict]
+    #return components
 
 def create_tab_interface(workflow_name):
     gr.Markdown("### Workflow Parameters")
+
+    key_context = workflow_definitions[workflow_name]["inputs"]
+
     components = []
-    component_data_dict = {workflow_name: workflow_definitions[workflow_name]["inputs"]}
+    component_data_dict = {}
     
     #constants = []
     #constants_data_dict = {workflow_name: workflow_definitions[workflow_name]["constants"]}
@@ -352,9 +810,9 @@ def create_tab_interface(workflow_name):
     interactive_components = []
     noninteractive_components = []
 
-    for input_key in workflow_definitions[workflow_name]["inputs"]:
-        input_details = workflow_definitions[workflow_name]["inputs"][input_key]
-        input_interactive = input_details["interactive"]
+    for input_key in key_context:
+        input_details = key_context[input_key]
+        input_interactive = input_details.get("interactive", True)
 
         if input_interactive:
             interactive_inputs.append(input_key)
@@ -362,27 +820,78 @@ def create_tab_interface(workflow_name):
             noninteractive_inputs.append(input_key)
 
     for input_key in interactive_inputs:
-        interactive_components.append(process_input(input_key))
+        [sub_components, sub_dict_values] = process_input(key_context, input_key)
+        interactive_components.extend(sub_components)
+        component_data_dict.update(sub_dict_values)
 
     with gr.Accordion("Constants", open=False):
         gr.Markdown("You can edit these constants in workflow_definitions.json if you know what you're doing.")
         
         for input_key in noninteractive_inputs:
-            noninteractive_components.append(process_input(input_key))
+            [sub_components, sub_dict_values] = process_input(key_context, input_key)
+            noninteractive_components.extend(sub_components)
+            component_data_dict.update(sub_dict_values)
 
     components.extend(interactive_components)
     components.extend(noninteractive_components)
-
+    
     return components, component_data_dict
 
 
-def select_correct_port(selector):
-    print(f"Selected Port URL: {selector}")
-    global selected_port_url 
-    selected_port_url = selector
-    print(f"Changed Port URL to: {selected_port_url}")
+def load_demo():
+    global ws, tick_timer, check_vram_running, previous_vram_used, check_queue_running, previous_queue_info, current_queue_info, check_progress_running, previous_progress_data
+    print("Loading the demo!!!")
+
+    tick_timer = gr.Timer(value=1.0)
+    ws = connect_to_websocket(client_id)
+
+    if ws:
+        try:
+            # Start threading after connecting
+            print(f"WebSocket connection attempt")
+            threading.Thread(target=send_heartbeat, args=(ws,), daemon=True).start()
+            threading.Thread(target=check_current_progress, args=(ws,), daemon=True).start()
+        except websocket.WebSocketConnectionClosedException as e:
+            print(f"WebSocket connection closed: {e}")
+            ws = reconnect(ws, client_id)
+        except Exception as e:
+            print(f"An error occurred: {e}")
+
+    check_vram_running = False
+    previous_vram_used = -1.0
+
+    check_queue_running = False
+    previous_queue_info = [-1, -1, -1, -1, -1, -1]
+    current_queue_info = [-1, -1, -1, -1, -1, -1]
+
+    check_progress_running = False
+    previous_progress_data = {}
+
+def unload_demo():
+    global ws, tick_timer, check_vram_running, previous_vram_used, check_queue_running, previous_queue_info, current_queue_info, check_progress_running, previous_progress_data
+    print("Unloading the demo...")
+
+    tick_timer.active = False
+    ws.close()
+
+    check_vram_running = False
+    previous_vram_used = -1.0
+
+    check_queue_running = False
+    previous_queue_info = [-1, -1, -1, -1, -1, -1]
+    current_queue_info = [-1, -1, -1, -1, -1, -1]
+
+    check_progress_running = False
+    previous_progress_data = {}
+
+    time.sleep(2.0)
 
 with gr.Blocks(title="WorkFlower") as demo:
+    tick_timer = gr.Timer(value=1.0)
+    demo.load(fn=load_demo)
+
+    demo.unload(fn=unload_demo)
+
     with gr.Row():
         with gr.Column():
             comfy_url_and_port_selector = gr.Dropdown(label="ComfyUI Prompt URL", choices=QUEUE_URLS, value=QUEUE_URLS[0], interactive=True)
@@ -403,50 +912,97 @@ with gr.Blocks(title="WorkFlower") as demo:
 
                     # make a tab for each workflow
                     with gr.TabItem(label=workflow_definitions[workflow_name]["name"]):
+                        info = gr.Markdown(workflow_definitions[workflow_name].get("description", ""))
+
                         with gr.Row():
+                            # main input construction
                             with gr.Column():
-                                # TODO: Figure out what this was supposed to do in the first place
+                                # also make a dictionary with the components' data
+                                components, component_dict = create_tab_interface(workflow_name)
+                                run_button = gr.Button("Run Workflow", variant="primary")
+
+                            with gr.Column():
+                                # TODO: Decide whether it's worth having to make a gif for each workflow tab
                                 # with gr.Row():
                                 #     preview_gif = gr.Image(
                                 #         label="Preview GIF",
                                 #         value=update_gif(workflow_name),
                                 #     )
-                                info = gr.Markdown(
-                                    workflow_definitions[workflow_name].get("description", "")
+
+                                # TODO: is it possible to preview only an output that was produced by this workflow tab? otherwise this should probably exist outside of the workflow tab
+                                gr.Markdown("### Output Preview")
+                                with gr.Group():
+                                    if output_type == "image":
+                                        output_player = gr.Image(show_label=False, interactive=False)
+                                    else:
+                                        output_player = gr.Video(show_label=False, autoplay=True, loop=True, interactive=False)
+                                    #output_filepath_component = gr.Markdown("N/A")
+                                    
+                                    tick_timer.tick(
+                                        fn=check_for_new_content,
+                                        outputs=[output_player],
+                                        show_progress="hidden"
+                                    )
+                                    
+                                with gr.Group(visible=False) as gen_progress_group:
+                                    gen_component = gr.Textbox(label="Generation Progress", interactive=False, visible=True)
+                                
+                                    tick_timer.tick(
+                                        fn=check_progress,
+                                        outputs=gen_component, 
+                                        show_progress="full"
+                                    )
+
+                                tick_timer.tick(
+                                    fn=check_gen_progress_visibility, 
+                                    outputs=gen_progress_group,
+                                    show_progress="hidden"
                                 )
-                            
-                            # main input construction
-                            with gr.Column():
-                                run_button = gr.Button("Run Workflow")
-                                # also make a dictionary with the components' data
-                                components, component_dict = create_tab_interface(workflow_name)
-                                #print(f"Components: {components}")
-                            
-                            # TODO: Add support for video/image preview of output, as well as real progress bar
-                            # output player construction
-                            #with gr.Column():
-                                # output_type = workflow_definitions[workflow_name]["outputs"].get(
-                                #     "type", ""
-                                # )
 
-                                # if output_type == "video":
-                                #     output_player = gr.Video(
-                                #         label="Output Video", autoplay=True
-                                #     )
-                                # elif output_type == "image":
-                                #     output_player = gr.Image(label="Output Image")
+                                with gr.Group(visible=False) as queue_progress_group:
+                                    queue_info_component = gr.Textbox(label="Queue Info", interactive=False, visible=True)
 
-                        # TODO: investigate trigger_mode=multiple for run_button.click event
+                                    tick_timer.tick(
+                                        fn=check_queue, 
+                                        outputs=queue_info_component, 
+                                        show_progress="full"
+                                    )
+                                    
+                                tick_timer.tick(
+                                    fn=check_interrupt_visibility, 
+                                    outputs=queue_progress_group,
+                                    show_progress="hidden"
+                                )
+
+                                with gr.Group():
+                                    vram_usage_component = gr.Textbox(label="VRAM Usage", interactive=False, visible=True)
+                                    
+                                    tick_timer.tick(
+                                        fn=check_vram, 
+                                        outputs=[vram_usage_component], 
+                                        show_progress="full"
+                                    )
+
+                                with gr.Group() as interrupt_group:
+                                    interrupt_button = gr.Button("Interrupt", visible=True, variant="stop")
+                                    interrupt_button.click(fn=post_interrupt)
+                                
+                                tick_timer.tick(
+                                    fn=check_interrupt_visibility, 
+                                    outputs=interrupt_group, 
+                                    show_progress="hidden"
+                                )
+
+                                output_type = workflow_definitions[workflow_name]["outputs"].get("type", "")
+                                output_prefix = workflow_definitions[workflow_name]["inputs"]["output-specifications"]["inputs"]["filename-prefix"].get("value", "")
 
                         if (selected_port_url is not None) and (components is not None) and (component_dict is not None):
-                                run_button.click(
-                                fn=run_workflow_with_name(workflow_filename, components, component_dict[workflow_name]),
+                            run_button.click(
+                                fn=run_workflow_with_name(workflow_filename, components, component_dict),
                                 inputs=components,
-                                # TODO: Add support for video/image preview of output, as well as real progress bar
-                                #outputs=[output_player],
+                                #outputs=[gen_component],
                                 trigger_mode="multiple",
+                                #show_progress="full"
                             )
-                        
-   
 
-    demo.launch(favicon_path="favicon.png")
+    demo.launch(allowed_paths=[".."], favicon_path="favicon.png")

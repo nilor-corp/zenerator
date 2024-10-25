@@ -1,5 +1,5 @@
 {
-  "COMFY_URL": "http://127.0.0.1:",
+  "COMFY_IP": "127.0.0.1",
   "COMFY_PORTS": ["8188", "6969"],
   "COMFY_ROOT": "../ComfyUI/",
   "User": "test"
