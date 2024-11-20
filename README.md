@@ -41,11 +41,12 @@ pip install comfy-cli
 ```
 comfy --workspace=ComfyUI install
 comfy set-default ComfyUI
-mkdir .\ComfyUI\output\WorkFlower
+<!-- mkdir .\ComfyUI\output\WorkFlower -->
+deactivate
 ```
 
 ### Install Models
-```py
+```
 cd ComfyUI
 rm -rf models #if unix
 rmdir models #if win. Answer yes if prompted
@@ -60,7 +61,10 @@ cd ..
 cp .\zenerator\ComfyUI-Manager-Snapshots\2024-08-08_17-26-15_snapshot.json .\ComfyUI\custom_nodes\ComfyUI-Manager\snapshots\
 -------------------
 cd zenerator
+python -m venv venv
+.\venv\Scripts\activate
 python -m pip install -r requirements.txt
+deactivate
 ```
 
 ### Env Variables
@@ -72,8 +76,9 @@ NILOR_API_URI=https://api.nilor.cool/api
 
 ### Provision comfy UI
 
-```py
-cd .. # should be in nilor-corp dir root
+```
+cd .. # should put you in nilor-corp dir root
+.\venv\Scripts\activate
 comfy launch
 ```
 - once launched, navigate to comfyUI in browser  http://127.0.0.1:8188
