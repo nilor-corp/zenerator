@@ -297,6 +297,10 @@ loras = get_lora_filenames(LORA_DIR)
 
 #region Content Getters
 def get_all_images(folder):
+    if not os.path.exists(folder):
+        os.makedirs(folder)
+        return []
+    
     files = os.listdir(folder)
     image_files = [
         f for f in files if f.lower().endswith(("png", "jpg", "jpeg", "gif"))
@@ -327,6 +331,10 @@ def get_latest_image_with_prefix(folder, prefix):
 #     return image_count
 
 def get_all_videos(folder):
+    if not os.path.exists(folder):
+        os.makedirs(folder)
+        return []
+    
     files = os.listdir(folder)
     video_files = [
         f for f in files if f.lower().endswith(("mp4", "mov"))
