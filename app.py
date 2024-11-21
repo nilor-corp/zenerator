@@ -19,6 +19,9 @@ import uuid
 #import urllib.request
 #import urllib.parse
 
+import signal
+import sys
+
 with open("config.json") as f:
     config = json.load(f)
 
@@ -38,6 +41,35 @@ LORA_DIR = os.path.abspath(config["COMFY_ROOT"] + "models/loras/")
 INPUTS_DIR = os.path.abspath("./inputs/")
 
 output_type = ""
+
+running = True
+threads = []
+
+def signal_handler(signum, frame):
+    global running
+    print("\nShutdown signal received. Cleaning up...")
+    running = False
+    
+    # Stop all monitoring loops
+    check_vram_running = False
+    check_queue_running = False
+    check_progress_running = False
+    
+    # Close WebSocket
+    if ws:
+        try:
+            ws.close()
+        except websocket.WebSocketException as e:
+            print(f"Error closing websocket: {e}")
+        except ConnectionError as e:
+            print(f"Connection error while closing: {e}")
+    
+    # Wait for threads to finish
+    for thread in threads:
+        if thread.is_alive():
+            thread.join(timeout=2.0)
+    
+    sys.exit(0)
 
 def select_correct_port(selector):
     print(f"Selected Port URL: {selector}")
@@ -87,17 +119,20 @@ def reconnect(client_id, max_retries=5):
 #     return json.loads(urllib.request.urlopen(req).read())
 
 def send_heartbeat(ws):
-    while ws and ws.connected:
+    while ws and ws.connected and running:  # Add running check
         try:
             ws.ping()
             time_as_string = datetime.now().strftime("%H:%M:%S")
             print(f"Heartbeat at {time_as_string}")
-            time.sleep(1)  # Send a ping every second
+            time.sleep(1)
         except websocket.WebSocketConnectionClosedException:
             print("WebSocket connection closed, stopping heartbeat")
             break
+        except ConnectionError as e:
+            print(f"Connection error in heartbeat: {e}")
+            break
         except Exception as e:
-            print(f"Heartbeat failed: {e}")
+            print(f"Unexpected error in heartbeat: {type(e).__name__}: {e}")
             break
 
 check_current_progress_running = False
@@ -106,57 +141,52 @@ def check_current_progress(ws):
     global check_current_progress_running, current_progress_data
 
     check_current_progress_running = True
-    #prompt_id = queue_prompt(prompt)['prompt_id']
-    output_images = {}
-    progress_time = time.time()
-    #print(f"Time: {progress_time}")
 
-    while check_current_progress_running:
-        out = ws.recv()
-        if isinstance(out, str):
-            message = json.loads(out)
-            #print(f"Message: {message}")
-            if message['type'] == 'executing':
-                data = message['data']
-                if data['node'] is None and data['prompt_id'] == prompt_id:
-                   check_current_progress_running = False
-                   break #Execution is done
-            elif message['type'] == 'status':
-                data = message['data']
-                queue_remaining = data['status']['exec_info']['queue_remaining']
-                print("Queue remaining: " + str(queue_remaining))
-            elif message['type'] == 'execution_start':
-                executing = True
-                print("Executing!")
-            elif message['type'] == 'executed':
-                data = message['data']
-                prompt_id = data['prompt_id']
-                print("Executed : " + prompt_id)
-                #task: Task = self._tasks.get(prompt_id)
-            elif message['type'] == 'progress':
-                data = message['data']
-                current_progress_data = data
-                #progress_time_used = str(round((time.time() - start_time) / 60, 2))
+    while check_current_progress_running and ws and ws.connected:  # Add running check
+        try:
+            out = ws.recv()
+            if not out:  # Check if we received empty data
+                break
                 
-                #print(f"Progress: {data}")
-                #print("Progress is " + str(data['value']) + "/" + str(data['max']) + "time " + progress_time_used + " min")
-                #print("Progress is " + str(data['value']) + "/" + str(data['max']))
-                progress_time = time.time()
-        else:
-            continue #previews are binary data
+            if isinstance(out, str):
+                try:
+                    message = json.loads(out)
+                    #print(f"Message: {message}")
+                    if message['type'] == 'executing':
+                        data = message['data']
+                        if data['node'] is None and data['prompt_id'] == prompt_id:
+                           check_current_progress_running = False
+                           break #Execution is done
+                    elif message['type'] == 'status':
+                        data = message['data']
+                        queue_remaining = data['status']['exec_info']['queue_remaining']
+                        print("Queue remaining: " + str(queue_remaining))
+                    elif message['type'] == 'execution_start':
+                        executing = True
+                        print("Executing!")
+                    elif message['type'] == 'executed':
+                        data = message['data']
+                        prompt_id = data['prompt_id']
+                        print("Executed : " + prompt_id)
+                    elif message['type'] == 'progress':
+                        data = message['data']
+                        current_progress_data = data
+                except json.JSONDecodeError:
+                    print("Received invalid JSON data, skipping...")
+                    continue
+            else:
+                continue #previews are binary data
 
-    # history = get_history(prompt_id)[prompt_id]
-    # for o in history['outputs']:
-    #     for node_id in history['outputs']:
-    #         node_output = history['outputs'][node_id]
-    #         if 'images' in node_output:
-    #             images_output = []
-    #             for image in node_output['images']:
-    #                 image_data = get_image(image['filename'], image['subfolder'], image['type'])
-    #                 images_output.append(image_data)
-    #         output_images[node_id] = images_output
+        except websocket.WebSocketConnectionClosedException:
+            print("WebSocket connection closed, stopping progress check")
+            break
+        except Exception as e:
+            print(f"Error in progress check: {type(e).__name__}: {e}")
+            break
 
-    return output_images
+    check_current_progress_running = False
+    current_progress_data = {}
+
 #endregion
 
 #region POST REQUESTS
@@ -862,15 +892,17 @@ def create_tab_interface(workflow_name):
 
 
 def load_demo():
-    global ws, tick_timer, check_vram_running, previous_vram_used, check_queue_running, previous_queue_info, current_queue_info, check_progress_running, previous_progress_data
+    global ws, tick_timer, threads
     print("Loading the demo!!!")
 
     # Close any existing connection
     if ws:
         try:
             ws.close()
-        except:
-            pass
+        except websocket.WebSocketException as e:
+            print(f"Error closing existing websocket: {e}")
+        except ConnectionError as e:
+            print(f"Connection error while closing: {e}")
 
     tick_timer = gr.Timer(value=1.0)
     ws = connect_to_websocket(client_id)
@@ -879,25 +911,20 @@ def load_demo():
         try:
             # Start threading after connecting
             print(f"WebSocket connection attempt")
-            threading.Thread(target=send_heartbeat, args=(ws,), daemon=True).start()
-            threading.Thread(target=check_current_progress, args=(ws,), daemon=True).start()
+            heartbeat_thread = threading.Thread(target=send_heartbeat, args=(ws,), daemon=True)
+            progress_thread = threading.Thread(target=check_current_progress, args=(ws,), daemon=True)
+            
+            threads = [heartbeat_thread, progress_thread]
+            for thread in threads:
+                thread.start()
+                
         except websocket.WebSocketConnectionClosedException as e:
             print(f"WebSocket connection closed: {e}")
             ws = reconnect(ws, client_id)
         except Exception as e:
-            print(f"An error occurred: {e}")
+            print(f"An error occurred: {type(e).__name__}: {e}")
 
-    # Reset all state variables
-    check_vram_running = False
-    previous_vram_used = -1.0
-
-    check_queue_running = False
-    previous_queue_info = [-1, -1, -1, -1, -1, -1]
-    current_queue_info = [-1, -1, -1, -1, -1, -1]
-
-    check_progress_running = False
-    previous_progress_data = {}
-
+    # Reset state variables...
 
 def unload_demo():
     global ws, tick_timer, check_vram_running, check_queue_running, check_progress_running
@@ -922,9 +949,17 @@ def unload_demo():
             print(f"Connection error while closing: {e}")
         ws = None
 
-        ws = None
-
     time.sleep(2.0)
+
+# Move these to the top level, before the Blocks creation
+def setup_signal_handlers():
+    if threading.current_thread() is threading.main_thread():
+        try:
+            signal.signal(signal.SIGINT, signal_handler)  # Ctrl+C
+            signal.signal(signal.SIGTERM, signal_handler)  # Termination request
+            print("Signal handlers set up successfully")
+        except ValueError as e:
+            print(f"Could not set up signal handlers: {e}")
 
 custom_css = """
 .group-label {
@@ -943,7 +978,6 @@ html {
 with gr.Blocks(title="WorkFlower", theme=gr.themes.Ocean(font=gr.themes.GoogleFont("DM Sans")), css=custom_css) as demo:
     tick_timer = gr.Timer(value=1.0)
     demo.load(fn=load_demo)
-
     demo.unload(fn=unload_demo)
 
     with gr.Row():
@@ -1057,4 +1091,13 @@ with gr.Blocks(title="WorkFlower", theme=gr.themes.Ocean(font=gr.themes.GoogleFo
                 show_progress="hidden"
             )
 
-    demo.launch(allowed_paths=[".."], favicon_path="favicon.png")
+
+    if __name__ == "__main__":
+        setup_signal_handlers()
+        demo.launch(
+            allowed_paths=[
+                OUT_DIR,      
+                LORA_DIR,
+                INPUTS_DIR
+            ]
+        )
