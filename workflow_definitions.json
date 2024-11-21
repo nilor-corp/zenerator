@@ -29,7 +29,8 @@
                         "label": "Raw Frame Count",
                         "node-id": "[\"111\"][\"inputs\"][\"int\"]",
                         "value": 180,
-                        "minimum": 12
+                        "minimum": 12,
+                        "info": "= (final frame count) / (frame interpolation)"
                     },
                     "frame_interp": {
                         "type": "int",
@@ -37,7 +38,8 @@
                         "node-id": "[\"190\"][\"inputs\"][\"multiplier\"]",
                         "value": 3,
                         "minimum": 1,
-                        "maximum": 10
+                        "maximum": 10,
+                        "info": "RIFE multiplier"
                     },
                     "filename-prefix": {
                         "type": "string",

@@ -711,6 +711,7 @@ def process_input(input_context, input_key):
     input_minimum = input_details.get("minimum", None)
     input_maximum = input_details.get("maximum", None)
     input_step = input_details.get("step", 1)
+    input_info = input_details.get("info", None)  # New: optional info field
 
     # Define a mapping of input types to Gradio components
     component_map = {
@@ -748,7 +749,7 @@ def process_input(input_context, input_key):
                     with gr.Row(equal_height=True):
                         # Checkbox component which enables Group
                         component_constructor = component_map.get(input_type)
-                        group_toggle = component_constructor(label=input_label, elem_id=input_key, value=input_value, interactive=input_interactive, scale=100)
+                        group_toggle = component_constructor(label=input_label, elem_id=input_key, value=input_value, interactive=input_interactive, scale=100, info=input_info)
                         
                         # Compact Reset button with reduced width, initially hidden
                         reset_button = gr.Button("↺", visible=False, elem_id="reset-button", scale=1, variant="secondary", min_width=5)
@@ -801,7 +802,7 @@ def process_input(input_context, input_key):
                 with gr.Row(equal_height=True):
                     # Use the mapping to create components based on input_type
                     component_constructor = component_map.get(input_type)
-                    component = component_constructor(label=input_label, elem_id=input_key, value=input_value, minimum=input_minimum, maximum=input_maximum, step=input_step, interactive=input_interactive, scale=100)
+                    component = component_constructor(label=input_label, elem_id=input_key, value=input_value, minimum=input_minimum, maximum=input_maximum, step=input_step, interactive=input_interactive, scale=100, info=input_info)
 
                     # Compact Reset button with reduced width, initially hidden
                     reset_button = gr.Button("↺", visible=False, elem_id="reset-button", scale=1, variant="secondary", min_width=5)
@@ -823,7 +824,7 @@ def process_input(input_context, input_key):
                 with gr.Row(equal_height=True):
                     # Use the mapping to create components based on input_type
                     component_constructor = component_map.get(input_type)
-                    component = component_constructor(label=input_label, elem_id=input_key, value=input_value, interactive=input_interactive, scale=100)
+                    component = component_constructor(label=input_label, elem_id=input_key, value=input_value, interactive=input_interactive, scale=100, info=input_info)
 
                     # Compact Reset button with reduced width, initially hidden
                     reset_button = gr.Button("↺", visible=False, elem_id="reset-button", scale=1, variant="secondary", min_width=5)
@@ -878,7 +879,7 @@ def create_tab_interface(workflow_name):
         component_data_dict.update(sub_dict_values)
 
     with gr.Accordion("Constants", open=False):
-        gr.Markdown("You can edit these constants in workflow_definitions.json if you know what you're doing.")
+        gr.Markdown("You can edit these constants in `workflow_definitions.json` if you know what you're doing.")
         
         for input_key in noninteractive_inputs:
             [sub_components, sub_dict_values] = process_input(key_context, input_key)
