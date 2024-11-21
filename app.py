@@ -618,7 +618,7 @@ def create_dynamic_input(input_type, choices, tooltips, text_label, identifier):
             ]
 
 
-        output = gr.Markdown(elem_id=identifier)
+        output = gr.Markdown(elem_id=identifier, elem_classes="group-label")
         # output = os.path.abspath(output)
 
     # modify visibility of inputs based on selected_option
