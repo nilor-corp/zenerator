@@ -1,4 +1,61 @@
 {
+    "default":{
+        "name": "Default",
+        "filename": "default.json",
+        "description": "Use this workflow to test that everything is working.",
+        "inputs": {
+            "output-specifications": {
+                "type": "group",
+                "label": "Output Specifications",
+                "inputs": {
+                    "width": {
+                        "type": "int",
+                        "label": "Output Width",
+                        "node-id": "[\"9\"][\"inputs\"][\"width\"]",
+                        "value": 512,
+                        "minimum": 256,
+                        "maximum": 1024
+                    },
+                    "height": {
+                        "type": "int",
+                        "label": "Output Height",
+                        "node-id": "[\"9\"][\"inputs\"][\"height\"]",
+                        "value": 512,
+                        "minimum": 256,
+                        "maximum": 1024
+                    },
+                    "filename-prefix": {
+                        "type": "string",
+                        "label": "Output Filename Prefix",
+                        "node-id": "[\"37\"][\"inputs\"][\"filename_prefix\"]",
+                        "value": "Zenerator/default"
+                    }
+                }
+            },
+            "prompting":{
+                "type": "group",
+                "label": "Text Prompting",
+                "inputs": {
+                    "text-01": {
+                        "type": "text",
+                        "label": "Positive",
+                        "node-id": "[\"3\"][\"inputs\"][\"text\"]",
+                        "value": "a woman outdoors with cherry blossom"
+                    },
+                    "text-02": {
+                        "type": "text",
+                        "label": "Negative",
+                        "node-id": "[\"6\"][\"inputs\"][\"text\"]",
+                        "value": "blurry, distorted, nsfw"
+                    }
+                }
+            }
+            
+        },
+        "outputs": {
+            "type": "video"
+        }
+    },
     "square":{
         "name": "Square",
         "filename": "general.json",
@@ -45,7 +102,7 @@
                         "type": "string",
                         "label": "Output Video Filename Prefix",
                         "node-id": "[\"191\"][\"inputs\"][\"filename_prefix\"]",
-                        "value": "WorkFlower/zenon_general"
+                        "value": "Zenerator/zenon_general"
                     }
                 }
             },
@@ -269,7 +326,7 @@
                         "type": "string",
                         "label": "Output Video Filename Prefix",
                         "node-id": "[\"191\"][\"inputs\"][\"filename_prefix\"]",
-                        "value": "WorkFlower/zenon_general"
+                        "value": "Zenerator/zenon_general"
                     }
                 }
             },
