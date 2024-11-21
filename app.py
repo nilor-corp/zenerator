@@ -36,7 +36,7 @@ selected_port_url = QUEUE_URLS[0]
 
 print(QUEUE_URLS)
 
-OUT_DIR = os.path.abspath(config["COMFY_ROOT"] + "output/WorkFlower/")
+OUT_DIR = os.path.abspath(config["COMFY_ROOT"] + "output/Zenerator/")
 LORA_DIR = os.path.abspath(config["COMFY_ROOT"] + "models/loras/")
 INPUTS_DIR = os.path.abspath("./inputs/")
 
@@ -975,7 +975,7 @@ html {
 }
 """    
 
-with gr.Blocks(title="WorkFlower", theme=gr.themes.Ocean(font=gr.themes.GoogleFont("DM Sans")), css=custom_css) as demo:
+with gr.Blocks(title="Zenerator", theme=gr.themes.Ocean(font=gr.themes.GoogleFont("DM Sans")), css=custom_css) as demo:
     tick_timer = gr.Timer(value=1.0)
     demo.load(fn=load_demo)
     demo.unload(fn=unload_demo)
@@ -988,7 +988,7 @@ with gr.Blocks(title="WorkFlower", theme=gr.themes.Ocean(font=gr.themes.GoogleFo
                 with gr.TabItem(label="About"):
                     with gr.Row():
                         gr.Markdown(
-                            "WorkFlower is a tool for creating and running workflows.\n\n"
+                            "Zenerator is a tool for creating and running workflows.\n\n"
                             "Select a workflow from the tabs above and fill in the parameters.\n\n"
                             "Click 'Run Workflow' to start the workflow.  ",
                             #"The output video will be displayed below."
