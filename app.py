@@ -387,7 +387,11 @@ def check_vram(progress=gr.Progress()):
     while check_vram_running:
         [system_stats, devices] = get_system_stats()
         
-        vram_used = 1.0
+        # if system_stats is None or len(devices) == 0:
+        #     progress(progress=0.0)
+            # vram_used = 0.0
+
+        vram_used = 0.0
         if (len(devices) > 0):
             vram_free = devices[0].get("vram_free")
             vram_total = devices[0].get("vram_total")
