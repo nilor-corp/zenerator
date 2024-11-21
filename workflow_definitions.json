@@ -495,7 +495,8 @@
                 "label": "Steps",
                 "node-id": "[\"540\"][\"inputs\"][\"int\"]",
                 "value": 20,
-                "interactive": false
+                "interactive": false,
+                "info": "Number of upscaling steps"
             }
         },
         "outputs": {
@@ -538,7 +539,8 @@
                 "label": "Steps",
                 "node-id": "[\"541\"][\"inputs\"][\"int\"]",
                 "value": 20,
-                "interactive": false
+                "interactive": false,
+                "info": "Number of upscaling steps"
             }
         },
         "outputs": {
