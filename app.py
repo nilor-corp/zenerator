@@ -87,12 +87,15 @@ def reconnect(client_id, max_retries=5):
 #     return json.loads(urllib.request.urlopen(req).read())
 
 def send_heartbeat(ws):
-    while ws.connected:
+    while ws and ws.connected:
         try:
             ws.ping()
             time_as_string = datetime.now().strftime("%H:%M:%S")
             print(f"Heartbeat at {time_as_string}")
-            time.sleep(1)  # Send a ping every 30 seconds
+            time.sleep(1)  # Send a ping every second
+        except websocket.WebSocketConnectionClosedException:
+            print("WebSocket connection closed, stopping heartbeat")
+            break
         except Exception as e:
             print(f"Heartbeat failed: {e}")
             break
@@ -862,6 +865,13 @@ def load_demo():
     global ws, tick_timer, check_vram_running, previous_vram_used, check_queue_running, previous_queue_info, current_queue_info, check_progress_running, previous_progress_data
     print("Loading the demo!!!")
 
+    # Close any existing connection
+    if ws:
+        try:
+            ws.close()
+        except:
+            pass
+
     tick_timer = gr.Timer(value=1.0)
     ws = connect_to_websocket(client_id)
 
@@ -877,6 +887,7 @@ def load_demo():
         except Exception as e:
             print(f"An error occurred: {e}")
 
+    # Reset all state variables
     check_vram_running = False
     previous_vram_used = -1.0
 
@@ -886,23 +897,32 @@ def load_demo():
 
     check_progress_running = False
     previous_progress_data = {}
+
 
 def unload_demo():
-    global ws, tick_timer, check_vram_running, previous_vram_used, check_queue_running, previous_queue_info, current_queue_info, check_progress_running, previous_progress_data
+    global ws, tick_timer, check_vram_running, check_queue_running, check_progress_running
     print("Unloading the demo...")
 
-    tick_timer.active = False
-    ws.close()
-
+    # Stop all monitoring loops
     check_vram_running = False
-    previous_vram_used = -1.0
-
     check_queue_running = False
-    previous_queue_info = [-1, -1, -1, -1, -1, -1]
-    current_queue_info = [-1, -1, -1, -1, -1, -1]
-
     check_progress_running = False
-    previous_progress_data = {}
+
+    # Deactivate timer
+    if tick_timer:
+        tick_timer.active = False
+
+    # Close WebSocket connection
+    if ws:
+        try:
+            ws.close()
+        except websocket.WebSocketException as e:
+            print(f"Error closing websocket: {e}")
+        except ConnectionError as e:
+            print(f"Connection error while closing: {e}")
+        ws = None
+
+        ws = None
 
     time.sleep(2.0)
 
