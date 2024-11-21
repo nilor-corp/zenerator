@@ -934,10 +934,11 @@ with gr.Blocks(title="WorkFlower", theme=gr.themes.Ocean(font=gr.themes.GoogleFo
                 with gr.TabItem(label="About"):
                     with gr.Row():
                         gr.Markdown(
-                            "WorkFlower is a tool for creating and running workflows. "
-                            "Select a workflow from the tabs above and fill in the parameters. "
-                            "Click 'Run Workflow' to start the workflow. "
+                            "WorkFlower is a tool for creating and running workflows.\n\n"
+                            "Select a workflow from the tabs above and fill in the parameters.\n\n"
+                            "Click 'Run Workflow' to start the workflow.  ",
                             #"The output video will be displayed below."
+                            line_breaks=True,
                         )
                 for workflow_name in workflow_definitions.keys():
                     workflow_filename = workflow_definitions[workflow_name]["filename"]
