@@ -60,7 +60,7 @@ def connect_to_websocket(client_id):
     ws = websocket.WebSocket()
     try:
         #TODO: make this work for multiple ports
-        ws.connect(f"ws://{config["COMFY_IP"]}:{config["COMFY_PORTS"][0]}/ws?clientId={client_id}")
+        ws.connect(f"ws://{config['COMFY_IP']}:{config['COMFY_PORTS'][0]}/ws?clientId={client_id}")
         print("Connected to WebSocket!")
     except ConnectionResetError as e:
         print(f"Connection was reset: {e}")
