@@ -921,7 +921,7 @@ with gr.Blocks(title="WorkFlower", theme=gr.themes.Ocean(font=gr.themes.GoogleFo
     demo.unload(fn=unload_demo)
 
     with gr.Row():
-        with gr.Column():
+        with gr.Column(scale=5):
 
             tabs = gr.Tabs()
             with tabs:
@@ -966,7 +966,7 @@ with gr.Blocks(title="WorkFlower", theme=gr.themes.Ocean(font=gr.themes.GoogleFo
                             output_type = workflow_definitions[workflow_name]["outputs"].get("type", "")
                             #output_prefix = workflow_definitions[workflow_name]["inputs"]["output-specifications"]["inputs"]["filename-prefix"].get("value", "")
                         
-        with gr.Column():
+        with gr.Column(scale=4):
             # TODO: is it possible to preview only an output that was produced by this workflow tab? otherwise this should probably exist outside of the workflow tab
             gr.Markdown("### Output Preview")
             with gr.Group():
