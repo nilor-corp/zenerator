@@ -1100,5 +1100,5 @@ with gr.Blocks(title="Zenerator", theme=gr.themes.Ocean(font=gr.themes.GoogleFon
                 OUT_DIR,      
                 LORA_DIR,
                 INPUTS_DIR
-            ]
+            ], favicon_path="favicon.png"
         )
