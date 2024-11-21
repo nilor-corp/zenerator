@@ -601,7 +601,7 @@ def process_dynamic_input(selected_option, possible_options, input_type, *option
         return None
 
 def create_dynamic_input(input_type, choices, tooltips, text_label, identifier):
-    gr.Markdown(f"##### {input_type.capitalize()} Input")    
+    gr.Markdown(f"##### {input_type.capitalize()} Input", elem_classes="group-label")    
     with gr.Group():            
         selected_option = gr.Radio(choices, label=text_label, value=choices[0])
         print(f"Choices: {choices}")
@@ -697,7 +697,7 @@ def process_input(input_context, input_key):
     with gr.Group():
         if input_type in component_map:
             if input_type == "group":
-                gr.Markdown(f"##### {input_label}")    
+                gr.Markdown(f"##### {input_label}", elem_classes="group-label")    
                 
                 with gr.Group():
                     # Group of inputs
@@ -905,8 +905,8 @@ def unload_demo():
     time.sleep(2.0)
 
 custom_css = """
-.hide-container {
-    padding: .5rem;
+.group-label {
+    padding: .25rem;
 }
 
 #workflow-info {
