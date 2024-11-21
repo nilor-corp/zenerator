@@ -899,7 +899,13 @@ def unload_demo():
 
     time.sleep(2.0)
 
-with gr.Blocks(title="WorkFlower") as demo:
+custom_css = """
+.hide-container {
+    padding: .5rem;
+}
+"""
+
+with gr.Blocks(title="WorkFlower", theme=gr.themes.Ocean(font=gr.themes.GoogleFont("DM Sans")), css=custom_css) as demo:
     tick_timer = gr.Timer(value=1.0)
     demo.load(fn=load_demo)
 
