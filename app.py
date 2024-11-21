@@ -90,7 +90,8 @@ def send_heartbeat(ws):
     while ws.connected:
         try:
             ws.ping()
-            print("Heartbeat")
+            time_as_string = datetime.now().strftime("%H:%M:%S")
+            print(f"Heartbeat at {time_as_string}")
             time.sleep(1)  # Send a ping every 30 seconds
         except Exception as e:
             print(f"Heartbeat failed: {e}")
