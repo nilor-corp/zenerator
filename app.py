@@ -928,14 +928,15 @@ with gr.Blocks(title="WorkFlower") as demo:
                         with gr.Row():
                             # main input construction
                             with gr.Column():
+                                with gr.Group():
+                                    with gr.Row(equal_height=True):
+                                        comfy_url_and_port_selector = gr.Dropdown(label="ComfyUI Port", choices=COMFY_PORTS, value=COMFY_PORTS[0], interactive=True, scale=1)
+                                        print(f"Default ComfyUI Port: {comfy_url_and_port_selector.value}")
+                                        comfy_url_and_port_selector.change(select_correct_port, inputs=[comfy_url_and_port_selector])    
+                                        run_button = gr.Button("Run Workflow", variant="primary", scale=2)
+
                                 # also make a dictionary with the components' data
                                 components, component_dict = create_tab_interface(workflow_name)
-
-                            comfy_url_and_port_selector = gr.Dropdown(label="ComfyUI Port", choices=COMFY_PORTS, value=COMFY_PORTS[0], interactive=True)
-                            print(f"Default ComfyUI Port: {comfy_url_and_port_selector.value}")
-                            comfy_url_and_port_selector.change(select_correct_port, inputs=[comfy_url_and_port_selector])
-
-                            run_button = gr.Button("Run Workflow", variant="primary")
                         
                             if (selected_port_url is not None) and (components is not None) and (component_dict is not None):
                                 run_button.click(
