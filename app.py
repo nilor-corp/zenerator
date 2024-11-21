@@ -29,24 +29,26 @@ COMFY_IP = config["COMFY_IP"]
 COMFY_PORTS = config["COMFY_PORTS"]
 QUEUE_URLS = []
 
+OUT_DIR = os.path.abspath(config["COMFY_ROOT"] + "output/Zenerator/")
+LORA_DIR = os.path.abspath(config["COMFY_ROOT"] + "models/loras/")
+INPUTS_DIR = os.path.abspath("./inputs/")
+
 for port in COMFY_PORTS:
     QUEUE_URLS.append(f"http://{COMFY_IP}:{port}")
 
 selected_port_url = QUEUE_URLS[0]
 
-print(QUEUE_URLS)
-
-OUT_DIR = os.path.abspath(config["COMFY_ROOT"] + "output/Zenerator/")
-LORA_DIR = os.path.abspath(config["COMFY_ROOT"] + "models/loras/")
-INPUTS_DIR = os.path.abspath("./inputs/")
-
-output_type = ""
-
 running = True
+output_type = ""
 threads = []
+queue = []
+prompt = {}
+status = {}
+previous_content = ""
+tick_timer = None
 
 def signal_handler(signum, frame):
-    global running
+    global running, tick_timer, threads
     print("\nShutdown signal received. Cleaning up...")
     running = False
     
@@ -54,6 +56,11 @@ def signal_handler(signum, frame):
     check_vram_running = False
     check_queue_running = False
     check_progress_running = False
+
+    # Deactivate timer
+    if tick_timer:
+        tick_timer.active = False
+    tick_timer = None
     
     # Close WebSocket
     if ws:
@@ -76,13 +83,6 @@ def select_correct_port(selector):
     global selected_port_url 
     selected_port_url = f"http://{COMFY_IP}:{selector}"
     print(f"Changed Port URL to: {selected_port_url}")
-
-queue = []
-
-prompt = {}
-status = {}
-
-previous_content = ""
 
 #region WEBSOCKET
 ws = None
@@ -691,17 +691,17 @@ def make_visible():
     return gr.update(visible=True)
 
 def watch_input(component, default_value, elem_id):
-    print(f"Equals Default Value? {component == default_value}")
-    if component != default_value:
-        # Return HTML to change the background color when value changes
-        # html = f"<style>#{elem_id}  {{ background: #30435d; }}"
-        html = ""
-        return gr.update(value=html, visible=True), gr.update(visible=True)
-    else:
+    resetter_visibility = False
+    if component == default_value:
         # Return HTML to reset background color when value matches default
-        # html = f"<style>#{elem_id}  {{ background: var(--input-background-fill); }}"
         html = ""
-        return gr.update(value=html, visible=False), gr.update(visible=False)
+        resetter_visibility = False
+    else:
+        # Return HTML to change the background color when does NOT match default
+        html = f"<style>#{elem_id}  {{ background: var(--background-fill-secondary); }}</style>"
+        resetter_visibility = True
+
+    return gr.update(value=html, visible=resetter_visibility), gr.update(visible=resetter_visibility)
 
 def reset_input(default_value):
     return default_value
@@ -716,7 +716,8 @@ def process_input(input_context, input_key):
     input_minimum = input_details.get("minimum", None)
     input_maximum = input_details.get("maximum", None)
     input_step = input_details.get("step", 1)
-    input_info = input_details.get("info", None)  # New: optional info field
+    input_choices = input_details.get("choices", None)
+    input_info = input_details.get("info", None)
 
     # Define a mapping of input types to Gradio components
     component_map = {
@@ -729,15 +730,21 @@ def process_input(input_context, input_key):
         "float": gr.Number,
         "int": gr.Number,
         "slider": gr.Slider,
+        "radio": gr.Radio, # True radios collect their options from the workflow_definitions.json
         "group": None,
         "toggle-group": gr.Checkbox
     }
     
+    component = None
+    reset_button = None
     components = []
     components_dict = {}
 
     with gr.Group():
         if input_type in component_map:
+            # Use the mapping to find Gradio component based on input_type
+            component_constructor = component_map.get(input_type)
+
             if input_type == "group":
                 gr.Markdown(f"##### {input_label}", elem_classes="group-label")    
                 
@@ -754,97 +761,75 @@ def process_input(input_context, input_key):
                 with gr.Group():
                     with gr.Row(equal_height=True):
                         # Checkbox component which enables Group
-                        component_constructor = component_map.get(input_type)
-                        group_toggle = component_constructor(label=input_label, elem_id=input_key, value=input_value, interactive=input_interactive, scale=100, info=input_info)
+                        component = component_constructor(label=input_label, elem_id=input_key, value=input_value, interactive=input_interactive, scale=100, info=input_info)
                         
                         # Compact Reset button with reduced width, initially hidden
                         reset_button = gr.Button("↺", visible=False, elem_id="reset-button", scale=1, variant="secondary", min_width=5)
-                        # Trigger the reset function when the button is clicked
-                        reset_button.click(fn=reset_input, inputs=[gr.State(input_value)], outputs=group_toggle, queue=False, show_progress="hidden")
-
-                        # Trigger the reset check when the value of the input changes
-                        html_output = gr.HTML(visible=False)
-                        group_toggle.change(fn=watch_input, inputs=[group_toggle, gr.State(input_value), gr.State(input_key)], outputs=[html_output, reset_button], queue=False, show_progress="hidden")
+                   
                     # Group of inputs (initially hidden)
-                    with gr.Group(visible=group_toggle.value) as input_group:
-                        # Use the mapping to create components based on input_type
-                        components.append(group_toggle)
-                        components_dict[input_key] = input_details
-
+                    with gr.Group(visible=component.value) as input_group:
                         sub_context = input_context[input_key]["inputs"]
                         for group_input_key in sub_context:
                             [sub_components, sub_dict_values] = process_input(sub_context, group_input_key)
+
                             components.extend(sub_components)
                             components_dict.update(sub_dict_values)
 
                 # Update the group visibility based on the checkbox
-                group_toggle.change(fn=toggle_group, inputs=group_toggle, outputs=input_group, queue=False, show_progress="hidden")
+                component.change(fn=toggle_group, inputs=component, outputs=input_group, queue=False, show_progress="hidden")
             elif input_type == "images":
                 # print("!!!!!!!!!!!!!!!!!!!!!!!\nMaking Radio")
-                selected_option, inputs, output = create_dynamic_input(
+                selected_option, inputs, component = create_dynamic_input(
                     input_type,
                     choices=["filepath", "nilor collection", "upload"], 
                     tooltips=["Enter the path of the directory of images and press Enter to submit", "Enter the name of the Nilor Collection and press Enter to resolve"],
                     text_label="Select Input Type", 
                     identifier=input_key
                 )
-
-                # Only append the output (Markdown element) to the components list
-                components.append(output)
-                components_dict[input_key] = input_details
             elif input_type == "video":
-                selected_option, inputs, output = create_dynamic_input(
+                selected_option, inputs, component = create_dynamic_input(
                     input_type,
                     choices=["filepath", "upload"], 
                     tooltips=["Enter the path of the directory of video and press Enter to submit"],
                     text_label="Select Input Type", 
                     identifier=input_key
                 )
-
-                # Only append the output (Markdown element) to the components list
-                component = components.append(output)
-                components_dict[input_key] = input_details
             elif input_type == "float" or input_type == "int" or input_type == "slider":
-                with gr.Row():
+                with gr.Row(equal_height=True):
                     # Use the mapping to create components based on input_type
-                    component_constructor = component_map.get(input_type)
                     component = component_constructor(label=input_label, elem_id=input_key, value=input_value, minimum=input_minimum, maximum=input_maximum, step=input_step, interactive=input_interactive, scale=100, info=input_info)
 
                     # Compact Reset button with reduced width, initially hidden
                     reset_button = gr.Button("↺", visible=False, elem_id="reset-button", scale=1, variant="secondary", min_width=5)
-                    # Trigger the reset function when the button is clicked
-                    reset_button.click(fn=reset_input, inputs=[gr.State(input_value)], outputs=component, queue=False, show_progress="hidden")
-
-                # Trigger the reset check when the value of the input changes
-                html_output = gr.HTML(visible=False)
-                component.change(fn=watch_input, inputs=[component, gr.State(input_value), gr.State(input_key)], outputs=[html_output, reset_button], queue=False, show_progress="hidden")
-
-                components.append(component)
-                components_dict[input_key] = input_details
-
-                # print(f"Component Constructor: {component_constructor}")
+            elif input_type == "radio":
+                with gr.Row(equal_height=True):
+                    # Use the mapping to create components based on input_type
+                    component = component_constructor(label=input_label, elem_id=input_key, choices=input_choices, value=input_value, scale=100, info=input_info)
+                    
+                    # Compact Reset button with reduced width, initially hidden
+                    reset_button = gr.Button("↺", visible=False, elem_id="reset-button", scale=1, variant="secondary", min_width=5)
             else:
                 if input_type == "path" and input_value is not None:
                     input_value = os.path.abspath(input_value)
                     
                 with gr.Row(equal_height=True):
                     # Use the mapping to create components based on input_type
-                    component_constructor = component_map.get(input_type)
                     component = component_constructor(label=input_label, elem_id=input_key, value=input_value, interactive=input_interactive, scale=100, info=input_info)
 
                     # Compact Reset button with reduced width, initially hidden
                     reset_button = gr.Button("↺", visible=False, elem_id="reset-button", scale=1, variant="secondary", min_width=5)
-                    # Trigger the reset function when the button is clicked
-                    reset_button.click(fn=reset_input, inputs=[gr.State(input_value)], outputs=component, queue=False, show_progress="hidden")
 
-                # Trigger the reset check when the value of the input changes
-                html_output = gr.HTML(visible=False)
-                component.change(fn=watch_input, inputs=[component, gr.State(input_value), gr.State(input_key)], outputs=[html_output, reset_button], queue=False, show_progress="hidden")
-
+            if component is not None:
                 components.append(component)
                 components_dict[input_key] = input_details
+                
+                if reset_button is not None:
+                    # Trigger the reset check when the value of the input changes
+                    html_output = gr.HTML(visible=False)
+                    component.change(fn=watch_input, inputs=[component, gr.State(input_value), gr.State(input_key)], outputs=[html_output, reset_button], queue=False, show_progress="hidden")
 
-                # print(f"Component Constructor: {component_constructor}")
+                    # Trigger the reset function when the button is clicked
+                    reset_button.click(fn=reset_input, inputs=[gr.State(input_value)], outputs=component, queue=False, show_progress="hidden")
         else:
             print(f"Whoa! Unsupported input type: {input_type}")
 
@@ -960,12 +945,11 @@ def unload_demo():
 
     time.sleep(2.0)
 
-# Move these to the top level, before the Blocks creation
 def setup_signal_handlers():
     if threading.current_thread() is threading.main_thread():
         try:
-            signal.signal(signal.SIGINT, signal_handler)  # Ctrl+C
-            signal.signal(signal.SIGTERM, signal_handler)  # Termination request
+            signal.signal(signal.SIGINT, signal_handler)    # Ctrl+C
+            signal.signal(signal.SIGTERM, signal_handler)   # Termination request
             print("Signal handlers set up successfully")
         except ValueError as e:
             print(f"Could not set up signal handlers: {e}")
@@ -991,16 +975,14 @@ with gr.Blocks(title="Zenerator", theme=gr.themes.Ocean(font=gr.themes.GoogleFon
 
     with gr.Row():
         with gr.Column(scale=5):
-
             tabs = gr.Tabs()
             with tabs:
                 with gr.TabItem(label="About"):
                     with gr.Row():
                         gr.Markdown(
-                            "Zenerator is a tool for creating and running workflows.\n\n"
+                            "Zenerator is a tool by Nilor Corp for creating and running generative AI workflows.\n\n"
                             "Select a workflow from the tabs above and fill in the parameters.\n\n"
                             "Click 'Run Workflow' to start the workflow.  ",
-                            #"The output video will be displayed below."
                             line_breaks=True,
                         )
                 for workflow_name in workflow_definitions.keys():
@@ -1008,7 +990,6 @@ with gr.Blocks(title="Zenerator", theme=gr.themes.Ocean(font=gr.themes.GoogleFon
 
                     # make a tab for each workflow
                     with gr.TabItem(label=workflow_definitions[workflow_name]["name"]):
-
                         with gr.Row():
                             # main input construction
                             with gr.Column():
@@ -1016,25 +997,15 @@ with gr.Blocks(title="Zenerator", theme=gr.themes.Ocean(font=gr.themes.GoogleFon
                                     with gr.Row(equal_height=True):
                                         comfy_url_and_port_selector = gr.Dropdown(label="ComfyUI Port", choices=COMFY_PORTS, value=COMFY_PORTS[0], interactive=True, scale=1)
                                         print(f"Default ComfyUI Port: {comfy_url_and_port_selector.value}")
-                                        comfy_url_and_port_selector.change(select_correct_port, inputs=[comfy_url_and_port_selector])    
-                                        run_button = gr.Button("Run Workflow", variant="primary", scale=3)
+                                        comfy_url_and_port_selector.change(select_correct_port, inputs=[comfy_url_and_port_selector])
+                                        run_button = gr.Button("Run Depth+", variant="primary", scale=3, elem_id="run-button")
                                     with gr.Accordion("Workflow Info", open=False, elem_id="workflow-info"):
                                         info = gr.Markdown(workflow_definitions[workflow_name].get("description", ""))
 
                                 # also make a dictionary with the components' data
                                 components, component_dict = create_tab_interface(workflow_name)
-                        
-                            if (selected_port_url is not None) and (components is not None) and (component_dict is not None):
-                                run_button.click(
-                                    fn=run_workflow_with_name(workflow_filename, components, component_dict),
-                                    inputs=components,
-                                    #outputs=[gen_component],
-                                    trigger_mode="multiple",
-                                    #show_progress="full"
-                                )
 
                             output_type = workflow_definitions[workflow_name]["outputs"].get("type", "")
-                            #output_prefix = workflow_definitions[workflow_name]["inputs"]["output-specifications"]["inputs"]["filename-prefix"].get("value", "")
                         
         with gr.Column(scale=4):
             # TODO: is it possible to preview only an output that was produced by this workflow tab? otherwise this should probably exist outside of the workflow tab
@@ -1043,7 +1014,12 @@ with gr.Blocks(title="Zenerator", theme=gr.themes.Ocean(font=gr.themes.GoogleFon
                 if output_type == "image":
                     output_player = gr.Image(show_label=False, interactive=False)
                 else:
-                    output_player = gr.Video(show_label=False, autoplay=True, loop=True, interactive=False)
+                    # populate the Output Preview with the latest video in the output directory 
+                    latest_content = get_latest_video(OUT_DIR)
+                    if (latest_content is not None):
+                        output_player = gr.Video(value=latest_content, show_label=False, autoplay=True, loop=True, interactive=False)
+                    else:
+                        output_player = gr.Video(show_label=False, autoplay=True, loop=True, interactive=False)
                 #output_filepath_component = gr.Markdown("N/A")
                 
                 tick_timer.tick(
@@ -1100,7 +1076,15 @@ with gr.Blocks(title="Zenerator", theme=gr.themes.Ocean(font=gr.themes.GoogleFon
                 outputs=interrupt_group, 
                 show_progress="hidden"
             )
-
+            
+        if (selected_port_url is not None) and (components is not None) and (component_dict is not None):
+            run_button.click(
+                fn=run_workflow_with_name(workflow_filename, components, component_dict),
+                inputs=components,
+                #outputs=[gen_component],
+                trigger_mode="multiple",
+                #show_progress="full"
+            )
 
     if __name__ == "__main__":
         setup_signal_handlers()
