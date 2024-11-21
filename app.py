@@ -912,6 +912,10 @@ custom_css = """
 #workflow-info {
     background-image: linear-gradient(120deg, var(--neutral-800) 0%, var(--neutral-900) 70%, var(--primary-800) 100%);
 }
+
+html {
+    overflow-y: scroll; /* Always show vertical scrollbar */
+}
 """    
 
 with gr.Blocks(title="WorkFlower", theme=gr.themes.Ocean(font=gr.themes.GoogleFont("DM Sans")), css=custom_css) as demo:
