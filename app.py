@@ -97,6 +97,12 @@ def connect_to_websocket(client_id):
         print(f"Connection was reset: {e}")
         #reconnect(client_id, 20)
         return None
+    except Exception as e:
+        print(f"Exception while connecting: {e}")
+        #reconnect(client_id, 20)
+        return None
+    
+    print("Connected to WebSocket successfully!")
     return ws
 
 def reconnect(client_id, max_retries=5):
@@ -905,6 +911,7 @@ def load_demo():
             print(f"Error closing existing websocket: {e}")
         except ConnectionError as e:
             print(f"Connection error while closing: {e}")
+        ws = None
 
     tick_timer = gr.Timer(value=1.0)
     ws = connect_to_websocket(client_id)
