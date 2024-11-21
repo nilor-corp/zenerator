@@ -1010,7 +1010,7 @@ with gr.Blocks(title="Zenerator", theme=gr.themes.Ocean(font=gr.themes.GoogleFon
                                         comfy_url_and_port_selector = gr.Dropdown(label="ComfyUI Port", choices=COMFY_PORTS, value=COMFY_PORTS[0], interactive=True, scale=1)
                                         print(f"Default ComfyUI Port: {comfy_url_and_port_selector.value}")
                                         comfy_url_and_port_selector.change(select_correct_port, inputs=[comfy_url_and_port_selector])    
-                                        run_button = gr.Button("Run Workflow", variant="primary", scale=2)
+                                        run_button = gr.Button("Run Workflow", variant="primary", scale=3)
                                     with gr.Accordion("Workflow Info", open=False, elem_id="workflow-info"):
                                         info = gr.Markdown(workflow_definitions[workflow_name].get("description", ""))
 
