@@ -656,11 +656,13 @@ def watch_input(component, default_value, elem_id):
     print(f"Equals Default Value? {component == default_value}")
     if component != default_value:
         # Return HTML to change the background color when value changes
-        html = f"<style>#{elem_id}  {{ background: #30435d; }}"
+        # html = f"<style>#{elem_id}  {{ background: #30435d; }}"
+        html = ""
         return gr.update(value=html, visible=True), gr.update(visible=True)
     else:
         # Return HTML to reset background color when value matches default
-        html = f"<style>#{elem_id}  {{ background: var(--input-background-fill); }}"
+        # html = f"<style>#{elem_id}  {{ background: var(--input-background-fill); }}"
+        html = ""
         return gr.update(value=html, visible=False), gr.update(visible=False)
 
 def reset_input(default_value):
@@ -710,7 +712,7 @@ def process_input(input_context, input_key):
                             components_dict.update(sub_dict_values)
             elif input_type == "toggle-group":
                 with gr.Group():
-                    with gr.Row():
+                    with gr.Row(equal_height=True):
                         # Checkbox component which enables Group
                         component_constructor = component_map.get(input_type)
                         group_toggle = component_constructor(label=input_label, elem_id=input_key, value=input_value, interactive=input_interactive, scale=100)
@@ -763,7 +765,7 @@ def process_input(input_context, input_key):
                 component = components.append(output)
                 components_dict[input_key] = input_details
             elif input_type == "float" or input_type == "int":
-                with gr.Row():
+                with gr.Row(equal_height=True):
                     # Use the mapping to create components based on input_type
                     component_constructor = component_map.get(input_type)
                     component = component_constructor(label=input_label, elem_id=input_key, value=input_value, minimum=input_minimum, maximum=input_maximum, step=input_step, interactive=input_interactive, scale=100)
@@ -785,7 +787,7 @@ def process_input(input_context, input_key):
                 if input_type == "path":
                     input_value = os.path.abspath(input_value)
                     
-                with gr.Row():
+                with gr.Row(equal_height=True):
                     # Use the mapping to create components based on input_type
                     component_constructor = component_map.get(input_type)
                     component = component_constructor(label=input_label, elem_id=input_key, value=input_value, interactive=input_interactive, scale=100)
