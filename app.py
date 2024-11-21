@@ -93,11 +93,16 @@ def connect_to_websocket(client_id):
     try:
         #TODO: make this work for multiple ports
         ws.connect(f"ws://{config['COMFY_IP']}:{config['COMFY_PORTS'][0]}/ws?clientId={client_id}")
-        print("Connected to WebSocket!")
     except ConnectionResetError as e:
         print(f"Connection was reset: {e}")
         #reconnect(client_id, 20)
         return None
+    except Exception as e:
+        print(f"Exception while connecting: {e}")
+        #reconnect(client_id, 20)
+        return None
+    
+    print("Connected to WebSocket successfully!")
     return ws
 
 def reconnect(client_id, max_retries=5):
@@ -723,6 +728,7 @@ def process_input(input_context, input_key):
         "bool": gr.Checkbox,
         "float": gr.Number,
         "int": gr.Number,
+        "slider": gr.Slider,
         "group": None,
         "toggle-group": gr.Checkbox
     }
@@ -798,8 +804,8 @@ def process_input(input_context, input_key):
                 # Only append the output (Markdown element) to the components list
                 component = components.append(output)
                 components_dict[input_key] = input_details
-            elif input_type == "float" or input_type == "int":
-                with gr.Row(equal_height=True):
+            elif input_type == "float" or input_type == "int" or input_type == "slider":
+                with gr.Row():
                     # Use the mapping to create components based on input_type
                     component_constructor = component_map.get(input_type)
                     component = component_constructor(label=input_label, elem_id=input_key, value=input_value, minimum=input_minimum, maximum=input_maximum, step=input_step, interactive=input_interactive, scale=100, info=input_info)
@@ -818,7 +824,7 @@ def process_input(input_context, input_key):
 
                 # print(f"Component Constructor: {component_constructor}")
             else:
-                if input_type == "path":
+                if input_type == "path" and input_value is not None:
                     input_value = os.path.abspath(input_value)
                     
                 with gr.Row(equal_height=True):
@@ -905,6 +911,7 @@ def load_demo():
             print(f"Error closing existing websocket: {e}")
         except ConnectionError as e:
             print(f"Connection error while closing: {e}")
+        ws = None
 
     tick_timer = gr.Timer(value=1.0)
     ws = connect_to_websocket(client_id)
