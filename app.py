@@ -908,7 +908,11 @@ custom_css = """
 .hide-container {
     padding: .5rem;
 }
-"""
+
+#workflow-info {
+    background-image: linear-gradient(120deg, var(--neutral-800) 0%, var(--neutral-900) 70%, var(--primary-800) 100%);
+}
+"""    
 
 with gr.Blocks(title="WorkFlower", theme=gr.themes.Ocean(font=gr.themes.GoogleFont("DM Sans")), css=custom_css) as demo:
     tick_timer = gr.Timer(value=1.0)
@@ -934,7 +938,6 @@ with gr.Blocks(title="WorkFlower", theme=gr.themes.Ocean(font=gr.themes.GoogleFo
 
                     # make a tab for each workflow
                     with gr.TabItem(label=workflow_definitions[workflow_name]["name"]):
-                        info = gr.Markdown(workflow_definitions[workflow_name].get("description", ""))
 
                         with gr.Row():
                             # main input construction
@@ -945,6 +948,8 @@ with gr.Blocks(title="WorkFlower", theme=gr.themes.Ocean(font=gr.themes.GoogleFo
                                         print(f"Default ComfyUI Port: {comfy_url_and_port_selector.value}")
                                         comfy_url_and_port_selector.change(select_correct_port, inputs=[comfy_url_and_port_selector])    
                                         run_button = gr.Button("Run Workflow", variant="primary", scale=2)
+                                    with gr.Accordion("Workflow Info", open=False, elem_id="workflow-info"):
+                                        info = gr.Markdown(workflow_definitions[workflow_name].get("description", ""))
 
                                 # also make a dictionary with the components' data
                                 components, component_dict = create_tab_interface(workflow_name)
