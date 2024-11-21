@@ -878,13 +878,14 @@ def create_tab_interface(workflow_name):
         interactive_components.extend(sub_components)
         component_data_dict.update(sub_dict_values)
 
-    with gr.Accordion("Constants", open=False):
-        gr.Markdown("You can edit these constants in `workflow_definitions.json` if you know what you're doing.")
+    if noninteractive_inputs:
+        with gr.Accordion("Constants", open=False):
+            gr.Markdown("You can edit these constants in `workflow_definitions.json` if you know what you're doing.")
         
-        for input_key in noninteractive_inputs:
-            [sub_components, sub_dict_values] = process_input(key_context, input_key)
-            noninteractive_components.extend(sub_components)
-            component_data_dict.update(sub_dict_values)
+            for input_key in noninteractive_inputs:
+                [sub_components, sub_dict_values] = process_input(key_context, input_key)
+                noninteractive_components.extend(sub_components)
+                component_data_dict.update(sub_dict_values)
 
     components.extend(interactive_components)
     components.extend(noninteractive_components)
