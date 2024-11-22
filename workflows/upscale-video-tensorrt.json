@@ -21,10 +21,7 @@
       "empty_latent_height": 640,
       "batch_size": 64
     },
-    "class_type": "Efficient Loader",
-    "_meta": {
-      "title": "Efficient Loader"
-    }
+    "class_type": "Efficient Loader"
   },
   "245": {
     "inputs": {
@@ -45,10 +42,7 @@
         0
       ]
     },
-    "class_type": "ADE_AnimateDiffLoaderWithContext",
-    "_meta": {
-      "title": "AnimateDiff Loader [Legacy] 🎭🅐🅓①"
-    }
+    "class_type": "ADE_AnimateDiffLoaderWithContext"
   },
   "246": {
     "inputs": {
@@ -61,19 +55,13 @@
       "start_percent": 0,
       "guarantee_steps": 1
     },
-    "class_type": "ADE_LoopedUniformContextOptions",
-    "_meta": {
-      "title": "Context Options◆Looped Uniform 🎭🅐🅓"
-    }
+    "class_type": "ADE_LoopedUniformContextOptions"
   },
   "250": {
     "inputs": {
       "ipadapter_file": "ip-adapter-plus_sd15.safetensors"
     },
-    "class_type": "IPAdapterModelLoader",
-    "_meta": {
-      "title": "IPAdapter Model Loader"
-    }
+    "class_type": "IPAdapterModelLoader"
   },
   "253": {
     "inputs": {
@@ -97,28 +85,19 @@
         0
       ]
     },
-    "class_type": "ACN_AdvancedControlNetApply",
-    "_meta": {
-      "title": "Apply Advanced ControlNet 🛂🅐🅒🅝"
-    }
+    "class_type": "ACN_AdvancedControlNetApply"
   },
   "254": {
     "inputs": {
       "control_net_name": "motion_controlnet_checkpoint.ckpt"
     },
-    "class_type": "ControlNetLoaderAdvanced",
-    "_meta": {
-      "title": "Load Advanced ControlNet Model 🛂🅐🅒🅝"
-    }
+    "class_type": "ControlNetLoaderAdvanced"
   },
   "303": {
     "inputs": {
       "clip_name": "ip-adapter_image_encoder_sd15.safetensors"
     },
-    "class_type": "CLIPVisionLoader",
-    "_meta": {
-      "title": "Load CLIP Vision"
-    }
+    "class_type": "CLIPVisionLoader"
   },
   "310": {
     "inputs": {
@@ -130,20 +109,14 @@
         0
       ]
     },
-    "class_type": "IPAdapterNoise",
-    "_meta": {
-      "title": "IPAdapter Noise"
-    }
+    "class_type": "IPAdapterNoise"
   },
   "336": {
     "inputs": {
       "name": "WAS26.safetensors",
       "strength": 0.6
     },
-    "class_type": "ADE_AnimateDiffLoRALoader",
-    "_meta": {
-      "title": "Load AnimateDiff LoRA 🎭🅐🅓"
-    }
+    "class_type": "ADE_AnimateDiffLoRALoader"
   },
   "356": {
     "inputs": {
@@ -158,17 +131,14 @@
         0
       ]
     },
-    "class_type": "RIFE VFI",
-    "_meta": {
-      "title": "RIFE VFI (recommend rife47 and rife49)"
-    }
+    "class_type": "RIFE VFI"
   },
   "357": {
     "inputs": {
       "frame_rate": 24,
       "loop_count": 0,
       "filename_prefix": [
-        "450",
+        "554",
         0
       ],
       "format": "video/h264-mp4",
@@ -182,10 +152,7 @@
         0
       ]
     },
-    "class_type": "VHS_VideoCombine",
-    "_meta": {
-      "title": "Video Combine 🎥🅥🅗🅢"
-    }
+    "class_type": "VHS_VideoCombine"
   },
   "365": {
     "inputs": {
@@ -194,10 +161,7 @@
         0
       ]
     },
-    "class_type": "ImpactImageInfo",
-    "_meta": {
-      "title": "ImpactImageInfo"
-    }
+    "class_type": "ImpactImageInfo"
   },
   "366": {
     "inputs": {
@@ -207,10 +171,7 @@
         1
       ]
     },
-    "class_type": "easy showAnything",
-    "_meta": {
-      "title": "Show Any"
-    }
+    "class_type": "easy showAnything"
   },
   "367": {
     "inputs": {
@@ -220,158 +181,25 @@
         2
       ]
     },
-    "class_type": "easy showAnything",
-    "_meta": {
-      "title": "Show Any"
-    }
+    "class_type": "easy showAnything"
   },
   "419": {
     "inputs": {
       "string": "G:\\Shared drives\\nilor\\Projects\\011_Vivid_Zenon_Emirates\\03_Development\\Generation Outputs\\141\\zenon_blocky_rife-1_00003.mp4"
     },
-    "class_type": "Primitive string [Crystools]",
-    "_meta": {
-      "title": "Input Video"
-    }
+    "class_type": "Primitive string [Crystools]"
   },
   "426": {
     "inputs": {
       "string": "extremely detailed"
     },
-    "class_type": "Primitive string multiline [Crystools]",
-    "_meta": {
-      "title": "Positive Prompt"
-    }
+    "class_type": "Primitive string multiline [Crystools]"
   },
   "427": {
     "inputs": {
       "string": "blurry, glitches, artifact, distorted, malformed, nsfw"
     },
-    "class_type": "Primitive string multiline [Crystools]",
-    "_meta": {
-      "title": "Negative Prompt"
-    }
-  },
-  "437": {
-    "inputs": {
-      "source": [
-        "419",
-        0
-      ],
-      "split_by": "\\",
-      "from_right": "true"
-    },
-    "class_type": "JWStringSplit",
-    "_meta": {
-      "title": "String Split"
-    }
-  },
-  "439": {
-    "inputs": {
-      "text": "zenon_blocky_rife-1_00003.mp4",
-      "anything": [
-        "437",
-        1
-      ]
-    },
-    "class_type": "easy showAnything",
-    "_meta": {
-      "title": "Show Any"
-    }
-  },
-  "443": {
-    "inputs": {
-      "a": [
-        "452",
-        0
-      ],
-      "b": [
-        "447",
-        0
-      ]
-    },
-    "class_type": "JWStringConcat",
-    "_meta": {
-      "title": "String Concatenate"
-    }
-  },
-  "447": {
-    "inputs": {
-      "source": [
-        "437",
-        1
-      ],
-      "split_by": ".",
-      "from_right": "true"
-    },
-    "class_type": "JWStringSplit",
-    "_meta": {
-      "title": "String Split"
-    }
-  },
-  "448": {
-    "inputs": {
-      "text": "zenon_blocky_rife-1_00003",
-      "anything": [
-        "447",
-        0
-      ]
-    },
-    "class_type": "easy showAnything",
-    "_meta": {
-      "title": "Show Any"
-    }
-  },
-  "450": {
-    "inputs": {
-      "a": [
-        "443",
-        0
-      ],
-      "b": [
-        "538",
-        0
-      ]
-    },
-    "class_type": "JWStringConcat",
-    "_meta": {
-      "title": "String Concatenate"
-    }
-  },
-  "452": {
-    "inputs": {
-      "string": "Workflower/"
-    },
-    "class_type": "Primitive string [Crystools]",
-    "_meta": {
-      "title": "🪛 Primitive string"
-    }
-  },
-  "453": {
-    "inputs": {
-      "text": "Workflower/zenon_blocky_rife-1_00003",
-      "anything": [
-        "443",
-        0
-      ]
-    },
-    "class_type": "easy showAnything",
-    "_meta": {
-      "title": "Show Any"
-    }
-  },
-  "454": {
-    "inputs": {
-      "text": "Workflower/_hr_ult_rife",
-      "anything": [
-        "450",
-        0
-      ]
-    },
-    "class_type": "easy showAnything",
-    "_meta": {
-      "title": "Show Any"
-    }
+    "class_type": "Primitive string multiline [Crystools]"
   },
   "509": {
     "inputs": {
@@ -387,10 +215,7 @@
       "skip_first_frames": 0,
       "select_every_nth": 2
     },
-    "class_type": "VHS_LoadVideoPath",
-    "_meta": {
-      "title": "Load Video (Path) 🎥🅥🅗🅢"
-    }
+    "class_type": "VHS_LoadVideoPath"
   },
   "535": {
     "inputs": {
@@ -421,10 +246,7 @@
         0
       ]
     },
-    "class_type": "IPAdapterBatch",
-    "_meta": {
-      "title": "IPAdapter Batch (Adv.)"
-    }
+    "class_type": "IPAdapterBatch"
   },
   "536": {
     "inputs": {
@@ -455,19 +277,7 @@
         0
       ]
     },
-    "class_type": "IPAdapterBatch",
-    "_meta": {
-      "title": "IPAdapter Batch (Adv.)"
-    }
-  },
-  "538": {
-    "inputs": {
-      "string": "_hr_ult_rife"
-    },
-    "class_type": "Primitive string [Crystools]",
-    "_meta": {
-      "title": "🪛 Primitive string"
-    }
+    "class_type": "IPAdapterBatch"
   },
   "539": {
     "inputs": {
@@ -513,32 +323,183 @@
         4
       ]
     },
-    "class_type": "UltimateSDUpscaleNoUpscale",
-    "_meta": {
-      "title": "Ultimate SD Upscale (No Upscale)"
-    }
+    "class_type": "UltimateSDUpscaleNoUpscale"
   },
   "540": {
     "inputs": {
-      "engine": "realistic.engine",
-      "resize_to": "none",
       "images": [
         "509",
         0
       ]
-    },
-    "class_type": "UpscalerTensorrt",
-    "_meta": {
-      "title": "Upscaler Tensorrt"
     }
   },
   "541": {
     "inputs": {
       "int": 20
     },
-    "class_type": "Primitive integer [Crystools]",
-    "_meta": {
-      "title": "Steps"
-    }
+    "class_type": "Primitive integer [Crystools]"
+  },
+  "542": {
+    "inputs": {
+      "source": [
+        "419",
+        0
+      ],
+      "split_by": "\\",
+      "from_right": "true"
+    },
+    "class_type": "JWStringSplit"
+  },
+  "543": {
+    "inputs": {
+      "text": "general_00001.mp4",
+      "anything": [
+        "542",
+        1
+      ]
+    },
+    "class_type": "easy showAnything"
+  },
+  "544": {
+    "inputs": {
+      "a": [
+        "552",
+        1
+      ],
+      "b": [
+        "558",
+        0
+      ]
+    },
+    "class_type": "JWStringConcat"
+  },
+  "545": {
+    "inputs": {
+      "source": [
+        "542",
+        1
+      ],
+      "split_by": ".",
+      "from_right": "true"
+    },
+    "class_type": "JWStringSplit"
+  },
+  "546": {
+    "inputs": {
+      "a": [
+        "557",
+        0
+      ],
+      "b": [
+        "550",
+        0
+      ]
+    },
+    "class_type": "JWStringConcat"
+  },
+  "547": {
+    "inputs": {
+      "text": "Zenerator\\general_00001",
+      "anything": [
+        "557",
+        0
+      ]
+    },
+    "class_type": "easy showAnything"
+  },
+  "548": {
+    "inputs": {
+      "text": "Zenerator\\general_00001_upscale",
+      "anything": [
+        "546",
+        0
+      ]
+    },
+    "class_type": "easy showAnything"
+  },
+  "550": {
+    "inputs": {
+      "string": "_upscale"
+    },
+    "class_type": "Primitive string [Crystools]"
+  },
+  "551": {
+    "inputs": {
+      "text": "Zenerator",
+      "anything": [
+        "552",
+        1
+      ]
+    },
+    "class_type": "easy showAnything"
+  },
+  "552": {
+    "inputs": {
+      "source": [
+        "542",
+        0
+      ],
+      "split_by": "\\",
+      "from_right": "true"
+    },
+    "class_type": "JWStringSplit"
+  },
+  "553": {
+    "inputs": {
+      "text": "general_00001",
+      "anything": [
+        "545",
+        0
+      ]
+    },
+    "class_type": "easy showAnything"
+  },
+  "554": {
+    "inputs": {
+      "a": [
+        "557",
+        0
+      ],
+      "b": [
+        "555",
+        0
+      ]
+    },
+    "class_type": "JWStringConcat"
+  },
+  "555": {
+    "inputs": {
+      "string": "_upscale_rife"
+    },
+    "class_type": "Primitive string [Crystools]"
+  },
+  "556": {
+    "inputs": {
+      "text": "Zenerator\\general_00001_upscale_rife",
+      "anything": [
+        "554",
+        0
+      ]
+    },
+    "class_type": "easy showAnything"
+  },
+  "557": {
+    "inputs": {
+      "a": [
+        "544",
+        0
+      ],
+      "b": [
+        "545",
+        0
+      ]
+    },
+    "class_type": "JWStringConcat"
+  },
+  "558": {
+    "inputs": {
+      "string": "\\"
+    },
+    "class_type": "Primitive string [Crystools]"
   }
 }

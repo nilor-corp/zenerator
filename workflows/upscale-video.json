@@ -21,10 +21,7 @@
       "empty_latent_height": 640,
       "batch_size": 64
     },
-    "class_type": "Efficient Loader",
-    "_meta": {
-      "title": "Efficient Loader"
-    }
+    "class_type": "Efficient Loader"
   },
   "245": {
     "inputs": {
@@ -45,10 +42,7 @@
         0
       ]
     },
-    "class_type": "ADE_AnimateDiffLoaderWithContext",
-    "_meta": {
-      "title": "AnimateDiff Loader [Legacy] 🎭🅐🅓①"
-    }
+    "class_type": "ADE_AnimateDiffLoaderWithContext"
   },
   "246": {
     "inputs": {
@@ -61,19 +55,13 @@
       "start_percent": 0,
       "guarantee_steps": 1
     },
-    "class_type": "ADE_LoopedUniformContextOptions",
-    "_meta": {
-      "title": "Context Options◆Looped Uniform 🎭🅐🅓"
-    }
+    "class_type": "ADE_LoopedUniformContextOptions"
   },
   "250": {
     "inputs": {
       "ipadapter_file": "ip-adapter-plus_sd15.safetensors"
     },
-    "class_type": "IPAdapterModelLoader",
-    "_meta": {
-      "title": "IPAdapter Model Loader"
-    }
+    "class_type": "IPAdapterModelLoader"
   },
   "253": {
     "inputs": {
@@ -97,28 +85,19 @@
         0
       ]
     },
-    "class_type": "ACN_AdvancedControlNetApply",
-    "_meta": {
-      "title": "Apply Advanced ControlNet 🛂🅐🅒🅝"
-    }
+    "class_type": "ACN_AdvancedControlNetApply"
   },
   "254": {
     "inputs": {
       "control_net_name": "motion_controlnet_checkpoint.ckpt"
     },
-    "class_type": "ControlNetLoaderAdvanced",
-    "_meta": {
-      "title": "Load Advanced ControlNet Model 🛂🅐🅒🅝"
-    }
+    "class_type": "ControlNetLoaderAdvanced"
   },
   "303": {
     "inputs": {
       "clip_name": "ip-adapter_image_encoder_sd15.safetensors"
     },
-    "class_type": "CLIPVisionLoader",
-    "_meta": {
-      "title": "Load CLIP Vision"
-    }
+    "class_type": "CLIPVisionLoader"
   },
   "310": {
     "inputs": {
@@ -130,20 +109,14 @@
         0
       ]
     },
-    "class_type": "IPAdapterNoise",
-    "_meta": {
-      "title": "IPAdapter Noise"
-    }
+    "class_type": "IPAdapterNoise"
   },
   "336": {
     "inputs": {
       "name": "WAS26.safetensors",
       "strength": 0.6
     },
-    "class_type": "ADE_AnimateDiffLoRALoader",
-    "_meta": {
-      "title": "Load AnimateDiff LoRA 🎭🅐🅓"
-    }
+    "class_type": "ADE_AnimateDiffLoRALoader"
   },
   "356": {
     "inputs": {
@@ -158,17 +131,14 @@
         0
       ]
     },
-    "class_type": "RIFE VFI",
-    "_meta": {
-      "title": "RIFE VFI (recommend rife47 and rife49)"
-    }
+    "class_type": "RIFE VFI"
   },
   "357": {
     "inputs": {
       "frame_rate": 24,
       "loop_count": 0,
       "filename_prefix": [
-        "450",
+        "544",
         0
       ],
       "format": "video/h264-mp4",
@@ -182,10 +152,7 @@
         0
       ]
     },
-    "class_type": "VHS_VideoCombine",
-    "_meta": {
-      "title": "Video Combine 🎥🅥🅗🅢"
-    }
+    "class_type": "VHS_VideoCombine"
   },
   "365": {
     "inputs": {
@@ -194,10 +161,7 @@
         0
       ]
     },
-    "class_type": "ImpactImageInfo",
-    "_meta": {
-      "title": "ImpactImageInfo"
-    }
+    "class_type": "ImpactImageInfo"
   },
   "366": {
     "inputs": {
@@ -207,10 +171,7 @@
         1
       ]
     },
-    "class_type": "easy showAnything",
-    "_meta": {
-      "title": "Show Any"
-    }
+    "class_type": "easy showAnything"
   },
   "367": {
     "inputs": {
@@ -220,55 +181,37 @@
         2
       ]
     },
-    "class_type": "easy showAnything",
-    "_meta": {
-      "title": "Show Any"
-    }
+    "class_type": "easy showAnything"
   },
   "370": {
     "inputs": {
       "model_name": "4xLexicaDAT2_otf.pth"
     },
-    "class_type": "Upscale Model Loader",
-    "_meta": {
-      "title": "Upscale Model Loader"
-    }
+    "class_type": "Upscale Model Loader"
   },
   "419": {
     "inputs": {
-      "string": "G:\\Shared drives\\nilor\\Projects\\008_Vivid_Zenon_Site-Visit\\03_Development\\02_Outputs\\01_Zenon_Wide-ABCDE\\240925-142735_zenon_research_wide_rife-1_00001.mp4"
+      "string": "D:\\nilor-corp\\ComfyUI\\output\\Zenerator\\general_00001.mp4"
     },
-    "class_type": "Primitive string [Crystools]",
-    "_meta": {
-      "title": "Input Video"
-    }
+    "class_type": "Primitive string [Crystools]"
   },
   "422": {
     "inputs": {
       "float": 3
     },
-    "class_type": "Primitive float [Crystools]",
-    "_meta": {
-      "title": "Upscale By"
-    }
+    "class_type": "Primitive float [Crystools]"
   },
   "426": {
     "inputs": {
       "string": "extremely detailed"
     },
-    "class_type": "Primitive string multiline [Crystools]",
-    "_meta": {
-      "title": "Positive Prompt"
-    }
+    "class_type": "Primitive string multiline [Crystools]"
   },
   "427": {
     "inputs": {
       "string": "blurry, glitches, artifact, distorted, malformed, nsfw"
     },
-    "class_type": "Primitive string multiline [Crystools]",
-    "_meta": {
-      "title": "Negative Prompt"
-    }
+    "class_type": "Primitive string multiline [Crystools]"
   },
   "437": {
     "inputs": {
@@ -279,39 +222,30 @@
       "split_by": "\\",
       "from_right": "true"
     },
-    "class_type": "JWStringSplit",
-    "_meta": {
-      "title": "String Split"
-    }
+    "class_type": "JWStringSplit"
   },
   "439": {
     "inputs": {
-      "text": "240925-142735_zenon_research_wide_rife-1_00001.mp4",
+      "text": "general_00001.mp4",
       "anything": [
         "437",
         1
       ]
     },
-    "class_type": "easy showAnything",
-    "_meta": {
-      "title": "Show Any"
-    }
+    "class_type": "easy showAnything"
   },
   "443": {
     "inputs": {
       "a": [
-        "452",
-        0
+        "542",
+        1
       ],
       "b": [
-        "447",
+        "548",
         0
       ]
     },
-    "class_type": "JWStringConcat",
-    "_meta": {
-      "title": "String Concatenate"
-    }
+    "class_type": "JWStringConcat"
   },
   "447": {
     "inputs": {
@@ -322,28 +256,12 @@
       "split_by": ".",
       "from_right": "true"
     },
-    "class_type": "JWStringSplit",
-    "_meta": {
-      "title": "String Split"
-    }
-  },
-  "448": {
-    "inputs": {
-      "text": "240925-142735_zenon_research_wide_rife-1_00001",
-      "anything": [
-        "447",
-        0
-      ]
-    },
-    "class_type": "easy showAnything",
-    "_meta": {
-      "title": "Show Any"
-    }
+    "class_type": "JWStringSplit"
   },
   "450": {
     "inputs": {
       "a": [
-        "443",
+        "547",
         0
       ],
       "b": [
@@ -351,45 +269,27 @@
         0
       ]
     },
-    "class_type": "JWStringConcat",
-    "_meta": {
-      "title": "String Concatenate"
-    }
-  },
-  "452": {
-    "inputs": {
-      "string": "Workflower/"
-    },
-    "class_type": "Primitive string [Crystools]",
-    "_meta": {
-      "title": "🪛 Primitive string"
-    }
+    "class_type": "JWStringConcat"
   },
   "453": {
     "inputs": {
-      "text": "Workflower/240925-142735_zenon_research_wide_rife-1_00001",
+      "text": "Zenerator\\general_00001",
       "anything": [
-        "443",
+        "547",
         0
       ]
     },
-    "class_type": "easy showAnything",
-    "_meta": {
-      "title": "Show Any"
-    }
+    "class_type": "easy showAnything"
   },
   "454": {
     "inputs": {
-      "text": "upscale_research/ipa-batch_was26_cfg-60_denoise-40/frame",
+      "text": "Zenerator\\general_00001_upscale",
       "anything": [
         "450",
         0
       ]
     },
-    "class_type": "easy showAnything",
-    "_meta": {
-      "title": "Show Any"
-    }
+    "class_type": "easy showAnything"
   },
   "509": {
     "inputs": {
@@ -405,10 +305,7 @@
       "skip_first_frames": 0,
       "select_every_nth": 2
     },
-    "class_type": "VHS_LoadVideoPath",
-    "_meta": {
-      "title": "Load Video (Path) 🎥🅥🅗🅢"
-    }
+    "class_type": "VHS_LoadVideoPath"
   },
   "516": {
     "inputs": {
@@ -416,7 +313,7 @@
         "422",
         0
       ],
-      "seed": 1085172609402978,
+      "seed": 737774293063061,
       "steps": [
         "540",
         0
@@ -462,10 +359,7 @@
         0
       ]
     },
-    "class_type": "UltimateSDUpscale",
-    "_meta": {
-      "title": "Ultimate SD Upscale"
-    }
+    "class_type": "UltimateSDUpscale"
   },
   "535": {
     "inputs": {
@@ -496,10 +390,7 @@
         0
       ]
     },
-    "class_type": "IPAdapterBatch",
-    "_meta": {
-      "title": "IPAdapter Batch (Adv.)"
-    }
+    "class_type": "IPAdapterBatch"
   },
   "536": {
     "inputs": {
@@ -530,27 +421,97 @@
         0
       ]
     },
-    "class_type": "IPAdapterBatch",
-    "_meta": {
-      "title": "IPAdapter Batch (Adv.)"
-    }
+    "class_type": "IPAdapterBatch"
   },
   "538": {
     "inputs": {
-      "string": "_hr_ult_rife"
+      "string": "_upscale"
     },
-    "class_type": "Primitive string [Crystools]",
-    "_meta": {
-      "title": "🪛 Primitive string"
-    }
+    "class_type": "Primitive string [Crystools]"
   },
   "540": {
     "inputs": {
       "int": 20
     },
-    "class_type": "Primitive integer [Crystools]",
-    "_meta": {
-      "title": "Steps"
-    }
+    "class_type": "Primitive integer [Crystools]"
+  },
+  "541": {
+    "inputs": {
+      "text": "Zenerator",
+      "anything": [
+        "542",
+        1
+      ]
+    },
+    "class_type": "easy showAnything"
+  },
+  "542": {
+    "inputs": {
+      "source": [
+        "437",
+        0
+      ],
+      "split_by": "\\",
+      "from_right": "true"
+    },
+    "class_type": "JWStringSplit"
+  },
+  "543": {
+    "inputs": {
+      "text": "general_00001",
+      "anything": [
+        "447",
+        0
+      ]
+    },
+    "class_type": "easy showAnything"
+  },
+  "544": {
+    "inputs": {
+      "a": [
+        "547",
+        0
+      ],
+      "b": [
+        "545",
+        0
+      ]
+    },
+    "class_type": "JWStringConcat"
+  },
+  "545": {
+    "inputs": {
+      "string": "_upscale_rife"
+    },
+    "class_type": "Primitive string [Crystools]"
+  },
+  "546": {
+    "inputs": {
+      "text": "Zenerator\\general_00001_upscale_rife",
+      "anything": [
+        "544",
+        0
+      ]
+    },
+    "class_type": "easy showAnything"
+  },
+  "547": {
+    "inputs": {
+      "a": [
+        "443",
+        0
+      ],
+      "b": [
+        "447",
+        0
+      ]
+    },
+    "class_type": "JWStringConcat"
+  },
+  "548": {
+    "inputs": {
+      "string": "\\"
+    },
+    "class_type": "Primitive string [Crystools]"
   }
 }
