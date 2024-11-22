@@ -1005,7 +1005,15 @@ with gr.Blocks(title="Zenerator", theme=gr.themes.Ocean(font=gr.themes.GoogleFon
                                 # also make a dictionary with the components' data
                                 components, component_dict = create_tab_interface(workflow_name)
 
-                            output_type = workflow_definitions[workflow_name]["outputs"].get("type", "")
+                            output_type = workflow_definitions[workflow_name]["outputs"].get("type", "")  
+                                             
+                    run_button.click(
+                        fn=run_workflow_with_name(workflow_filename, components, component_dict),
+                        inputs=components,
+                        #outputs=[gen_component],
+                        trigger_mode="multiple",
+                        #show_progress="full"
+                    )
                         
         with gr.Column(scale=4):
             # TODO: is it possible to preview only an output that was produced by this workflow tab? otherwise this should probably exist outside of the workflow tab
@@ -1075,15 +1083,6 @@ with gr.Blocks(title="Zenerator", theme=gr.themes.Ocean(font=gr.themes.GoogleFon
                 fn=check_interrupt_visibility, 
                 outputs=interrupt_group, 
                 show_progress="hidden"
-            )
-            
-        if (selected_port_url is not None) and (components is not None) and (component_dict is not None):
-            run_button.click(
-                fn=run_workflow_with_name(workflow_filename, components, component_dict),
-                inputs=components,
-                #outputs=[gen_component],
-                trigger_mode="multiple",
-                #show_progress="full"
             )
 
     if __name__ == "__main__":
