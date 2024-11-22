@@ -1,10 +1,10 @@
 ---
 title: Zenerator 
-emoji: 😎
+emoji: ☯️
 colorFrom: green
 colorTo: purple
 sdk: gradio
-sdk_version: 4.20.0
+sdk_version: 5.6.0
 app_file: app.py
 pinned: false
 license: apache-2.0
@@ -13,18 +13,19 @@ license: apache-2.0
 Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
 
 
-# Installing Zenerator
+# Zenerator
 
-## Dependencies:
-- python
-- cuda version 12.11
-- ssh connection to nilor corp HF organization: https://huggingface.co/nilor-corp
-- git lfs
+## Dependencies
+- Python
+- Cuda version 12.11
+- SSH connection to Nilor Corp HuggingFace organization: https://huggingface.co/nilor-corp
+- Git and LFS
 
 
 ## Installation
-these commands have only been tested using adminsistrative powershell so far
-### setup python environment
+**Disclaimer:** These commands have only been tested using Powershell with Administrative privileges so far.
+
+### Setup the Python environment
 ```
 mkdir nilor-corp
 cd nilor-corp
@@ -41,43 +42,39 @@ pip install comfy-cli
 ```
 comfy --workspace=ComfyUI install
 comfy set-default ComfyUI
-<!-- mkdir .\ComfyUI\output\WorkFlower -->
-deactivate
 ```
 
 ### Install Models
 ```
 cd ComfyUI
-rm -rf models #if unix
-rmdir models #if win. Answer yes if prompted
+rm -rf models   #if unix
+rmdir models    #if win. Answer yes if prompted
 git clone git@hf.co:nilor-corp/zenerator-models models
+cd ..   # should put you in .\nilor-corp\ dir
 ```
 
 ### Install Workflower
+- in the `.\nilor-corp\` dir:
 ```
 git clone git@hf.co:spaces/nilor-corp/zenerator
-cd ..
-------------------
-cp .\zenerator\ComfyUI-Manager-Snapshots\2024-08-08_17-26-15_snapshot.json .\ComfyUI\custom_nodes\ComfyUI-Manager\snapshots\
--------------------
 cd zenerator
-python -m venv venv
-.\venv\Scripts\activate
+------------------
+cp .\ComfyUI-Manager-Snapshots\2024-11-22_18-23-34_snapshot.json ..\ComfyUI\custom_nodes\ComfyUI-Manager\snapshots\
+-------------------
 python -m pip install -r requirements.txt
-deactivate
 ```
 
 ### Env Variables
-- (in zenerator root, where you should be if you've been following the above commands) create a .env file and add:
+- in the `.\nilor-corp\zenerator\` dir, create a `.env` file and add the following to it:
 ``` 
 NILOR_API_KEY=<API KEY>
 NILOR_API_URI=https://api.nilor.cool/api
 ```
 
-### Provision comfy UI
-
+### Provision ComfyUI
+- in the `.\nilor-corp\zenerator\` dir:
 ```
-cd .. # should put you in nilor-corp dir root
+cd ..   # should put you in .\nilor-corp\ dir
 .\venv\Scripts\activate
 comfy launch
 ```
@@ -89,16 +86,15 @@ comfy launch
 ### Directory Structure
 After finishing installation, your directory structure should look like this:
 - nilor-corp
-    - comfy-cli
     - ComfyUI
-    - zenerator
     - venv
+    - zenerator
 
 ## Run
-You will need to run ComfyUI and zenerator in seperate shells
+You will need to run ComfyUI and Zenerator in seperate instances of Powershell.
 
 ### Run ComfyUI
-From nilor-corp root:
+In the first instance of Powershell, from `.\nilor-corp\` dir:
 ```
 .\venv\scripts\activate
 comfy launch
@@ -106,7 +102,7 @@ comfy launch
 - If you run into "import torch" error when trying to launch comfy for the first time, [see potential fix here](https://github.com/Comfy-Org/comfy-cli/issues/150) 
 
 ### Run Zenerator
-From nilor-corp root:
+In the second instance of Powershell, from `.\nilor-corp\` dir:
 ```
 .\venv\scripts\activate
 cd zenerator
@@ -114,8 +110,4 @@ gradio ./app.py
 ```
 
 ### Output
-Generated output can be found in:
-```
-nilor-corp\ComfyUI\output\WorkFlower
-```
-
+Generated output can be found in: `.\nilor-corp\ComfyUI\output\Zenerator\` dir.
