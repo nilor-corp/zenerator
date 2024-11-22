@@ -45,7 +45,7 @@
                         "type": "string",
                         "label": "Output Video Filename Prefix",
                         "node-id": "[\"191\"][\"inputs\"][\"filename_prefix\"]",
-                        "value": "WorkFlower/zenon_general"
+                        "value": "Zenerator/general"
                     }
                 }
             },
@@ -269,7 +269,7 @@
                         "type": "string",
                         "label": "Output Video Filename Prefix",
                         "node-id": "[\"191\"][\"inputs\"][\"filename_prefix\"]",
-                        "value": "WorkFlower/zenon_general"
+                        "value": "Zenerator/general"
                     }
                 }
             },
