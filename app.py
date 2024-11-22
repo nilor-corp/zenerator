@@ -16,8 +16,8 @@ import threading
 
 import websocket
 import uuid
-#import urllib.request
-#import urllib.parse
+
+import torch
 
 import signal
 import sys
@@ -30,8 +30,22 @@ COMFY_PORTS = config["COMFY_PORTS"]
 QUEUE_URLS = []
 
 OUT_DIR = os.path.abspath(config["COMFY_ROOT"] + "output/Zenerator/")
-LORA_DIR = os.path.abspath(config["COMFY_ROOT"] + "models/loras/")
+MODELS_DIR = os.path.abspath(config["COMFY_ROOT"] + "models/")
+LORA_DIR = MODELS_DIR + "loras/"
 INPUTS_DIR = os.path.abspath("./inputs/")
+
+TENSORRT_NODES_DIR = os.path.abspath(config["COMFY_ROOT"] + "custom_nodes/ComfyUI-Upscaler-Tensorrt/")
+if os.path.exists(TENSORRT_NODES_DIR):
+    print(f"Importing TensorRT export_trt.")
+
+    sys.path.append(TENSORRT_NODES_DIR)
+    
+    import export_trt
+else:
+    print(f"NOT importing TensorRT export_trt because {TENSORRT_NODES_DIR} dir does not exist.")
+
+TENSORRT_DIR = MODELS_DIR + "tensorrt/"
+UPSCALER_DIR = TENSORRT_DIR + "upscaler/"
 
 for port in COMFY_PORTS:
     QUEUE_URLS.append(f"http://{COMFY_IP}:{port}")
@@ -84,7 +98,35 @@ def select_correct_port(selector):
     selected_port_url = f"http://{COMFY_IP}:{selector}"
     print(f"Changed Port URL to: {selected_port_url}")
 
-#region WEBSOCKET
+# region TensorRT
+
+def install_tensorrt():
+    print("Installing TensorRT...")
+
+
+def check_tensorrt_installation():
+    print("Checking TensorRT installation...")
+
+    installed = False
+    if not os.path.exists(TENSORRT_DIR):
+        os.makedirs(TENSORRT_DIR)
+        
+    if not os.path.exists(UPSCALER_DIR):
+        os.makedirs(UPSCALER_DIR)
+
+    if os.path.exists(UPSCALER_DIR + "realistic.engine"):
+        print("Realistic TensorRT engine found.")
+        installed = True
+    else:
+        raise Warning("Realistic TensorRT engine not found!")
+    
+    if not installed:
+        exec(open(TENSORRT_NODES_DIR + "export_trt.py").read())
+
+    raise Warning("TensorRT is not installed!")
+#endregion
+
+#region Websocket
 ws = None
 client_id = str(uuid.uuid4())
 
@@ -194,7 +236,7 @@ def check_current_progress(ws):
 
 #endregion
 
-#region POST REQUESTS
+#region POST Requests
 def comfy_POST(endpoint, message):
     post_url = selected_port_url + "/" + endpoint
     data = json.dumps(message).encode("utf-8")
@@ -229,7 +271,7 @@ def post_history_delete(prompt_id):
     return comfy_POST("history", message)
 #endregion
 
-#region GET REQUESTS
+#region GET Requests
 def comfy_GET(endpoint):
     get_url = selected_port_url + "/" + endpoint
     #print(f"GET {endpoint} on: {get_url}\n")
