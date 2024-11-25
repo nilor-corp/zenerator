@@ -138,7 +138,7 @@
       "frame_rate": 24,
       "loop_count": 0,
       "filename_prefix": [
-        "544",
+        "560",
         0
       ],
       "format": "video/h264-mp4",
@@ -212,84 +212,6 @@
       "string": "blurry, glitches, artifact, distorted, malformed, nsfw"
     },
     "class_type": "Primitive string multiline [Crystools]"
-  },
-  "437": {
-    "inputs": {
-      "source": [
-        "419",
-        0
-      ],
-      "split_by": "\\",
-      "from_right": "true"
-    },
-    "class_type": "JWStringSplit"
-  },
-  "439": {
-    "inputs": {
-      "text": "general_00001.mp4",
-      "anything": [
-        "437",
-        1
-      ]
-    },
-    "class_type": "easy showAnything"
-  },
-  "443": {
-    "inputs": {
-      "a": [
-        "542",
-        1
-      ],
-      "b": [
-        "548",
-        0
-      ]
-    },
-    "class_type": "JWStringConcat"
-  },
-  "447": {
-    "inputs": {
-      "source": [
-        "437",
-        1
-      ],
-      "split_by": ".",
-      "from_right": "true"
-    },
-    "class_type": "JWStringSplit"
-  },
-  "450": {
-    "inputs": {
-      "a": [
-        "547",
-        0
-      ],
-      "b": [
-        "538",
-        0
-      ]
-    },
-    "class_type": "JWStringConcat"
-  },
-  "453": {
-    "inputs": {
-      "text": "Zenerator\\general_00001",
-      "anything": [
-        "547",
-        0
-      ]
-    },
-    "class_type": "easy showAnything"
-  },
-  "454": {
-    "inputs": {
-      "text": "Zenerator\\general_00001_upscale",
-      "anything": [
-        "450",
-        0
-      ]
-    },
-    "class_type": "easy showAnything"
   },
   "509": {
     "inputs": {
@@ -423,32 +345,16 @@
     },
     "class_type": "IPAdapterBatch"
   },
-  "538": {
-    "inputs": {
-      "string": "_upscale"
-    },
-    "class_type": "Primitive string [Crystools]"
-  },
   "540": {
     "inputs": {
       "int": 20
     },
     "class_type": "Primitive integer [Crystools]"
   },
-  "541": {
-    "inputs": {
-      "text": "Zenerator",
-      "anything": [
-        "542",
-        1
-      ]
-    },
-    "class_type": "easy showAnything"
-  },
-  "542": {
+  "550": {
     "inputs": {
       "source": [
-        "437",
+        "419",
         0
       ],
       "split_by": "\\",
@@ -456,61 +362,144 @@
     },
     "class_type": "JWStringSplit"
   },
-  "543": {
+  "551": {
     "inputs": {
-      "text": "general_00001",
+      "text": "zenon_general_00005.mp4",
       "anything": [
-        "447",
-        0
+        "550",
+        1
       ]
     },
     "class_type": "easy showAnything"
   },
-  "544": {
+  "552": {
     "inputs": {
       "a": [
-        "547",
+        "566",
         0
       ],
       "b": [
-        "545",
+        "564",
         0
       ]
     },
     "class_type": "JWStringConcat"
   },
-  "545": {
+  "553": {
+    "inputs": {
+      "source": [
+        "550",
+        1
+      ],
+      "split_by": ".",
+      "from_right": "true"
+    },
+    "class_type": "JWStringSplit"
+  },
+  "554": {
+    "inputs": {
+      "a": [
+        "563",
+        0
+      ],
+      "b": [
+        "558",
+        0
+      ]
+    },
+    "class_type": "JWStringConcat"
+  },
+  "555": {
+    "inputs": {
+      "text": "WorkFlower\\zenon_general_00005",
+      "anything": [
+        "563",
+        0
+      ]
+    },
+    "class_type": "easy showAnything"
+  },
+  "556": {
+    "inputs": {
+      "text": "WorkFlower\\zenon_general_00005_upscale",
+      "anything": [
+        "554",
+        0
+      ]
+    },
+    "class_type": "easy showAnything"
+  },
+  "558": {
+    "inputs": {
+      "string": "_upscale"
+    },
+    "class_type": "Primitive string [Crystools]"
+  },
+  "559": {
+    "inputs": {
+      "text": "zenon_general_00005",
+      "anything": [
+        "553",
+        0
+      ]
+    },
+    "class_type": "easy showAnything"
+  },
+  "560": {
+    "inputs": {
+      "a": [
+        "563",
+        0
+      ],
+      "b": [
+        "561",
+        0
+      ]
+    },
+    "class_type": "JWStringConcat"
+  },
+  "561": {
     "inputs": {
       "string": "_upscale_rife"
     },
     "class_type": "Primitive string [Crystools]"
   },
-  "546": {
+  "562": {
     "inputs": {
-      "text": "Zenerator\\general_00001_upscale_rife",
+      "text": "WorkFlower\\zenon_general_00005_upscale_rife",
       "anything": [
-        "544",
+        "560",
         0
       ]
     },
     "class_type": "easy showAnything"
   },
-  "547": {
+  "563": {
     "inputs": {
       "a": [
-        "443",
+        "552",
         0
       ],
       "b": [
-        "447",
+        "553",
         0
       ]
     },
     "class_type": "JWStringConcat"
   },
-  "548": {
+  "564": {
     "inputs": {
       "string": "\\"
+    },
+    "class_type": "Primitive string [Crystools]"
+  },
+  "565": {
+    "inputs": {},
+    "class_type": "JWStringConcat"
+  },
+  "566": {
+    "inputs": {
+      "string": "Zenerator"
     },
     "class_type": "Primitive string [Crystools]"
   }

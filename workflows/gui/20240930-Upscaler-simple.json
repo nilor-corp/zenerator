@@ -1,6 +1,6 @@
 {
-  "last_node_id": 549,
-  "last_link_id": 881,
+  "last_node_id": 566,
+  "last_link_id": 903,
   "nodes": [
     {
       "id": 244,
@@ -14,7 +14,7 @@
         387.6549072265625
       ],
       "flags": {},
-      "order": 21,
+      "order": 23,
       "mode": 0,
       "inputs": [
         {
@@ -140,7 +140,7 @@
         230
       ],
       "flags": {},
-      "order": 29,
+      "order": 31,
       "mode": 0,
       "inputs": [
         {
@@ -308,7 +308,7 @@
         26
       ],
       "flags": {},
-      "order": 25,
+      "order": 28,
       "mode": 0,
       "inputs": [
         {
@@ -347,7 +347,7 @@
         286
       ],
       "flags": {},
-      "order": 30,
+      "order": 32,
       "mode": 0,
       "inputs": [
         {
@@ -536,7 +536,7 @@
         106
       ],
       "flags": {},
-      "order": 31,
+      "order": 33,
       "mode": 0,
       "inputs": [
         {
@@ -955,7 +955,7 @@
         82
       ],
       "flags": {},
-      "order": 24,
+      "order": 27,
       "mode": 4,
       "inputs": [
         {
@@ -1011,7 +1011,7 @@
           "type": "STRING",
           "links": [
             682,
-            684
+            897
           ],
           "slot_index": 0,
           "shape": 3
@@ -1136,329 +1136,6 @@
       "bgcolor": "#533"
     },
     {
-      "id": 437,
-      "type": "JWStringSplit",
-      "pos": [
-        2300,
-        -370
-      ],
-      "size": [
-        315,
-        126
-      ],
-      "flags": {},
-      "order": 23,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "source",
-          "type": "STRING",
-          "link": 685,
-          "widget": {
-            "name": "source"
-          }
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            865
-          ],
-          "slot_index": 0,
-          "shape": 3
-        },
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            637,
-            646
-          ],
-          "slot_index": 1,
-          "shape": 3
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "JWStringSplit"
-      },
-      "widgets_values": [
-        "a,b",
-        "\\",
-        "true"
-      ]
-    },
-    {
-      "id": 439,
-      "type": "easy showAnything",
-      "pos": [
-        2300,
-        -190
-      ],
-      "size": [
-        320,
-        80
-      ],
-      "flags": {},
-      "order": 27,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "anything",
-          "type": "*",
-          "link": 637,
-          "shape": 7
-        }
-      ],
-      "outputs": [
-        {
-          "name": "output",
-          "type": "*",
-          "links": null
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "easy showAnything"
-      },
-      "widgets_values": [
-        "general_00001.mp4"
-      ],
-      "color": "#323",
-      "bgcolor": "#535"
-    },
-    {
-      "id": 443,
-      "type": "JWStringConcat",
-      "pos": [
-        3190,
-        -440
-      ],
-      "size": [
-        210,
-        54
-      ],
-      "flags": {},
-      "order": 32,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "a",
-          "type": "STRING",
-          "link": 867,
-          "widget": {
-            "name": "a"
-          }
-        },
-        {
-          "name": "b",
-          "type": "STRING",
-          "link": 876,
-          "widget": {
-            "name": "b"
-          }
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            877
-          ],
-          "slot_index": 0,
-          "shape": 3
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "JWStringConcat"
-      },
-      "widgets_values": [
-        "",
-        ""
-      ]
-    },
-    {
-      "id": 447,
-      "type": "JWStringSplit",
-      "pos": [
-        2680,
-        -150
-      ],
-      "size": [
-        315,
-        126
-      ],
-      "flags": {},
-      "order": 28,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "source",
-          "type": "STRING",
-          "link": 646,
-          "widget": {
-            "name": "source"
-          }
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            874,
-            878
-          ],
-          "slot_index": 0,
-          "shape": 3
-        },
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [],
-          "slot_index": 1,
-          "shape": 3
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "JWStringSplit"
-      },
-      "widgets_values": [
-        "a,b",
-        ".",
-        "true"
-      ]
-    },
-    {
-      "id": 450,
-      "type": "JWStringConcat",
-      "pos": [
-        3680,
-        -439
-      ],
-      "size": [
-        210,
-        54
-      ],
-      "flags": {},
-      "order": 39,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "a",
-          "type": "STRING",
-          "link": 880,
-          "widget": {
-            "name": "a"
-          }
-        },
-        {
-          "name": "b",
-          "type": "STRING",
-          "link": 860,
-          "widget": {
-            "name": "b"
-          }
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            654,
-            872
-          ],
-          "slot_index": 0,
-          "shape": 3
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "JWStringConcat"
-      },
-      "widgets_values": [
-        "",
-        ""
-      ]
-    },
-    {
-      "id": 453,
-      "type": "easy showAnything",
-      "pos": [
-        3189,
-        -222
-      ],
-      "size": [
-        320,
-        80
-      ],
-      "flags": {},
-      "order": 38,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "anything",
-          "type": "*",
-          "link": 879,
-          "shape": 7
-        }
-      ],
-      "outputs": [
-        {
-          "name": "output",
-          "type": "*",
-          "links": null
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "easy showAnything"
-      },
-      "widgets_values": [
-        "Zenerator\\general_00001"
-      ],
-      "color": "#323",
-      "bgcolor": "#535"
-    },
-    {
-      "id": 454,
-      "type": "easy showAnything",
-      "pos": [
-        3680,
-        -342
-      ],
-      "size": [
-        320,
-        80
-      ],
-      "flags": {},
-      "order": 42,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "anything",
-          "type": "*",
-          "link": 654,
-          "shape": 7
-        }
-      ],
-      "outputs": [
-        {
-          "name": "output",
-          "type": "*",
-          "links": null
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "easy showAnything"
-      },
-      "widgets_values": [
-        "Zenerator\\general_00001_upscale"
-      ],
-      "color": "#323",
-      "bgcolor": "#535"
-    },
-    {
       "id": 463,
       "type": "Reroute (rgthree)",
       "pos": [
@@ -1470,7 +1147,7 @@
         30
       ],
       "flags": {},
-      "order": 19,
+      "order": 21,
       "mode": 0,
       "inputs": [
         {
@@ -1507,54 +1184,6 @@
       }
     },
     {
-      "id": 464,
-      "type": "Reroute (rgthree)",
-      "pos": [
-        2306,
-        -549
-      ],
-      "size": [
-        40,
-        30
-      ],
-      "flags": {},
-      "order": 20,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "",
-          "type": "*",
-          "link": 684,
-          "dir": 3,
-          "has_old_label": true,
-          "label": " ",
-          "widget": {
-            "name": "value"
-          }
-        }
-      ],
-      "outputs": [
-        {
-          "name": "string",
-          "type": "STRING",
-          "links": [
-            685
-          ],
-          "slot_index": 0,
-          "dir": 4,
-          "has_old_label": true,
-          "label": " "
-        }
-      ],
-      "properties": {
-        "resizable": false,
-        "size": [
-          40,
-          30
-        ]
-      }
-    },
-    {
       "id": 509,
       "type": "VHS_LoadVideoPath",
       "pos": [
@@ -1566,7 +1195,7 @@
         238
       ],
       "flags": {},
-      "order": 22,
+      "order": 25,
       "mode": 0,
       "inputs": [
         {
@@ -1660,7 +1289,7 @@
         278
       ],
       "flags": {},
-      "order": 35,
+      "order": 36,
       "mode": 0,
       "inputs": [
         {
@@ -1732,7 +1361,7 @@
         278
       ],
       "flags": {},
-      "order": 37,
+      "order": 40,
       "mode": 0,
       "inputs": [
         {
@@ -1793,39 +1422,6 @@
       ]
     },
     {
-      "id": 538,
-      "type": "Primitive string [Crystools]",
-      "pos": [
-        3680,
-        -540
-      ],
-      "size": [
-        210,
-        58
-      ],
-      "flags": {},
-      "order": 14,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "string",
-          "type": "STRING",
-          "links": [
-            860
-          ],
-          "slot_index": 0,
-          "shape": 3
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "Primitive string [Crystools]"
-      },
-      "widgets_values": [
-        "_upscale"
-      ]
-    },
-    {
       "id": 540,
       "type": "Primitive integer [Crystools]",
       "pos": [
@@ -1837,7 +1433,7 @@
         58.64535903930664
       ],
       "flags": {},
-      "order": 15,
+      "order": 14,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -1862,345 +1458,6 @@
       "bgcolor": "#335"
     },
     {
-      "id": 541,
-      "type": "easy showAnything",
-      "pos": [
-        2680,
-        -290
-      ],
-      "size": [
-        320,
-        80
-      ],
-      "flags": {},
-      "order": 33,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "anything",
-          "type": "*",
-          "link": 873,
-          "shape": 7
-        }
-      ],
-      "outputs": [
-        {
-          "name": "output",
-          "type": "*",
-          "links": [],
-          "slot_index": 0
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "easy showAnything"
-      },
-      "widgets_values": [
-        "Zenerator"
-      ],
-      "color": "#323",
-      "bgcolor": "#535"
-    },
-    {
-      "id": 542,
-      "type": "JWStringSplit",
-      "pos": [
-        2680,
-        -460
-      ],
-      "size": [
-        315,
-        126
-      ],
-      "flags": {},
-      "order": 26,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "source",
-          "type": "STRING",
-          "link": 865,
-          "widget": {
-            "name": "source"
-          }
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [],
-          "slot_index": 0,
-          "shape": 3
-        },
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            867,
-            873
-          ],
-          "slot_index": 1,
-          "shape": 3
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "JWStringSplit"
-      },
-      "widgets_values": [
-        "a,b",
-        "\\",
-        "true"
-      ]
-    },
-    {
-      "id": 543,
-      "type": "easy showAnything",
-      "pos": [
-        2680,
-        20
-      ],
-      "size": [
-        320,
-        80
-      ],
-      "flags": {},
-      "order": 34,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "anything",
-          "type": "*",
-          "link": 874,
-          "shape": 7
-        }
-      ],
-      "outputs": [
-        {
-          "name": "output",
-          "type": "*",
-          "links": [],
-          "slot_index": 0
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "easy showAnything"
-      },
-      "widgets_values": [
-        "general_00001"
-      ],
-      "color": "#323",
-      "bgcolor": "#535"
-    },
-    {
-      "id": 544,
-      "type": "JWStringConcat",
-      "pos": [
-        3680,
-        -80
-      ],
-      "size": [
-        210,
-        54
-      ],
-      "flags": {},
-      "order": 40,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "a",
-          "type": "STRING",
-          "link": 881,
-          "widget": {
-            "name": "a"
-          }
-        },
-        {
-          "name": "b",
-          "type": "STRING",
-          "link": 868,
-          "widget": {
-            "name": "b"
-          }
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            871,
-            875
-          ],
-          "slot_index": 0,
-          "shape": 3
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "JWStringConcat"
-      },
-      "widgets_values": [
-        "",
-        ""
-      ]
-    },
-    {
-      "id": 545,
-      "type": "Primitive string [Crystools]",
-      "pos": [
-        3677,
-        -181
-      ],
-      "size": [
-        210,
-        58
-      ],
-      "flags": {},
-      "order": 16,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "string",
-          "type": "STRING",
-          "links": [
-            868
-          ],
-          "slot_index": 0,
-          "shape": 3
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "Primitive string [Crystools]"
-      },
-      "widgets_values": [
-        "_upscale_rife"
-      ]
-    },
-    {
-      "id": 546,
-      "type": "easy showAnything",
-      "pos": [
-        3683,
-        31
-      ],
-      "size": [
-        320,
-        80
-      ],
-      "flags": {},
-      "order": 44,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "anything",
-          "type": "*",
-          "link": 875,
-          "shape": 7
-        }
-      ],
-      "outputs": [
-        {
-          "name": "output",
-          "type": "*",
-          "links": null
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "easy showAnything"
-      },
-      "widgets_values": [
-        "Zenerator\\general_00001_upscale_rife"
-      ],
-      "color": "#323",
-      "bgcolor": "#535"
-    },
-    {
-      "id": 547,
-      "type": "JWStringConcat",
-      "pos": [
-        3188,
-        -338
-      ],
-      "size": [
-        210,
-        54
-      ],
-      "flags": {},
-      "order": 36,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "a",
-          "type": "STRING",
-          "link": 877,
-          "widget": {
-            "name": "a"
-          }
-        },
-        {
-          "name": "b",
-          "type": "STRING",
-          "link": 878,
-          "widget": {
-            "name": "b"
-          }
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            879,
-            880,
-            881
-          ],
-          "slot_index": 0,
-          "shape": 3
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "JWStringConcat"
-      },
-      "widgets_values": [
-        "",
-        ""
-      ]
-    },
-    {
-      "id": 548,
-      "type": "Primitive string [Crystools]",
-      "pos": [
-        3192,
-        -540
-      ],
-      "size": [
-        210,
-        58
-      ],
-      "flags": {},
-      "order": 17,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "string",
-          "type": "STRING",
-          "links": [
-            876
-          ],
-          "slot_index": 0,
-          "shape": 3
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "Primitive string [Crystools]"
-      },
-      "widgets_values": [
-        "\\"
-      ]
-    },
-    {
       "id": 549,
       "type": "Reroute",
       "pos": [
@@ -2212,7 +1469,7 @@
         26
       ],
       "flags": {},
-      "order": 18,
+      "order": 15,
       "mode": 0,
       "inputs": [
         {
@@ -2245,7 +1502,7 @@
         614
       ],
       "flags": {},
-      "order": 41,
+      "order": 44,
       "mode": 0,
       "inputs": [
         {
@@ -2345,7 +1602,7 @@
         306
       ],
       "flags": {},
-      "order": 43,
+      "order": 42,
       "mode": 4,
       "inputs": [
         {
@@ -2376,7 +1633,7 @@
         {
           "name": "filename_prefix",
           "type": "STRING",
-          "link": 872,
+          "link": 898,
           "widget": {
             "name": "filename_prefix"
           }
@@ -2512,7 +1769,7 @@
         {
           "name": "filename_prefix",
           "type": "STRING",
-          "link": 871,
+          "link": 899,
           "widget": {
             "name": "filename_prefix"
           }
@@ -2554,6 +1811,736 @@
       },
       "color": "#282828",
       "bgcolor": "#141414"
+    },
+    {
+      "id": 550,
+      "type": "JWStringSplit",
+      "pos": [
+        2314.45849609375,
+        -383.3517150878906
+      ],
+      "size": [
+        315,
+        126
+      ],
+      "flags": {},
+      "order": 26,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "STRING",
+          "link": 882,
+          "widget": {
+            "name": "source"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 0,
+          "shape": 3
+        },
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            883,
+            886
+          ],
+          "slot_index": 1,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "JWStringSplit"
+      },
+      "widgets_values": [
+        "a,b",
+        "\\",
+        "true"
+      ]
+    },
+    {
+      "id": 551,
+      "type": "easy showAnything",
+      "pos": [
+        2314.45849609375,
+        -203.350830078125
+      ],
+      "size": [
+        320,
+        80
+      ],
+      "flags": {},
+      "order": 29,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "type": "*",
+          "link": 883,
+          "shape": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy showAnything"
+      },
+      "widgets_values": [
+        "zenon_general_00005.mp4"
+      ],
+      "color": "#323",
+      "bgcolor": "#535"
+    },
+    {
+      "id": 552,
+      "type": "JWStringConcat",
+      "pos": [
+        3204.45947265625,
+        -453.3518371582031
+      ],
+      "size": [
+        210,
+        54
+      ],
+      "flags": {},
+      "order": 24,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "a",
+          "type": "STRING",
+          "link": 884,
+          "widget": {
+            "name": "a"
+          }
+        },
+        {
+          "name": "b",
+          "type": "STRING",
+          "link": 885,
+          "widget": {
+            "name": "b"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            895
+          ],
+          "slot_index": 0,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "JWStringConcat"
+      },
+      "widgets_values": [
+        "",
+        ""
+      ]
+    },
+    {
+      "id": 553,
+      "type": "JWStringSplit",
+      "pos": [
+        2694.45947265625,
+        -163.35072326660156
+      ],
+      "size": [
+        315,
+        126
+      ],
+      "flags": {},
+      "order": 30,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "STRING",
+          "link": 886,
+          "widget": {
+            "name": "source"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            891,
+            896
+          ],
+          "slot_index": 0,
+          "shape": 3
+        },
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 1,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "JWStringSplit"
+      },
+      "widgets_values": [
+        "a,b",
+        ".",
+        "true"
+      ]
+    },
+    {
+      "id": 555,
+      "type": "easy showAnything",
+      "pos": [
+        3203.45947265625,
+        -235.35105895996094
+      ],
+      "size": [
+        320,
+        80
+      ],
+      "flags": {},
+      "order": 38,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "type": "*",
+          "link": 889,
+          "shape": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy showAnything"
+      },
+      "widgets_values": [
+        "WorkFlower\\zenon_general_00005"
+      ],
+      "color": "#323",
+      "bgcolor": "#535"
+    },
+    {
+      "id": 556,
+      "type": "easy showAnything",
+      "pos": [
+        3694.45947265625,
+        -355.35162353515625
+      ],
+      "size": [
+        320,
+        80
+      ],
+      "flags": {},
+      "order": 41,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "type": "*",
+          "link": 890,
+          "shape": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy showAnything"
+      },
+      "widgets_values": [
+        "WorkFlower\\zenon_general_00005_upscale"
+      ],
+      "color": "#323",
+      "bgcolor": "#535"
+    },
+    {
+      "id": 557,
+      "type": "Reroute (rgthree)",
+      "pos": [
+        2320.45849609375,
+        -562.3511352539062
+      ],
+      "size": [
+        40,
+        30
+      ],
+      "flags": {},
+      "order": 22,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "",
+          "type": "*",
+          "link": 897,
+          "dir": 3,
+          "has_old_label": true,
+          "label": " ",
+          "widget": {
+            "name": "value"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "string",
+          "type": "STRING",
+          "links": [
+            882
+          ],
+          "slot_index": 0,
+          "dir": 4,
+          "has_old_label": true,
+          "label": " "
+        }
+      ],
+      "properties": {
+        "resizable": false,
+        "size": [
+          40,
+          30
+        ]
+      }
+    },
+    {
+      "id": 558,
+      "type": "Primitive string [Crystools]",
+      "pos": [
+        3694.45947265625,
+        -553.3512573242188
+      ],
+      "size": [
+        210,
+        58
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "string",
+          "type": "STRING",
+          "links": [
+            888
+          ],
+          "slot_index": 0,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Primitive string [Crystools]"
+      },
+      "widgets_values": [
+        "_upscale"
+      ]
+    },
+    {
+      "id": 559,
+      "type": "easy showAnything",
+      "pos": [
+        2694.45947265625,
+        6.649091720581055
+      ],
+      "size": [
+        320,
+        80
+      ],
+      "flags": {},
+      "order": 34,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "type": "*",
+          "link": 891,
+          "shape": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": [],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy showAnything"
+      },
+      "widgets_values": [
+        "zenon_general_00005"
+      ],
+      "color": "#323",
+      "bgcolor": "#535"
+    },
+    {
+      "id": 561,
+      "type": "Primitive string [Crystools]",
+      "pos": [
+        3691.45947265625,
+        -194.35081481933594
+      ],
+      "size": [
+        210,
+        58
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "string",
+          "type": "STRING",
+          "links": [
+            893
+          ],
+          "slot_index": 0,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Primitive string [Crystools]"
+      },
+      "widgets_values": [
+        "_upscale_rife"
+      ]
+    },
+    {
+      "id": 562,
+      "type": "easy showAnything",
+      "pos": [
+        3697.45947265625,
+        17.649147033691406
+      ],
+      "size": [
+        320,
+        80
+      ],
+      "flags": {},
+      "order": 43,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "type": "*",
+          "link": 894,
+          "shape": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy showAnything"
+      },
+      "widgets_values": [
+        "WorkFlower\\zenon_general_00005_upscale_rife"
+      ],
+      "color": "#323",
+      "bgcolor": "#535"
+    },
+    {
+      "id": 563,
+      "type": "JWStringConcat",
+      "pos": [
+        3202.461669921875,
+        -350.99078369140625
+      ],
+      "size": [
+        210,
+        54
+      ],
+      "flags": {},
+      "order": 35,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "a",
+          "type": "STRING",
+          "link": 895,
+          "widget": {
+            "name": "a"
+          }
+        },
+        {
+          "name": "b",
+          "type": "STRING",
+          "link": 896,
+          "widget": {
+            "name": "b"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            887,
+            889,
+            892
+          ],
+          "slot_index": 0,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "JWStringConcat"
+      },
+      "widgets_values": [
+        "",
+        ""
+      ]
+    },
+    {
+      "id": 564,
+      "type": "Primitive string [Crystools]",
+      "pos": [
+        3206.45947265625,
+        -553.3512573242188
+      ],
+      "size": [
+        210,
+        58
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "string",
+          "type": "STRING",
+          "links": [
+            885
+          ],
+          "slot_index": 0,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Primitive string [Crystools]"
+      },
+      "widgets_values": [
+        "\\"
+      ]
+    },
+    {
+      "id": 565,
+      "type": "JWStringConcat",
+      "pos": [
+        3252.461669921875,
+        -21.99060821533203
+      ],
+      "size": [
+        210,
+        54
+      ],
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "a",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "a"
+          }
+        },
+        {
+          "name": "b",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "b"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 0,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "JWStringConcat"
+      },
+      "widgets_values": [
+        "",
+        ""
+      ]
+    },
+    {
+      "id": 566,
+      "type": "Primitive string [Crystools]",
+      "pos": [
+        2695.461669921875,
+        -453.9908447265625
+      ],
+      "size": [
+        315,
+        58
+      ],
+      "flags": {},
+      "order": 20,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "string",
+          "type": "STRING",
+          "links": [
+            884
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Primitive string [Crystools]"
+      },
+      "widgets_values": [
+        "Zenerator"
+      ]
+    },
+    {
+      "id": 554,
+      "type": "JWStringConcat",
+      "pos": [
+        3694.45947265625,
+        -452.3518371582031
+      ],
+      "size": [
+        210,
+        54
+      ],
+      "flags": {},
+      "order": 37,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "a",
+          "type": "STRING",
+          "link": 887,
+          "widget": {
+            "name": "a"
+          }
+        },
+        {
+          "name": "b",
+          "type": "STRING",
+          "link": 888,
+          "widget": {
+            "name": "b"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            890,
+            898
+          ],
+          "slot_index": 0,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "JWStringConcat"
+      },
+      "widgets_values": [
+        "",
+        ""
+      ]
+    },
+    {
+      "id": 560,
+      "type": "JWStringConcat",
+      "pos": [
+        3694.45947265625,
+        -93.35073852539062
+      ],
+      "size": [
+        210,
+        54
+      ],
+      "flags": {},
+      "order": 39,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "a",
+          "type": "STRING",
+          "link": 892,
+          "widget": {
+            "name": "a"
+          }
+        },
+        {
+          "name": "b",
+          "type": "STRING",
+          "link": 893,
+          "widget": {
+            "name": "b"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            894,
+            899
+          ],
+          "slot_index": 0,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "JWStringConcat"
+      },
+      "widgets_values": [
+        "",
+        ""
+      ]
     }
   ],
   "links": [
@@ -2678,52 +2665,12 @@
       "STRING"
     ],
     [
-      637,
-      437,
-      1,
-      439,
-      0,
-      "*"
-    ],
-    [
-      646,
-      437,
-      1,
-      447,
-      0,
-      "STRING"
-    ],
-    [
-      654,
-      450,
-      0,
-      454,
-      0,
-      "*"
-    ],
-    [
       682,
       419,
       0,
       463,
       0,
       "*"
-    ],
-    [
-      684,
-      419,
-      0,
-      464,
-      0,
-      "*"
-    ],
-    [
-      685,
-      464,
-      0,
-      437,
-      0,
-      "STRING"
     ],
     [
       749,
@@ -2894,14 +2841,6 @@
       "MODEL"
     ],
     [
-      860,
-      538,
-      0,
-      450,
-      1,
-      "STRING"
-    ],
-    [
       861,
       540,
       0,
@@ -2910,115 +2849,147 @@
       "INT"
     ],
     [
-      865,
-      437,
+      882,
+      557,
       0,
-      542,
+      550,
       0,
       "STRING"
     ],
     [
-      867,
-      542,
+      883,
+      550,
       1,
-      443,
+      551,
+      0,
+      "*"
+    ],
+    [
+      884,
+      566,
+      0,
+      552,
       0,
       "STRING"
     ],
     [
-      868,
-      545,
+      885,
+      564,
       0,
-      544,
+      552,
       1,
       "STRING"
     ],
     [
-      871,
-      544,
+      886,
+      550,
+      1,
+      553,
       0,
-      357,
-      4,
       "STRING"
     ],
     [
-      872,
-      450,
+      887,
+      563,
+      0,
+      554,
+      0,
+      "STRING"
+    ],
+    [
+      888,
+      558,
+      0,
+      554,
+      1,
+      "STRING"
+    ],
+    [
+      889,
+      563,
+      0,
+      555,
+      0,
+      "*"
+    ],
+    [
+      890,
+      554,
+      0,
+      556,
+      0,
+      "*"
+    ],
+    [
+      891,
+      553,
+      0,
+      559,
+      0,
+      "*"
+    ],
+    [
+      892,
+      563,
+      0,
+      560,
+      0,
+      "STRING"
+    ],
+    [
+      893,
+      561,
+      0,
+      560,
+      1,
+      "STRING"
+    ],
+    [
+      894,
+      560,
+      0,
+      562,
+      0,
+      "*"
+    ],
+    [
+      895,
+      552,
+      0,
+      563,
+      0,
+      "STRING"
+    ],
+    [
+      896,
+      553,
+      0,
+      563,
+      1,
+      "STRING"
+    ],
+    [
+      897,
+      419,
+      0,
+      557,
+      0,
+      "*"
+    ],
+    [
+      898,
+      554,
       0,
       333,
       4,
       "STRING"
     ],
     [
-      873,
-      542,
-      1,
-      541,
+      899,
+      560,
       0,
-      "*"
-    ],
-    [
-      874,
-      447,
-      0,
-      543,
-      0,
-      "*"
-    ],
-    [
-      875,
-      544,
-      0,
-      546,
-      0,
-      "*"
-    ],
-    [
-      876,
-      548,
-      0,
-      443,
-      1,
-      "STRING"
-    ],
-    [
-      877,
-      443,
-      0,
-      547,
-      0,
-      "STRING"
-    ],
-    [
-      878,
-      447,
-      0,
-      547,
-      1,
-      "STRING"
-    ],
-    [
-      879,
-      547,
-      0,
-      453,
-      0,
-      "*"
-    ],
-    [
-      880,
-      547,
-      0,
-      450,
-      0,
-      "STRING"
-    ],
-    [
-      881,
-      547,
-      0,
-      544,
-      0,
+      357,
+      4,
       "STRING"
     ]
   ],
@@ -3128,13 +3099,13 @@
       "flags": {}
     },
     {
-      "id": 9,
+      "id": 10,
       "title": "Filename_Prefix",
       "bounding": [
-        2285.322998046875,
-        -623.1724243164062,
-        1786.1341552734375,
-        778.472900390625
+        2304.45849609375,
+        -626.9512329101562,
+        1723.0009765625,
+        734.6001586914062
       ],
       "color": "#3f789e",
       "font_size": 24,
@@ -3144,10 +3115,10 @@
   "config": {},
   "extra": {
     "ds": {
-      "scale": 0.5559917313492327,
+      "scale": 0.7400249944258311,
       "offset": [
-        -2088.681144392787,
-        990.745315690964
+        -2812.365481904684,
+        771.3658020895766
       ]
     }
   },
