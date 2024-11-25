@@ -31,21 +31,15 @@ QUEUE_URLS = []
 
 OUT_DIR = os.path.abspath(config["COMFY_ROOT"] + "output/Zenerator/")
 MODELS_DIR = os.path.abspath(config["COMFY_ROOT"] + "models/")
-LORA_DIR = MODELS_DIR + "loras/"
+LORA_DIR =  os.path.abspath(MODELS_DIR + "/loras/")
 INPUTS_DIR = os.path.abspath("./inputs/")
 
 TENSORRT_NODES_DIR = os.path.abspath(config["COMFY_ROOT"] + "custom_nodes/ComfyUI-Upscaler-Tensorrt/")
-if os.path.exists(TENSORRT_NODES_DIR):
-    print(f"Importing TensorRT export_trt.")
 
-    sys.path.append(TENSORRT_NODES_DIR)
-    
-    import export_trt
-else:
-    print(f"NOT importing TensorRT export_trt because {TENSORRT_NODES_DIR} dir does not exist.")
-
-TENSORRT_DIR = MODELS_DIR + "tensorrt/"
-UPSCALER_DIR = TENSORRT_DIR + "upscaler/"
+TENSORRT_DIR = os.path.abspath(MODELS_DIR + "/tensorrt/")
+UPSCALER_DIR = os.path.abspath(TENSORRT_DIR + "/upscaler/")
+UPSCALER_PATH = os.path.abspath(UPSCALER_DIR + "/realistic.engine")
+ONNX_PATH = os.path.abspath("./models/realistic.onnx")
 
 for port in COMFY_PORTS:
     QUEUE_URLS.append(f"http://{COMFY_IP}:{port}")
@@ -99,11 +93,6 @@ def select_correct_port(selector):
     print(f"Changed Port URL to: {selected_port_url}")
 
 # region TensorRT
-
-def install_tensorrt():
-    print("Installing TensorRT...")
-
-
 def check_tensorrt_installation():
     print("Checking TensorRT installation...")
 
@@ -114,16 +103,50 @@ def check_tensorrt_installation():
     if not os.path.exists(UPSCALER_DIR):
         os.makedirs(UPSCALER_DIR)
 
-    if os.path.exists(UPSCALER_DIR + "realistic.engine"):
+    if os.path.exists(UPSCALER_PATH):
         print("Realistic TensorRT engine found.")
         installed = True
-    else:
-        raise Warning("Realistic TensorRT engine not found!")
     
     if not installed:
-        exec(open(TENSORRT_NODES_DIR + "export_trt.py").read())
+        print("TensorRT is not installed!")
+        #exec(open(TENSORRT_NODES_DIR + "export_trt.py").read())
 
-    raise Warning("TensorRT is not installed!")
+    return installed
+
+# REF: https://github.com/yuvraj108c/ComfyUI-Upscaler-Tensorrt/blob/master/export_trt.py
+def install_tensorrt():
+    print("Installing TensorRT...")
+
+    engine = Engine(UPSCALER_DIR + "\\realistic.engine")
+
+    torch.cuda.empty_cache()
+
+    s = time.time()
+    ret = engine.build(
+        ONNX_PATH,
+        True,
+        enable_preview=True,
+        input_profile=[
+            {"input": [(1,3,256,256), (1,3,512,512), (1,3,1280,1280)]}, # any sizes from 256x256 to 1280x1280
+        ],
+    )
+    e = time.time()
+    print(f"Time taken to build TensorRT: {(e-s)} seconds")
+
+    return ret
+
+if os.path.exists(TENSORRT_NODES_DIR):
+    print(f"Importing TensorRT requirements.")
+
+    sys.path.append(TENSORRT_NODES_DIR)
+
+    #from export_trt import export_trt 
+    from utilities import Engine
+
+if check_tensorrt_installation():
+    print(f"TensorRT is already installed.")
+else:
+    install_tensorrt()
 #endregion
 
 #region Websocket

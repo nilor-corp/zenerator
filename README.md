@@ -34,17 +34,20 @@ python -m venv venv
 ```
 
 ### Install comfy-cli
+- in the `.\nilor-corp\` dir:
 ```
 pip install comfy-cli
 ```
 
 ### Install ComfyUI
+- in the `.\nilor-corp\` dir:
 ```
 comfy --workspace=ComfyUI install
 comfy set-default ComfyUI
 ```
 
 ### Install Models
+- in the `.\nilor-corp\` dir:
 ```
 cd ComfyUI
 rm -rf models   #if unix
@@ -61,6 +64,7 @@ cd zenerator
 ------------------
 cp .\ComfyUI-Manager-Snapshots\2024-11-22_18-23-34_snapshot.json ..\ComfyUI\custom_nodes\ComfyUI-Manager\snapshots\
 -------------------
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121 --no-cache-dir
 python -m pip install -r requirements.txt
 ```
 
@@ -108,6 +112,8 @@ In the second instance of Powershell, from `.\nilor-corp\` dir:
 cd zenerator
 gradio ./app.py
 ```
+
+**Note:** The first time you launch Zenerator, expect the startup to be delayed because it needs to build a TensorRT engine in order for the "Upscale Video (TensorRT)" workflow tab to work. This shouldn't take more than a few minutes.
 
 ### Output
 Generated output can be found in: `.\nilor-corp\ComfyUI\output\Zenerator\` dir.
