@@ -1031,6 +1031,17 @@ custom_css = """
 html {
     overflow-y: scroll; /* Always show vertical scrollbar */
 }
+
+.logs textarea {
+    font-family: monospace;
+    font-size: 12px;
+    background-color: var(--neutral-950);
+    color: var(--neutral-100);
+}
+
+.progress-bar {
+    background: linear-gradient(to right, var(--secondary-500), var(--primary-500));
+}
 """    
 
 with gr.Blocks(title="Zenerator", theme=gr.themes.Ocean(font=gr.themes.GoogleFont("DM Sans")), css=custom_css) as demo:
