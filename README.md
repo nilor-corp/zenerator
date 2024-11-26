@@ -23,7 +23,7 @@ Check out the configuration reference at https://huggingface.co/docs/hub/spaces-
 
 
 ## Installation
-**Disclaimer:** These commands have only been tested using Powershell with Administrative privileges so far.
+**Disclaimer:** These commands have only been tested using Powershell with Administrative privileges.
 
 ### Setup the Python environment
 ```
@@ -98,7 +98,7 @@ After finishing installation, your directory structure should look like this:
 You will need to run ComfyUI and Zenerator in seperate instances of Powershell.
 
 ### Run ComfyUI
-In the first instance of Powershell, from `.\nilor-corp\` dir:
+In the first instance of Powershell, from the `.\nilor-corp\` dir:
 ```
 .\venv\scripts\activate
 comfy launch
@@ -106,7 +106,7 @@ comfy launch
 - If you run into "import torch" error when trying to launch comfy for the first time, [see potential fix here](https://github.com/Comfy-Org/comfy-cli/issues/150) 
 
 ### Run Zenerator
-In the second instance of Powershell, from `.\nilor-corp\` dir:
+In the second instance of Powershell, from the `.\nilor-corp\` dir:
 ```
 .\venv\scripts\activate
 cd zenerator
