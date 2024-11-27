@@ -34,20 +34,20 @@ python -m venv venv
 ```
 
 ### Install comfy-cli
-- in the `.\nilor-corp\` dir:
+In the `.\nilor-corp\` dir:
 ```
 pip install comfy-cli
 ```
 
 ### Install ComfyUI
-- in the `.\nilor-corp\` dir:
+In the `.\nilor-corp\` dir:
 ```
 comfy --workspace=ComfyUI install
 comfy set-default ComfyUI
 ```
 
 ### Install Models
-- in the `.\nilor-corp\` dir:
+In the `.\nilor-corp\` dir:
 ```
 cd ComfyUI
 rm -rf models   #if unix
@@ -57,7 +57,7 @@ cd ..   # should put you in .\nilor-corp\ dir
 ```
 
 ### Install Workflower
-- in the `.\nilor-corp\` dir:
+In the `.\nilor-corp\` dir:
 ```
 git clone git@hf.co:spaces/nilor-corp/zenerator
 cd zenerator
@@ -69,14 +69,14 @@ python -m pip install -r requirements.txt
 ```
 
 ### Env Variables
-- in the `.\nilor-corp\zenerator\` dir, create a `.env` file and add the following to it:
+In the `.\nilor-corp\zenerator\` dir, create a `.env` file and add the following to it:
 ``` 
 NILOR_API_KEY=<API KEY>
 NILOR_API_URI=https://api.nilor.cool/api
 ```
 
 ### Provision ComfyUI
-- in the `.\nilor-corp\zenerator\` dir:
+In the `.\nilor-corp\zenerator\` dir:
 ```
 cd ..   # should put you in .\nilor-corp\ dir
 .\venv\Scripts\activate
@@ -85,7 +85,7 @@ comfy launch
 - once launched, navigate to comfyUI in browser  http://127.0.0.1:8188
 - in the top right corner of the screen click the "🧩 Manager" button
 - a new window will appear, in the bottom left corner, under the "Experimental" section click "Snapshot Manager"
-- Click "Restore" on the snapshot and then press the "Restart" button that will appear to restart ComfyUI. This will download a lot packages which you should see in terminal 
+- click "Restore" on the snapshot and then press the "Restart" button that will appear to restart ComfyUI. This will download a lot packages which you should see in terminal 
 
 ### Directory Structure
 After finishing installation, your directory structure should look like this:
@@ -94,7 +94,7 @@ After finishing installation, your directory structure should look like this:
     - venv
     - zenerator
 
-## Run
+## Usage
 You will need to run ComfyUI and Zenerator in seperate instances of Powershell.
 
 ### Run ComfyUI
@@ -103,7 +103,7 @@ In the first instance of Powershell, from the `.\nilor-corp\` dir:
 .\venv\scripts\activate
 comfy launch
 ```
-- If you run into "import torch" error when trying to launch comfy for the first time, [see potential fix here](https://github.com/Comfy-Org/comfy-cli/issues/150) 
+**Note:** If you run into "import torch" error when trying to launch comfy for the first time, [see potential fix here](https://github.com/Comfy-Org/comfy-cli/issues/150) 
 
 ### Run Zenerator
 In the second instance of Powershell, from the `.\nilor-corp\` dir:
