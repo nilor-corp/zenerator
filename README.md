@@ -63,7 +63,7 @@ In the `.\nilor-corp\` directory:
 git clone git@hf.co:spaces/nilor-corp/zenerator
 cd zenerator
 ------------------
-cp .\ComfyUI-Manager-Snapshots\2024-11-27_17-59-21_snapshot.json ..\ComfyUI\custom_nodes\ComfyUI-Manager\snapshots\
+cp .\ComfyUI-Manager-Snapshots\2024-11-27_19-29-44_snapshot.json ..\ComfyUI\custom_nodes\ComfyUI-Manager\snapshots\
 -------------------
 python -m pip install -r requirements.txt
 ```
