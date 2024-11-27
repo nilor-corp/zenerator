@@ -32,6 +32,7 @@ python -m venv venv
 ### Install comfy-cli
 In the `.\nilor-corp\` directory:
 ```
+python.exe -m pip install --upgrade pip
 pip install comfy-cli
 ```
 
@@ -57,15 +58,10 @@ git clone git@hf.co:nilor-corp/zenerator-models models
 cd ..           # should put you in .\nilor-corp\ directory
 ```
 
-### Install Zenerator
+### Clone Zenerator
 In the `.\nilor-corp\` directory:
 ```
 git clone git@hf.co:spaces/nilor-corp/zenerator
-cd zenerator
-------------------
-cp .\ComfyUI-Manager-Snapshots\2024-11-27_19-29-44_snapshot.json ..\ComfyUI\custom_nodes\ComfyUI-Manager\snapshots\
--------------------
-python -m pip install -r requirements.txt
 ```
 
 ### Env Variables
@@ -76,22 +72,45 @@ NILOR_API_URI=https://api.nilor.cool/api
 ```
 
 ### Provision ComfyUI
-In the `.\nilor-corp\zenerator\` directory, still within the `venv` virtual environment:
+In the `.\nilor-corp\` directory, still within the `venv` virtual environment:
 ```
+cd zenerator
+cp .\ComfyUI-Manager-Snapshots\2024-11-27_19-29-44_snapshot.json ..\ComfyUI\custom_nodes\ComfyUI-Manager\snapshots\
 cd ..           # should put you in .\nilor-corp\ directory
 comfy launch
 ```
-- Once launched, navigate to ComfyUI in your browser: http://127.0.0.1:8188
-- In the top right corner of the screen click the "🧩 Manager" button.
-- A new window will appear. In the bottom left corner, under the "Experimental" section click "Snapshot Manager".
-- Click "Restore" on the snapshot and then press the "Restart" button that will appear to restart ComfyUI. This will download a lot packages which you should see in terminal.
+Once launched, navigate to ComfyUI in your browser: http://127.0.0.1:8188
+
+In the top right corner of the screen click the `🧩 Manager` button.
+
+A new window will appear. In the bottom left corner under the `Experimental` section, click `Snapshot Manager`.
+
+Click `Restore` on the snapshot, then press the `Restart` button that appears in order to restart ComfyUI. This will download a lot packages which you should see in terminal.
+
+### Install Zenerator dependencies
+Once ComfyUI has fished installing packages, quit ComfyUI by pressing `Ctrl + C` (Win) or `Cmd + C` (Unix) in the terminal.
+
+In the `.\nilor-corp\` directory, enter the following:
+```
+.\venv\Scripts\activate
+cd zenerator
+python -m pip install --no-cache-dir -r requirements.txt
+```
+Then run Zenerator to install the last remaining TensorRT dependencies by entering the following:
+```
+gradio app.py
+```
+
+You are finished installing Zenerator!
 
 ### Directory Structure
-After finishing installation, your directory structure should look like this:
-- nilor-corp
-    - ComfyUI
-    - venv
-    - zenerator
+If you have installed Zenerator correctly, your directory structure should look like this:
+```
+nilor-corp
+├── ComfyUI
+├── venv  
+└── zenerator
+```
 
 ## Usage
 You will need to run ComfyUI and Zenerator in seperate instances of Powershell.
