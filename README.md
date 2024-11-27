@@ -39,6 +39,11 @@ pip install comfy-cli
 In the `.\nilor-corp\` directory:
 ```
 comfy --workspace=ComfyUI install
+```
+**Note:** Before proceeding, select either "nvidia", "amd", or "intel_arc" for the first question (depending on which GPU you have), and type "y" to agree to the second question about which repository to clone from.
+
+**Disclaimer:** Zenerator has only been tested with Nvidia GPUs.
+```
 comfy set-default ComfyUI
 ```
 
@@ -58,9 +63,8 @@ In the `.\nilor-corp\` directory:
 git clone git@hf.co:spaces/nilor-corp/zenerator
 cd zenerator
 ------------------
-cp .\ComfyUI-Manager-Snapshots\2024-11-22_18-23-34_snapshot.json ..\ComfyUI\custom_nodes\ComfyUI-Manager\snapshots\
+cp .\ComfyUI-Manager-Snapshots\2024-11-27_17-59-21_snapshot.json ..\ComfyUI\custom_nodes\ComfyUI-Manager\snapshots\
 -------------------
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121 --no-cache-dir
 python -m pip install -r requirements.txt
 ```
 
@@ -72,16 +76,15 @@ NILOR_API_URI=https://api.nilor.cool/api
 ```
 
 ### Provision ComfyUI
-In the `.\nilor-corp\zenerator\` directory:
+In the `.\nilor-corp\zenerator\` directory, still within the `venv` virtual environment:
 ```
 cd ..           # should put you in .\nilor-corp\ directory
-.\venv\Scripts\activate
 comfy launch
 ```
-- once launched, navigate to comfyUI in browser  http://127.0.0.1:8188
-- in the top right corner of the screen click the "🧩 Manager" button
-- a new window will appear, in the bottom left corner, under the "Experimental" section click "Snapshot Manager"
-- click "Restore" on the snapshot and then press the "Restart" button that will appear to restart ComfyUI. This will download a lot packages which you should see in terminal 
+- Once launched, navigate to ComfyUI in your browser: http://127.0.0.1:8188
+- In the top right corner of the screen click the "🧩 Manager" button.
+- A new window will appear. In the bottom left corner, under the "Experimental" section click "Snapshot Manager".
+- Click "Restore" on the snapshot and then press the "Restart" button that will appear to restart ComfyUI. This will download a lot packages which you should see in terminal.
 
 ### Directory Structure
 After finishing installation, your directory structure should look like this:

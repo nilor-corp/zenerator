@@ -1,6 +1,14 @@
+torch
+torchvision 
+torchaudio
+--extra-index-url https://download.pytorch.org/whl/cu121 
+
 gradio==5.6.0
-tensorrt==10.6.0.post1
 python-dotenv>=1.0.1
 websocket_client>=1.8.0
-polygraphy
 opencv-python
+
+tensorrt==10.6.0.post1
+tensorrt-cu12==10.6.0.post1
+tensorrt-cu12_bindings==10.6.0.post1
+polygraphy
