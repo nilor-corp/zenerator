@@ -41,7 +41,7 @@ In the `.\nilor-corp\` directory:
 ```
 comfy --workspace=ComfyUI install
 ```
-**Note:** Before proceeding, select either "nvidia", "amd", or "intel_arc" for the first question (depending on which GPU you have), and type "y" to agree to the second question about which repository to clone from.
+Running the above command will cause it to prompt the user for input in the terminal. Select either "nvidia", "amd", or "intel_arc" for the first question (depending on which GPU you have), and type "y" to agree to the second question about which repository to clone from.
 
 **Disclaimer:** Zenerator has only been tested with Nvidia GPUs.
 ```
@@ -64,7 +64,7 @@ In the `.\nilor-corp\` directory:
 git clone git@hf.co:spaces/nilor-corp/zenerator
 ```
 
-### Env Variables
+### Setup Env Variables
 In the `.\nilor-corp\zenerator\` directory, create a `.env` file and add the following to it:
 ``` 
 NILOR_API_KEY=<API KEY>
