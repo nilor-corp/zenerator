@@ -83,9 +83,9 @@ cd ..   # should put you in .\nilor-corp\ dir
 comfy launch
 ```
 - once launched, navigate to comfyUI in browser  http://127.0.0.1:8188
-- in the bottom right corner of the screen on the floating modal click the "manager" button
-- a new window will appear, in the bottom left corner, under the "expiremental" section click "snapshot manager"
-- Click "restore" on the snapshot and then press the "restart" button that will appear to restart comfyUI. This will download a lot packages which you should see in terminal 
+- in the top right corner of the screen click the "🧩 Manager" button
+- a new window will appear, in the bottom left corner, under the "Experimental" section click "Snapshot Manager"
+- Click "Restore" on the snapshot and then press the "Restart" button that will appear to restart ComfyUI. This will download a lot packages which you should see in terminal 
 
 ### Directory Structure
 After finishing installation, your directory structure should look like this:
