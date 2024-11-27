@@ -18,7 +18,6 @@ license: apache-2.0
 - SSH connection to Nilor Corp HuggingFace organization: https://huggingface.co/nilor-corp
 - Git and LFS
 
-
 ## Installation
 **Disclaimer:** These commands have only been tested using Powershell with Administrative privileges.
 
@@ -31,30 +30,30 @@ python -m venv venv
 ```
 
 ### Install comfy-cli
-In the `.\nilor-corp\` dir:
+In the `.\nilor-corp\` directory:
 ```
 pip install comfy-cli
 ```
 
 ### Install ComfyUI
-In the `.\nilor-corp\` dir:
+In the `.\nilor-corp\` directory:
 ```
 comfy --workspace=ComfyUI install
 comfy set-default ComfyUI
 ```
 
 ### Install Models
-In the `.\nilor-corp\` dir:
+In the `.\nilor-corp\` directory:
 ```
 cd ComfyUI
 rm -rf models   #if unix
 rmdir models    #if win. Answer yes if prompted
 git clone git@hf.co:nilor-corp/zenerator-models models
-cd ..   # should put you in .\nilor-corp\ dir
+cd ..           # should put you in .\nilor-corp\ directory
 ```
 
-### Install Workflower
-In the `.\nilor-corp\` dir:
+### Install Zenerator
+In the `.\nilor-corp\` directory:
 ```
 git clone git@hf.co:spaces/nilor-corp/zenerator
 cd zenerator
@@ -66,16 +65,16 @@ python -m pip install -r requirements.txt
 ```
 
 ### Env Variables
-In the `.\nilor-corp\zenerator\` dir, create a `.env` file and add the following to it:
+In the `.\nilor-corp\zenerator\` directory, create a `.env` file and add the following to it:
 ``` 
 NILOR_API_KEY=<API KEY>
 NILOR_API_URI=https://api.nilor.cool/api
 ```
 
 ### Provision ComfyUI
-In the `.\nilor-corp\zenerator\` dir:
+In the `.\nilor-corp\zenerator\` directory:
 ```
-cd ..   # should put you in .\nilor-corp\ dir
+cd ..           # should put you in .\nilor-corp\ directory
 .\venv\Scripts\activate
 comfy launch
 ```
@@ -95,15 +94,16 @@ After finishing installation, your directory structure should look like this:
 You will need to run ComfyUI and Zenerator in seperate instances of Powershell.
 
 ### Run ComfyUI
-In the first instance of Powershell, from the `.\nilor-corp\` dir:
+In the first instance of Powershell, from the `.\nilor-corp\` directory:
 ```
 .\venv\scripts\activate
 comfy launch
 ```
+
 **Note:** If you run into "import torch" error when trying to launch comfy for the first time, [see potential fix here](https://github.com/Comfy-Org/comfy-cli/issues/150) 
 
 ### Run Zenerator
-In the second instance of Powershell, from the `.\nilor-corp\` dir:
+In the second instance of Powershell, from the `.\nilor-corp\` directory:
 ```
 .\venv\scripts\activate
 cd zenerator
@@ -113,4 +113,4 @@ gradio ./app.py
 **Note:** The first time you launch Zenerator, expect the startup to be delayed because it needs to build a TensorRT engine in order for the "Upscale Video (TensorRT)" workflow tab to work. This shouldn't take more than a few minutes.
 
 ### Output
-Generated output can be found in: `.\nilor-corp\ComfyUI\output\Zenerator\` dir.
+Generated output can be found in: `.\nilor-corp\ComfyUI\output\Zenerator\` directory.
