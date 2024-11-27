@@ -169,44 +169,6 @@
       "bgcolor": "#593930"
     },
     {
-      "id": 366,
-      "type": "easy showAnything",
-      "pos": [
-        4890,
-        1030
-      ],
-      "size": [
-        210,
-        76
-      ],
-      "flags": {},
-      "order": 47,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "anything",
-          "type": "*",
-          "link": 749,
-          "shape": 7
-        }
-      ],
-      "outputs": [
-        {
-          "name": "output",
-          "type": "*",
-          "links": null
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "easy showAnything"
-      },
-      "widgets_values": [
-        "2048"
-      ],
-      "color": "#323",
-      "bgcolor": "#535"
-    },
-    {
       "id": 333,
       "type": "VHS_VideoCombine",
       "pos": [
@@ -570,104 +532,6 @@
       "bgcolor": "#000"
     },
     {
-      "id": 367,
-      "type": "easy showAnything",
-      "pos": [
-        4890,
-        1150
-      ],
-      "size": [
-        210,
-        76
-      ],
-      "flags": {
-        "collapsed": false
-      },
-      "order": 48,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "anything",
-          "type": "*",
-          "link": 541,
-          "shape": 7
-        }
-      ],
-      "outputs": [
-        {
-          "name": "output",
-          "type": "*",
-          "links": null
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "easy showAnything"
-      },
-      "widgets_values": [
-        "2048"
-      ],
-      "color": "#323",
-      "bgcolor": "#535"
-    },
-    {
-      "id": 365,
-      "type": "ImpactImageInfo",
-      "pos": [
-        4630,
-        1030
-      ],
-      "size": [
-        210,
-        86
-      ],
-      "flags": {},
-      "order": 45,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "value",
-          "type": "IMAGE",
-          "link": 551
-        }
-      ],
-      "outputs": [
-        {
-          "name": "batch",
-          "type": "INT",
-          "links": null,
-          "shape": 3
-        },
-        {
-          "name": "height",
-          "type": "INT",
-          "links": [
-            749
-          ],
-          "slot_index": 1,
-          "shape": 3
-        },
-        {
-          "name": "width",
-          "type": "INT",
-          "links": [
-            541
-          ],
-          "slot_index": 2,
-          "shape": 3
-        },
-        {
-          "name": "channel",
-          "type": "INT",
-          "links": null,
-          "shape": 3
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "ImpactImageInfo"
-      },
-      "widgets_values": []
-    },
-    {
       "id": 244,
       "type": "Efficient Loader",
       "pos": [
@@ -855,7 +719,7 @@
         690
       ],
       "flags": {},
-      "order": 46,
+      "order": 45,
       "mode": 0,
       "inputs": [
         {
@@ -955,8 +819,7 @@
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            549,
-            551
+            549
           ],
           "slot_index": 0
         }
@@ -2526,26 +2389,10 @@
       "IMAGE"
     ],
     [
-      541,
-      365,
-      2,
-      367,
-      0,
-      "*"
-    ],
-    [
       549,
       371,
       0,
       356,
-      0,
-      "IMAGE"
-    ],
-    [
-      551,
-      371,
-      0,
-      365,
       0,
       "IMAGE"
     ],
@@ -2586,14 +2433,6 @@
       419,
       0,
       463,
-      0,
-      "*"
-    ],
-    [
-      749,
-      365,
-      1,
-      366,
       0,
       "*"
     ],
@@ -3024,10 +2863,10 @@
   "config": {},
   "extra": {
     "ds": {
-      "scale": 0.3138428376721063,
+      "scale": 0.5054470284993055,
       "offset": [
-        -1253.6747615646264,
-        1593.4532541938527
+        -3698.137674592439,
+        172.99332451125116
       ]
     }
   },

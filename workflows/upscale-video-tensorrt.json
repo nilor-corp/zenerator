@@ -154,35 +154,6 @@
     },
     "class_type": "VHS_VideoCombine"
   },
-  "365": {
-    "inputs": {
-      "value": [
-        "539",
-        0
-      ]
-    },
-    "class_type": "ImpactImageInfo"
-  },
-  "366": {
-    "inputs": {
-      "text": "2048",
-      "anything": [
-        "365",
-        1
-      ]
-    },
-    "class_type": "easy showAnything"
-  },
-  "367": {
-    "inputs": {
-      "text": "2048",
-      "anything": [
-        "365",
-        2
-      ]
-    },
-    "class_type": "easy showAnything"
-  },
   "419": {
     "inputs": {
       "string": "D:\\NILOR\\HUGGINGFACE\\nilor-corp-2\\ComfyUI\\output\\WorkFlower\\zenon_general_00005.mp4"

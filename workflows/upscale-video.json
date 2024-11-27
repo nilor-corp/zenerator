@@ -154,35 +154,6 @@
     },
     "class_type": "VHS_VideoCombine"
   },
-  "365": {
-    "inputs": {
-      "value": [
-        "516",
-        0
-      ]
-    },
-    "class_type": "ImpactImageInfo"
-  },
-  "366": {
-    "inputs": {
-      "text": "2304",
-      "anything": [
-        "365",
-        1
-      ]
-    },
-    "class_type": "easy showAnything"
-  },
-  "367": {
-    "inputs": {
-      "text": "7896",
-      "anything": [
-        "365",
-        2
-      ]
-    },
-    "class_type": "easy showAnything"
-  },
   "370": {
     "inputs": {
       "model_name": "4xLexicaDAT2_otf.pth"
