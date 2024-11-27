@@ -143,10 +143,13 @@ if os.path.exists(TENSORRT_NODES_DIR):
     #from export_trt import export_trt 
     from utilities import Engine
 
-if check_tensorrt_installation():
-    print(f"TensorRT is already installed.")
-else:
-    install_tensorrt()
+try:
+    if check_tensorrt_installation():
+        print(f"TensorRT is already installed.")
+    else:
+        install_tensorrt()
+except Exception as e:
+    print(f"Error installing TensorRT: {e}")
 #endregion
 
 #region Websocket
