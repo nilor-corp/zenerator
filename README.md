@@ -59,6 +59,7 @@ Zenerator is a collection of ComfyUI workflows by Nilor Studio that we commonly 
 
 > [!WARNING]
 > Zenerator has only been tested with Nvidia GPUs.
+
 3. 
     ```
     comfy set-default ComfyUI
