@@ -6,9 +6,7 @@ import time
 from datetime import datetime
 import gradio as gr
 from pathlib import Path
-from image_downloader import resolve_online_collection
-from image_downloader import organise_local_files
-from image_downloader import copy_uploaded_files_to_local_dir
+from image_downloader import resolve_online_collection, organise_local_files, copy_uploaded_files_to_local_dir, process_video_file
 from lora_maker import generate_lora
 from tqdm import tqdm
 import asyncio
@@ -685,48 +683,70 @@ def select_dynamic_input_option(selected_option, choices):
 
     return updaters
 
-def process_dynamic_input(selected_option, possible_options, input_type, limit_enabled, limit_value, *option_values):
+def process_dynamic_input(selected_option, possible_options, input_type, *args):
     print("\nProcessing dynamic input")
     print(f"Selected Option: {selected_option}")
     print(f"Possible Options: {possible_options}")
+
+    arg_index = 0
+
+    # Handle limit controls based on input_type
+    if input_type == "images":
+        limit_enabled = args[arg_index]
+        limit_value = args[arg_index + 1]
+        arg_index += 2
+        print(f"Limit Enabled: {limit_enabled}")
+        print(f"Limit Value: {limit_value if limit_enabled else 'No limit'}")
+    else:
+        limit_enabled = False
+        limit_value = None
+
+    option_values = args[arg_index:arg_index + len(possible_options)]
+    arg_index += len(possible_options)
     print(f"Option Values: {option_values}")
-    print(f"Limit Enabled: {limit_enabled}")
-    print(f"Max Images: {limit_value if limit_enabled else 'No limit'}")
 
     selected_index = possible_options.index(selected_option)
     selected_value = option_values[selected_index]
 
-    # Apply limit only if enabled
-    max_images = int(limit_value) if limit_enabled else None
-
     result = None
-    if selected_option == "filepath":
-        result = organise_local_files(selected_value, input_type, max_images=max_images)
-    elif selected_option == "nilor collection":
-        result = resolve_online_collection(selected_value, max_images=max_images)
-    elif selected_option == "upload":
-        result = copy_uploaded_files_to_local_dir(selected_value, input_type, max_files=max_images)
+    if input_type == "images":
+        max_images = int(limit_value) if limit_enabled else None
+        if selected_option == "filepath":
+            result = organise_local_files(selected_value, input_type, max_images=max_images)
+        elif selected_option == "nilor collection":
+            result = resolve_online_collection(selected_value, max_images=max_images)
+        elif selected_option == "upload":
+            result = copy_uploaded_files_to_local_dir(selected_value, input_type, max_files=max_images)
+    elif input_type == "video":
+        if selected_option == "filepath":
+            result = process_video_file(selected_value)
+        elif selected_option == "upload":
+            result = process_video_file(selected_value)
 
     # Return values for all components
-    return [selected_value, "", None] + [result]  # Values for possible_inputs + output
+    return list(option_values) + [result]
 
 def create_dynamic_input(input_type, choices, tooltips, text_label, identifier):
-    gr.Markdown(f"##### {input_type.capitalize()} Input", elem_classes="group-label")    
-    with gr.Group():            
+    gr.Markdown(f"##### {input_type.capitalize()} Input", elem_classes="group-label")
+    with gr.Group():
         selected_option = gr.Radio(choices, label=text_label, value=choices[0])
         print(f"Choices: {choices}")
-        
-        # Add optional limit controls in a collapsible section
-        with gr.Accordion("Advanced Options", open=False):
-            limit_enabled = gr.Checkbox(label="Limit number of frames", value=False)
-            limit_value = gr.Number(
-                label="Max frames", 
-                value=10,
-                minimum=1,
-                step=1,
-                interactive=True,
-                visible=True
-            )
+
+        # Add optional limit controls only for image inputs
+        if input_type == "images":
+            with gr.Accordion("Advanced Options", open=False):
+                limit_enabled = gr.Checkbox(label="Limit number of images", value=False)
+                limit_value = gr.Number(
+                    label="Max images",
+                    value=10,
+                    minimum=1,
+                    step=1,
+                    interactive=True,
+                    visible=True
+                )
+        else:
+            limit_enabled = None
+            limit_value = None
 
         # Initialize possible_inputs based on input_type
         if input_type == "images":
@@ -741,29 +761,36 @@ def create_dynamic_input(input_type, choices, tooltips, text_label, identifier):
                 gr.File(label=choices[1], show_label=False, visible=False, file_count="single", type="filepath", file_types=["video"])
             ]
 
-        output = gr.Textbox(label="Directory", interactive=False, elem_id=identifier, info="Preview of the directory path")
+        output = gr.Textbox(label="File Path", interactive=False, elem_id=identifier, info="Preview of the file path")
 
         # Modify visibility of inputs based on selected_option
         selected_option.change(
-            select_dynamic_input_option, 
-            inputs=[selected_option, gr.State(choices)], 
+            select_dynamic_input_option,
+            inputs=[selected_option, gr.State(choices)],
             outputs=possible_inputs
         )
 
+        # Prepare the inputs list for the submit/upload events
+        # Only include limit controls if they are not None
+        optional_inputs = []
+        if limit_enabled and limit_value:
+            optional_inputs.extend([limit_enabled, limit_value])
+
+        event_inputs = [selected_option, gr.State(choices), gr.State(input_type)] + optional_inputs + possible_inputs
+
         # Handle input submission
-        print(f"Possible Inputs: {possible_inputs}")
         for input_box in possible_inputs:
             if isinstance(input_box, gr.Textbox):
                 input_box.submit(
                     process_dynamic_input,
-                    inputs=[selected_option, gr.State(choices), gr.State(input_type), limit_enabled, limit_value] + possible_inputs,
-                    outputs=possible_inputs + [output]  # Return all components
+                    inputs=event_inputs,
+                    outputs=possible_inputs + [output]
                 )
-            elif isinstance(input_box, (gr.Gallery, gr.File)):
+            elif isinstance(input_box, (gr.File, gr.Gallery)):
                 input_box.upload(
                     process_dynamic_input,
-                    inputs=[selected_option, gr.State(choices), gr.State(input_type), limit_enabled, limit_value] + possible_inputs,
-                    outputs=possible_inputs + [output]  # Return all components
+                    inputs=event_inputs,
+                    outputs=possible_inputs + [output]
                 )
 
         return selected_option, possible_inputs, output

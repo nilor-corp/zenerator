@@ -152,8 +152,31 @@ def process_files(files, destination, input_type, singular=False, reorganising=F
             return None
 
     return os.path.abspath(destination)  # Return absolute path of destination directory
+def process_video_file(file_path):
+    try:
+        print("\nProcessing video file")
+        print(f"Video file path: {file_path}")
 
+        if not os.path.isfile(file_path):
+            print(f"Video file does not exist: {file_path}")
+            return None
 
+        # Create destination directory
+        timestamp = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+        folder_name = os.path.splitext(os.path.basename(file_path))[0]
+        destination = os.path.join(IN_DIR, folder_name, timestamp)
+        os.makedirs(destination, exist_ok=True)
+        print(f"Created directory for video: {destination}")
+
+        # Copy video file to destination
+        dst = os.path.join(destination, os.path.basename(file_path))
+        shutil.copy(file_path, dst)
+        print(f"Copied video file to {dst}")
+
+        return os.path.abspath(dst)  # Return the full path to the copied video file
+    except Exception as e:
+        print(f"Failed to process video file: {e}")
+        return None
 
 def organise_local_files(dir, input_type, max_images=None, shuffle=False, reorganising=False):
     try:
