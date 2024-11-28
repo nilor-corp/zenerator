@@ -732,8 +732,12 @@ def process_dynamic_input(selected_option, possible_options, input_type, *args):
     # Return values for all components
     return list(option_values) + [result]
 
-def create_dynamic_input(input_type, choices, tooltips, text_label, identifier):
-    gr.Markdown(f"##### {input_type.capitalize()} Input", elem_classes="group-label")
+def create_dynamic_input(input_type, choices, tooltips, text_label, identifier, additional_information=None):
+    markdown_text = f"##### {input_type.capitalize()} Input"
+    if additional_information is not None:
+        markdown_text += f"\n*{additional_information}*"
+
+    gr.Markdown(markdown_text, elem_classes="group-label")
     with gr.Group():
         selected_option = gr.Radio(choices, label=text_label, value=choices[0])
         print(f"Choices: {choices}")
@@ -914,7 +918,8 @@ def process_input(input_context, input_key):
                     choices=["filepath", "nilor collection", "upload"], 
                     tooltips=["Enter the path of the directory of images and press Enter to submit", "Enter the name of the Nilor Collection and press Enter to resolve"],
                     text_label="Select Input Type", 
-                    identifier=input_key
+                    identifier=input_key,
+                    additional_information=input_info
                 )
             elif input_type == "video":
                 selected_option, inputs, component = create_dynamic_input(
@@ -922,7 +927,8 @@ def process_input(input_context, input_key):
                     choices=["filepath", "upload"], 
                     tooltips=["Enter the path of the directory of video and press Enter to submit"],
                     text_label="Select Input Type", 
-                    identifier=input_key
+                    identifier=input_key,
+                    additional_information=input_info
                 )
             elif input_type == "float" or input_type == "int" or input_type == "slider":
                 with gr.Row(equal_height=True):

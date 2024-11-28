@@ -130,7 +130,8 @@
                 "type": "images",
                 "label": "Images",
                 "node-id": "[\"142\"][\"inputs\"][\"string\"]",
-                "value": ""
+                "value": "",
+                "info": "Images to interpolate between (for best results use 2-4 images)"
             },
 
             "use-latent-mask": {
