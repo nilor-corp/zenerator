@@ -57,8 +57,8 @@ Zenerator is a collection of ComfyUI workflows by Nilor Studio that we commonly 
     ```
 2. Running the above command will cause the terminal to prompt the user for input in the terminal. Select either "nvidia", "amd", or "intel_arc" for the first question (depending on which GPU you have), and type "y" to agree to the second question about which repository to clone from.
 
-    > [!WARNING]
-    > Zenerator has only been tested with Nvidia GPUs.
+> [!WARNING]
+> Zenerator has only been tested with Nvidia GPUs.
 3. 
     ```
     comfy set-default ComfyUI
@@ -141,7 +141,7 @@ You will need to run ComfyUI and Zenerator in seperate instances of Powershell.
     .\venv\scripts\activate
     comfy launch
     ```
-    
+
 > [!TIP]
 > If you run into a "import torch" error when trying to launch ComfyUI for the first time, try [the potential fix here](https://github.com/Comfy-Org/comfy-cli/issues/150).
 
