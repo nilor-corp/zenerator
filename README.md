@@ -4,9 +4,7 @@
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-
-<!-- TODO: [![MIT License][license-shield]][license-url]-->
-
+[![Apache-2.0 License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 # Zenerator
@@ -176,7 +174,7 @@ In order to make new custom workflow tabs in the Gradio app, follow these instru
 [issues-shield]: https://img.shields.io/github/issues/nilor-corp/zenerator.svg?style=for-the-badge
 [issues-url]: https://github.com/nilor-corp/zenerator/issues
 [license-shield]: https://img.shields.io/github/license/nilor-corp/zenerator.svg?style=for-the-badge
-[license-url]: https://github.com/nilor-corp/zenerator/blob/main/LICENSE.txt
+[license-url]: https://github.com/nilor-corp/zenerator/blob/main/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/company/nilor-corp/
 <!-- TODO: github tag version shield and url https://shields.io/badges/git-hub-tag -->
