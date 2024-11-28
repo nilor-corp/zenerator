@@ -108,81 +108,85 @@ def resolve_online_collection(collection_name, max_images=None, shuffle=False):
 def process_files(files, destination, input_type, singular=False, reorganising=False, source=None):
     print(f"\nProcessing files: {'Reorganising' if reorganising else 'Organising'}")
     if not singular:
-        if not reorganising:
-            # get each filename of the uploaded items,
-            filenames = [file[0] for file in files]
-        else:
-            filenames = files
-        
-        # copy files to the directory
-        for i, file in enumerate(filenames):
+        filenames = files          
+        for i, filename in enumerate(filenames):
             print(f"Copying file {i+1} of {len(filenames)}")
             if source:
-                src = os.path.join(source, os.path.basename(file))
+                src = os.path.join(source, filename)  # Use filename directly, not basename
             else:
-                src = os.path.join(file)
-            src = os.path.abspath(src)  # Convert to absolute path
+                src = filename  # Use filename as is if no source directory
+            
+            src = os.path.abspath(src)
             print(f"Source: {src}")
-            ext = os.path.splitext(file)[1]
+            ext = os.path.splitext(filename)[1]  # Get extension from filename
             print(f"Extension: {ext}")
-            index_as_str = format(i, "04") # zero pad
+            index_as_str = format(i, "04")
             new_filename = f"{input_type}_{index_as_str}{ext}"
             print(new_filename)
-            dst = os.path.join(destination, f"{new_filename}")
-            shutil.copy(src, dst)
-            print(f"Copied file {i+1} to {destination}")
+            dst = os.path.join(destination, new_filename)
+            dst = os.path.abspath(dst)  # Convert destination to absolute path
+            
+            if os.path.exists(src):  # Add existence check
+                shutil.copy(src, dst)
+                print(f"Copied file {i+1} to {destination}")
+            else:
+                print(f"Source file not found: {src}")
+                return None
     else:
         print("We are using a File input")
         print(f"{files}")
         file = files if isinstance(files, str) else files[0]
-
+        
         print(f"File: {file}")
-        src = os.path.join(file)
-        src = os.path.abspath(src)  # Convert to absolute path
+        src = os.path.abspath(file)  # Convert to absolute path
         print(f"Source: {src}")
         ext = os.path.splitext(file)[1]
-        new_filename = f"{input_type}{ext}"
-        print(new_filename)
-        dst = os.path.join(destination, f"{new_filename}")
-        shutil.copy(src, dst)
-        print(f"Copied file to {destination}")
-        # when a video is uploaded, we need to append the filename to the destination
-        if input_type == "video":
-            return os.path.join(destination, new_filename)
+        dst = os.path.join(destination, f"{input_type}_0000{ext}")
+        dst = os.path.abspath(dst)  # Convert destination to absolute path
+        
+        if os.path.exists(src):
+            shutil.copy(src, dst)
+            print(f"Copied file to {destination}")
         else:
-            return destination
+            print(f"Source file not found: {src}")
+            return None
+
+    return os.path.abspath(destination)  # Return absolute path of destination directory
 
 
 
 def organise_local_files(dir, input_type, max_images=None, shuffle=False, reorganising=False):
     try:
         print("\nOrganising local files")
-        if not os.path.exists(dir):
-            print(f"Directory does not exist: {dir}")
-            return None
-
+        dir = os.path.abspath(dir)  # Convert input dir to absolute path
         print(f"Sorting files in directory: {dir}")
-        files = sorted(os.listdir(dir))
-
+        
+        files = []
+        for file in os.listdir(dir):
+            if file.lower().endswith((".png", ".jpg", ".jpeg", ".gif", ".bmp")):
+                files.append(file)
+        
         print(f"Sorted files: {files}")
-
+        
+        if not files:
+            print("No image files found in directory")
+            return None
+            
         if shuffle:
             random.shuffle(files)
-            print(f"Shuffled files in directory {dir}")
-
-        sanitized_name = sanitize_name(os.path.basename(dir))
-        current_datetime = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
-        directory = os.path.join(IN_DIR, sanitized_name, current_datetime)
-        os.makedirs(directory, exist_ok=True)
-
-        print(f"Created directory for {input_type}: {directory}")
-        if input_type == "images":
-            process_files(files, directory, input_type, singular=False, reorganising=reorganising, source=dir)
-        else: # means we are using a File input with exactly one input
-            process_files(files, directory, input_type, singular=True, reorganising=reorganising, source=dir)
-
-        print(f"Finished copying {input_type} from directory: {dir}")
-        return directory
+            
+        if max_images:
+            files = files[:max_images]
+            
+        timestamp = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+        folder_name = os.path.basename(dir)
+        destination = os.path.join(IN_DIR, folder_name, timestamp)
+        os.makedirs(destination, exist_ok=True)
+        
+        print(f"Created directory for images: {destination}")
+        
+        result = process_files(files, destination, input_type, reorganising=reorganising, source=dir)
+        return os.path.abspath(result) if result else None  # Return absolute path
 
     except Exception as e:
         print(f"Failed to reorganise local files: {e}")
@@ -194,27 +198,25 @@ def organise_local_files(dir, input_type, max_images=None, shuffle=False, reorga
 def copy_uploaded_files_to_local_dir(files, input_type, max_files=None, shuffle=False):
     """
     Args:
-        files: list of uploaded files
+        files: list of uploaded files (could be list of tuples from Gradio upload component)
     """
     try:
         print("\nCopying uploaded files to local directory")
 
-        # copy the files to a directory in the comfyui input folder
-        # create a new directory
+        # Extract file paths from the tuples
+        file_paths = [file[0] if isinstance(file, tuple) else file for file in files]
+
+        # Create a new directory in the ComfyUI input folder
         current_datetime = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
         directory = os.path.join(IN_DIR, "uploaded", current_datetime)
         os.makedirs(directory, exist_ok=True)
         print(f"Created directory for {input_type}: {directory}")
 
         if input_type == "images":
-            process_files(files, directory, input_type, singular=False, reorganising=False)
+            process_files(file_paths, directory, input_type, singular=False, reorganising=False)
             return organise_local_files(directory, input_type, max_files, shuffle, reorganising=True)
-        else: # means we are using a File input with exactly one input
-            return process_files(files, directory, input_type, singular=True, reorganising=False)
-
-        # perform reorganisation on local dir
-        # and supply the directory path 
-
+        else:  # For singular file inputs
+            return process_files(file_paths, directory, input_type, singular=True, reorganising=False)
 
     except Exception as e:
         print(f"Failed to copy local files: {e}")
