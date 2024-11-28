@@ -1107,6 +1107,10 @@ html {
 .progress-bar {
     background: linear-gradient(to right, var(--secondary-500), var(--primary-500));
 }
+
+.progress-text{
+    font-family: monospace;
+}
 """    
 
 with gr.Blocks(title="Zenerator", theme=gr.themes.Ocean(font=gr.themes.GoogleFont("DM Sans")), css=custom_css) as demo:
