@@ -1,19 +1,26 @@
 <!-- PROJECT SHIELDS -->
 <!-- REF: https://github.com/othneildrew/Best-README-Template -->
+[![Python][python-shield]][python-url]
+<!-- TODO: gradio shield and url -->
+
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![Apache-2.0 License][license-shield]][license-url]
-<!-- TODO: gradio shield and url -->
-[![LinkedIn][linkedin-shield]][linkedin-url]
 <!-- TODO: github tag version shield and url https://shields.io/badges/git-hub-tag -->
+
+[![LinkedIn][linkedin-shield]][linkedin-url]
 <!-- TODO: x.com shield and url https://shields.io/badges/x-formerly-twitter-url -->
+<!-- TODO: instagram shield and url ? -->
 <!-- TODO: discord server shield and url https://shields.io/badges/discord -->
+
+<!-- TODO: add Zenerator banner -->
 
 # Zenerator
 Zenerator is a collection of ComfyUI workflows by Nilor Studio that we commonly use to produce art, conveniently packaged up in an easy-to-use Gradio application. The application was made to be extensible, so that others can produce Gradio UIs for [their own custom workflows via JSON](#making-custom-workflow-tabs).  
 
+<!-- TODO: brag about how Zenerator has already been used to make production-quality work -->
 
 ## Dependencies
 - Python
@@ -185,5 +192,6 @@ In order to make new custom workflow tabs in the Gradio app, follow these instru
 <!-- TODO: github tag version shield and url https://shields.io/badges/git-hub-tag -->
 <!-- TODO: x.com shield and url https://shields.io/badges/x-formerly-twitter-url -->
 <!-- TODO: discord server shield and url https://shields.io/badges/discord -->
-[python-url]: https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54
+[python-shield]: https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54
+[python-url]: https://www.python.org/
 <!-- TODO: gradio shield and url -->
