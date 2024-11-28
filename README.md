@@ -3,6 +3,7 @@
 [![Python][python-shield]][python-url]
 <!-- TODO: gradio shield and url -->
 
+<!-- GITHUB SHIELDS -->
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
@@ -10,6 +11,7 @@
 [![Apache-2.0 License][license-shield]][license-url]
 <!-- TODO: github tag version shield and url https://shields.io/badges/git-hub-tag -->
 
+<!-- SOCIAL SHIELDS -->
 [![LinkedIn][linkedin-shield]][linkedin-url]
 <!-- TODO: x.com shield and url https://shields.io/badges/x-formerly-twitter-url -->
 <!-- TODO: instagram shield and url ? -->
