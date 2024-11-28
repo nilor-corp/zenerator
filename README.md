@@ -5,10 +5,15 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![Apache-2.0 License][license-shield]][license-url]
+<!-- TODO: gradio shield and url -->
 [![LinkedIn][linkedin-shield]][linkedin-url]
+<!-- TODO: github tag version shield and url https://shields.io/badges/git-hub-tag -->
+<!-- TODO: x.com shield and url https://shields.io/badges/x-formerly-twitter-url -->
+<!-- TODO: discord server shield and url https://shields.io/badges/discord -->
 
 # Zenerator
 Zenerator is a collection of ComfyUI workflows by Nilor Studio that we commonly use to produce art, conveniently packaged up in an easy-to-use Gradio application. The application was made to be extensible, so that others can produce Gradio UIs for [their own custom workflows via JSON](#making-custom-workflow-tabs).  
+
 
 ## Dependencies
 - Python
@@ -16,10 +21,10 @@ Zenerator is a collection of ComfyUI workflows by Nilor Studio that we commonly 
 - SSH connection to the [Nilor Corp organization on HuggingFace](https://huggingface.co/nilor-corp)
 - Git and LFS
 
+
 ## Installation
 > [!WARNING]
 > These setup instructions have only been tested on Windows using Powershell with Administrative privileges.
-
 
 ### Set up the Python Environment
 * In a directory of your choosing, enter the following into your terminal:
@@ -146,6 +151,7 @@ You will need to run ComfyUI and Zenerator in seperate instances of Powershell.
 > [!TIP]
 > Generated outputs can be found in: `.\nilor-corp\ComfyUI\output\Zenerator\` directory.
 
+
 ## Advanced Usage
 
 ### Making a Custom Workflow Tab
@@ -159,7 +165,6 @@ In order to make new custom workflow tabs in the Gradio app, follow these instru
 2. Then, edit the [workflow_definitions.json](workflow_definitions.json) file to add another definition for your new workflow. Be sure to edit the "filename" field to the filename of your newly-exported workflow JSON file, and follow the conventions of the existing pre-defined workflows in [workflow_definitions.json](workflow_definitions.json) to write a new workflow definition. 
 
 3. You should populate your new workflow definition with the input components required to control the workflow, as well as the worklow node IDs that those input components should point to. The workflow node IDs can be found within your newly-exported worklow JSON file.
-
 
 
 
