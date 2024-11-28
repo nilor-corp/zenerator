@@ -1,15 +1,3 @@
----
-title: Zenerator 
-emoji: ☯️
-colorFrom: green
-colorTo: purple
-sdk: gradio
-sdk_version: 5.6.0
-app_file: app.py
-pinned: false
-license: apache-2.0
----
-
 <!-- PROJECT SHIELDS -->
 <!-- REF: https://github.com/othneildrew/Best-README-Template -->
 [![Contributors][contributors-shield]][contributors-url]
