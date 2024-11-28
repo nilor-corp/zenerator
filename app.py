@@ -27,17 +27,23 @@ COMFY_IP = config["COMFY_IP"]
 COMFY_PORTS = config["COMFY_PORTS"]
 QUEUE_URLS = []
 
-OUT_DIR = os.path.abspath(config["COMFY_ROOT"] + "output/Zenerator/")
-MODELS_DIR = os.path.abspath(config["COMFY_ROOT"] + "models/")
-LORA_DIR =  os.path.abspath(MODELS_DIR + "/loras/")
-INPUTS_DIR = os.path.abspath("./inputs/")
+ROOT_DIR = str(Path(__file__).parent.resolve())
+COMFY_ROOT = str(Path(config["COMFY_ROOT"]).resolve())
 
-TENSORRT_NODES_DIR = os.path.abspath(config["COMFY_ROOT"] + "custom_nodes/ComfyUI-Upscaler-Tensorrt/")
+OUT_DIR = str(Path(COMFY_ROOT) / "output" / "Zenerator")
+MODELS_DIR = str(Path(COMFY_ROOT) / "models")
+LORA_DIR = str(Path(MODELS_DIR) / "loras")
+INPUTS_DIR = str(Path(ROOT_DIR) / "inputs")
 
-TENSORRT_DIR = os.path.abspath(MODELS_DIR + "/tensorrt/")
-UPSCALER_DIR = os.path.abspath(TENSORRT_DIR + "/upscaler/")
-UPSCALER_PATH = os.path.abspath(UPSCALER_DIR + "/realistic.engine")
-ONNX_PATH = os.path.abspath("./models/realistic.onnx")
+TENSORRT_NODES_DIR = str(Path(COMFY_ROOT) / "custom_nodes" / "ComfyUI-Upscaler-Tensorrt")
+TENSORRT_DIR = str(Path(MODELS_DIR) / "tensorrt")
+UPSCALER_DIR = str(Path(TENSORRT_DIR) / "upscaler")
+UPSCALER_PATH = str(Path(UPSCALER_DIR) / "realistic.engine")
+ONNX_PATH = str(Path(ROOT_DIR) / "models" / "realistic.onnx")
+
+# Ensure required directories exist
+for directory in [OUT_DIR, INPUTS_DIR, TENSORRT_DIR, UPSCALER_DIR]:
+    os.makedirs(directory, exist_ok=True)
 
 for port in COMFY_PORTS:
     QUEUE_URLS.append(f"http://{COMFY_IP}:{port}")
@@ -1227,5 +1233,6 @@ with gr.Blocks(title="Zenerator", theme=gr.themes.Ocean(font=gr.themes.GoogleFon
                 OUT_DIR,      
                 LORA_DIR,
                 INPUTS_DIR
-            ], favicon_path="favicon.png"
+            ],
+            favicon_path="favicon.png"
         )
