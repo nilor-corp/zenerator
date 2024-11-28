@@ -141,7 +141,6 @@ You will need to run ComfyUI and Zenerator in seperate instances of Powershell.
     .\venv\scripts\activate
     comfy launch
     ```
-
     > [!TIP]
     > If you run into a "import torch" error when trying to launch ComfyUI for the first time, try [the potential fix here](https://github.com/Comfy-Org/comfy-cli/issues/150).
 
@@ -152,7 +151,6 @@ You will need to run ComfyUI and Zenerator in seperate instances of Powershell.
     cd zenerator
     gradio ./app.py
     ```
-
     > [!NOTE]
     > The first time you launch Zenerator, expect the startup to be delayed because it needs to build a TensorRT engine in order for the "Upscale Video (TensorRT)" workflow tab to work. This shouldn't take more than a few minutes and should only occur once.
 
