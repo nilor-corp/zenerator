@@ -57,14 +57,14 @@ Zenerator is a collection of ComfyUI workflows by Nilor Studio that we commonly 
     comfy --workspace=ComfyUI install
     ```
 2. Running the above command will cause the terminal to prompt the user for input in the terminal. Select either "nvidia", "amd", or "intel_arc" for the first question (depending on which GPU you have), and type "y" to agree to the second question about which repository to clone from.
-3. 
-    ```console
-    comfy set-default ComfyUI
-    ```
     
 > [!WARNING]
 > Zenerator has only been tested on Nvidia GPUs.
 
+3. 
+    ```console
+    comfy set-default ComfyUI
+    ```
 ### Install Models
 * In the `.\nilor-corp\` directory:
     ```console
