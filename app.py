@@ -738,7 +738,7 @@ def create_dynamic_input(input_type, choices, tooltips, text_label, identifier):
                 limit_enabled = gr.Checkbox(label="Limit number of images", value=False)
                 limit_value = gr.Number(
                     label="Max images",
-                    value=10,
+                    value=4,
                     minimum=1,
                     step=1,
                     interactive=True,
