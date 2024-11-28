@@ -157,8 +157,8 @@ You will need to run ComfyUI and Zenerator in seperate instances of Powershell.
 > [!NOTE]
 > The first time you launch Zenerator, expect the startup to be delayed because it needs to build a TensorRT engine in order for the "Upscale Video (TensorRT)" workflow tab to work. This shouldn't take more than a few minutes and should only occur once.
 
-### Outputs
-* Generated outputs can be found in: `.\nilor-corp\ComfyUI\output\Zenerator\` directory.
+> [!TIP]
+> Generated outputs can be found in: `.\nilor-corp\ComfyUI\output\Zenerator\` directory.
 
 ## Advanced Usage
 
