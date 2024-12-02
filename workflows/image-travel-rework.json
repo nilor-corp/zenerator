@@ -1,0 +1,1278 @@
+{
+  "400": {
+    "inputs": {
+      "seed": -1
+    },
+    "class_type": "Seed (rgthree)"
+  },
+  "437": {
+    "inputs": {
+      "vae_name": "vae-ft-mse-840000-ema-pruned.safetensors"
+    },
+    "class_type": "VAELoader"
+  },
+  "439": {
+    "inputs": {
+      "beta_schedule": "lcm avg(sqrt_linear,linear)",
+      "model": [
+        "764",
+        0
+      ],
+      "m_models": [
+        "440",
+        0
+      ],
+      "context_options": [
+        "442",
+        0
+      ],
+      "sample_settings": [
+        "744",
+        0
+      ]
+    },
+    "class_type": "ADE_UseEvolvedSampling"
+  },
+  "440": {
+    "inputs": {
+      "motion_model": [
+        "441",
+        0
+      ],
+      "motion_lora": [
+        "596",
+        0
+      ],
+      "scale_multival": [
+        "443",
+        0
+      ]
+    },
+    "class_type": "ADE_ApplyAnimateDiffModelSimple"
+  },
+  "441": {
+    "inputs": {
+      "model_name": "v3_sd15_mm.ckpt"
+    },
+    "class_type": "ADE_LoadAnimateDiffModel"
+  },
+  "442": {
+    "inputs": {
+      "context_length": 16,
+      "context_stride": 1,
+      "context_overlap": 6,
+      "closed_loop": [
+        "1040",
+        0
+      ],
+      "fuse_method": "pyramid",
+      "use_on_equal_length": false,
+      "start_percent": 0,
+      "guarantee_steps": 1
+    },
+    "class_type": "ADE_LoopedUniformContextOptions"
+  },
+  "443": {
+    "inputs": {
+      "float_val": 1.3
+    },
+    "class_type": "ADE_MultivalDynamic"
+  },
+  "445": {
+    "inputs": {
+      "seed": [
+        "400",
+        0
+      ],
+      "steps": 20,
+      "cfg": 6,
+      "sampler_name": "dpmpp_2m",
+      "scheduler": "karras",
+      "denoise": 1,
+      "model": [
+        "439",
+        0
+      ],
+      "positive": [
+        "1008",
+        0
+      ],
+      "negative": [
+        "1009",
+        0
+      ],
+      "latent_image": [
+        "963",
+        0
+      ]
+    },
+    "class_type": "KSampler"
+  },
+  "446": {
+    "inputs": {
+      "frame_rate": 8,
+      "loop_count": 0,
+      "filename_prefix": "241009-ImageTravelHyper",
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p10le",
+      "crf": 19,
+      "save_metadata": true,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "447",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine"
+  },
+  "447": {
+    "inputs": {
+      "samples": [
+        "445",
+        0
+      ],
+      "vae": [
+        "437",
+        0
+      ]
+    },
+    "class_type": "VAEDecode"
+  },
+  "596": {
+    "inputs": {
+      "name": "WAS26.safetensors",
+      "strength": 0.6,
+      "prev_motion_lora": [
+        "726",
+        0
+      ]
+    },
+    "class_type": "ADE_AnimateDiffLoRALoader"
+  },
+  "602": {
+    "inputs": {
+      "ckpt_name": "juggernaut_reborn.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple"
+  },
+  "631": {
+    "inputs": {
+      "image": [
+        "880",
+        0
+      ],
+      "vae": [
+        "437",
+        0
+      ],
+      "latent_size": [
+        "963",
+        0
+      ]
+    },
+    "class_type": "ACN_SparseCtrlRGBPreprocessor"
+  },
+  "633": {
+    "inputs": {
+      "strength": 1,
+      "start_percent": 0,
+      "end_percent": 0.3,
+      "positive": [
+        "721",
+        0
+      ],
+      "negative": [
+        "722",
+        0
+      ],
+      "control_net": [
+        "875",
+        0
+      ],
+      "image": [
+        "631",
+        0
+      ]
+    },
+    "class_type": "ACN_AdvancedControlNetApply"
+  },
+  "634": {
+    "inputs": {
+      "indexes": [
+        "892",
+        0
+      ]
+    },
+    "class_type": "ACN_SparseCtrlIndexMethodNode"
+  },
+  "666": {
+    "inputs": {
+      "lora_name": "SD1.5\\animatediff\\v3_sd15_adapter.ckpt",
+      "strength_model": 0.8,
+      "model": [
+        "602",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly"
+  },
+  "673": {
+    "inputs": {
+      "value": 0
+    },
+    "class_type": "JWInteger"
+  },
+  "676": {
+    "inputs": {
+      "mask": [
+        "732",
+        0
+      ]
+    },
+    "class_type": "InvertMask"
+  },
+  "721": {
+    "inputs": {
+      "text": "\"0\":\"\",\n\"32\":\"\",\n\"64\":\"\",\n\"96\":\"\"",
+      "max_frames": [
+        "804",
+        4
+      ],
+      "print_output": false,
+      "pre_text": [
+        "840",
+        0
+      ],
+      "start_frame": 0,
+      "end_frame": 0,
+      "clip": [
+        "602",
+        1
+      ]
+    },
+    "class_type": "BatchPromptSchedule"
+  },
+  "722": {
+    "inputs": {
+      "text": "nsfw",
+      "clip": [
+        "602",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode"
+  },
+  "726": {
+    "inputs": {
+      "name": "LiquidAF-0-1.safetensors",
+      "strength": [
+        "1041",
+        0
+      ]
+    },
+    "class_type": "ADE_AnimateDiffLoRALoader"
+  },
+  "730": {
+    "inputs": {
+      "input": [
+        "804",
+        4
+      ],
+      "output": ""
+    },
+    "class_type": "Display Int (rgthree)"
+  },
+  "732": {
+    "inputs": {
+      "channel": "red",
+      "image": [
+        "804",
+        0
+      ]
+    },
+    "class_type": "ImageToMask"
+  },
+  "744": {
+    "inputs": {
+      "batch_offset": 0,
+      "noise_type": "FreeNoise",
+      "seed_gen": "comfy",
+      "seed_offset": 0,
+      "adapt_denoise_steps": false
+    },
+    "class_type": "ADE_AnimateDiffSamplingSettings"
+  },
+  "746": {
+    "inputs": {
+      "control_net_name": "control_v1p_sd15_qrcode_monster_v2.safetensors",
+      "tk_optional": [
+        "1035",
+        1
+      ]
+    },
+    "class_type": "ControlNetLoaderAdvanced"
+  },
+  "748": {
+    "inputs": {
+      "strength": 1.2,
+      "start_percent": 0.3,
+      "end_percent": 1,
+      "positive": [
+        "633",
+        0
+      ],
+      "negative": [
+        "633",
+        1
+      ],
+      "control_net": [
+        "746",
+        0
+      ],
+      "image": [
+        "827",
+        0
+      ]
+    },
+    "class_type": "ACN_AdvancedControlNetApply"
+  },
+  "755": {
+    "inputs": {
+      "width": [
+        "791",
+        0
+      ],
+      "height": [
+        "792",
+        0
+      ],
+      "batch_size": [
+        "804",
+        4
+      ]
+    },
+    "class_type": "EmptyLatentImage"
+  },
+  "759": {
+    "inputs": {
+      "weight": 0.8,
+      "weight_type": "linear",
+      "start_at": 0,
+      "end_at": 1,
+      "embeds_scaling": "V only",
+      "enhance_tiles": [
+        "760",
+        0
+      ],
+      "enhance_ratio": 1,
+      "encode_batch_size": 64,
+      "model": [
+        "763",
+        0
+      ],
+      "ipadapter": [
+        "763",
+        1
+      ],
+      "image": [
+        "762",
+        0
+      ],
+      "attn_mask": [
+        "676",
+        0
+      ]
+    },
+    "class_type": "IPAdapterClipVisionEnhancerBatch"
+  },
+  "760": {
+    "inputs": {
+      "value": 3
+    },
+    "class_type": "JWInteger"
+  },
+  "761": {
+    "inputs": {
+      "value": "a*224",
+      "a": [
+        "760",
+        0
+      ]
+    },
+    "class_type": "SimpleMath+"
+  },
+  "762": {
+    "inputs": {
+      "upscale_method": "lanczos",
+      "width": [
+        "761",
+        0
+      ],
+      "height": [
+        "761",
+        0
+      ],
+      "crop": "center",
+      "image": [
+        "805",
+        0
+      ]
+    },
+    "class_type": "ImageScale"
+  },
+  "763": {
+    "inputs": {
+      "preset": "PLUS (high strength)",
+      "model": [
+        "666",
+        0
+      ]
+    },
+    "class_type": "IPAdapterUnifiedLoader"
+  },
+  "764": {
+    "inputs": {
+      "weight": 0.8,
+      "weight_type": "linear",
+      "start_at": 0,
+      "end_at": 1,
+      "embeds_scaling": "V only",
+      "enhance_tiles": [
+        "760",
+        0
+      ],
+      "enhance_ratio": 1,
+      "encode_batch_size": 64,
+      "model": [
+        "759",
+        0
+      ],
+      "ipadapter": [
+        "763",
+        1
+      ],
+      "image": [
+        "765",
+        0
+      ],
+      "attn_mask": [
+        "732",
+        0
+      ]
+    },
+    "class_type": "IPAdapterClipVisionEnhancerBatch"
+  },
+  "765": {
+    "inputs": {
+      "upscale_method": "lanczos",
+      "width": [
+        "761",
+        0
+      ],
+      "height": [
+        "761",
+        0
+      ],
+      "crop": "center",
+      "image": [
+        "805",
+        1
+      ]
+    },
+    "class_type": "ImageScale"
+  },
+  "791": {
+    "inputs": {
+      "value": 576
+    },
+    "class_type": "JWInteger"
+  },
+  "792": {
+    "inputs": {
+      "value": 1024
+    },
+    "class_type": "JWInteger"
+  },
+  "804": {
+    "inputs": {
+      "animation_type_1": "Fade",
+      "animation_type_2": "Fade",
+      "animation_type_3": "GrowingCircle",
+      "animation_type_4": "Fade",
+      "animation_type_5": "Fade",
+      "animation_type_6": "TopDown",
+      "animation_type_7": "Fade",
+      "animation_type_8": "TopDown",
+      "animation_type_9": "Fade",
+      "animation_type_10": "TopDown",
+      "animation_type_11": "Fade",
+      "animation_type_12": "TopDown",
+      "transition_easing": "false",
+      "blur_easing": "false",
+      "frame_width": [
+        "791",
+        0
+      ],
+      "frame_height": [
+        "792",
+        0
+      ],
+      "hold_frames": [
+        "973",
+        0
+      ],
+      "transition_frames": [
+        "973",
+        2
+      ],
+      "padding_frames": [
+        "673",
+        0
+      ],
+      "input_frames": [
+        "879",
+        2
+      ],
+      "gaussian_blur_amount": 3,
+      "edge_fx_thickness": 1,
+      "push_fx": 0,
+      "retract_fx": 0,
+      "fx_cull_white_frames": 10,
+      "qr_greyness": 0.5,
+      "random_seed": 0,
+      "edgeFade_contrast": 1,
+      "edgeFade_blur": 0,
+      "generation_mode": "Only Transitions",
+      "edge_fx_fade_balance": 0.5,
+      "venetian_bars": 4
+    },
+    "class_type": "DynamicAnimatedWeightsHelper"
+  },
+  "805": {
+    "inputs": {
+      "num_images": [
+        "879",
+        2
+      ],
+      "hold_length": [
+        "973",
+        0
+      ],
+      "transition_length": [
+        "973",
+        2
+      ],
+      "padding_frames": [
+        "673",
+        0
+      ],
+      "image_stream": [
+        "880",
+        0
+      ]
+    },
+    "class_type": "MaskSequenceHelper"
+  },
+  "827": {
+    "inputs": {
+      "video": "G:\\Shared drives\\nilor\\R&D\\IPA Weights Revisit\\ZenonA2E_BallsMask_15sec.mp4",
+      "force_rate": 0,
+      "force_size": "Disabled",
+      "custom_width": 512,
+      "custom_height": 512,
+      "frame_load_cap": 0,
+      "skip_first_frames": 0,
+      "select_every_nth": 1
+    },
+    "class_type": "VHS_LoadVideoPath"
+  },
+  "840": {
+    "inputs": {
+      "text": ""
+    },
+    "class_type": "JWStringMultiline"
+  },
+  "875": {
+    "inputs": {
+      "sparsectrl_name": "SD1.5\\animatediff\\v3_sd15_sparsectrl_rgb.ckpt",
+      "use_motion": true,
+      "motion_strength": 1,
+      "motion_scale": 1,
+      "context_aware": "nearest_hint",
+      "sparse_hint_mult": 1,
+      "sparse_nonhint_mult": 1,
+      "sparse_mask_mult": 1,
+      "sparse_method": [
+        "634",
+        0
+      ]
+    },
+    "class_type": "ACN_SparseCtrlLoaderAdvanced"
+  },
+  "879": {
+    "inputs": {
+      "directory": "G:\\Shared drives\\nilor\\R&D\\IPA Weights Revisit\\app-01",
+      "image_load_cap": 4,
+      "skip_first_images": 0,
+      "select_every_nth": 1
+    },
+    "class_type": "VHS_LoadImagesPath"
+  },
+  "880": {
+    "inputs": {
+      "width": [
+        "791",
+        0
+      ],
+      "height": [
+        "792",
+        0
+      ],
+      "interpolation": "lanczos",
+      "method": "keep proportion",
+      "condition": "always",
+      "multiple_of": 0,
+      "image": [
+        "879",
+        0
+      ]
+    },
+    "class_type": "ImageResize+"
+  },
+  "890": {
+    "inputs": {
+      "numerator": [
+        "804",
+        4
+      ],
+      "denominator": [
+        "879",
+        2
+      ],
+      "type": "starts"
+    },
+    "class_type": "Nilor n Fractions of Int"
+  },
+  "891": {
+    "inputs": {
+      "int_": [
+        "890",
+        0
+      ],
+      "use_commas": "false"
+    },
+    "class_type": "Int to String"
+  },
+  "892": {
+    "inputs": {
+      "join_with": ",",
+      "string_list": [
+        "891",
+        0
+      ]
+    },
+    "class_type": "StringListToString"
+  },
+  "893": {
+    "inputs": {
+      "text": "0,32,64,96",
+      "anything": [
+        "892",
+        0
+      ]
+    },
+    "class_type": "easy showAnything"
+  },
+  "894": {
+    "inputs": {
+      "control_net_name": "control_v11f1p_sd15_depth_fp16.safetensors",
+      "tk_optional": [
+        "1024",
+        1
+      ]
+    },
+    "class_type": "ControlNetLoaderAdvanced"
+  },
+  "896": {
+    "inputs": {
+      "strength": 0.7000000000000001,
+      "start_percent": 0,
+      "end_percent": 0.5,
+      "positive": [
+        "1028",
+        0
+      ],
+      "negative": [
+        "1027",
+        0
+      ],
+      "control_net": [
+        "894",
+        0
+      ],
+      "image": [
+        "899",
+        0
+      ]
+    },
+    "class_type": "ACN_AdvancedControlNetApply"
+  },
+  "899": {
+    "inputs": {
+      "image": "D:\\nilor-corp\\zenerator\\inputs\\screen-depths\\g_depth.png",
+      "force_size": "Disabled",
+      "custom_width": 512,
+      "custom_height": 512
+    },
+    "class_type": "VHS_LoadImagePath"
+  },
+  "917": {
+    "inputs": {
+      "control_net_name": "control_v11p_sd15_softedge_fp16.safetensors",
+      "tk_optional": [
+        "1012",
+        1
+      ]
+    },
+    "class_type": "ControlNetLoaderAdvanced"
+  },
+  "918": {
+    "inputs": {
+      "strength": 0.7000000000000001,
+      "start_percent": 0,
+      "end_percent": 0.5,
+      "positive": [
+        "1022",
+        0
+      ],
+      "negative": [
+        "1023",
+        0
+      ],
+      "control_net": [
+        "917",
+        0
+      ],
+      "image": [
+        "1011",
+        0
+      ]
+    },
+    "class_type": "ACN_AdvancedControlNetApply"
+  },
+  "919": {
+    "inputs": {
+      "image": "\"D:\\nilor-corp\\zenerator\\inputs\\static-lineart\\poseidon_lineart.png\"",
+      "force_size": "Disabled",
+      "custom_width": 512,
+      "custom_height": 512
+    },
+    "class_type": "VHS_LoadImagePath"
+  },
+  "921": {
+    "inputs": {
+      "video": "D:\\nilor-corp\\zenerator\\inputs\\animated-lineart\\medusa_lineart.mp4",
+      "force_rate": 0,
+      "force_size": "Disabled",
+      "custom_width": 512,
+      "custom_height": 512,
+      "frame_load_cap": 0,
+      "skip_first_frames": 0,
+      "select_every_nth": 1
+    },
+    "class_type": "VHS_LoadVideoPath"
+  },
+  "923": {
+    "inputs": {
+      "video": "G:\\Shared drives\\nilor\\R&D\\IPA Weights Revisit\\ZenonA2E_BallsMask_15sec.mp4",
+      "force_rate": 0,
+      "force_size": "Disabled",
+      "custom_width": 512,
+      "custom_height": 512,
+      "frame_load_cap": 0,
+      "skip_first_frames": 0,
+      "select_every_nth": 1
+    },
+    "class_type": "VHS_LoadVideoPath"
+  },
+  "926": {
+    "inputs": {
+      "image": "D:\\nilor-corp\\zenerator\\inputs\\screen-masks\\f_screen-mask.png",
+      "force_size": "Disabled",
+      "custom_width": 512,
+      "custom_height": 512
+    },
+    "class_type": "VHS_LoadImagePath"
+  },
+  "928": {
+    "inputs": {
+      "channel": "R",
+      "images": [
+        "955",
+        0
+      ]
+    },
+    "class_type": "ImageExtractChannel"
+  },
+  "938": {
+    "inputs": {
+      "latents": [
+        "755",
+        0
+      ]
+    },
+    "class_type": "VHS_GetLatentCount"
+  },
+  "939": {
+    "inputs": {
+      "text": "128",
+      "anything": [
+        "938",
+        0
+      ]
+    },
+    "class_type": "easy showAnything"
+  },
+  "941": {
+    "inputs": {
+      "grow_mask_by": 0,
+      "pixels": [
+        "956",
+        0
+      ],
+      "vae": [
+        "437",
+        0
+      ],
+      "mask": [
+        "928",
+        0
+      ]
+    },
+    "class_type": "VAEEncodeForInpaint"
+  },
+  "942": {
+    "inputs": {
+      "samples": [
+        "755",
+        0
+      ],
+      "vae": [
+        "437",
+        0
+      ]
+    },
+    "class_type": "VAEDecode"
+  },
+  "948": {
+    "inputs": {
+      "blend_factor": 0.5,
+      "blend_mode": "multiply",
+      "image1": [
+        "1016",
+        0
+      ],
+      "image2": [
+        "1013",
+        0
+      ]
+    },
+    "class_type": "ImageBlend"
+  },
+  "955": {
+    "inputs": {
+      "batch_size": [
+        "938",
+        0
+      ],
+      "mode": "simple",
+      "image": [
+        "948",
+        0
+      ]
+    },
+    "class_type": "ChangeImageBatchSize //Inspire"
+  },
+  "956": {
+    "inputs": {
+      "blend_factor": 1,
+      "blend_mode": "multiply",
+      "image1": [
+        "942",
+        0
+      ],
+      "image2": [
+        "955",
+        0
+      ]
+    },
+    "class_type": "ImageBlend"
+  },
+  "962": {
+    "inputs": {
+      "width": [
+        "791",
+        0
+      ],
+      "height": [
+        "792",
+        0
+      ],
+      "interpolation": "lanczos",
+      "method": "fill / crop",
+      "condition": "always",
+      "multiple_of": 0,
+      "image": [
+        "923",
+        0
+      ]
+    },
+    "class_type": "ImageResize+"
+  },
+  "963": {
+    "inputs": {
+      "samples": [
+        "941",
+        0
+      ],
+      "mask": [
+        "928",
+        0
+      ]
+    },
+    "class_type": "SetLatentNoiseMask"
+  },
+  "972": {
+    "inputs": {
+      "value": 128
+    },
+    "class_type": "JWInteger"
+  },
+  "973": {
+    "inputs": {
+      "value_1": "(a/b)*c",
+      "value_2": "(a/b)*d",
+      "a": [
+        "972",
+        0
+      ],
+      "b": [
+        "879",
+        2
+      ],
+      "c": [
+        "1037",
+        0
+      ],
+      "d": [
+        "1038",
+        0
+      ]
+    },
+    "class_type": "SimpleMathDual+"
+  },
+  "976": {
+    "inputs": {
+      "input": [
+        "973",
+        0
+      ],
+      "output": ""
+    },
+    "class_type": "Display Int (rgthree)"
+  },
+  "977": {
+    "inputs": {
+      "input": [
+        "973",
+        2
+      ],
+      "output": ""
+    },
+    "class_type": "Display Int (rgthree)"
+  },
+  "979": {
+    "inputs": {
+      "boolean": true
+    },
+    "class_type": "Primitive boolean [Crystools]"
+  },
+  "980": {
+    "inputs": {
+      "boolean": false
+    },
+    "class_type": "Primitive boolean [Crystools]"
+  },
+  "983": {
+    "inputs": {
+      "value": 1,
+      "width": 512,
+      "height": 512
+    },
+    "class_type": "SolidMask"
+  },
+  "984": {
+    "inputs": {
+      "mask": [
+        "983",
+        0
+      ]
+    },
+    "class_type": "MaskToImage"
+  },
+  "987": {
+    "inputs": {
+      "image": "D:\\nilor-corp\\zenerator\\inputs\\screen-masks\\f_screen-mask.png",
+      "force_size": "Disabled",
+      "custom_width": 512,
+      "custom_height": 512
+    },
+    "class_type": "VHS_LoadImagePath"
+  },
+  "988": {
+    "inputs": {
+      "boolean": true
+    },
+    "class_type": "Primitive boolean [Crystools]"
+  },
+  "990": {
+    "inputs": {
+      "boolean": false
+    },
+    "class_type": "Primitive boolean [Crystools]"
+  },
+  "997": {
+    "inputs": {
+      "boolean": true
+    },
+    "class_type": "Primitive boolean [Crystools]"
+  },
+  "1008": {
+    "inputs": {
+      "cond": [
+        "990",
+        0
+      ],
+      "tt_value": [
+        "918",
+        0
+      ],
+      "ff_value": [
+        "1022",
+        0
+      ]
+    },
+    "class_type": "ImpactConditionalBranch"
+  },
+  "1009": {
+    "inputs": {
+      "cond": [
+        "990",
+        0
+      ],
+      "tt_value": [
+        "918",
+        1
+      ],
+      "ff_value": [
+        "1023",
+        0
+      ]
+    },
+    "class_type": "ImpactConditionalBranch"
+  },
+  "1011": {
+    "inputs": {
+      "cond": [
+        "997",
+        0
+      ],
+      "tt_value": [
+        "921",
+        0
+      ],
+      "ff_value": [
+        "919",
+        0
+      ]
+    },
+    "class_type": "ImpactConditionalBranch"
+  },
+  "1012": {
+    "inputs": {
+      "base_multiplier": 0.825,
+      "uncond_multiplier": 1
+    },
+    "class_type": "ACN_ScaledSoftControlNetWeights"
+  },
+  "1013": {
+    "inputs": {
+      "cond": [
+        "980",
+        0
+      ],
+      "tt_value": [
+        "926",
+        0
+      ],
+      "ff_value": [
+        "984",
+        0
+      ]
+    },
+    "class_type": "ImpactConditionalBranch"
+  },
+  "1015": {
+    "inputs": {
+      "cond": [
+        "988",
+        0
+      ],
+      "tt_value": [
+        "962",
+        0
+      ],
+      "ff_value": [
+        "987",
+        0
+      ]
+    },
+    "class_type": "ImpactConditionalBranch"
+  },
+  "1016": {
+    "inputs": {
+      "cond": [
+        "979",
+        0
+      ],
+      "tt_value": [
+        "1015",
+        0
+      ],
+      "ff_value": [
+        "984",
+        0
+      ]
+    },
+    "class_type": "ImpactConditionalBranch"
+  },
+  "1022": {
+    "inputs": {
+      "cond": [
+        "1031",
+        0
+      ],
+      "tt_value": [
+        "896",
+        0
+      ],
+      "ff_value": [
+        "1028",
+        0
+      ]
+    },
+    "class_type": "ImpactConditionalBranch"
+  },
+  "1023": {
+    "inputs": {
+      "cond": [
+        "1031",
+        0
+      ],
+      "tt_value": [
+        "896",
+        1
+      ],
+      "ff_value": [
+        "1027",
+        0
+      ]
+    },
+    "class_type": "ImpactConditionalBranch"
+  },
+  "1024": {
+    "inputs": {
+      "base_multiplier": 0.825,
+      "uncond_multiplier": 1
+    },
+    "class_type": "ACN_ScaledSoftControlNetWeights"
+  },
+  "1027": {
+    "inputs": {
+      "cond": [
+        "1033",
+        0
+      ],
+      "tt_value": [
+        "748",
+        1
+      ],
+      "ff_value": [
+        "633",
+        1
+      ]
+    },
+    "class_type": "ImpactConditionalBranch"
+  },
+  "1028": {
+    "inputs": {
+      "cond": [
+        "1033",
+        0
+      ],
+      "tt_value": [
+        "748",
+        0
+      ],
+      "ff_value": [
+        "633",
+        0
+      ]
+    },
+    "class_type": "ImpactConditionalBranch"
+  },
+  "1031": {
+    "inputs": {
+      "boolean": false
+    },
+    "class_type": "Primitive boolean [Crystools]"
+  },
+  "1033": {
+    "inputs": {
+      "boolean": false
+    },
+    "class_type": "Primitive boolean [Crystools]"
+  },
+  "1035": {
+    "inputs": {
+      "base_multiplier": 0.825,
+      "uncond_multiplier": 1
+    },
+    "class_type": "ACN_ScaledSoftControlNetWeights"
+  },
+  "1037": {
+    "inputs": {
+      "float": 0.38
+    },
+    "class_type": "Primitive float [Crystools]"
+  },
+  "1038": {
+    "inputs": {
+      "float": 0.63
+    },
+    "class_type": "Primitive float [Crystools]"
+  },
+  "1040": {
+    "inputs": {
+      "boolean": true
+    },
+    "class_type": "Primitive boolean [Crystools]"
+  },
+  "1041": {
+    "inputs": {
+      "float": 0.4
+    },
+    "class_type": "Primitive float [Crystools]"
+  }
+}
