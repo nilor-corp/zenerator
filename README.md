@@ -104,6 +104,9 @@ Zenerator is a collection of ComfyUI workflows by Nilor Studio that we commonly 
 4. A new window will appear. In the bottom left corner under the `Experimental` section, click `Snapshot Manager`.
 5. Click `Restore` on the snapshot, then press the `Restart` button that appears in order to restart ComfyUI. This will download a lot packages which you should see in terminal.
 
+> [!TIP]
+> You may see a `ModuleNotFoundError` about `"tensorrt_bindings"` during ComfyUI startup. In our tests, this can be safely ignored because it is resolved by the next step.
+
 ### Install Zenerator dependencies
 1. Once ComfyUI has fished installing packages, quit ComfyUI by pressing `Ctrl + C` (Win) or `Cmd + C` (Unix) in the terminal.
 
