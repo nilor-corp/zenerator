@@ -95,7 +95,7 @@ Zenerator is a collection of ComfyUI workflows by Nilor Studio that we commonly 
 1. In the `.\nilor-corp\` directory, still within the `venv` virtual environment:
     ```console
     cd zenerator
-    cp .\ComfyUI-Manager-Snapshots\2024-11-27_19-29-44_snapshot.json ..\ComfyUI\custom_nodes\ComfyUI-Manager\snapshots\
+    cp .\ComfyUI-Manager-Snapshots\2024-12-02_13-10-11_snapshot.json ..\ComfyUI\custom_nodes\ComfyUI-Manager\snapshots\
     cd ..           # should put you in .\nilor-corp\ directory
     comfy launch
     ```
