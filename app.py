@@ -659,6 +659,10 @@ def run_workflow_with_name(workflow_name, raw_components, component_info_dict, p
     def wrapper(*args):
         # match the component to the arg
         for component, arg in zip(raw_components, args):
+            # check if component is path type and convert to absolute path if needed
+            if component_info_dict[component.elem_id].get("type") == "path" and arg:
+                arg = os.path.abspath(arg)
+
             # access the component_info_dict using component.elem_id and add a value field = arg
             component_info_dict[component.elem_id]["value"] = arg
 
