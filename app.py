@@ -1309,7 +1309,7 @@ with gr.Blocks(title="Zenerator", theme=gr.themes.Ocean(font=gr.themes.GoogleFon
         setup_signal_handlers()
         demo.launch(
             allowed_paths=[
-                str(Path(COMFY_ROOT).resolve()),  # Add parent directory
+                str(Path(COMFY_ROOT).resolve()),
                 str(Path(OUT_DIR).resolve()),
                 str(Path(LORA_DIR).resolve()),
                 str(Path(INPUTS_DIR).resolve())
