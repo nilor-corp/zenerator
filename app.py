@@ -1309,9 +1309,10 @@ with gr.Blocks(title="Zenerator", theme=gr.themes.Ocean(font=gr.themes.GoogleFon
         setup_signal_handlers()
         demo.launch(
             allowed_paths=[
-                OUT_DIR,      
-                LORA_DIR,
-                INPUTS_DIR
+                str(Path(COMFY_ROOT).resolve()),  # Add parent directory
+                str(Path(OUT_DIR).resolve()),
+                str(Path(LORA_DIR).resolve()),
+                str(Path(INPUTS_DIR).resolve())
             ],
             favicon_path="favicon.png"
         )
