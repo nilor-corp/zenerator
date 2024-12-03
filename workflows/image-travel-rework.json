@@ -612,7 +612,7 @@
   },
   "879": {
     "inputs": {
-      "directory": "G:\\Shared drives\\nilor\\R&D\\IPA Weights Revisit\\app-01",
+      "directory": "G:\\Shared drives\\nilor\\R&D\\IPA Weights Revisit\\bone-lord",
       "image_load_cap": 4,
       "skip_first_images": 0,
       "select_every_nth": 1
@@ -994,7 +994,7 @@
   },
   "979": {
     "inputs": {
-      "boolean": true
+      "boolean": false
     },
     "class_type": "Primitive boolean [Crystools]"
   },
