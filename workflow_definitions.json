@@ -59,6 +59,25 @@
     "name": "Image Travel",
     "filename": "image-travel-rework.json",
     "description": "Create a video that travels between images.",
+    "presets": {
+        "Square": {
+            "name": "Square",
+            "description": "High resolution with fade transitions",
+            "values": {
+                "width": 1024,
+                "height": 1024
+            }
+        },
+        "Wide": {
+            "name": "Wide",
+            "description": "Fast paced with circle transitions", 
+            "values": {
+                "width": 1365,
+                "height": 768,
+                "num_frames": 120
+            }
+        }
+    },
     "inputs": {
       "output-specifications": {
         "type": "group",

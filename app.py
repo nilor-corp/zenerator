@@ -827,15 +827,14 @@ def make_visible():
 def watch_input(component, default_value, elem_id):
     resetter_visibility = False
     if component == default_value:
-        # Return HTML to reset background color when value matches default
         html = ""
         resetter_visibility = False
     else:
-        # Return HTML to change the background color when does NOT match default
-        html = f"<style>#{elem_id}  {{ background: var(--background-fill-secondary); }}</style>"
+        html = f"<style>#{elem_id} {{ background: var(--background-fill-secondary); }}</style>"
         resetter_visibility = True
 
-    return gr.update(value=html, visible=resetter_visibility), gr.update(visible=resetter_visibility)
+    # Return updates with display="none"
+    return gr.update(value=html, visible=False, elem_classes="hide-container"), gr.update(visible=resetter_visibility)
 
 def reset_input(default_value):
     return default_value
@@ -977,51 +976,112 @@ def process_input(input_context, input_key):
     return [components, components_dict]
     #return components
 
+
+def apply_preset(workflow_name, preset_name):
+    if preset_name == "Default":
+        # Return default values from workflow definition
+        defaults = {
+            key: details["value"] 
+            for key, details in workflow_definitions[workflow_name]["inputs"].items()
+        }
+        return [defaults[comp.elem_id] for comp in components]
+    
+    # Get preset values
+    preset = workflow_definitions[workflow_name]["presets"][preset_name]
+    preset_values = preset["values"]
+    
+    # Update component values
+    updates = []
+    for component in components:
+        if component.elem_id in preset_values:
+            updates.append(preset_values[component.elem_id])
+        else:
+            # Keep existing value if not in preset
+            updates.append(component.value)
+            
+    return updates
+
+
 def create_tab_interface(workflow_name):
     gr.Markdown("### Workflow Parameters")
+    
+    components = []  # Initialize components list
+    component_data_dict = {}
+
+    # Add preset selector if workflow has presets
+    presets = workflow_definitions[workflow_name].get("presets", {})
+    preset_dropdown = None
+    if presets:
+        preset_choices = ["Default"] + list(presets.keys())
+        with gr.Row():
+            preset_dropdown = gr.Dropdown(
+                choices=preset_choices,
+                value="Default",
+                label="Presets",
+                info="Select a preset to automatically configure multiple parameters"
+            )
 
     key_context = workflow_definitions[workflow_name]["inputs"]
-
-    components = []
-    component_data_dict = {}
     
-    #constants = []
-    #constants_data_dict = {workflow_name: workflow_definitions[workflow_name]["constants"]}
-
-    print(f"\nWORKFLOW: {workflow_name}")
-
     interactive_inputs = []
     noninteractive_inputs = []
 
-    interactive_components = []
-    noninteractive_components = []
-
+    # Sort inputs by interactivity
     for input_key in key_context:
         input_details = key_context[input_key]
         input_interactive = input_details.get("interactive", True)
-
         if input_interactive:
             interactive_inputs.append(input_key)
         else:
             noninteractive_inputs.append(input_key)
 
+    # Process interactive inputs
     for input_key in interactive_inputs:
         [sub_components, sub_dict_values] = process_input(key_context, input_key)
-        interactive_components.extend(sub_components)
+        components.extend(sub_components)
         component_data_dict.update(sub_dict_values)
 
+    # Process non-interactive inputs
     if noninteractive_inputs:
         with gr.Accordion("Constants", open=False):
-            gr.Markdown("You can edit these constants in `workflow_definitions.json` if you know what you're doing.")
-        
+            gr.Markdown("You can edit these constants in workflow_definitions.json if you know what you're doing.")
             for input_key in noninteractive_inputs:
                 [sub_components, sub_dict_values] = process_input(key_context, input_key)
-                noninteractive_components.extend(sub_components)
+                components.extend(sub_components)
                 component_data_dict.update(sub_dict_values)
 
-    components.extend(interactive_components)
-    components.extend(noninteractive_components)
-    
+    # Add preset change handler
+    if preset_dropdown is not None:
+        def apply_preset(preset_name):
+            if preset_name == "Default":
+                # Return default values from workflow definition
+                updates = []
+                for comp in components:
+                    if hasattr(comp, 'elem_id') and comp.elem_id in key_context:
+                        updates.append(key_context[comp.elem_id].get("value"))
+                    else:
+                        updates.append(comp.value)
+                return updates
+            
+            # Get preset values
+            preset_values = presets[preset_name]["values"]
+            
+            # Update component values
+            updates = []
+            for comp in components:
+                if hasattr(comp, 'elem_id') and comp.elem_id in preset_values:
+                    updates.append(preset_values[comp.elem_id])
+                else:
+                    updates.append(comp.value)
+            
+            return updates
+
+        preset_dropdown.change(
+            fn=apply_preset,
+            inputs=[preset_dropdown],
+            outputs=components
+        )
+
     return components, component_data_dict
 
 
