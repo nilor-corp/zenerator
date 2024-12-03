@@ -865,6 +865,7 @@ def process_input(input_context, input_key):
         "int": gr.Number,
         "slider": gr.Slider,
         "radio": gr.Radio, # True radios collect their options from the workflow_definitions.json
+        "enum": gr.Dropdown,
         "group": None,
         "toggle-group": gr.Checkbox
     }
@@ -943,6 +944,10 @@ def process_input(input_context, input_key):
                     component = component_constructor(label=input_label, elem_id=input_key, choices=input_choices, value=input_value, scale=100, info=input_info)
                     
                     # Compact Reset button with reduced width, initially hidden
+                    reset_button = gr.Button("↺", visible=False, elem_id="reset-button", scale=1, variant="secondary", min_width=5)
+            elif input_type == "enum":
+                with gr.Row(equal_height=True):
+                    component = component_constructor(label=input_label, elem_id=input_key, choices=input_choices, value=input_value, scale=100, info=input_info)
                     reset_button = gr.Button("↺", visible=False, elem_id="reset-button", scale=1, variant="secondary", min_width=5)
             else:
                 if input_type == "path" and input_value is not None:
