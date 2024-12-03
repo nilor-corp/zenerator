@@ -57,7 +57,7 @@
   },
   "image-travel": {
     "name": "Image Travel",
-    "filename": "image-travel.json",
+    "filename": "image-travel-rework.json",
     "description": "Create a video that travels between images.",
     "inputs": {
       "output-specifications": {
