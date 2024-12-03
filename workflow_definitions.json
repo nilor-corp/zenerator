@@ -1,608 +1,1195 @@
 {
-    "default":{
-        "name": "Default",
-        "filename": "default.json",
-        "description": "Use this workflow to test that everything is working.",
+  "default": {
+    "name": "Default",
+    "filename": "default.json",
+    "description": "Use this workflow to test that everything is working.",
+    "inputs": {
+      "output-specifications": {
+        "type": "group",
+        "label": "Output Specifications",
         "inputs": {
-            "output-specifications": {
-                "type": "group",
-                "label": "Output Specifications",
-                "inputs": {
-                    "width": {
-                        "type": "int",
-                        "label": "Output Width",
-                        "node-id": "[\"9\"][\"inputs\"][\"width\"]",
-                        "value": 512,
-                        "minimum": 256,
-                        "maximum": 1024
-                    },
-                    "height": {
-                        "type": "int",
-                        "label": "Output Height",
-                        "node-id": "[\"9\"][\"inputs\"][\"height\"]",
-                        "value": 512,
-                        "minimum": 256,
-                        "maximum": 1024
-                    },
-                    "filename-prefix": {
-                        "type": "string",
-                        "label": "Output Filename Prefix",
-                        "node-id": "[\"37\"][\"inputs\"][\"filename_prefix\"]",
-                        "value": "Zenerator/default"
-                    }
-                }
-            },
-            "prompting":{
-                "type": "group",
-                "label": "Text Prompting",
-                "inputs": {
-                    "text-01": {
-                        "type": "text",
-                        "label": "Positive",
-                        "node-id": "[\"3\"][\"inputs\"][\"text\"]",
-                        "value": "a woman outdoors with cherry blossom"
-                    },
-                    "text-02": {
-                        "type": "text",
-                        "label": "Negative",
-                        "node-id": "[\"6\"][\"inputs\"][\"text\"]",
-                        "value": "blurry, distorted, nsfw"
-                    }
-                }
-            }
-            
-        },
-        "outputs": {
-            "type": "video"
+          "width": {
+            "type": "int",
+            "label": "Output Width",
+            "node-id": "[\"9\"][\"inputs\"][\"width\"]",
+            "value": 512,
+            "minimum": 256,
+            "maximum": 1024
+          },
+          "height": {
+            "type": "int",
+            "label": "Output Height",
+            "node-id": "[\"9\"][\"inputs\"][\"height\"]",
+            "value": 512,
+            "minimum": 256,
+            "maximum": 1024
+          },
+          "filename-prefix": {
+            "type": "string",
+            "label": "Output Filename Prefix",
+            "node-id": "[\"37\"][\"inputs\"][\"filename_prefix\"]",
+            "value": "Zenerator/default"
+          }
         }
+      },
+      "prompting": {
+        "type": "group",
+        "label": "Text Prompting",
+        "inputs": {
+          "text-01": {
+            "type": "text",
+            "label": "Positive",
+            "node-id": "[\"3\"][\"inputs\"][\"text\"]",
+            "value": "a woman outdoors with cherry blossom"
+          },
+          "text-02": {
+            "type": "text",
+            "label": "Negative",
+            "node-id": "[\"6\"][\"inputs\"][\"text\"]",
+            "value": "blurry, distorted, nsfw"
+          }
+        }
+      }
     },
-    "square":{
-        "name": "Square",
-        "filename": "general.json",
-        "description": "Create a video for a square screen using fully exposed parameters.",
-        "inputs": {
-            "output-specifications": {
-                "type": "group",
-                "label": "Output Specifications",
-                "inputs": {
-                    "width": {
-                        "type": "int",
-                        "label": "Output Width",
-                        "node-id": "[\"218\"][\"inputs\"][\"int\"]",
-                        "value": 768,
-                        "minimum": 256,
-                        "maximum": 4096
-                    },
-                    "height": {
-                        "type": "int",
-                        "label": "Output Height",
-                        "node-id": "[\"219\"][\"inputs\"][\"int\"]",
-                        "value": 768,
-                        "minimum": 256,
-                        "maximum": 4096
-                    },
-                    "raw_frame_count": {
-                        "type": "int",
-                        "label": "Raw Frame Count",
-                        "node-id": "[\"111\"][\"inputs\"][\"int\"]",
-                        "value": 180,
-                        "minimum": 12,
-                        "info": "= (final frame count) / (frame interpolation)"
-                    },
-                    "frame_interp": {
-                        "type": "int",
-                        "label": "Frame Interpolation",
-                        "node-id": "[\"190\"][\"inputs\"][\"multiplier\"]",
-                        "value": 3,
-                        "minimum": 1,
-                        "maximum": 10,
-                        "info": "RIFE multiplier"
-                    },
-                    "filename-prefix": {
-                        "type": "string",
-                        "label": "Output Video Filename Prefix",
-                        "node-id": "[\"191\"][\"inputs\"][\"filename_prefix\"]",
-                        "value": "Zenerator/general"
-                    }
-                }
-            },
-            
-            "prompting": {
-                "type": "group",
-                "label": "Text Prompting",
-                "inputs": {
-                    "text-01": {
-                        "type": "text",
-                        "label": "Positive",
-                        "node-id": "[\"6\"][\"inputs\"][\"text\"]",
-                        "value": "extremely detailed"
-                    },
-                    "text-02": {
-                        "type": "text",
-                        "label": "Negative",
-                        "node-id": "[\"7\"][\"inputs\"][\"text\"]",
-                        "value": "blurry, glitches, artefact, distorted, malformed, nsfw, lens flare, glare, bloom, bokeh"
-                    }
-                }
-            },
-
-            "images-01": {
-                "type": "images",
-                "label": "Images",
-                "node-id": "[\"142\"][\"inputs\"][\"string\"]",
-                "value": "",
-                "info": "Images to interpolate between (for best results use 2-4 images)"
-            },
-
-            "use-latent-mask": {
-                "type": "toggle-group",
-                "label": "Use Latent Mask",
-                "node-id": "[\"461\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "interactive": true, 
-                "inputs": {
-                    "image-mask-path": {
-                        "type": "path",
-                        "label": "Path of Screen Mask Image",
-                        "node-id": "[\"337\"][\"inputs\"][\"string\"]",
-                        "value": "./inputs/screen-masks/square_screen-mask.png"
-                    },
-                    "use-animated-mask": {
-                        "type": "toggle-group",
-                        "label": "Use Animated Mask Video",
-                        "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
-                        "value": false,
-                        "inputs": {
-                            "video-mask-path": {
-                            "type": "path",
-                            "label": "Path of Animated Mask Video",
-                            "node-id": "[\"339\"][\"inputs\"][\"string\"]",
-                            "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4"
-                            },
-                            "video-mask-select-every-nth": {
-                                "type": "int",
-                                "label": "Select Every Nth Frame of Animated Mask Video",
-                                "node-id": "[\"348\"][\"inputs\"][\"int\"]",
-                                "value": 1,
-                                "minimum": 1
-                            }
-                        }
-                    }
-                }
-            },
-
-            "use-depth-controlnet": {
-                "type": "toggle-group",
-                "label": "Use Depth ControlNet",
-                "node-id": "[\"359\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "inputs": {
-                    "depth-strength": {
-                        "type": "float",
-                        "label": "Depth Strength",
-                        "node-id": "[\"384\"][\"inputs\"][\"strength\"]",
-                        "value": 0.5,
-                        "minimum": -3.0,
-                        "maximum": 3.0,
-                        "step": 0.05
-                    },
-                    "depth-end-percent": {
-                        "type": "float",
-                        "label": "Depth End Percent",
-                        "node-id": "[\"384\"][\"inputs\"][\"end_percent\"]",
-                        "value": 0.5,
-                        "minimum": 0.0,
-                        "maximum": 1.0,
-                        "step": 0.05
-                    },
-                    "image-depth-path": {
-                        "type": "path",
-                        "label": "Path of Depth Image",
-                        "node-id": "[\"360\"][\"inputs\"][\"string\"]",
-                        "value": "./inputs/screen-depths/medusa_depth.png"
-                    },
-                    "use-animated-depth": {
-                        "type": "toggle-group",
-                        "label": "Use Animated Depth Video",
-                        "node-id": "[\"356\"][\"inputs\"][\"boolean\"]",
-                        "value": false,
-                        "inputs": {
-                            "video-depth-path": {
-                                "type": "path",
-                                "label": "Path of Animated Depth Video",
-                                "node-id": "[\"357\"][\"inputs\"][\"string\"]",
-                                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4"
-                            },
-                            "video-depth-select-every-nth": {
-                                "type": "int",
-                                "label": "Select Every Nth Frame of Animated Depth Video",
-                                "node-id": "[\"363\"][\"inputs\"][\"int\"]",
-                                "value": 1,
-                                "minimum": 1
-                            }
-                        }
-                    }
-                }
-            },
-            
-            "use-lineart-controlnet": {
-                "type": "toggle-group",
-                "label": "Use LineArt ControlNet",
-                "node-id": "[\"452\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "inputs": {
-                    "lineart-strength": {
-                        "type": "float",
-                        "label": "LineArt Strength",
-                        "node-id": "[\"448\"][\"inputs\"][\"strength\"]",
-                        "value": 0.5,
-                        "minimum": -3.0,
-                        "maximum": 3.0,
-                        "step": 0.05
-                    },
-                    "lineart-end-percent": {
-                        "type": "float",
-                        "label": "LineArt End Percent",
-                        "node-id": "[\"448\"][\"inputs\"][\"end_percent\"]",
-                        "value": 0.5,
-                        "minimum": 0.0,
-                        "maximum": 1.0,
-                        "step": 0.05
-                    },
-                    "image-lineart-path": {
-                        "type": "path",
-                        "label": "Path of LineArt Image",
-                        "node-id": "[\"453\"][\"inputs\"][\"string\"]",
-                        "value": "./inputs/static-lineart/medusa_lineart.png"
-                    },
-                    "use-animated-lineart": {
-                        "type": "toggle-group",
-                        "label": "Use Animated LineArt Video",
-                        "node-id": "[\"450\"][\"inputs\"][\"boolean\"]",
-                        "value": false,
-                        "inputs": {
-                            "video-lineart-path": {
-                                "type": "path",
-                                "label": "Path of Animated LineArt Video",
-                                "node-id": "[\"451\"][\"inputs\"][\"string\"]",
-                                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4"
-                            },
-                            "video-lineart-select-every-nth": {
-                                "type": "int",
-                                "label": "Select Every Nth Frame of Animated LineArt Video",
-                                "node-id": "[\"454\"][\"inputs\"][\"int\"]",
-                                "value": 1,
-                                "minimum": 1
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "outputs": {
-            "type": "video"
-        }
-    },
-    "wide":{
-        "name": "Wide",
-        "filename": "general.json",
-        "description": "Create a video for a 16:9 screen using fully exposed parameters.",
-        "inputs": {
-            "output-specifications": {
-                "type": "group",
-                "label": "Output Specifications",
-                "inputs": {
-                    "width": {
-                        "type": "int",
-                        "label": "Output Width",
-                        "node-id": "[\"218\"][\"inputs\"][\"int\"]",
-                        "value": 1365,
-                        "minimum": 256,
-                        "maximum": 4096
-                    },
-                    "height": {
-                        "type": "int",
-                        "label": "Output Height",
-                        "node-id": "[\"219\"][\"inputs\"][\"int\"]",
-                        "value": 768,
-                        "minimum": 256,
-                        "maximum": 4096
-                    },
-                    "raw_frame_count": {
-                        "type": "int",
-                        "label": "Raw Frame Count",
-                        "node-id": "[\"111\"][\"inputs\"][\"int\"]",
-                        "value": 180,
-                        "minimum": 12
-                    },
-                    "frame_interp": {
-                        "type": "int",
-                        "label": "Frame Interpolation",
-                        "node-id": "[\"190\"][\"inputs\"][\"multiplier\"]",
-                        "value": 3,
-                        "minimum": 1,
-                        "maximum": 10
-                    },
-                    "filename-prefix": {
-                        "type": "string",
-                        "label": "Output Video Filename Prefix",
-                        "node-id": "[\"191\"][\"inputs\"][\"filename_prefix\"]",
-                        "value": "Zenerator/general"
-                    }
-                }
-            },
-            
-            "prompting": {
-                "type": "group",
-                "label": "Text Prompting",
-                "inputs": {
-                    "text-01": {
-                        "type": "text",
-                        "label": "Positive",
-                        "node-id": "[\"6\"][\"inputs\"][\"text\"]",
-                        "value": "extremely detailed"
-                    },
-                    "text-02": {
-                        "type": "text",
-                        "label": "Negative",
-                        "node-id": "[\"7\"][\"inputs\"][\"text\"]",
-                        "value": "blurry, glitches, artefact, distorted, malformed, nsfw, lens flare, glare, bloom, bokeh"
-                    }
-                }
-            },
-
-            "images-01": {
-                "type": "images",
-                "label": "Images",
-                "node-id": "[\"142\"][\"inputs\"][\"string\"]",
-                "value": ""
-            },
-
-            "use-latent-mask": {
-                "type": "toggle-group",
-                "label": "Use Latent Mask",
-                "node-id": "[\"461\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "interactive": true, 
-                "inputs": {
-                    "image-mask-path": {
-                        "type": "path",
-                        "label": "Path of Screen Mask Image",
-                        "node-id": "[\"337\"][\"inputs\"][\"string\"]",
-                        "value": "./inputs/screen-masks/square_screen-mask.png"
-                    },
-                    "use-animated-mask": {
-                        "type": "toggle-group",
-                        "label": "Use Animated Mask Video",
-                        "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
-                        "value": false,
-                        "inputs": {
-                            "video-mask-path": {
-                            "type": "path",
-                            "label": "Path of Animated Mask Video",
-                            "node-id": "[\"339\"][\"inputs\"][\"string\"]",
-                            "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4"
-                            },
-                            "video-mask-select-every-nth": {
-                                "type": "int",
-                                "label": "Select Every Nth Frame of Animated Mask Video",
-                                "node-id": "[\"348\"][\"inputs\"][\"int\"]",
-                                "value": 1,
-                                "minimum": 1
-                            }
-                        }
-                    }
-                }
-            },
-
-            "use-depth-controlnet": {
-                "type": "toggle-group",
-                "label": "Use Depth ControlNet",
-                "node-id": "[\"359\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "inputs": {
-                    "depth-strength": {
-                        "type": "float",
-                        "label": "Depth Strength",
-                        "node-id": "[\"384\"][\"inputs\"][\"strength\"]",
-                        "value": 0.5,
-                        "minimum": -3.0,
-                        "maximum": 3.0,
-                        "step": 0.05
-                    },
-                    "depth-end-percent": {
-                        "type": "float",
-                        "label": "Depth End Percent",
-                        "node-id": "[\"384\"][\"inputs\"][\"end_percent\"]",
-                        "value": 0.5,
-                        "minimum": 0.0,
-                        "maximum": 1.0,
-                        "step": 0.05
-                    },
-                    "image-depth-path": {
-                        "type": "path",
-                        "label": "Path of Depth Image",
-                        "node-id": "[\"360\"][\"inputs\"][\"string\"]",
-                        "value": "./inputs/screen-depths/medusa_depth.png"
-                    },
-                    "use-animated-depth": {
-                        "type": "toggle-group",
-                        "label": "Use Animated Depth Video",
-                        "node-id": "[\"356\"][\"inputs\"][\"boolean\"]",
-                        "value": false,
-                        "inputs": {
-                            "video-depth-path": {
-                                "type": "path",
-                                "label": "Path of Animated Depth Video",
-                                "node-id": "[\"357\"][\"inputs\"][\"string\"]",
-                                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4"
-                            },
-                            "video-depth-select-every-nth": {
-                                "type": "int",
-                                "label": "Select Every Nth Frame of Animated Depth Video",
-                                "node-id": "[\"363\"][\"inputs\"][\"int\"]",
-                                "value": 1,
-                                "minimum": 1
-                            }
-                        }
-                    }
-                }
-            },
-            
-            "use-lineart-controlnet": {
-                "type": "toggle-group",
-                "label": "Use LineArt ControlNet",
-                "node-id": "[\"452\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "inputs": {
-                    "lineart-strength": {
-                        "type": "float",
-                        "label": "LineArt Strength",
-                        "node-id": "[\"448\"][\"inputs\"][\"strength\"]",
-                        "value": 0.5,
-                        "minimum": -3.0,
-                        "maximum": 3.0,
-                        "step": 0.05
-                    },
-                    "lineart-end-percent": {
-                        "type": "float",
-                        "label": "LineArt End Percent",
-                        "node-id": "[\"448\"][\"inputs\"][\"end_percent\"]",
-                        "value": 0.5,
-                        "minimum": 0.0,
-                        "maximum": 1.0,
-                        "step": 0.05
-                    },
-                    "image-lineart-path": {
-                        "type": "path",
-                        "label": "Path of LineArt Image",
-                        "node-id": "[\"453\"][\"inputs\"][\"string\"]",
-                        "value": "./inputs/static-lineart/medusa_lineart.png"
-                    },
-                    "use-animated-lineart": {
-                        "type": "toggle-group",
-                        "label": "Use Animated LineArt Video",
-                        "node-id": "[\"450\"][\"inputs\"][\"boolean\"]",
-                        "value": false,
-                        "inputs": {
-                            "video-lineart-path": {
-                                "type": "path",
-                                "label": "Path of Animated LineArt Video",
-                                "node-id": "[\"451\"][\"inputs\"][\"string\"]",
-                                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4"
-                            },
-                            "video-lineart-select-every-nth": {
-                                "type": "int",
-                                "label": "Select Every Nth Frame of Animated LineArt Video",
-                                "node-id": "[\"454\"][\"inputs\"][\"int\"]",
-                                "value": 1,
-                                "minimum": 1
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "outputs": {
-            "type": "video"
-        }
-    },
-    "upscale-video":{
-        "name": "Upscale Video",
-        "filename": "upscale-video.json",
-        "description": "Upscale a video.",
-        "inputs": {
-            "video-to-uscale-path": {
-                "type": "video",
-                "label": "Video to Upscale",
-                "node-id": "[\"419\"][\"inputs\"][\"string\"]",
-                "value": ""
-            },
-            
-            "prompting": {
-                "type": "group",
-                "label": "Text Prompting",
-                "inputs": {
-                    "text-01": {
-                        "type": "text",
-                        "label": "Positive",
-                        "node-id": "[\"426\"][\"inputs\"][\"string\"]",
-                        "value": "extremely detailed"
-                    },
-                    "text-02": {
-                        "type": "text",
-                        "label": "Negative",
-                        "node-id": "[\"427\"][\"inputs\"][\"string\"]",
-                        "value": "blurry, glitches, artefact, distorted, malformed, nsfw, lens flare, glare, bloom, bokeh"
-                    }
-                }
-            },
-
-            "upscale-by": {
-                "type": "float",
-                "label": "Upscale By",
-                "node-id": "[\"422\"][\"inputs\"][\"float\"]",
-                "value": 2.5,
-                "minimum": 1.0,
-                "maximum": 4.0,
-                "step": 0.25
-            },
-
-            "steps": {
-                "type": "int",
-                "label": "Steps",
-                "node-id": "[\"540\"][\"inputs\"][\"int\"]",
-                "value": 20,
-                "interactive": false,
-                "info": "Number of upscaling steps"
-            }
-        },
-        "outputs": {
-            "type": "video"
-        }
-    },
-    "upscale-video-tensorrt":{
-        "name": "Upscale Video (TensorRT)",
-        "filename": "upscale-video-tensorrt.json",
-        "description": "Upscale a video using TensorRT. This is faster than the normal upscaler, but there are limitations:\n* You can only upscale the input video by 4X.\n* Input video width and height must BOTH be less than 1280.",
-        "inputs": {
-            "video-to-path": {
-                "type": "video",
-                "label": "Video to Upscale",
-                "node-id": "[\"419\"][\"inputs\"][\"string\"]",
-                "value": ""
-            },
-            
-            "prompting": {
-                "type": "group",
-                "label": "Text Prompting",
-                "inputs": {
-                    "text-01": {
-                        "type": "text",
-                        "label": "Positive",
-                        "node-id": "[\"426\"][\"inputs\"][\"string\"]",
-                        "value": "extremely detailed"
-                    },
-                    "text-02": {
-                        "type": "text",
-                        "label": "Negative",
-                        "node-id": "[\"427\"][\"inputs\"][\"string\"]",
-                        "value": "blurry, glitches, artefact, distorted, malformed, nsfw, lens flare, glare, bloom, bokeh"
-                    }
-                }
-            },
-
-            "steps": {
-                "type": "int",
-                "label": "Steps",
-                "node-id": "[\"541\"][\"inputs\"][\"int\"]",
-                "value": 20,
-                "interactive": false,
-                "info": "Number of upscaling steps"
-            }
-        },
-        "outputs": {
-            "type": "video"
-        }
+    "outputs": {
+      "type": "video"
     }
+  },
+  "image-travel": {
+    "name": "Image Travel",
+    "filename": "image-travel.json",
+    "description": "Create a video that travels between images.",
+    "inputs": {
+      "output-specifications": {
+        "type": "group",
+        "label": "Output Specifications",
+        "inputs": {
+          "width": {
+            "type": "int",
+            "label": "Width",
+            "node-id": "[\"791\"][\"inputs\"][\"value\"]",
+            "value": 576,
+            "minimum": 128
+          },
+          "height": {
+            "type": "int",
+            "label": "Height",
+            "node-id": "[\"792\"][\"inputs\"][\"value\"]",
+            "value": 1024,
+            "minimum": 128
+          },
+          "num_frames": {
+            "type": "int",
+            "label": "Number of Frames",
+            "node-id": "[\"972\"][\"inputs\"][\"value\"]",
+            "value": 128,
+            "minimum": 16
+          },
+          "filename-prefix": {
+            "type": "string",
+            "label": "Filename Prefix",
+            "node-id": "[\"446\"][\"inputs\"][\"filename_prefix\"]",
+            "value": "Zenerator/image-travel"
+          }
+        }
+      },
+      "input-specifications": {
+        "type": "group",
+        "label": "Input Specifications",
+        "inputs": {
+          "images": {
+            "type": "images",
+            "label": "Images",
+            "node-id": "[\"879\"][\"inputs\"][\"directory\"]",
+            "value": ""
+          },
+          "prepend-prompt": {
+            "type": "string",
+            "label": "Positive Prompt (Static)",
+            "node-id": "[\"840\"][\"inputs\"][\"text\"]",
+            "value": "",
+            "info": "Applies to entire animation"
+          },
+          "negative-prompt": {
+            "type": "string",
+            "label": "Negative Prompt (Static)",
+            "node-id": "[\"722\"][\"inputs\"][\"text\"]",
+            "value": "nsfw",
+            "info": "Applies to entire animation"
+          }
+        }
+      },
+      "extra-settings": {
+        "type": "group",
+        "label": "Extra Settings",
+        "inputs": {
+          "loop": {
+            "type": "bool",
+            "label": "Loop",
+            "node-id": "[\"1040\"][\"inputs\"][\"boolean\"]",
+            "value": true
+          },
+          "liquid-strength": {
+            "type": "float",
+            "label": "Liquid Strength",
+            "node-id": "[\"1041\"][\"inputs\"][\"float\"]",
+            "value": 0.4,
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          "use-latent-mask": {
+            "type": "toggle-group",
+            "label": "Use Latent Masking",
+            "node-id": "[\"979\"][\"inputs\"][\"boolean\"]",
+            "value": false,
+            "interactive": true,
+            "inputs": {
+              "image-mask-path": {
+                "type": "path",
+                "label": "Path of Screen Mask Image",
+                "node-id": "[\"987\"][\"inputs\"][\"image\"]",
+                "value": "./inputs/screen-masks/f_screen-mask.png"
+              },
+              "use-animated-mask": {
+                "type": "toggle-group",
+                "label": "Use Animated Mask Video",
+                "node-id": "[\"988\"][\"inputs\"][\"boolean\"]",
+                "value": false,
+                "inputs": {
+                  "video-mask-path": {
+                    "type": "path",
+                    "label": "Path of Animated Mask Video",
+                    "node-id": "[\"923\"][\"inputs\"][\"video\"]",
+                    "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4"
+                  },
+                  "video-mask-select-every-nth": {
+                    "type": "int",
+                    "label": "Select Every Nth Frame of Animated Mask Video",
+                    "node-id": "[\"923\"][\"inputs\"][\"select_every_nth\"]",
+                    "value": 1,
+                    "minimum": 1
+                  }
+                }
+              },
+              "use-screen-mask": {
+                "type": "toggle-group",
+                "label": "Use Screen Mask",
+                "node-id": "[\"980\"][\"inputs\"][\"boolean\"]",
+                "value": false,
+                "inputs": {
+                  "screen-mask-path": {
+                    "type": "path",
+                    "label": "Path of Screen Mask Image",
+                    "node-id": "[\"926\"][\"inputs\"][\"image\"]",
+                    "value": "./inputs/screen-masks/square_screen-mask.png"
+                  }
+                }
+              }
+            }
+          },
+          "use-depth-controlnet": {
+            "type": "toggle-group",
+            "label": "Use Depth ControlNet",
+            "node-id": "[\"1031\"][\"inputs\"][\"boolean\"]",
+            "value": false,
+            "inputs": {
+              "depth-strength": {
+                "type": "float",
+                "label": "Depth Strength",
+                "node-id": "[\"896\"][\"inputs\"][\"strength\"]",
+                "value": 0.5,
+                "minimum": -3.0,
+                "maximum": 3.0
+              },
+              "depth-end-percent": {
+                "type": "float",
+                "label": "Depth End Percent",
+                "node-id": "[\"896\"][\"inputs\"][\"end_percent\"]",
+                "value": 0.5,
+                "minimum": 0.0,
+                "maximum": 1.0
+              },
+              "image-depth-path": {
+                "type": "path",
+                "label": "Path of Depth Image",
+                "node-id": "[\"899\"][\"inputs\"][\"image\"]",
+                "value": "./inputs/screen-depths/medusa_depth.png"
+              }
+            }
+          },
+          "use-lineart-controlnet": {
+            "type": "toggle-group",
+            "label": "Use LineArt ControlNet",
+            "node-id": "[\"990\"][\"inputs\"][\"boolean\"]",
+            "value": false,
+            "inputs": {
+              "lineart-strength": {
+                "type": "float",
+                "label": "LineArt Strength",
+                "node-id": "[\"918\"][\"inputs\"][\"strength\"]",
+                "value": 0.5,
+                "minimum": -3.0,
+                "maximum": 3.0
+              },
+              "lineart-end-percent": {
+                "type": "float",
+                "label": "LineArt End Percent",
+                "node-id": "[\"918\"][\"inputs\"][\"end_percent\"]",
+                "value": 0.5,
+                "minimum": 0.0,
+                "maximum": 1.0
+              },
+              "image-lineart-path": {
+                "type": "path",
+                "label": "Path of LineArt Image",
+                "node-id": "[\"919\"][\"inputs\"][\"image\"]",
+                "value": "./inputs/static-lineart/medusa_lineart.png"
+              },
+              "use-animated-lineart": {
+                "type": "toggle-group",
+                "label": "Use Animated LineArt Video",
+                "node-id": "[\"997\"][\"inputs\"][\"boolean\"]",
+                "value": false,
+                "inputs": {
+                  "video-lineart-path": {
+                    "type": "path",
+                    "label": "Path of Animated LineArt Video",
+                    "node-id": "[\"921\"][\"inputs\"][\"video\"]",
+                    "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4"
+                  },
+                  "video-lineart-select-every-nth": {
+                    "type": "int",
+                    "label": "Select Every Nth Frame of Animated LineArt Video",
+                    "node-id": "[\"921\"][\"inputs\"][\"select_every_nth\"]",
+                    "value": 1,
+                    "minimum": 1
+                  }
+                }
+              }
+            }
+          },
+          "use-qr-controlnet": {
+            "type": "toggle-group",
+            "label": "Use QR ControlNet",
+            "node-id": "[\"1033\"][\"inputs\"][\"boolean\"]",
+            "value": false,
+            "inputs": {
+              "qr-strength": {
+                "type": "float",
+                "label": "QR Strength",
+                "node-id": "[\"748\"][\"inputs\"][\"strength\"]",
+                "value": 1.2,
+                "minimum": -3.0,
+                "maximum": 3.0
+              },
+              "qr-end-percent": {
+                "type": "float",
+                "label": "QR End Percent",
+                "node-id": "[\"896\"][\"inputs\"][\"end_percent\"]",
+                "value": 1.0,
+                "minimum": 0.0,
+                "maximum": 1.0
+              },
+              "qr-video-path": {
+                "type": "path",
+                "label": "Path of QR Monster Video",
+                "node-id": "[\"827\"][\"inputs\"][\"video\"]",
+                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4"
+              }
+            }
+          },
+          "diffusion-steps": {
+            "type": "int",
+            "label": "Diffusion Steps",
+            "node-id": "[\"445\"][\"inputs\"][\"steps\"]",
+            "value": 20,
+            "minimum": 1,
+            "maximum": 100
+          }
+        }
+      },
+      "advanced-animation-settings": {
+        "type": "group",
+        "label": "Advanced Animation Settings",
+        "inputs": {
+          "animation-type-01": {
+            "type": "enum",
+            "label": "Animation Type 01",
+            "node-id": "[\"804\"][\"inputs\"][\"animation_type_1\"]",
+            "value": "Fade",
+            "choices": [
+              "LeftToRight",
+              "RightToLeft",
+              "TopDown",
+              "BottomToTop",
+              "GrowingCircle",
+              "ShrinkingCircle",
+              "DiagonalTopLeft-BottomRight",
+              "DiagonalTopRight-BottomLeft",
+              "DiagonalBottomLeft-TopRight",
+              "DiagonalBottomRight-TopLeft",
+              "Fade",
+              "SqSpinCw",
+              "SqSpinCcw",
+              "VenetianBlindsHorizontal",
+              "VenetianBlindsVertical",
+              "DiagonalVenetianBlinds1",
+              "DiagonalVenetianBlinds2",
+              "Random",
+              "RandomNoVenetian"
+            ]
+          },
+          "animation-type-02": {
+            "type": "enum",
+            "label": "Animation Type 02",
+            "node-id": "[\"804\"][\"inputs\"][\"animation_type_2\"]",
+            "value": "Fade",
+            "choices": [
+              "LeftToRight",
+              "RightToLeft",
+              "TopDown",
+              "BottomToTop",
+              "GrowingCircle",
+              "ShrinkingCircle",
+              "DiagonalTopLeft-BottomRight",
+              "DiagonalTopRight-BottomLeft",
+              "DiagonalBottomLeft-TopRight",
+              "DiagonalBottomRight-TopLeft",
+              "Fade",
+              "SqSpinCw",
+              "SqSpinCcw",
+              "VenetianBlindsHorizontal",
+              "VenetianBlindsVertical",
+              "DiagonalVenetianBlinds1",
+              "DiagonalVenetianBlinds2",
+              "Random",
+              "RandomNoVenetian"
+            ]
+          },
+          "animation-type-03": {
+            "type": "enum",
+            "label": "Animation Type 03",
+            "node-id": "[\"804\"][\"inputs\"][\"animation_type_3\"]",
+            "value": "Fade",
+            "choices": [
+              "LeftToRight",
+              "RightToLeft",
+              "TopDown",
+              "BottomToTop",
+              "GrowingCircle",
+              "ShrinkingCircle",
+              "DiagonalTopLeft-BottomRight",
+              "DiagonalTopRight-BottomLeft",
+              "DiagonalBottomLeft-TopRight",
+              "DiagonalBottomRight-TopLeft",
+              "Fade",
+              "SqSpinCw",
+              "SqSpinCcw",
+              "VenetianBlindsHorizontal",
+              "VenetianBlindsVertical",
+              "DiagonalVenetianBlinds1",
+              "DiagonalVenetianBlinds2",
+              "Random",
+              "RandomNoVenetian"
+            ]
+          },
+          "animation-type-04": {
+            "type": "enum",
+            "label": "Animation Type 04",
+            "node-id": "[\"804\"][\"inputs\"][\"animation_type_4\"]",
+            "value": "Fade",
+            "choices": [
+              "LeftToRight",
+              "RightToLeft",
+              "TopDown",
+              "BottomToTop",
+              "GrowingCircle",
+              "ShrinkingCircle",
+              "DiagonalTopLeft-BottomRight",
+              "DiagonalTopRight-BottomLeft",
+              "DiagonalBottomLeft-TopRight",
+              "DiagonalBottomRight-TopLeft",
+              "Fade",
+              "SqSpinCw",
+              "SqSpinCcw",
+              "VenetianBlindsHorizontal",
+              "VenetianBlindsVertical",
+              "DiagonalVenetianBlinds1",
+              "DiagonalVenetianBlinds2",
+              "Random",
+              "RandomNoVenetian"
+            ]
+          },
+          "animation-type-05": {
+            "type": "enum",
+            "label": "Animation Type 05",
+            "node-id": "[\"804\"][\"inputs\"][\"animation_type_5\"]",
+            "value": "Fade",
+            "choices": [
+              "LeftToRight",
+              "RightToLeft",
+              "TopDown",
+              "BottomToTop",
+              "GrowingCircle",
+              "ShrinkingCircle",
+              "DiagonalTopLeft-BottomRight",
+              "DiagonalTopRight-BottomLeft",
+              "DiagonalBottomLeft-TopRight",
+              "DiagonalBottomRight-TopLeft",
+              "Fade",
+              "SqSpinCw",
+              "SqSpinCcw",
+              "VenetianBlindsHorizontal",
+              "VenetianBlindsVertical",
+              "DiagonalVenetianBlinds1",
+              "DiagonalVenetianBlinds2",
+              "Random",
+              "RandomNoVenetian"
+            ]
+          },
+          "animation-type-06": {
+            "type": "enum",
+            "label": "Animation Type 06",
+            "node-id": "[\"804\"][\"inputs\"][\"animation_type_6\"]",
+            "value": "Fade",
+            "choices": [
+              "LeftToRight",
+              "RightToLeft",
+              "TopDown",
+              "BottomToTop",
+              "GrowingCircle",
+              "ShrinkingCircle",
+              "DiagonalTopLeft-BottomRight",
+              "DiagonalTopRight-BottomLeft",
+              "DiagonalBottomLeft-TopRight",
+              "DiagonalBottomRight-TopLeft",
+              "Fade",
+              "SqSpinCw",
+              "SqSpinCcw",
+              "VenetianBlindsHorizontal",
+              "VenetianBlindsVertical",
+              "DiagonalVenetianBlinds1",
+              "DiagonalVenetianBlinds2",
+              "Random",
+              "RandomNoVenetian"
+            ]
+          },
+          "animation-type-07": {
+            "type": "enum",
+            "label": "Animation Type 07",
+            "node-id": "[\"804\"][\"inputs\"][\"animation_type_7\"]",
+            "value": "Fade",
+            "choices": [
+              "LeftToRight",
+              "RightToLeft",
+              "TopDown",
+              "BottomToTop",
+              "GrowingCircle",
+              "ShrinkingCircle",
+              "DiagonalTopLeft-BottomRight",
+              "DiagonalTopRight-BottomLeft",
+              "DiagonalBottomLeft-TopRight",
+              "DiagonalBottomRight-TopLeft",
+              "Fade",
+              "SqSpinCw",
+              "SqSpinCcw",
+              "VenetianBlindsHorizontal",
+              "VenetianBlindsVertical",
+              "DiagonalVenetianBlinds1",
+              "DiagonalVenetianBlinds2",
+              "Random",
+              "RandomNoVenetian"
+            ]
+          },
+          "animation-type-08": {
+            "type": "enum",
+            "label": "Animation Type 08",
+            "node-id": "[\"804\"][\"inputs\"][\"animation_type_8\"]",
+            "value": "Fade",
+            "choices": [
+              "LeftToRight",
+              "RightToLeft",
+              "TopDown",
+              "BottomToTop",
+              "GrowingCircle",
+              "ShrinkingCircle",
+              "DiagonalTopLeft-BottomRight",
+              "DiagonalTopRight-BottomLeft",
+              "DiagonalBottomLeft-TopRight",
+              "DiagonalBottomRight-TopLeft",
+              "Fade",
+              "SqSpinCw",
+              "SqSpinCcw",
+              "VenetianBlindsHorizontal",
+              "VenetianBlindsVertical",
+              "DiagonalVenetianBlinds1",
+              "DiagonalVenetianBlinds2",
+              "Random",
+              "RandomNoVenetian"
+            ]
+          },
+          "animation-type-09": {
+            "type": "enum",
+            "label": "Animation Type 09",
+            "node-id": "[\"804\"][\"inputs\"][\"animation_type_9\"]",
+            "value": "Fade",
+            "choices": [
+              "LeftToRight",
+              "RightToLeft",
+              "TopDown",
+              "BottomToTop",
+              "GrowingCircle",
+              "ShrinkingCircle",
+              "DiagonalTopLeft-BottomRight",
+              "DiagonalTopRight-BottomLeft",
+              "DiagonalBottomLeft-TopRight",
+              "DiagonalBottomRight-TopLeft",
+              "Fade",
+              "SqSpinCw",
+              "SqSpinCcw",
+              "VenetianBlindsHorizontal",
+              "VenetianBlindsVertical",
+              "DiagonalVenetianBlinds1",
+              "DiagonalVenetianBlinds2",
+              "Random",
+              "RandomNoVenetian"
+            ]
+          },
+          "animation-type-10": {
+            "type": "enum",
+            "label": "Animation Type 10",
+            "node-id": "[\"804\"][\"inputs\"][\"animation_type_10\"]",
+            "value": "Fade",
+            "choices": [
+              "LeftToRight",
+              "RightToLeft",
+              "TopDown",
+              "BottomToTop",
+              "GrowingCircle",
+              "ShrinkingCircle",
+              "DiagonalTopLeft-BottomRight",
+              "DiagonalTopRight-BottomLeft",
+              "DiagonalBottomLeft-TopRight",
+              "DiagonalBottomRight-TopLeft",
+              "Fade",
+              "SqSpinCw",
+              "SqSpinCcw",
+              "VenetianBlindsHorizontal",
+              "VenetianBlindsVertical",
+              "DiagonalVenetianBlinds1",
+              "DiagonalVenetianBlinds2",
+              "Random",
+              "RandomNoVenetian"
+            ]
+          },
+          "animation-type-11": {
+            "type": "enum",
+            "label": "Animation Type 11",
+            "node-id": "[\"804\"][\"inputs\"][\"animation_type_11\"]",
+            "value": "Fade",
+            "choices": [
+              "LeftToRight",
+              "RightToLeft",
+              "TopDown",
+              "BottomToTop",
+              "GrowingCircle",
+              "ShrinkingCircle",
+              "DiagonalTopLeft-BottomRight",
+              "DiagonalTopRight-BottomLeft",
+              "DiagonalBottomLeft-TopRight",
+              "DiagonalBottomRight-TopLeft",
+              "Fade",
+              "SqSpinCw",
+              "SqSpinCcw",
+              "VenetianBlindsHorizontal",
+              "VenetianBlindsVertical",
+              "DiagonalVenetianBlinds1",
+              "DiagonalVenetianBlinds2",
+              "Random",
+              "RandomNoVenetian"
+            ]
+          },
+          "animation-type-12": {
+            "type": "enum",
+            "label": "Animation Type 12",
+            "node-id": "[\"804\"][\"inputs\"][\"animation_type_12\"]",
+            "value": "Fade",
+            "choices": [
+              "LeftToRight",
+              "RightToLeft",
+              "TopDown",
+              "BottomToTop",
+              "GrowingCircle",
+              "ShrinkingCircle",
+              "DiagonalTopLeft-BottomRight",
+              "DiagonalTopRight-BottomLeft",
+              "DiagonalBottomLeft-TopRight",
+              "DiagonalBottomRight-TopLeft",
+              "Fade",
+              "SqSpinCw",
+              "SqSpinCcw",
+              "VenetianBlindsHorizontal",
+              "VenetianBlindsVertical",
+              "DiagonalVenetianBlinds1",
+              "DiagonalVenetianBlinds2",
+              "Random",
+              "RandomNoVenetian"
+            ]
+          }
+        }
+      }
+    },
+    "outputs": {
+      "type": "video"
+    }
+  },
+  "square": {
+    "name": "Square",
+    "filename": "general.json",
+    "description": "Create a video for a square screen using fully exposed parameters.",
+    "inputs": {
+      "output-specifications": {
+        "type": "group",
+        "label": "Output Specifications",
+        "inputs": {
+          "width": {
+            "type": "int",
+            "label": "Output Width",
+            "node-id": "[\"218\"][\"inputs\"][\"int\"]",
+            "value": 768,
+            "minimum": 256,
+            "maximum": 4096
+          },
+          "height": {
+            "type": "int",
+            "label": "Output Height",
+            "node-id": "[\"219\"][\"inputs\"][\"int\"]",
+            "value": 768,
+            "minimum": 256,
+            "maximum": 4096
+          },
+          "raw_frame_count": {
+            "type": "int",
+            "label": "Raw Frame Count",
+            "node-id": "[\"111\"][\"inputs\"][\"int\"]",
+            "value": 180,
+            "minimum": 12,
+            "info": "= (final frame count) / (frame interpolation)"
+          },
+          "frame_interp": {
+            "type": "int",
+            "label": "Frame Interpolation",
+            "node-id": "[\"190\"][\"inputs\"][\"multiplier\"]",
+            "value": 3,
+            "minimum": 1,
+            "maximum": 10,
+            "info": "RIFE multiplier"
+          },
+          "filename-prefix": {
+            "type": "string",
+            "label": "Output Video Filename Prefix",
+            "node-id": "[\"191\"][\"inputs\"][\"filename_prefix\"]",
+            "value": "Zenerator/general"
+          }
+        }
+      },
+
+      "prompting": {
+        "type": "group",
+        "label": "Text Prompting",
+        "inputs": {
+          "text-01": {
+            "type": "text",
+            "label": "Positive",
+            "node-id": "[\"6\"][\"inputs\"][\"text\"]",
+            "value": "extremely detailed"
+          },
+          "text-02": {
+            "type": "text",
+            "label": "Negative",
+            "node-id": "[\"7\"][\"inputs\"][\"text\"]",
+            "value": "blurry, glitches, artefact, distorted, malformed, nsfw, lens flare, glare, bloom, bokeh"
+          }
+        }
+      },
+
+      "images-01": {
+        "type": "images",
+        "label": "Images",
+        "node-id": "[\"142\"][\"inputs\"][\"string\"]",
+        "value": "",
+        "info": "Images to interpolate between (for best results use 2-4 images)"
+      },
+
+      "use-latent-mask": {
+        "type": "toggle-group",
+        "label": "Use Latent Mask",
+        "node-id": "[\"461\"][\"inputs\"][\"boolean\"]",
+        "value": false,
+        "interactive": true,
+        "inputs": {
+          "image-mask-path": {
+            "type": "path",
+            "label": "Path of Screen Mask Image",
+            "node-id": "[\"337\"][\"inputs\"][\"string\"]",
+            "value": "./inputs/screen-masks/square_screen-mask.png"
+          },
+          "use-animated-mask": {
+            "type": "toggle-group",
+            "label": "Use Animated Mask Video",
+            "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
+            "value": false,
+            "inputs": {
+              "video-mask-path": {
+                "type": "path",
+                "label": "Path of Animated Mask Video",
+                "node-id": "[\"339\"][\"inputs\"][\"string\"]",
+                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4"
+              },
+              "video-mask-select-every-nth": {
+                "type": "int",
+                "label": "Select Every Nth Frame of Animated Mask Video",
+                "node-id": "[\"348\"][\"inputs\"][\"int\"]",
+                "value": 1,
+                "minimum": 1
+              }
+            }
+          }
+        }
+      },
+
+      "use-depth-controlnet": {
+        "type": "toggle-group",
+        "label": "Use Depth ControlNet",
+        "node-id": "[\"359\"][\"inputs\"][\"boolean\"]",
+        "value": false,
+        "inputs": {
+          "depth-strength": {
+            "type": "float",
+            "label": "Depth Strength",
+            "node-id": "[\"384\"][\"inputs\"][\"strength\"]",
+            "value": 0.5,
+            "minimum": -3.0,
+            "maximum": 3.0,
+            "step": 0.05
+          },
+          "depth-end-percent": {
+            "type": "float",
+            "label": "Depth End Percent",
+            "node-id": "[\"384\"][\"inputs\"][\"end_percent\"]",
+            "value": 0.5,
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "step": 0.05
+          },
+          "image-depth-path": {
+            "type": "path",
+            "label": "Path of Depth Image",
+            "node-id": "[\"360\"][\"inputs\"][\"string\"]",
+            "value": "./inputs/screen-depths/medusa_depth.png"
+          },
+          "use-animated-depth": {
+            "type": "toggle-group",
+            "label": "Use Animated Depth Video",
+            "node-id": "[\"356\"][\"inputs\"][\"boolean\"]",
+            "value": false,
+            "inputs": {
+              "video-depth-path": {
+                "type": "path",
+                "label": "Path of Animated Depth Video",
+                "node-id": "[\"357\"][\"inputs\"][\"string\"]",
+                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4"
+              },
+              "video-depth-select-every-nth": {
+                "type": "int",
+                "label": "Select Every Nth Frame of Animated Depth Video",
+                "node-id": "[\"363\"][\"inputs\"][\"int\"]",
+                "value": 1,
+                "minimum": 1
+              }
+            }
+          }
+        }
+      },
+
+      "use-lineart-controlnet": {
+        "type": "toggle-group",
+        "label": "Use LineArt ControlNet",
+        "node-id": "[\"452\"][\"inputs\"][\"boolean\"]",
+        "value": false,
+        "inputs": {
+          "lineart-strength": {
+            "type": "float",
+            "label": "LineArt Strength",
+            "node-id": "[\"448\"][\"inputs\"][\"strength\"]",
+            "value": 0.5,
+            "minimum": -3.0,
+            "maximum": 3.0,
+            "step": 0.05
+          },
+          "lineart-end-percent": {
+            "type": "float",
+            "label": "LineArt End Percent",
+            "node-id": "[\"448\"][\"inputs\"][\"end_percent\"]",
+            "value": 0.5,
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "step": 0.05
+          },
+          "image-lineart-path": {
+            "type": "path",
+            "label": "Path of LineArt Image",
+            "node-id": "[\"453\"][\"inputs\"][\"string\"]",
+            "value": "./inputs/static-lineart/medusa_lineart.png"
+          },
+          "use-animated-lineart": {
+            "type": "toggle-group",
+            "label": "Use Animated LineArt Video",
+            "node-id": "[\"450\"][\"inputs\"][\"boolean\"]",
+            "value": false,
+            "inputs": {
+              "video-lineart-path": {
+                "type": "path",
+                "label": "Path of Animated LineArt Video",
+                "node-id": "[\"451\"][\"inputs\"][\"string\"]",
+                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4"
+              },
+              "video-lineart-select-every-nth": {
+                "type": "int",
+                "label": "Select Every Nth Frame of Animated LineArt Video",
+                "node-id": "[\"454\"][\"inputs\"][\"int\"]",
+                "value": 1,
+                "minimum": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "outputs": {
+      "type": "video"
+    }
+  },
+  "wide": {
+    "name": "Wide",
+    "filename": "general.json",
+    "description": "Create a video for a 16:9 screen using fully exposed parameters.",
+    "inputs": {
+      "output-specifications": {
+        "type": "group",
+        "label": "Output Specifications",
+        "inputs": {
+          "width": {
+            "type": "int",
+            "label": "Output Width",
+            "node-id": "[\"218\"][\"inputs\"][\"int\"]",
+            "value": 1365,
+            "minimum": 256,
+            "maximum": 4096
+          },
+          "height": {
+            "type": "int",
+            "label": "Output Height",
+            "node-id": "[\"219\"][\"inputs\"][\"int\"]",
+            "value": 768,
+            "minimum": 256,
+            "maximum": 4096
+          },
+          "raw_frame_count": {
+            "type": "int",
+            "label": "Raw Frame Count",
+            "node-id": "[\"111\"][\"inputs\"][\"int\"]",
+            "value": 180,
+            "minimum": 12
+          },
+          "frame_interp": {
+            "type": "int",
+            "label": "Frame Interpolation",
+            "node-id": "[\"190\"][\"inputs\"][\"multiplier\"]",
+            "value": 3,
+            "minimum": 1,
+            "maximum": 10
+          },
+          "filename-prefix": {
+            "type": "string",
+            "label": "Output Video Filename Prefix",
+            "node-id": "[\"191\"][\"inputs\"][\"filename_prefix\"]",
+            "value": "Zenerator/general"
+          }
+        }
+      },
+
+      "prompting": {
+        "type": "group",
+        "label": "Text Prompting",
+        "inputs": {
+          "text-01": {
+            "type": "text",
+            "label": "Positive",
+            "node-id": "[\"6\"][\"inputs\"][\"text\"]",
+            "value": "extremely detailed"
+          },
+          "text-02": {
+            "type": "text",
+            "label": "Negative",
+            "node-id": "[\"7\"][\"inputs\"][\"text\"]",
+            "value": "blurry, glitches, artefact, distorted, malformed, nsfw, lens flare, glare, bloom, bokeh"
+          }
+        }
+      },
+
+      "images-01": {
+        "type": "images",
+        "label": "Images",
+        "node-id": "[\"142\"][\"inputs\"][\"string\"]",
+        "value": ""
+      },
+
+      "use-latent-mask": {
+        "type": "toggle-group",
+        "label": "Use Latent Mask",
+        "node-id": "[\"461\"][\"inputs\"][\"boolean\"]",
+        "value": false,
+        "interactive": true,
+        "inputs": {
+          "image-mask-path": {
+            "type": "path",
+            "label": "Path of Screen Mask Image",
+            "node-id": "[\"337\"][\"inputs\"][\"string\"]",
+            "value": "./inputs/screen-masks/square_screen-mask.png"
+          },
+          "use-animated-mask": {
+            "type": "toggle-group",
+            "label": "Use Animated Mask Video",
+            "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
+            "value": false,
+            "inputs": {
+              "video-mask-path": {
+                "type": "path",
+                "label": "Path of Animated Mask Video",
+                "node-id": "[\"339\"][\"inputs\"][\"string\"]",
+                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4"
+              },
+              "video-mask-select-every-nth": {
+                "type": "int",
+                "label": "Select Every Nth Frame of Animated Mask Video",
+                "node-id": "[\"348\"][\"inputs\"][\"int\"]",
+                "value": 1,
+                "minimum": 1
+              }
+            }
+          }
+        }
+      },
+
+      "use-depth-controlnet": {
+        "type": "toggle-group",
+        "label": "Use Depth ControlNet",
+        "node-id": "[\"359\"][\"inputs\"][\"boolean\"]",
+        "value": false,
+        "inputs": {
+          "depth-strength": {
+            "type": "float",
+            "label": "Depth Strength",
+            "node-id": "[\"384\"][\"inputs\"][\"strength\"]",
+            "value": 0.5,
+            "minimum": -3.0,
+            "maximum": 3.0,
+            "step": 0.05
+          },
+          "depth-end-percent": {
+            "type": "float",
+            "label": "Depth End Percent",
+            "node-id": "[\"384\"][\"inputs\"][\"end_percent\"]",
+            "value": 0.5,
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "step": 0.05
+          },
+          "image-depth-path": {
+            "type": "path",
+            "label": "Path of Depth Image",
+            "node-id": "[\"360\"][\"inputs\"][\"string\"]",
+            "value": "./inputs/screen-depths/medusa_depth.png"
+          },
+          "use-animated-depth": {
+            "type": "toggle-group",
+            "label": "Use Animated Depth Video",
+            "node-id": "[\"356\"][\"inputs\"][\"boolean\"]",
+            "value": false,
+            "inputs": {
+              "video-depth-path": {
+                "type": "path",
+                "label": "Path of Animated Depth Video",
+                "node-id": "[\"357\"][\"inputs\"][\"string\"]",
+                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4"
+              },
+              "video-depth-select-every-nth": {
+                "type": "int",
+                "label": "Select Every Nth Frame of Animated Depth Video",
+                "node-id": "[\"363\"][\"inputs\"][\"int\"]",
+                "value": 1,
+                "minimum": 1
+              }
+            }
+          }
+        }
+      },
+
+      "use-lineart-controlnet": {
+        "type": "toggle-group",
+        "label": "Use LineArt ControlNet",
+        "node-id": "[\"452\"][\"inputs\"][\"boolean\"]",
+        "value": false,
+        "inputs": {
+          "lineart-strength": {
+            "type": "float",
+            "label": "LineArt Strength",
+            "node-id": "[\"448\"][\"inputs\"][\"strength\"]",
+            "value": 0.5,
+            "minimum": -3.0,
+            "maximum": 3.0,
+            "step": 0.05
+          },
+          "lineart-end-percent": {
+            "type": "float",
+            "label": "LineArt End Percent",
+            "node-id": "[\"448\"][\"inputs\"][\"end_percent\"]",
+            "value": 0.5,
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "step": 0.05
+          },
+          "image-lineart-path": {
+            "type": "path",
+            "label": "Path of LineArt Image",
+            "node-id": "[\"453\"][\"inputs\"][\"string\"]",
+            "value": "./inputs/static-lineart/medusa_lineart.png"
+          },
+          "use-animated-lineart": {
+            "type": "toggle-group",
+            "label": "Use Animated LineArt Video",
+            "node-id": "[\"450\"][\"inputs\"][\"boolean\"]",
+            "value": false,
+            "inputs": {
+              "video-lineart-path": {
+                "type": "path",
+                "label": "Path of Animated LineArt Video",
+                "node-id": "[\"451\"][\"inputs\"][\"string\"]",
+                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4"
+              },
+              "video-lineart-select-every-nth": {
+                "type": "int",
+                "label": "Select Every Nth Frame of Animated LineArt Video",
+                "node-id": "[\"454\"][\"inputs\"][\"int\"]",
+                "value": 1,
+                "minimum": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "outputs": {
+      "type": "video"
+    }
+  },
+  "upscale-video": {
+    "name": "Upscale Video",
+    "filename": "upscale-video.json",
+    "description": "Upscale a video.",
+    "inputs": {
+      "video-to-uscale-path": {
+        "type": "video",
+        "label": "Video to Upscale",
+        "node-id": "[\"419\"][\"inputs\"][\"string\"]",
+        "value": ""
+      },
+
+      "prompting": {
+        "type": "group",
+        "label": "Text Prompting",
+        "inputs": {
+          "text-01": {
+            "type": "text",
+            "label": "Positive",
+            "node-id": "[\"426\"][\"inputs\"][\"string\"]",
+            "value": "extremely detailed"
+          },
+          "text-02": {
+            "type": "text",
+            "label": "Negative",
+            "node-id": "[\"427\"][\"inputs\"][\"string\"]",
+            "value": "blurry, glitches, artefact, distorted, malformed, nsfw, lens flare, glare, bloom, bokeh"
+          }
+        }
+      },
+
+      "upscale-by": {
+        "type": "float",
+        "label": "Upscale By",
+        "node-id": "[\"422\"][\"inputs\"][\"float\"]",
+        "value": 2.5,
+        "minimum": 1.0,
+        "maximum": 4.0,
+        "step": 0.25
+      },
+
+      "steps": {
+        "type": "int",
+        "label": "Steps",
+        "node-id": "[\"540\"][\"inputs\"][\"int\"]",
+        "value": 20,
+        "interactive": false,
+        "info": "Number of upscaling steps"
+      }
+    },
+    "outputs": {
+      "type": "video"
+    }
+  },
+  "upscale-video-tensorrt": {
+    "name": "Upscale Video (TensorRT)",
+    "filename": "upscale-video-tensorrt.json",
+    "description": "Upscale a video using TensorRT. This is faster than the normal upscaler, but there are limitations:\n* You can only upscale the input video by 4X.\n* Input video width and height must BOTH be less than 1280.",
+    "inputs": {
+      "video-to-path": {
+        "type": "video",
+        "label": "Video to Upscale",
+        "node-id": "[\"419\"][\"inputs\"][\"string\"]",
+        "value": ""
+      },
+
+      "prompting": {
+        "type": "group",
+        "label": "Text Prompting",
+        "inputs": {
+          "text-01": {
+            "type": "text",
+            "label": "Positive",
+            "node-id": "[\"426\"][\"inputs\"][\"string\"]",
+            "value": "extremely detailed"
+          },
+          "text-02": {
+            "type": "text",
+            "label": "Negative",
+            "node-id": "[\"427\"][\"inputs\"][\"string\"]",
+            "value": "blurry, glitches, artefact, distorted, malformed, nsfw, lens flare, glare, bloom, bokeh"
+          }
+        }
+      },
+
+      "steps": {
+        "type": "int",
+        "label": "Steps",
+        "node-id": "[\"541\"][\"inputs\"][\"int\"]",
+        "value": 20,
+        "interactive": false,
+        "info": "Number of upscaling steps"
+      }
+    },
+    "outputs": {
+      "type": "video"
+    }
+  }
 }
