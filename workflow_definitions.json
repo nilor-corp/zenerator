@@ -97,12 +97,6 @@
         "type": "group",
         "label": "Input Specifications",
         "inputs": {
-          "images": {
-            "type": "images",
-            "label": "Images",
-            "node-id": "[\"879\"][\"inputs\"][\"directory\"]",
-            "value": ""
-          },
           "prepend-prompt": {
             "type": "string",
             "label": "Positive Prompt (Static)",
@@ -116,6 +110,12 @@
             "node-id": "[\"722\"][\"inputs\"][\"text\"]",
             "value": "nsfw",
             "info": "Applies to entire animation"
+          },
+          "images": {
+            "type": "images",
+            "label": "Images",
+            "node-id": "[\"879\"][\"inputs\"][\"directory\"]",
+            "value": ""
           }
         }
       },
