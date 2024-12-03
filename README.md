@@ -65,6 +65,16 @@ Zenerator is a collection of ComfyUI workflows by Nilor Studio that we commonly 
     ```console
     comfy set-default ComfyUI
     ```
+
+### Clone Zenerator
+* In the `.\nilor-corp\` directory:
+    ```console
+    git clone https://github.com/nilor-corp/zenerator.git
+    cd zenerator
+    git switch feature/vivid
+    cd ..
+    ```
+
 ### Install Models
 * In the `.\nilor-corp\` directory:
     ```console
@@ -73,12 +83,6 @@ Zenerator is a collection of ComfyUI workflows by Nilor Studio that we commonly 
     rmdir models    #if win. Answer yes if prompted
     git clone git@hf.co:nilor-corp/zenerator-models models
     cd ..           # should put you in .\nilor-corp\ directory
-    ```
-
-### Clone Zenerator
-* In the `.\nilor-corp\` directory:
-    ```console
-    git clone https://github.com/nilor-corp/zenerator.git
     ```
 
 ### Set up Env Variables
@@ -94,8 +98,6 @@ Zenerator is a collection of ComfyUI workflows by Nilor Studio that we commonly 
 ### Provision ComfyUI
 1. In the `.\nilor-corp\` directory, still within the `venv` virtual environment:
     ```console
-    cd zenerator
-    git switch feature/vivid
     cp .\ComfyUI-Manager-Snapshots\2024-12-02_13-10-11_snapshot.json ..\ComfyUI\custom_nodes\ComfyUI-Manager\snapshots\
     cd ..           # should put you in .\nilor-corp\ directory
     comfy launch
