@@ -133,7 +133,7 @@ Congratulations, you are finished installing Zenerator!
     ```
 
 ### Test your Installation
-* Following the [Usage](#usage) instructions below, with both ComfyUI and Zenerator initialized please run the "Default" workflow tab to ensure that your installation is functioning properly.
+* Following the [Usage](#usage) instructions below, with both ComfyUI and Zenerator initialized please run the "Test" workflow tab to ensure that your installation is functioning properly.
 
 
 ## Usage

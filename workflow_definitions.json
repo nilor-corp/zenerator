@@ -1,7 +1,7 @@
 {
-  "default": {
-    "name": "Default",
-    "filename": "default.json",
+  "test": {
+    "name": "Test",
+    "filename": "test.json",
     "description": "Use this workflow to test that everything is working.",
     "inputs": {
       "output-specifications": {
@@ -28,7 +28,7 @@
             "type": "string",
             "label": "Output Filename Prefix",
             "node-id": "[\"37\"][\"inputs\"][\"filename_prefix\"]",
-            "value": "Zenerator/default"
+            "value": "Zenerator/test"
           }
         }
       },
@@ -46,7 +46,7 @@
             "type": "text",
             "label": "Negative",
             "node-id": "[\"6\"][\"inputs\"][\"text\"]",
-            "value": "blurry, distorted, nsfw"
+            "value": "nsfw, blurry, distorted"
           }
         }
       }
@@ -60,21 +60,182 @@
     "filename": "image-travel-rework.json",
     "description": "Create a video that travels between images.",
     "presets": {
-        "Square": {
-            "name": "Square",
-            "description": "High resolution with fade transitions",
+        "Zenon Wide (A-E)": {
+            "name": "Zenon Wide (A-E)",
+            "description": "Preset for Zenon's entire Wide dining room screen",
             "values": {
-                "width": 1024,
-                "height": 1024
+                "width": 2632,
+                "height": 768,
+                "filename-prefix": "Zenerator/Zenon/AE-it",
+
+                "image-mask-path": "./inputs/screen-masks/wide_screen-mask.png",
+                "screen-mask-path": "./inputs/screen-masks/wide_screen-mask.png",
+
+                "image-depth-path": "./inputs/screen-depths/f_depth.png"
             }
         },
-        "Wide": {
-            "name": "Wide",
-            "description": "Fast paced with circle transitions", 
+        "Zenon A": {
+            "name": "Zenon A",
+            "description": "Preset for Zenon's A screen, part of the Wide dining room screen",
             "values": {
-                "width": 1365,
-                "height": 768,
-                "num_frames": 120
+                "width": 680,
+                "height": 1200,
+                "filename-prefix": "Zenerator/Zenon/A-it",
+
+                "image-mask-path": "./inputs/screen-masks/square_screen-mask.png",
+                "screen-mask-path": "./inputs/screen-masks/square_screen-mask.png",
+
+                "image-depth-path": "./inputs/screen-depths/f_depth.png"
+            }
+        },
+        "Zenon B": {
+            "name": "Zenon B",
+            "description": "Preset for Zenon's B screen, part of the Wide dining room screen",
+            "values": {
+                "width": 680,
+                "height": 1200,
+                "filename-prefix": "Zenerator/Zenon/B-it",
+
+                "image-mask-path": "./inputs/screen-masks/square_screen-mask.png",
+                "screen-mask-path": "./inputs/screen-masks/square_screen-mask.png",
+
+                "image-depth-path": "./inputs/screen-depths/f_depth.png"
+            }
+        },
+        "Zenon C": {
+            "name": "Zenon C",
+            "description": "Preset for Zenon's C screen, part of the Wide dining room screen",
+            "values": {
+                "width": 1120,
+                "height": 1040,
+                "filename-prefix": "Zenerator/Zenon/C-it",
+
+                "image-mask-path": "./inputs/screen-masks/square_screen-mask.png",
+                "screen-mask-path": "./inputs/screen-masks/square_screen-mask.png",
+
+                "image-depth-path": "./inputs/screen-depths/f_depth.png"
+            }
+        },
+        "Zenon D": {
+            "name": "Zenon D",
+            "description": "Preset for Zenon's D screen, part of the Wide dining room screen",
+            "values": {
+                "width": 600,
+                "height": 1200,
+                "filename-prefix": "Zenerator/Zenon/D-it",
+
+                "image-mask-path": "./inputs/screen-masks/square_screen-mask.png",
+                "screen-mask-path": "./inputs/screen-masks/square_screen-mask.png",
+
+                "image-depth-path": "./inputs/screen-depths/f_depth.png"
+            }
+        },
+        "Zenon E": {
+            "name": "Zenon E",
+            "description": "Preset for Zenon's E screen, part of the Wide dining room screen",
+            "values": {
+                "width": 1040,
+                "height": 1040,
+                "filename-prefix": "Zenerator/Zenon/E-it",
+
+                "image-mask-path": "./inputs/screen-masks/square_screen-mask.png",
+                "screen-mask-path": "./inputs/screen-masks/square_screen-mask.png",
+
+                "image-depth-path": "./inputs/screen-depths/f_depth.png"
+            }
+        },
+        "Zenon F": {
+            "name": "Zenon F",
+            "description": "Preset for Zenon's F screen, directly across from the Wide dining room screen",
+            "values": {
+                "width": 1024,
+                "height": 922,
+                "filename-prefix": "Zenerator/Zenon/F-it",
+
+                "image-mask-path": "./inputs/screen-masks/f_screen-mask.png",
+                "screen-mask-path": "./inputs/screen-masks/f_screen-mask.png",
+
+                "image-depth-path": "./inputs/screen-depths/f_depth.png"
+            }
+        },
+        "Zenon G1": {
+            "name": "Zenon G1",
+            "description": "Preset for Zenon's G1 screen in the VIP room",
+            "values": {
+                "width": 720,
+                "height": 1480,
+                "filename-prefix": "Zenerator/Zenon/G1-it",
+
+                "image-mask-path": "./inputs/screen-masks/g_screen-mask.png",
+                "screen-mask-path": "./inputs/screen-masks/g_screen-mask.png",
+
+                "image-depth-path": "./inputs/screen-depths/g_depth.png"
+            }
+        },
+        "Zenon G2": {
+            "name": "Zenon G2",
+            "description": "Preset for Zenon's G2 screen in the VIP room",
+            "values": {
+                "width": 720,
+                "height": 1480,
+                "filename-prefix": "Zenerator/Zenon/G2-it",
+
+                "image-mask-path": "./inputs/screen-masks/g_screen-mask.png",
+                "screen-mask-path": "./inputs/screen-masks/g_screen-mask.png",
+
+                "image-depth-path": "./inputs/screen-depths/g_depth.png"
+            }
+        },
+        "Zenon H": {
+            "name": "Zenon H",
+            "description": "Preset for Zenon's H screen on the ceiling of the VIP room",
+            "values": {
+                "width": 480,
+                "height": 1440,
+                "filename-prefix": "Zenerator/Zenon/H-it",
+
+                "image-mask-path": "./inputs/screen-masks/h_screen-mask.png",
+                "screen-mask-path": "./inputs/screen-masks/h_screen-mask.png",
+
+                "image-depth-path": "./inputs/screen-depths/h_depth.png"
+            }
+        },
+        "Zenon Medusa": {
+            "name": "Zenon Medusa",
+            "description": "Preset for Zenon's Medusa sculpture in the VIP room",
+            "values": {
+                "width": 1536,
+                "height": 864,
+                "filename-prefix": "Zenerator/Zenon/Medusa-it",
+                
+                "positive-prompt": "medusa",
+
+                "image-mask-path": "./inputs/screen-masks/medusa_screen-mask.png",
+                "screen-mask-path": "./inputs/screen-masks/medusa_screen_screen-mask.png",
+
+                "image-depth-path": "./inputs/screen-depths/medusa_depth.png",
+
+                "image-lineart-path": "./inputs/static-lineart/medusa_lineart.png",
+                "video-lineart-path": "./inputs/animated-lineart/medusa_lineart.mp4"
+            }
+        },
+        "Zenon Poseidon": {
+            "name": "Zenon Poseidon",
+            "description": "Preset for Zenon's Poseidon sculpture in the VIP room",
+            "values": {
+                "width": 1536,
+                "height": 864,
+                "filename-prefix": "Zenerator/Zenon/Poseidon-it",
+                
+                "positive-prompt": "poseidon",
+
+                "image-mask-path": "./inputs/screen-masks/poseidon_screen-mask.png",
+                "screen-mask-path": "./inputs/screen-masks/poseidon_screen_screen-mask.png",
+
+                "image-depth-path": "./inputs/screen-depths/poseidon_depth.png",
+
+                "image-lineart-path": "./inputs/static-lineart/poseidon_lineart.png",
+                "video-lineart-path": "./inputs/animated-lineart/poseidon_lineart.mp4"
             }
         }
     },
@@ -87,15 +248,17 @@
             "type": "int",
             "label": "Width",
             "node-id": "[\"791\"][\"inputs\"][\"value\"]",
-            "value": 576,
-            "minimum": 128
+            "value": 1024,
+            "minimum": 128,
+            "maximum": 4096
           },
           "height": {
             "type": "int",
             "label": "Height",
             "node-id": "[\"792\"][\"inputs\"][\"value\"]",
             "value": 1024,
-            "minimum": 128
+            "minimum": 128,
+            "maximum": 4096
           },
           "num_frames": {
             "type": "int",
@@ -116,7 +279,7 @@
         "type": "group",
         "label": "Input Specifications",
         "inputs": {
-          "prepend-prompt": {
+          "positive-prompt": {
             "type": "string",
             "label": "Positive Prompt (Static)",
             "node-id": "[\"840\"][\"inputs\"][\"text\"]",
@@ -311,7 +474,7 @@
               },
               "qr-video-path": {
                 "type": "path",
-                "label": "Path of QR Monster Video",
+                "label": "Path of Animated QR Video",
                 "node-id": "[\"827\"][\"inputs\"][\"video\"]",
                 "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4"
               }
@@ -675,10 +838,190 @@
       "type": "video"
     }
   },
-  "square": {
-    "name": "Square",
+  "steerable-motion": {
+    "name": "Steerable Motion",
     "filename": "general.json",
-    "description": "Create a video for a square screen using fully exposed parameters.",
+    "description": "Create a video using input images, videos, and text prompts",
+    "presets": {
+        "Zenon Wide (A-E)": {
+            "name": "Zenon Wide (A-E)",
+            "description": "Preset for Zenon's entire Wide dining room screen",
+            "values": {
+                "width": 2632,
+                "height": 768,
+                "filename-prefix": "Zenerator/Zenon/AE-sm",
+
+                "image-mask-path": "./inputs/screen-masks/wide_screen-mask.png",
+                "screen-mask-path": "./inputs/screen-masks/wide_screen-mask.png",
+
+                "image-depth-path": "./inputs/screen-depths/f_depth.png"
+            }
+        },
+        "Zenon A": {
+            "name": "Zenon A",
+            "description": "Preset for Zenon's A screen, part of the Wide dining room screen",
+            "values": {
+                "width": 680,
+                "height": 1200,
+                "filename-prefix": "Zenerator/Zenon/A-sm",
+
+                "image-mask-path": "./inputs/screen-masks/square_screen-mask.png",
+                "screen-mask-path": "./inputs/screen-masks/square_screen-mask.png",
+
+                "image-depth-path": "./inputs/screen-depths/f_depth.png"
+            }
+        },
+        "Zenon B": {
+            "name": "Zenon A",
+            "description": "Preset for Zenon's B screen, part of the Wide dining room screen",
+            "values": {
+                "width": 680,
+                "height": 1200,
+                "filename-prefix": "Zenerator/Zenon/B-sm",
+
+                "image-mask-path": "./inputs/screen-masks/square_screen-mask.png",
+                "screen-mask-path": "./inputs/screen-masks/square_screen-mask.png",
+
+                "image-depth-path": "./inputs/screen-depths/f_depth.png"
+            }
+        },
+        "Zenon C": {
+            "name": "Zenon C",
+            "description": "Preset for Zenon's C screen, part of the Wide dining room screen",
+            "values": {
+                "width": 1120,
+                "height": 1040,
+                "filename-prefix": "Zenerator/Zenon/C-sm",
+
+                "image-mask-path": "./inputs/screen-masks/square_screen-mask.png",
+                "screen-mask-path": "./inputs/screen-masks/square_screen-mask.png",
+
+                "image-depth-path": "./inputs/screen-depths/f_depth.png"
+            }
+        },
+        "Zenon D": {
+            "name": "Zenon D",
+            "description": "Preset for Zenon's D screen, part of the Wide dining room screen",
+            "values": {
+                "width": 600,
+                "height": 1200,
+                "filename-prefix": "Zenerator/Zenon/D-sm",
+
+                "image-mask-path": "./inputs/screen-masks/square_screen-mask.png",
+                "screen-mask-path": "./inputs/screen-masks/square_screen-mask.png",
+
+                "image-depth-path": "./inputs/screen-depths/f_depth.png"
+            }
+        },
+        "Zenon E": {
+            "name": "Zenon E",
+            "description": "Preset for Zenon's E screen, part of the Wide dining room screen",
+            "values": {
+                "width": 1040,
+                "height": 1040,
+                "filename-prefix": "Zenerator/Zenon/E-sm",
+
+                "image-mask-path": "./inputs/screen-masks/square_screen-mask.png",
+                "screen-mask-path": "./inputs/screen-masks/square_screen-mask.png",
+
+                "image-depth-path": "./inputs/screen-depths/f_depth.png"
+            }
+        },
+        "Zenon F": {
+            "name": "Zenon F",
+            "description": "Preset for Zenon's F screen, directly across from the Wide dining room screen",
+            "values": {
+                "width": 1024,
+                "height": 922,
+                "filename-prefix": "Zenerator/Zenon/F-sm",
+
+                "image-mask-path": "./inputs/screen-masks/f_screen-mask.png",
+                "screen-mask-path": "./inputs/screen-masks/f_screen-mask.png",
+
+                "image-depth-path": "./inputs/screen-depths/f_depth.png"
+            }
+        },
+        "Zenon G1": {
+            "name": "Zenon G1",
+            "description": "Preset for Zenon's G1 screen in the VIP room",
+            "values": {
+                "width": 720,
+                "height": 1480,
+                "filename-prefix": "Zenerator/Zenon/G1-sm",
+
+                "image-mask-path": "./inputs/screen-masks/g_screen-mask.png",
+                "screen-mask-path": "./inputs/screen-masks/g_screen-mask.png",
+
+                "image-depth-path": "./inputs/screen-depths/g_depth.png"
+            }
+        },
+        "Zenon G2": {
+            "name": "Zenon G2",
+            "description": "Preset for Zenon's G2 screen in the VIP room",
+            "values": {
+                "width": 720,
+                "height": 1480,
+                "filename-prefix": "Zenerator/Zenon/G2-sm",
+
+                "image-mask-path": "./inputs/screen-masks/g_screen-mask.png",
+                "screen-mask-path": "./inputs/screen-masks/g_screen-mask.png",
+
+                "image-depth-path": "./inputs/screen-depths/g_depth.png"
+            }
+        },
+        "Zenon H": {
+            "name": "Zenon H",
+            "description": "Preset for Zenon's H screen on the ceiling of the VIP room",
+            "values": {
+                "width": 480,
+                "height": 1440,
+                "filename-prefix": "Zenerator/Zenon/H-sm",
+
+                "image-mask-path": "./inputs/screen-masks/h_screen-mask.png",
+                "screen-mask-path": "./inputs/screen-masks/h_screen-mask.png",
+
+                "image-depth-path": "./inputs/screen-depths/h_depth.png"
+            }
+        },
+        "Zenon Medusa": {
+            "name": "Zenon Medusa",
+            "description": "Preset for Zenon's Medusa sculpture in the VIP room",
+            "values": {
+                "width": 1536,
+                "height": 864,
+                "filename-prefix": "Zenerator/Zenon/Medusa-sm",
+
+                "positive-prompt": "medusa",
+
+                "image-mask-path": "./inputs/screen-masks/medusa_screen-mask.png",
+                "screen-mask-path": "./inputs/screen-masks/medusa_screen_screen-mask.png",
+
+                "image-depth-path": "./inputs/screen-depths/medusa_depth.png",
+
+                "image-lineart-path": "./inputs/static-lineart/medusa_lineart.png",
+                "video-lineart-path": "./inputs/animated-lineart/medusa_lineart.mp4"
+            }
+        },
+        "Zenon Poseidon": {
+            "name": "Zenon Poseidon",
+            "description": "Preset for Zenon's Poseidon sculpture in the VIP room",
+            "values": {
+                "width": 1536,
+                "height": 864,
+                "filename-prefix": "Zenerator/Zenon/Poseidon-sm",
+
+                "positive-prompt": "poseidon",
+
+                "image-mask-path": "./inputs/screen-masks/poseidon_screen-mask.png",
+                "screen-mask-path": "./inputs/screen-masks/poseidon_screen_screen-mask.png",
+
+                "image-depth-path": "./inputs/screen-depths/poseidon_depth.png",
+
+                "image-lineart-path": "./inputs/static-lineart/poseidon_lineart.png",
+                "video-lineart-path": "./inputs/animated-lineart/poseidon_lineart.mp4"
+            }
+        }
+    },
     "inputs": {
       "output-specifications": {
         "type": "group",
@@ -705,7 +1048,7 @@
             "label": "Raw Frame Count",
             "node-id": "[\"111\"][\"inputs\"][\"int\"]",
             "value": 180,
-            "minimum": 12,
+            "minimum": 16,
             "info": "= (final frame count) / (frame interpolation)"
           },
           "frame_interp": {
@@ -721,7 +1064,7 @@
             "type": "string",
             "label": "Output Video Filename Prefix",
             "node-id": "[\"191\"][\"inputs\"][\"filename_prefix\"]",
-            "value": "Zenerator/general"
+            "value": "Zenerator/steerable-motion"
           }
         }
       },
@@ -730,251 +1073,27 @@
         "type": "group",
         "label": "Text Prompting",
         "inputs": {
-          "text-01": {
+          "positive-prompt": {
             "type": "text",
             "label": "Positive",
             "node-id": "[\"6\"][\"inputs\"][\"text\"]",
             "value": "extremely detailed"
           },
-          "text-02": {
+          "negative-prompt": {
             "type": "text",
             "label": "Negative",
             "node-id": "[\"7\"][\"inputs\"][\"text\"]",
-            "value": "blurry, glitches, artefact, distorted, malformed, nsfw, lens flare, glare, bloom, bokeh"
+            "value": "nsfw, blurry, glitches, artefact, distorted, malformed, lens flare, glare, bloom, bokeh"
           }
         }
       },
 
-      "images-01": {
+      "images": {
         "type": "images",
         "label": "Images",
         "node-id": "[\"142\"][\"inputs\"][\"string\"]",
         "value": "",
         "info": "Images to interpolate between (for best results use 2-4 images)"
-      },
-
-      "use-latent-mask": {
-        "type": "toggle-group",
-        "label": "Use Latent Mask",
-        "node-id": "[\"461\"][\"inputs\"][\"boolean\"]",
-        "value": false,
-        "interactive": true,
-        "inputs": {
-          "image-mask-path": {
-            "type": "path",
-            "label": "Path of Screen Mask Image",
-            "node-id": "[\"337\"][\"inputs\"][\"string\"]",
-            "value": "./inputs/screen-masks/square_screen-mask.png"
-          },
-          "use-animated-mask": {
-            "type": "toggle-group",
-            "label": "Use Animated Mask Video",
-            "node-id": "[\"350\"][\"inputs\"][\"boolean\"]",
-            "value": false,
-            "inputs": {
-              "video-mask-path": {
-                "type": "path",
-                "label": "Path of Animated Mask Video",
-                "node-id": "[\"339\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4"
-              },
-              "video-mask-select-every-nth": {
-                "type": "int",
-                "label": "Select Every Nth Frame of Animated Mask Video",
-                "node-id": "[\"348\"][\"inputs\"][\"int\"]",
-                "value": 1,
-                "minimum": 1
-              }
-            }
-          }
-        }
-      },
-
-      "use-depth-controlnet": {
-        "type": "toggle-group",
-        "label": "Use Depth ControlNet",
-        "node-id": "[\"359\"][\"inputs\"][\"boolean\"]",
-        "value": false,
-        "inputs": {
-          "depth-strength": {
-            "type": "float",
-            "label": "Depth Strength",
-            "node-id": "[\"384\"][\"inputs\"][\"strength\"]",
-            "value": 0.5,
-            "minimum": -3.0,
-            "maximum": 3.0,
-            "step": 0.05
-          },
-          "depth-end-percent": {
-            "type": "float",
-            "label": "Depth End Percent",
-            "node-id": "[\"384\"][\"inputs\"][\"end_percent\"]",
-            "value": 0.5,
-            "minimum": 0.0,
-            "maximum": 1.0,
-            "step": 0.05
-          },
-          "image-depth-path": {
-            "type": "path",
-            "label": "Path of Depth Image",
-            "node-id": "[\"360\"][\"inputs\"][\"string\"]",
-            "value": "./inputs/screen-depths/medusa_depth.png"
-          },
-          "use-animated-depth": {
-            "type": "toggle-group",
-            "label": "Use Animated Depth Video",
-            "node-id": "[\"356\"][\"inputs\"][\"boolean\"]",
-            "value": false,
-            "inputs": {
-              "video-depth-path": {
-                "type": "path",
-                "label": "Path of Animated Depth Video",
-                "node-id": "[\"357\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4"
-              },
-              "video-depth-select-every-nth": {
-                "type": "int",
-                "label": "Select Every Nth Frame of Animated Depth Video",
-                "node-id": "[\"363\"][\"inputs\"][\"int\"]",
-                "value": 1,
-                "minimum": 1
-              }
-            }
-          }
-        }
-      },
-
-      "use-lineart-controlnet": {
-        "type": "toggle-group",
-        "label": "Use LineArt ControlNet",
-        "node-id": "[\"452\"][\"inputs\"][\"boolean\"]",
-        "value": false,
-        "inputs": {
-          "lineart-strength": {
-            "type": "float",
-            "label": "LineArt Strength",
-            "node-id": "[\"448\"][\"inputs\"][\"strength\"]",
-            "value": 0.5,
-            "minimum": -3.0,
-            "maximum": 3.0,
-            "step": 0.05
-          },
-          "lineart-end-percent": {
-            "type": "float",
-            "label": "LineArt End Percent",
-            "node-id": "[\"448\"][\"inputs\"][\"end_percent\"]",
-            "value": 0.5,
-            "minimum": 0.0,
-            "maximum": 1.0,
-            "step": 0.05
-          },
-          "image-lineart-path": {
-            "type": "path",
-            "label": "Path of LineArt Image",
-            "node-id": "[\"453\"][\"inputs\"][\"string\"]",
-            "value": "./inputs/static-lineart/medusa_lineart.png"
-          },
-          "use-animated-lineart": {
-            "type": "toggle-group",
-            "label": "Use Animated LineArt Video",
-            "node-id": "[\"450\"][\"inputs\"][\"boolean\"]",
-            "value": false,
-            "inputs": {
-              "video-lineart-path": {
-                "type": "path",
-                "label": "Path of Animated LineArt Video",
-                "node-id": "[\"451\"][\"inputs\"][\"string\"]",
-                "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4"
-              },
-              "video-lineart-select-every-nth": {
-                "type": "int",
-                "label": "Select Every Nth Frame of Animated LineArt Video",
-                "node-id": "[\"454\"][\"inputs\"][\"int\"]",
-                "value": 1,
-                "minimum": 1
-              }
-            }
-          }
-        }
-      }
-    },
-    "outputs": {
-      "type": "video"
-    }
-  },
-  "wide": {
-    "name": "Wide",
-    "filename": "general.json",
-    "description": "Create a video for a 16:9 screen using fully exposed parameters.",
-    "inputs": {
-      "output-specifications": {
-        "type": "group",
-        "label": "Output Specifications",
-        "inputs": {
-          "width": {
-            "type": "int",
-            "label": "Output Width",
-            "node-id": "[\"218\"][\"inputs\"][\"int\"]",
-            "value": 1365,
-            "minimum": 256,
-            "maximum": 4096
-          },
-          "height": {
-            "type": "int",
-            "label": "Output Height",
-            "node-id": "[\"219\"][\"inputs\"][\"int\"]",
-            "value": 768,
-            "minimum": 256,
-            "maximum": 4096
-          },
-          "raw_frame_count": {
-            "type": "int",
-            "label": "Raw Frame Count",
-            "node-id": "[\"111\"][\"inputs\"][\"int\"]",
-            "value": 180,
-            "minimum": 12
-          },
-          "frame_interp": {
-            "type": "int",
-            "label": "Frame Interpolation",
-            "node-id": "[\"190\"][\"inputs\"][\"multiplier\"]",
-            "value": 3,
-            "minimum": 1,
-            "maximum": 10
-          },
-          "filename-prefix": {
-            "type": "string",
-            "label": "Output Video Filename Prefix",
-            "node-id": "[\"191\"][\"inputs\"][\"filename_prefix\"]",
-            "value": "Zenerator/general"
-          }
-        }
-      },
-
-      "prompting": {
-        "type": "group",
-        "label": "Text Prompting",
-        "inputs": {
-          "text-01": {
-            "type": "text",
-            "label": "Positive",
-            "node-id": "[\"6\"][\"inputs\"][\"text\"]",
-            "value": "extremely detailed"
-          },
-          "text-02": {
-            "type": "text",
-            "label": "Negative",
-            "node-id": "[\"7\"][\"inputs\"][\"text\"]",
-            "value": "blurry, glitches, artefact, distorted, malformed, nsfw, lens flare, glare, bloom, bokeh"
-          }
-        }
-      },
-
-      "images-01": {
-        "type": "images",
-        "label": "Images",
-        "node-id": "[\"142\"][\"inputs\"][\"string\"]",
-        "value": ""
       },
 
       "use-latent-mask": {
@@ -1142,17 +1261,17 @@
         "type": "group",
         "label": "Text Prompting",
         "inputs": {
-          "text-01": {
+          "positive-prompt": {
             "type": "text",
             "label": "Positive",
             "node-id": "[\"426\"][\"inputs\"][\"string\"]",
             "value": "extremely detailed"
           },
-          "text-02": {
+          "negative-prompt": {
             "type": "text",
             "label": "Negative",
             "node-id": "[\"427\"][\"inputs\"][\"string\"]",
-            "value": "blurry, glitches, artefact, distorted, malformed, nsfw, lens flare, glare, bloom, bokeh"
+            "value": "nsfw, blurry, glitches, artefacts, distorted, malformed, lens flare, glare, bloom, bokeh"
           }
         }
       },
@@ -1196,17 +1315,17 @@
         "type": "group",
         "label": "Text Prompting",
         "inputs": {
-          "text-01": {
+          "positive-prompt": {
             "type": "text",
             "label": "Positive",
             "node-id": "[\"426\"][\"inputs\"][\"string\"]",
             "value": "extremely detailed"
           },
-          "text-02": {
+          "negative-prompt": {
             "type": "text",
             "label": "Negative",
             "node-id": "[\"427\"][\"inputs\"][\"string\"]",
-            "value": "blurry, glitches, artefact, distorted, malformed, nsfw, lens flare, glare, bloom, bokeh"
+            "value": "nsfw, blurry, glitches, artefacts, distorted, malformed, lens flare, glare, bloom, bokeh"
           }
         }
       },
