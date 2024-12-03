@@ -311,6 +311,7 @@
       "advanced-animation-settings": {
         "type": "group",
         "label": "Advanced Animation Settings",
+        "interactive": false,
         "inputs": {
           "animation-type-01": {
             "type": "enum",
@@ -337,13 +338,14 @@
               "DiagonalVenetianBlinds2",
               "Random",
               "RandomNoVenetian"
-            ]
+            ],
+            "interactive": false
           },
           "animation-type-02": {
             "type": "enum",
             "label": "Animation Type 02",
             "node-id": "[\"804\"][\"inputs\"][\"animation_type_2\"]",
-            "value": "Fade",
+            "value": "GrowingCircle",
             "choices": [
               "LeftToRight",
               "RightToLeft",
@@ -364,7 +366,8 @@
               "DiagonalVenetianBlinds2",
               "Random",
               "RandomNoVenetian"
-            ]
+            ],
+            "interactive": false
           },
           "animation-type-03": {
             "type": "enum",
@@ -391,13 +394,14 @@
               "DiagonalVenetianBlinds2",
               "Random",
               "RandomNoVenetian"
-            ]
+            ],
+            "interactive": false
           },
           "animation-type-04": {
             "type": "enum",
             "label": "Animation Type 04",
             "node-id": "[\"804\"][\"inputs\"][\"animation_type_4\"]",
-            "value": "Fade",
+            "value": "ShrinkingCircle",
             "choices": [
               "LeftToRight",
               "RightToLeft",
@@ -418,7 +422,8 @@
               "DiagonalVenetianBlinds2",
               "Random",
               "RandomNoVenetian"
-            ]
+            ],
+            "interactive": false
           },
           "animation-type-05": {
             "type": "enum",
@@ -445,13 +450,14 @@
               "DiagonalVenetianBlinds2",
               "Random",
               "RandomNoVenetian"
-            ]
+            ],
+            "interactive": false
           },
           "animation-type-06": {
             "type": "enum",
             "label": "Animation Type 06",
             "node-id": "[\"804\"][\"inputs\"][\"animation_type_6\"]",
-            "value": "Fade",
+            "value": "GrowingCircle",
             "choices": [
               "LeftToRight",
               "RightToLeft",
@@ -472,7 +478,8 @@
               "DiagonalVenetianBlinds2",
               "Random",
               "RandomNoVenetian"
-            ]
+            ],
+            "interactive": false
           },
           "animation-type-07": {
             "type": "enum",
@@ -499,13 +506,14 @@
               "DiagonalVenetianBlinds2",
               "Random",
               "RandomNoVenetian"
-            ]
+            ],
+            "interactive": false
           },
           "animation-type-08": {
             "type": "enum",
             "label": "Animation Type 08",
             "node-id": "[\"804\"][\"inputs\"][\"animation_type_8\"]",
-            "value": "Fade",
+            "value": "ShrinkingCircle",
             "choices": [
               "LeftToRight",
               "RightToLeft",
@@ -526,13 +534,14 @@
               "DiagonalVenetianBlinds2",
               "Random",
               "RandomNoVenetian"
-            ]
+            ],
+            "interactive": false
           },
           "animation-type-09": {
             "type": "enum",
             "label": "Animation Type 09",
             "node-id": "[\"804\"][\"inputs\"][\"animation_type_9\"]",
-            "value": "Fade",
+            "value": "TopDown",
             "choices": [
               "LeftToRight",
               "RightToLeft",
@@ -553,13 +562,14 @@
               "DiagonalVenetianBlinds2",
               "Random",
               "RandomNoVenetian"
-            ]
+            ],
+            "interactive": false
           },
           "animation-type-10": {
             "type": "enum",
             "label": "Animation Type 10",
             "node-id": "[\"804\"][\"inputs\"][\"animation_type_10\"]",
-            "value": "Fade",
+            "value": "TopDown",
             "choices": [
               "LeftToRight",
               "RightToLeft",
@@ -580,13 +590,14 @@
               "DiagonalVenetianBlinds2",
               "Random",
               "RandomNoVenetian"
-            ]
+            ],
+            "interactive": false
           },
           "animation-type-11": {
             "type": "enum",
             "label": "Animation Type 11",
             "node-id": "[\"804\"][\"inputs\"][\"animation_type_11\"]",
-            "value": "Fade",
+            "value": "Random",
             "choices": [
               "LeftToRight",
               "RightToLeft",
@@ -607,13 +618,14 @@
               "DiagonalVenetianBlinds2",
               "Random",
               "RandomNoVenetian"
-            ]
+            ],
+            "interactive": false
           },
           "animation-type-12": {
             "type": "enum",
             "label": "Animation Type 12",
             "node-id": "[\"804\"][\"inputs\"][\"animation_type_12\"]",
-            "value": "Fade",
+            "value": "Random",
             "choices": [
               "LeftToRight",
               "RightToLeft",
@@ -634,7 +646,8 @@
               "DiagonalVenetianBlinds2",
               "Random",
               "RandomNoVenetian"
-            ]
+            ],
+            "interactive": false
           }
         }
       }
