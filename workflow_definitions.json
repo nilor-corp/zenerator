@@ -247,13 +247,15 @@
                 "filename-prefix": "Zenerator/Solitaire/cube-it",
 
                 "loop": false,
+                
+                "use-latent-mask": true,
+                "image-mask-path": "./inputs/screen-masks/SOL_cube-01_screen-mask.png",
 
                 "use-depth-controlnet": true,
                 "use-animated-depth": true,
                 "depth-strength": 3.0,
-                "depth-end-percent": 1.0,
-                "image-depth-path": "./inputs/screen-depths/poseidon_depth.png",
-                "video-depth-path": "./inputs/screen-depths/solitaire-cube-01.mp4",
+                "depth-end-percent": 0.95,
+                "video-depth-path": "./inputs/animated-depths/SOL_cube-01_depth.mp4",
                 "video-depth-select-every-nth": 1
             }
         }
