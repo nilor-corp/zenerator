@@ -68,6 +68,7 @@
                 "height": 768,
                 "filename-prefix": "Zenerator/Zenon/AE-it",
 
+                "use-latent-mask": true,
                 "image-mask-path": "./inputs/screen-masks/wide_screen-mask.png",
 
                 "image-depth-path": "./inputs/screen-depths/f_depth.png"
@@ -868,6 +869,7 @@
                 "height": 768,
                 "filename-prefix": "Zenerator/Zenon/AE-sm",
 
+                "use-latent-mask": true,
                 "image-mask-path": "./inputs/screen-masks/wide_screen-mask.png",
 
                 "image-depth-path": "./inputs/screen-depths/f_depth.png"
@@ -1025,6 +1027,25 @@
                 "image-lineart-path": "./inputs/static-lineart/poseidon_lineart.png",
                 "video-lineart-path": "./inputs/animated-lineart/poseidon_lineart.mp4"
             }
+        },
+        "Solitaire Cube 01": {
+            "name": "Solitaire Cube 01",
+            "description": "Preset for Solitaire's anamorphic cube",
+            "values": {
+                "width": 1280,
+                "height": 720,
+                "filename-prefix": "Zenerator/Solitaire/cube-sm",
+                
+                "use-latent-mask": true,
+                "image-mask-path": "./inputs/screen-masks/SOL_cube-01_screen-mask.png",
+
+                "use-depth-controlnet": true,
+                "depth-strength": 3.0,
+                "depth-end-percent": 0.95,
+                "use-animated-depth": true,
+                "video-depth-path": "./inputs/animated-depths/SOL_cube-01_depth.mp4",
+                "video-depth-select-every-nth": 1
+            }
         }
     },
     "inputs": {
@@ -1034,7 +1055,7 @@
         "inputs": {
           "width": {
             "type": "int",
-            "label": "Output Width",
+            "label": "Width",
             "node-id": "[\"218\"][\"inputs\"][\"int\"]",
             "value": 768,
             "minimum": 256,
@@ -1042,7 +1063,7 @@
           },
           "height": {
             "type": "int",
-            "label": "Output Height",
+            "label": "Height",
             "node-id": "[\"219\"][\"inputs\"][\"int\"]",
             "value": 768,
             "minimum": 256,
