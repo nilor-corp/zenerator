@@ -66,15 +66,6 @@ Zenerator is a collection of ComfyUI workflows by Nilor Studio that we commonly 
     comfy set-default ComfyUI
     ```
 
-### Clone Zenerator
-* In the `.\nilor-corp\` directory:
-    ```console
-    git clone https://github.com/nilor-corp/zenerator.git
-    cd zenerator
-    git switch feature/vivid
-    cd ..
-    ```
-
 ### Install Models
 * In the `.\nilor-corp\` directory:
     ```console
@@ -85,7 +76,13 @@ Zenerator is a collection of ComfyUI workflows by Nilor Studio that we commonly 
     cd ..           # should put you in .\nilor-corp\ directory
     ```
 
-### Set up Env Variables
+### Clone Zenerator
+* In the `.\nilor-corp\` directory:
+    ```console
+    git clone https://github.com/nilor-corp/zenerator.git
+    ```
+
+### Set up Zenerator Env Variables
 > [!NOTE]
 > This step is only necessary if you intend to use the [nilor.cool](https://nilor.cool) platform to generate images and use Collections of generated images as input to Zenerator. This is a highly recommended and very convenient feature, but it requires a personal Nilor API key which can currently only be attained by request from the Nilor Corp development team. In the near future it will be possible to attain this API key directly through the [nilor.cool](https://nilor.cool) platform.
 
@@ -98,6 +95,7 @@ Zenerator is a collection of ComfyUI workflows by Nilor Studio that we commonly 
 ### Provision ComfyUI
 1. In the `.\nilor-corp\` directory, still within the `venv` virtual environment:
     ```console
+    cd zenerator
     cp .\ComfyUI-Manager-Snapshots\2024-12-02_13-10-11_snapshot.json ..\ComfyUI\custom_nodes\ComfyUI-Manager\snapshots\
     cd ..           # should put you in .\nilor-corp\ directory
     comfy launch
