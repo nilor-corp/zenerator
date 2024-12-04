@@ -612,7 +612,7 @@
   },
   "879": {
     "inputs": {
-      "directory": "G:\\Shared drives\\nilor\\R&D\\IPA Weights Revisit\\bone-lord",
+      "directory": "G:\\Shared drives\\nilor\\R&D\\IPA Weights Revisit\\app-01",
       "image_load_cap": 4,
       "skip_first_images": 0,
       "select_every_nth": 1
@@ -712,7 +712,7 @@
         0
       ],
       "image": [
-        "899",
+        "1045",
         0
       ]
     },
@@ -994,7 +994,7 @@
   },
   "979": {
     "inputs": {
-      "boolean": false
+      "boolean": true
     },
     "class_type": "Primitive boolean [Crystools]"
   },
@@ -1274,5 +1274,41 @@
       "float": 0.4
     },
     "class_type": "Primitive float [Crystools]"
+  },
+  "1043": {
+    "inputs": {
+      "video": "D:\\nilor-corp\\zenerator\\inputs\\animated-lineart\\medusa_lineart.mp4",
+      "force_rate": 0,
+      "force_size": "Disabled",
+      "custom_width": 512,
+      "custom_height": 512,
+      "frame_load_cap": 0,
+      "skip_first_frames": 0,
+      "select_every_nth": 1
+    },
+    "class_type": "VHS_LoadVideoPath"
+  },
+  "1044": {
+    "inputs": {
+      "boolean": true
+    },
+    "class_type": "Primitive boolean [Crystools]"
+  },
+  "1045": {
+    "inputs": {
+      "cond": [
+        "1044",
+        0
+      ],
+      "tt_value": [
+        "1043",
+        0
+      ],
+      "ff_value": [
+        "899",
+        0
+      ]
+    },
+    "class_type": "ImpactConditionalBranch"
   }
 }
