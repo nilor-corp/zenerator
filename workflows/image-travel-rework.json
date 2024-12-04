@@ -484,13 +484,13 @@
   },
   "791": {
     "inputs": {
-      "value": 576
+      "value": 1280
     },
     "class_type": "JWInteger"
   },
   "792": {
     "inputs": {
-      "value": 1024
+      "value": 720
     },
     "class_type": "JWInteger"
   },
@@ -576,7 +576,7 @@
   },
   "827": {
     "inputs": {
-      "video": "G:\\Shared drives\\nilor\\R&D\\IPA Weights Revisit\\ZenonA2E_BallsMask_15sec.mp4",
+      "video": "C:\\nilor-corp\\zenerator\\inputs/animated-depths/SOL_cube-01_depth.mp4",
       "force_rate": 0,
       "force_size": "Disabled",
       "custom_width": 512,
@@ -612,7 +612,7 @@
   },
   "879": {
     "inputs": {
-      "directory": "G:\\Shared drives\\nilor\\R&D\\IPA Weights Revisit\\app-01",
+      "directory": "C:\\nilor-corp\\ComfyUI\\input\\WorkFlower\\Ref_Image\\2024-12-04-21-00-22",
       "image_load_cap": 4,
       "skip_first_images": 0,
       "select_every_nth": 1
@@ -718,15 +718,6 @@
     },
     "class_type": "ACN_AdvancedControlNetApply"
   },
-  "899": {
-    "inputs": {
-      "image": "D:\\nilor-corp\\zenerator\\inputs\\screen-depths\\g_depth.png",
-      "force_size": "Disabled",
-      "custom_width": 512,
-      "custom_height": 512
-    },
-    "class_type": "VHS_LoadImagePath"
-  },
   "917": {
     "inputs": {
       "control_net_name": "control_v11p_sd15_softedge_fp16.safetensors",
@@ -761,18 +752,9 @@
     },
     "class_type": "ACN_AdvancedControlNetApply"
   },
-  "919": {
-    "inputs": {
-      "image": "\"D:\\nilor-corp\\zenerator\\inputs\\static-lineart\\poseidon_lineart.png\"",
-      "force_size": "Disabled",
-      "custom_width": 512,
-      "custom_height": 512
-    },
-    "class_type": "VHS_LoadImagePath"
-  },
   "921": {
     "inputs": {
-      "video": "D:\\nilor-corp\\zenerator\\inputs\\animated-lineart\\medusa_lineart.mp4",
+      "video": "C:\\nilor-corp\\zenerator\\inputs\\animated-lineart\\medusa_lineart.mp4",
       "force_rate": 0,
       "force_size": "Disabled",
       "custom_width": 512,
@@ -785,7 +767,7 @@
   },
   "923": {
     "inputs": {
-      "video": "G:\\Shared drives\\nilor\\R&D\\IPA Weights Revisit\\ZenonA2E_BallsMask_15sec.mp4",
+      "video": "C:/nilor-corp/zenerator/inputs//animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
       "force_rate": 0,
       "force_size": "Disabled",
       "custom_width": 512,
@@ -795,15 +777,6 @@
       "select_every_nth": 1
     },
     "class_type": "VHS_LoadVideoPath"
-  },
-  "926": {
-    "inputs": {
-      "image": "D:\\nilor-corp\\zenerator\\inputs\\screen-masks\\f_screen-mask.png",
-      "force_size": "Disabled",
-      "custom_width": 512,
-      "custom_height": 512
-    },
-    "class_type": "VHS_LoadImagePath"
   },
   "928": {
     "inputs": {
@@ -865,21 +838,6 @@
     },
     "class_type": "VAEDecode"
   },
-  "948": {
-    "inputs": {
-      "blend_factor": 0.5,
-      "blend_mode": "multiply",
-      "image1": [
-        "1016",
-        0
-      ],
-      "image2": [
-        "1013",
-        0
-      ]
-    },
-    "class_type": "ImageBlend"
-  },
   "955": {
     "inputs": {
       "batch_size": [
@@ -888,7 +846,7 @@
       ],
       "mode": "simple",
       "image": [
-        "948",
+        "1016",
         0
       ]
     },
@@ -998,12 +956,6 @@
     },
     "class_type": "Primitive boolean [Crystools]"
   },
-  "980": {
-    "inputs": {
-      "boolean": false
-    },
-    "class_type": "Primitive boolean [Crystools]"
-  },
   "983": {
     "inputs": {
       "value": 1,
@@ -1021,18 +973,9 @@
     },
     "class_type": "MaskToImage"
   },
-  "987": {
-    "inputs": {
-      "image": "D:\\nilor-corp\\zenerator\\inputs\\screen-masks\\f_screen-mask.png",
-      "force_size": "Disabled",
-      "custom_width": 512,
-      "custom_height": 512
-    },
-    "class_type": "VHS_LoadImagePath"
-  },
   "988": {
     "inputs": {
-      "boolean": true
+      "boolean": false
     },
     "class_type": "Primitive boolean [Crystools]"
   },
@@ -1044,7 +987,7 @@
   },
   "997": {
     "inputs": {
-      "boolean": true
+      "boolean": false
     },
     "class_type": "Primitive boolean [Crystools]"
   },
@@ -1093,7 +1036,7 @@
         0
       ],
       "ff_value": [
-        "919",
+        "1049",
         0
       ]
     },
@@ -1106,23 +1049,6 @@
     },
     "class_type": "ACN_ScaledSoftControlNetWeights"
   },
-  "1013": {
-    "inputs": {
-      "cond": [
-        "980",
-        0
-      ],
-      "tt_value": [
-        "926",
-        0
-      ],
-      "ff_value": [
-        "984",
-        0
-      ]
-    },
-    "class_type": "ImpactConditionalBranch"
-  },
   "1015": {
     "inputs": {
       "cond": [
@@ -1134,7 +1060,7 @@
         0
       ],
       "ff_value": [
-        "987",
+        "1048",
         0
       ]
     },
@@ -1234,7 +1160,7 @@
   },
   "1031": {
     "inputs": {
-      "boolean": false
+      "boolean": true
     },
     "class_type": "Primitive boolean [Crystools]"
   },
@@ -1277,7 +1203,7 @@
   },
   "1043": {
     "inputs": {
-      "video": "D:\\nilor-corp\\zenerator\\inputs\\animated-lineart\\medusa_lineart.mp4",
+      "video": "C:\\nilor-corp\\zenerator\\inputs/animated-depths/SOL_cube-01_depth.mp4",
       "force_rate": 0,
       "force_size": "Disabled",
       "custom_width": 512,
@@ -1305,10 +1231,28 @@
         0
       ],
       "ff_value": [
-        "899",
+        "1050",
         0
       ]
     },
     "class_type": "ImpactConditionalBranch"
+  },
+  "1048": {
+    "inputs": {
+      "image": "C:\\nilor-corp\\zenerator\\inputs\\screen-masks\\SOL_cube-01_screen-mask.png"
+    },
+    "class_type": "LoadImageFromPath"
+  },
+  "1049": {
+    "inputs": {
+      "image": "C:\\nilor-corp\\zenerator\\inputs\\static-lineart\\poseidon_lineart.png"
+    },
+    "class_type": "LoadImageFromPath"
+  },
+  "1050": {
+    "inputs": {
+      "image": "C:\\nilor-corp\\zenerator\\inputs\\screen-depths\\f_depth.png"
+    },
+    "class_type": "LoadImageFromPath"
   }
 }

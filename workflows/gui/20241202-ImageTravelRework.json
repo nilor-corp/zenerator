@@ -1,6 +1,6 @@
 {
-  "last_node_id": 1045,
-  "last_link_id": 1951,
+  "last_node_id": 1050,
+  "last_link_id": 1959,
   "nodes": [
     {
       "id": 439,
@@ -14,7 +14,7 @@
         120
       ],
       "flags": {},
-      "order": 110,
+      "order": 107,
       "mode": 0,
       "inputs": [
         {
@@ -77,7 +77,7 @@
         134
       ],
       "flags": {},
-      "order": 77,
+      "order": 72,
       "mode": 0,
       "inputs": [
         {
@@ -153,7 +153,7 @@
       "flags": {
         "collapsed": false
       },
-      "order": 57,
+      "order": 52,
       "mode": 0,
       "inputs": [
         {
@@ -262,7 +262,7 @@
       "flags": {
         "collapsed": false
       },
-      "order": 109,
+      "order": 103,
       "mode": 0,
       "inputs": [
         {
@@ -306,7 +306,7 @@
         218
       ],
       "flags": {},
-      "order": 63,
+      "order": 64,
       "mode": 0,
       "inputs": [
         {
@@ -380,7 +380,7 @@
         26
       ],
       "flags": {},
-      "order": 74,
+      "order": 70,
       "mode": 0,
       "inputs": [
         {
@@ -417,7 +417,7 @@
         114
       ],
       "flags": {},
-      "order": 82,
+      "order": 78,
       "mode": 0,
       "inputs": [
         {
@@ -520,7 +520,7 @@
         60
       ],
       "flags": {},
-      "order": 87,
+      "order": 80,
       "mode": 0,
       "inputs": [
         {
@@ -560,7 +560,7 @@
         26
       ],
       "flags": {},
-      "order": 94,
+      "order": 87,
       "mode": 0,
       "inputs": [
         {
@@ -674,7 +674,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 98,
+      "order": 93,
       "mode": 4,
       "inputs": [
         {
@@ -728,7 +728,7 @@
         310
       ],
       "flags": {},
-      "order": 103,
+      "order": 98,
       "mode": 4,
       "inputs": [
         {
@@ -801,7 +801,7 @@
         375.53387451171875
       ],
       "flags": {},
-      "order": 104,
+      "order": 99,
       "mode": 4,
       "inputs": [
         {
@@ -828,7 +828,7 @@
         84
       ],
       "flags": {},
-      "order": 78,
+      "order": 73,
       "mode": 0,
       "inputs": [
         {
@@ -921,7 +921,7 @@
         324
       ],
       "flags": {},
-      "order": 99,
+      "order": 97,
       "mode": 0,
       "inputs": [
         {
@@ -1005,7 +1005,7 @@
         324
       ],
       "flags": {},
-      "order": 105,
+      "order": 104,
       "mode": 0,
       "inputs": [
         {
@@ -1170,7 +1170,7 @@
         58
       ],
       "flags": {},
-      "order": 97,
+      "order": 90,
       "mode": 0,
       "inputs": [
         {
@@ -1214,7 +1214,7 @@
         58
       ],
       "flags": {},
-      "order": 102,
+      "order": 96,
       "mode": 0,
       "inputs": [
         {
@@ -1259,7 +1259,7 @@
         76
       ],
       "flags": {},
-      "order": 108,
+      "order": 102,
       "mode": 0,
       "inputs": [
         {
@@ -1297,7 +1297,7 @@
         83.14347076416016
       ],
       "flags": {},
-      "order": 91,
+      "order": 84,
       "mode": 0,
       "inputs": [
         {
@@ -1351,7 +1351,7 @@
         74
       ],
       "flags": {},
-      "order": 114,
+      "order": 109,
       "mode": 0,
       "inputs": [
         {
@@ -1450,7 +1450,7 @@
         26
       ],
       "flags": {},
-      "order": 62,
+      "order": 57,
       "mode": 0,
       "inputs": [
         {
@@ -1489,7 +1489,7 @@
         60
       ],
       "flags": {},
-      "order": 61,
+      "order": 56,
       "mode": 4,
       "inputs": [
         {
@@ -1529,7 +1529,7 @@
         46
       ],
       "flags": {},
-      "order": 138,
+      "order": 133,
       "mode": 0,
       "inputs": [
         {
@@ -1567,10 +1567,10 @@
       ],
       "size": [
         216,
-        310
+        672.4444580078125
       ],
       "flags": {},
-      "order": 139,
+      "order": 134,
       "mode": 0,
       "inputs": [
         {
@@ -1622,7 +1622,7 @@
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "241009-ImageTravelHyper_00054.mp4",
+            "filename": "241009-ImageTravelHyper_00001.mp4",
             "subfolder": "",
             "type": "output",
             "format": "video/h264-mp4",
@@ -1720,7 +1720,7 @@
         234
       ],
       "flags": {},
-      "order": 137,
+      "order": 132,
       "mode": 0,
       "inputs": [
         {
@@ -1791,7 +1791,7 @@
         82
       ],
       "flags": {},
-      "order": 72,
+      "order": 67,
       "mode": 4,
       "inputs": [
         {
@@ -1831,7 +1831,7 @@
         330.5338439941406
       ],
       "flags": {},
-      "order": 89,
+      "order": 82,
       "mode": 0,
       "inputs": [
         {
@@ -1945,7 +1945,7 @@
         26
       ],
       "flags": {},
-      "order": 95,
+      "order": 88,
       "mode": 0,
       "inputs": [
         {
@@ -1984,7 +1984,7 @@
         76
       ],
       "flags": {},
-      "order": 100,
+      "order": 94,
       "mode": 0,
       "inputs": [
         {
@@ -2022,7 +2022,7 @@
         46
       ],
       "flags": {},
-      "order": 96,
+      "order": 89,
       "mode": 0,
       "inputs": [
         {
@@ -2065,13 +2065,13 @@
         78
       ],
       "flags": {},
-      "order": 101,
+      "order": 95,
       "mode": 0,
       "inputs": [
         {
           "name": "image",
           "type": "IMAGE",
-          "link": 1764
+          "link": 1959
         },
         {
           "name": "batch_size",
@@ -2113,7 +2113,7 @@
         102
       ],
       "flags": {},
-      "order": 106,
+      "order": 100,
       "mode": 0,
       "inputs": [
         {
@@ -2157,7 +2157,7 @@
         58
       ],
       "flags": {},
-      "order": 107,
+      "order": 101,
       "mode": 0,
       "inputs": [
         {
@@ -2220,7 +2220,7 @@
         98
       ],
       "flags": {},
-      "order": 111,
+      "order": 105,
       "mode": 0,
       "inputs": [
         {
@@ -2268,7 +2268,7 @@
         46
       ],
       "flags": {},
-      "order": 113,
+      "order": 108,
       "mode": 0,
       "inputs": [
         {
@@ -2312,7 +2312,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 50,
+      "order": 47,
       "mode": 0,
       "inputs": [
         {
@@ -2376,7 +2376,7 @@
       "flags": {
         "collapsed": false
       },
-      "order": 92,
+      "order": 91,
       "mode": 0,
       "inputs": [
         {
@@ -2436,7 +2436,7 @@
       "flags": {
         "collapsed": false
       },
-      "order": 93,
+      "order": 92,
       "mode": 0,
       "inputs": [
         {
@@ -2517,7 +2517,7 @@
         84
       ],
       "flags": {},
-      "order": 90,
+      "order": 83,
       "mode": 0,
       "inputs": [
         {
@@ -2580,7 +2580,7 @@
         76
       ],
       "flags": {},
-      "order": 88,
+      "order": 81,
       "mode": 0,
       "inputs": [
         {
@@ -2603,85 +2603,18 @@
       ]
     },
     {
-      "id": 968,
-      "type": "Note",
-      "pos": [
-        -1610,
-        3430
-      ],
-      "size": [
-        210,
-        60
-      ],
-      "flags": {},
-      "order": 10,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [],
-      "properties": {},
-      "widgets_values": [
-        "Screen Mask"
-      ],
-      "color": "#432",
-      "bgcolor": "#653"
-    },
-    {
-      "id": 948,
-      "type": "ImageBlend",
-      "pos": [
-        -800,
-        2980
-      ],
-      "size": [
-        223.36497497558594,
-        102
-      ],
-      "flags": {},
-      "order": 84,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image1",
-          "type": "IMAGE",
-          "link": 1897
-        },
-        {
-          "name": "image2",
-          "type": "IMAGE",
-          "link": 1888
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            1764
-          ],
-          "slot_index": 0
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "ImageBlend"
-      },
-      "widgets_values": [
-        0.5,
-        "multiply"
-      ]
-    },
-    {
       "id": 983,
       "type": "SolidMask",
       "pos": [
-        -1620,
-        3210
+        -1600,
+        3390
       ],
       "size": [
         210,
         106
       ],
       "flags": {},
-      "order": 11,
+      "order": 10,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -2717,7 +2650,7 @@
         78
       ],
       "flags": {},
-      "order": 65,
+      "order": 62,
       "mode": 0,
       "inputs": [
         {
@@ -2728,7 +2661,7 @@
         {
           "name": "ff_value",
           "type": "IMAGE",
-          "link": 1881
+          "link": 1957
         },
         {
           "name": "cond",
@@ -2760,42 +2693,6 @@
       "bgcolor": "#000"
     },
     {
-      "id": 980,
-      "type": "Primitive boolean [Crystools]",
-      "pos": [
-        -1710,
-        3550
-      ],
-      "size": [
-        315,
-        58
-      ],
-      "flags": {},
-      "order": 12,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "boolean",
-          "type": "BOOLEAN",
-          "links": [
-            1887
-          ],
-          "slot_index": 0,
-          "shape": 3
-        }
-      ],
-      "title": "Use Screen Mask",
-      "properties": {
-        "Node name for S&R": "Primitive boolean [Crystools]"
-      },
-      "widgets_values": [
-        false
-      ],
-      "color": "#323",
-      "bgcolor": "#535"
-    },
-    {
       "id": 962,
       "type": "ImageResize+",
       "pos": [
@@ -2807,7 +2704,7 @@
         170
       ],
       "flags": {},
-      "order": 54,
+      "order": 65,
       "mode": 0,
       "inputs": [
         {
@@ -2867,122 +2764,6 @@
       "bgcolor": "#3f5159"
     },
     {
-      "id": 984,
-      "type": "MaskToImage",
-      "pos": [
-        -1370,
-        3210
-      ],
-      "size": [
-        186.0034942626953,
-        30.043575286865234
-      ],
-      "flags": {},
-      "order": 51,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "mask",
-          "type": "MASK",
-          "link": 1809
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            1885,
-            1895
-          ],
-          "slot_index": 0
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "MaskToImage"
-      },
-      "widgets_values": [],
-      "color": "#ffffff",
-      "bgcolor": "#ffffff"
-    },
-    {
-      "id": 1016,
-      "type": "ImpactConditionalBranch",
-      "pos": [
-        -1070,
-        2980
-      ],
-      "size": [
-        210,
-        78
-      ],
-      "flags": {},
-      "order": 76,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "tt_value",
-          "type": "IMAGE",
-          "link": 1894
-        },
-        {
-          "name": "ff_value",
-          "type": "IMAGE",
-          "link": 1895
-        },
-        {
-          "name": "cond",
-          "type": "BOOLEAN",
-          "link": 1896,
-          "widget": {
-            "name": "cond"
-          }
-        }
-      ],
-      "outputs": [
-        {
-          "name": "*",
-          "type": "IMAGE",
-          "links": [
-            1897
-          ],
-          "slot_index": 0,
-          "label": "IMAGE"
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "ImpactConditionalBranch"
-      },
-      "widgets_values": [
-        false
-      ],
-      "color": "#222",
-      "bgcolor": "#000"
-    },
-    {
-      "id": 969,
-      "type": "Note",
-      "pos": [
-        -550,
-        3020
-      ],
-      "size": [
-        210,
-        60
-      ],
-      "flags": {},
-      "order": 13,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [],
-      "properties": {},
-      "widgets_values": [
-        "Blend Masks"
-      ],
-      "color": "#432",
-      "bgcolor": "#653"
-    },
-    {
       "id": 1012,
       "type": "ACN_ScaledSoftControlNetWeights",
       "pos": [
@@ -2994,7 +2775,7 @@
         102
       ],
       "flags": {},
-      "order": 14,
+      "order": 11,
       "mode": 0,
       "inputs": [
         {
@@ -3043,7 +2824,7 @@
         78
       ],
       "flags": {},
-      "order": 133,
+      "order": 128,
       "mode": 0,
       "inputs": [
         {
@@ -3097,7 +2878,7 @@
         30
       ],
       "flags": {},
-      "order": 136,
+      "order": 131,
       "mode": 0,
       "inputs": [
         {
@@ -3142,7 +2923,7 @@
         78
       ],
       "flags": {},
-      "order": 134,
+      "order": 129,
       "mode": 0,
       "inputs": [
         {
@@ -3196,7 +2977,7 @@
         30
       ],
       "flags": {},
-      "order": 135,
+      "order": 130,
       "mode": 0,
       "inputs": [
         {
@@ -3241,7 +3022,7 @@
         30
       ],
       "flags": {},
-      "order": 130,
+      "order": 125,
       "mode": 0,
       "inputs": [
         {
@@ -3287,7 +3068,7 @@
         30
       ],
       "flags": {},
-      "order": 131,
+      "order": 126,
       "mode": 0,
       "inputs": [
         {
@@ -3333,7 +3114,7 @@
         78
       ],
       "flags": {},
-      "order": 127,
+      "order": 122,
       "mode": 0,
       "inputs": [
         {
@@ -3387,7 +3168,7 @@
         78
       ],
       "flags": {},
-      "order": 126,
+      "order": 121,
       "mode": 0,
       "inputs": [
         {
@@ -3441,7 +3222,7 @@
         30
       ],
       "flags": {},
-      "order": 123,
+      "order": 118,
       "mode": 0,
       "inputs": [
         {
@@ -3487,7 +3268,7 @@
         30
       ],
       "flags": {},
-      "order": 124,
+      "order": 119,
       "mode": 0,
       "inputs": [
         {
@@ -3533,7 +3314,7 @@
         78
       ],
       "flags": {},
-      "order": 120,
+      "order": 115,
       "mode": 0,
       "inputs": [
         {
@@ -3587,7 +3368,7 @@
         78
       ],
       "flags": {},
-      "order": 119,
+      "order": 114,
       "mode": 0,
       "inputs": [
         {
@@ -3641,7 +3422,7 @@
         288
       ],
       "flags": {},
-      "order": 115,
+      "order": 110,
       "mode": 0,
       "inputs": [
         {
@@ -3751,7 +3532,7 @@
         30
       ],
       "flags": {},
-      "order": 116,
+      "order": 111,
       "mode": 0,
       "inputs": [
         {
@@ -3797,7 +3578,7 @@
         30
       ],
       "flags": {},
-      "order": 117,
+      "order": 112,
       "mode": 0,
       "inputs": [
         {
@@ -3843,7 +3624,7 @@
         30
       ],
       "flags": {},
-      "order": 59,
+      "order": 54,
       "mode": 0,
       "inputs": [
         {
@@ -3892,7 +3673,7 @@
         30
       ],
       "flags": {},
-      "order": 56,
+      "order": 51,
       "mode": 0,
       "inputs": [
         {
@@ -3941,7 +3722,7 @@
         30
       ],
       "flags": {},
-      "order": 121,
+      "order": 116,
       "mode": 0,
       "inputs": [
         {
@@ -3986,7 +3767,7 @@
         30
       ],
       "flags": {},
-      "order": 122,
+      "order": 117,
       "mode": 0,
       "inputs": [
         {
@@ -4031,7 +3812,7 @@
         286
       ],
       "flags": {},
-      "order": 118,
+      "order": 113,
       "mode": 0,
       "inputs": [
         {
@@ -4141,7 +3922,7 @@
         102
       ],
       "flags": {},
-      "order": 15,
+      "order": 12,
       "mode": 0,
       "inputs": [
         {
@@ -4178,60 +3959,6 @@
       "bgcolor": "#535"
     },
     {
-      "id": 1013,
-      "type": "ImpactConditionalBranch",
-      "pos": [
-        -1070,
-        3510
-      ],
-      "size": [
-        210,
-        78
-      ],
-      "flags": {},
-      "order": 69,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "tt_value",
-          "type": "IMAGE",
-          "link": 1886
-        },
-        {
-          "name": "ff_value",
-          "type": "IMAGE",
-          "link": 1885
-        },
-        {
-          "name": "cond",
-          "type": "BOOLEAN",
-          "link": 1887,
-          "widget": {
-            "name": "cond"
-          }
-        }
-      ],
-      "outputs": [
-        {
-          "name": "*",
-          "type": "IMAGE",
-          "links": [
-            1888
-          ],
-          "slot_index": 0,
-          "label": "IMAGE"
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "ImpactConditionalBranch"
-      },
-      "widgets_values": [
-        false
-      ],
-      "color": "#222",
-      "bgcolor": "#000"
-    },
-    {
       "id": 840,
       "type": "JWStringMultiline",
       "pos": [
@@ -4245,7 +3972,7 @@
       "flags": {
         "collapsed": false
       },
-      "order": 16,
+      "order": 13,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4270,84 +3997,6 @@
       "bgcolor": "#353"
     },
     {
-      "id": 792,
-      "type": "JWInteger",
-      "pos": [
-        -1447.2103271484375,
-        316.1779479980469
-      ],
-      "size": [
-        216,
-        60
-      ],
-      "flags": {},
-      "order": 17,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "INT",
-          "type": "INT",
-          "links": [
-            1586,
-            1619,
-            1629,
-            1785
-          ],
-          "slot_index": 0,
-          "shape": 3
-        }
-      ],
-      "title": "Height",
-      "properties": {
-        "Node name for S&R": "JWInteger"
-      },
-      "widgets_values": [
-        1024
-      ],
-      "color": "#232",
-      "bgcolor": "#353"
-    },
-    {
-      "id": 791,
-      "type": "JWInteger",
-      "pos": [
-        -1451.193359375,
-        193.75128173828125
-      ],
-      "size": [
-        216,
-        60
-      ],
-      "flags": {},
-      "order": 18,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "INT",
-          "type": "INT",
-          "links": [
-            1585,
-            1618,
-            1628,
-            1784
-          ],
-          "slot_index": 0,
-          "shape": 3
-        }
-      ],
-      "title": "Width",
-      "properties": {
-        "Node name for S&R": "JWInteger"
-      },
-      "widgets_values": [
-        576
-      ],
-      "color": "#232",
-      "bgcolor": "#353"
-    },
-    {
       "id": 722,
       "type": "CLIPTextEncode",
       "pos": [
@@ -4359,7 +4008,7 @@
         114.34098052978516
       ],
       "flags": {},
-      "order": 73,
+      "order": 68,
       "mode": 0,
       "inputs": [
         {
@@ -4400,7 +4049,7 @@
         251.7608642578125
       ],
       "flags": {},
-      "order": 79,
+      "order": 77,
       "mode": 4,
       "inputs": [
         {
@@ -4427,7 +4076,7 @@
         78
       ],
       "flags": {},
-      "order": 70,
+      "order": 71,
       "mode": 0,
       "inputs": [
         {
@@ -4438,7 +4087,7 @@
         {
           "name": "ff_value",
           "type": "IMAGE",
-          "link": 1891
+          "link": 1956
         },
         {
           "name": "cond",
@@ -4481,7 +4130,7 @@
         76
       ],
       "flags": {},
-      "order": 55,
+      "order": 61,
       "mode": 4,
       "inputs": [
         {
@@ -4508,185 +4157,6 @@
       "bgcolor": "#3f5159"
     },
     {
-      "id": 923,
-      "type": "VHS_LoadVideoPath",
-      "pos": [
-        -1340,
-        2460
-      ],
-      "size": [
-        231.8896484375,
-        238
-      ],
-      "flags": {
-        "collapsed": false
-      },
-      "order": 19,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "meta_batch",
-          "type": "VHS_BatchManager",
-          "link": null,
-          "shape": 7
-        },
-        {
-          "name": "vae",
-          "type": "VAE",
-          "link": null,
-          "shape": 7
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            1786
-          ],
-          "slot_index": 0,
-          "shape": 3
-        },
-        {
-          "name": "frame_count",
-          "type": "INT",
-          "links": [
-            1734
-          ],
-          "slot_index": 1,
-          "shape": 3
-        },
-        {
-          "name": "audio",
-          "type": "AUDIO",
-          "links": null,
-          "shape": 3
-        },
-        {
-          "name": "video_info",
-          "type": "VHS_VIDEOINFO",
-          "links": [],
-          "slot_index": 3,
-          "shape": 3
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "VHS_LoadVideoPath"
-      },
-      "widgets_values": {
-        "video": "G:\\Shared drives\\nilor\\R&D\\IPA Weights Revisit\\ZenonA2E_BallsMask_15sec.mp4",
-        "force_rate": 0,
-        "force_size": "Disabled",
-        "custom_width": 512,
-        "custom_height": 512,
-        "frame_load_cap": 0,
-        "skip_first_frames": 0,
-        "select_every_nth": 1,
-        "videopreview": {
-          "hidden": false,
-          "paused": false,
-          "params": {
-            "frame_load_cap": 0,
-            "skip_first_frames": 0,
-            "force_rate": 0,
-            "filename": "G:\\Shared drives\\nilor\\R&D\\IPA Weights Revisit\\ZenonA2E_BallsMask_15sec.mp4",
-            "type": "path",
-            "format": "video/mp4",
-            "select_every_nth": 1
-          }
-        }
-      },
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
-      "id": 827,
-      "type": "VHS_LoadVideoPath",
-      "pos": [
-        1310.1177978515625,
-        985.9779052734375
-      ],
-      "size": [
-        231.8896484375,
-        238
-      ],
-      "flags": {
-        "collapsed": false
-      },
-      "order": 20,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "meta_batch",
-          "type": "VHS_BatchManager",
-          "link": null,
-          "shape": 7
-        },
-        {
-          "name": "vae",
-          "type": "VAE",
-          "link": null,
-          "shape": 7
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            1598
-          ],
-          "slot_index": 0,
-          "shape": 3
-        },
-        {
-          "name": "frame_count",
-          "type": "INT",
-          "links": [],
-          "slot_index": 1,
-          "shape": 3
-        },
-        {
-          "name": "audio",
-          "type": "AUDIO",
-          "links": null,
-          "shape": 3
-        },
-        {
-          "name": "video_info",
-          "type": "VHS_VIDEOINFO",
-          "links": null,
-          "shape": 3
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "VHS_LoadVideoPath"
-      },
-      "widgets_values": {
-        "video": "G:\\Shared drives\\nilor\\R&D\\IPA Weights Revisit\\ZenonA2E_BallsMask_15sec.mp4",
-        "force_rate": 0,
-        "force_size": "Disabled",
-        "custom_width": 512,
-        "custom_height": 512,
-        "frame_load_cap": 0,
-        "skip_first_frames": 0,
-        "select_every_nth": 1,
-        "videopreview": {
-          "hidden": false,
-          "paused": false,
-          "params": {
-            "frame_load_cap": 0,
-            "skip_first_frames": 0,
-            "force_rate": 0,
-            "filename": "G:\\Shared drives\\nilor\\R&D\\IPA Weights Revisit\\ZenonA2E_BallsMask_15sec.mp4",
-            "type": "path",
-            "format": "video/mp4",
-            "select_every_nth": 1
-          }
-        }
-      }
-    },
-    {
       "id": 1033,
       "type": "Primitive boolean [Crystools]",
       "pos": [
@@ -4698,7 +4168,7 @@
         58
       ],
       "flags": {},
-      "order": 21,
+      "order": 14,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4734,7 +4204,7 @@
         58
       ],
       "flags": {},
-      "order": 22,
+      "order": 15,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4770,7 +4240,7 @@
         58
       ],
       "flags": {},
-      "order": 23,
+      "order": 16,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4805,7 +4275,7 @@
         286
       ],
       "flags": {},
-      "order": 132,
+      "order": 127,
       "mode": 0,
       "inputs": [
         {
@@ -4920,7 +4390,7 @@
         286
       ],
       "flags": {},
-      "order": 125,
+      "order": 120,
       "mode": 0,
       "inputs": [
         {
@@ -5032,7 +4502,7 @@
       "flags": {
         "collapsed": false
       },
-      "order": 24,
+      "order": 17,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -5058,7 +4528,7 @@
         58
       ],
       "flags": {},
-      "order": 25,
+      "order": 18,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -5094,7 +4564,7 @@
         758
       ],
       "flags": {},
-      "order": 83,
+      "order": 76,
       "mode": 0,
       "inputs": [
         {
@@ -5239,7 +4709,7 @@
         142
       ],
       "flags": {},
-      "order": 75,
+      "order": 69,
       "mode": 0,
       "inputs": [
         {
@@ -5319,7 +4789,7 @@
         58
       ],
       "flags": {},
-      "order": 26,
+      "order": 19,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -5352,7 +4822,7 @@
         58
       ],
       "flags": {},
-      "order": 27,
+      "order": 20,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -5385,7 +4855,7 @@
         76
       ],
       "flags": {},
-      "order": 81,
+      "order": 75,
       "mode": 0,
       "inputs": [
         {
@@ -5419,7 +4889,7 @@
         76
       ],
       "flags": {},
-      "order": 80,
+      "order": 74,
       "mode": 0,
       "inputs": [
         {
@@ -5453,7 +4923,7 @@
         58
       ],
       "flags": {},
-      "order": 28,
+      "order": 21,
       "mode": 4,
       "inputs": [],
       "outputs": [
@@ -5489,7 +4959,7 @@
       "flags": {
         "pinned": false
       },
-      "order": 29,
+      "order": 22,
       "mode": 4,
       "inputs": [],
       "outputs": [
@@ -5523,7 +4993,7 @@
         58
       ],
       "flags": {},
-      "order": 30,
+      "order": 23,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -5560,7 +5030,7 @@
         26
       ],
       "flags": {},
-      "order": 64,
+      "order": 59,
       "mode": 0,
       "inputs": [
         {
@@ -5598,7 +5068,7 @@
         132
       ],
       "flags": {},
-      "order": 31,
+      "order": 24,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -5637,7 +5107,7 @@
         58
       ],
       "flags": {},
-      "order": 32,
+      "order": 25,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -5662,42 +5132,6 @@
       "bgcolor": "#353"
     },
     {
-      "id": 988,
-      "type": "Primitive boolean [Crystools]",
-      "pos": [
-        -1710,
-        2850
-      ],
-      "size": [
-        315,
-        58
-      ],
-      "flags": {},
-      "order": 33,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "boolean",
-          "type": "BOOLEAN",
-          "links": [
-            1892
-          ],
-          "slot_index": 0,
-          "shape": 3
-        }
-      ],
-      "title": "Use Animated Latent Mask Video",
-      "properties": {
-        "Node name for S&R": "Primitive boolean [Crystools]"
-      },
-      "widgets_values": [
-        true
-      ],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
       "id": 966,
       "type": "Note",
       "pos": [
@@ -5709,7 +5143,7 @@
         60
       ],
       "flags": {},
-      "order": 34,
+      "order": 26,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -5719,42 +5153,6 @@
       ],
       "color": "#432",
       "bgcolor": "#653"
-    },
-    {
-      "id": 979,
-      "type": "Primitive boolean [Crystools]",
-      "pos": [
-        -1781.8658447265625,
-        3014.758544921875
-      ],
-      "size": [
-        315,
-        58
-      ],
-      "flags": {},
-      "order": 35,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "boolean",
-          "type": "BOOLEAN",
-          "links": [
-            1896
-          ],
-          "slot_index": 0,
-          "shape": 3
-        }
-      ],
-      "title": "Use Latent Mask",
-      "properties": {
-        "Node name for S&R": "Primitive boolean [Crystools]"
-      },
-      "widgets_values": [
-        true
-      ],
-      "color": "#232",
-      "bgcolor": "#353"
     },
     {
       "id": 596,
@@ -5768,7 +5166,7 @@
         82
       ],
       "flags": {},
-      "order": 71,
+      "order": 66,
       "mode": 0,
       "inputs": [
         {
@@ -5812,7 +5210,7 @@
         82
       ],
       "flags": {},
-      "order": 58,
+      "order": 53,
       "mode": 0,
       "inputs": [
         {
@@ -5865,7 +5263,7 @@
         60
       ],
       "flags": {},
-      "order": 36,
+      "order": 27,
       "mode": 0,
       "inputs": [
         {
@@ -5907,7 +5305,7 @@
         82
       ],
       "flags": {},
-      "order": 60,
+      "order": 55,
       "mode": 0,
       "inputs": [
         {
@@ -5947,7 +5345,7 @@
         98
       ],
       "flags": {},
-      "order": 37,
+      "order": 28,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -5996,7 +5394,7 @@
         62.92486572265625
       ],
       "flags": {},
-      "order": 38,
+      "order": 29,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -6029,7 +5427,7 @@
         58
       ],
       "flags": {},
-      "order": 53,
+      "order": 50,
       "mode": 0,
       "inputs": [
         {
@@ -6072,7 +5470,7 @@
         58
       ],
       "flags": {},
-      "order": 52,
+      "order": 49,
       "mode": 0,
       "inputs": [
         {
@@ -6104,338 +5502,6 @@
       "bgcolor": "#535"
     },
     {
-      "id": 879,
-      "type": "VHS_LoadImagesPath",
-      "pos": [
-        -1711.4654541015625,
-        -323.27252197265625
-      ],
-      "size": [
-        242.24609375,
-        596.9306640625
-      ],
-      "flags": {},
-      "order": 39,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "meta_batch",
-          "type": "VHS_BatchManager",
-          "link": null,
-          "shape": 7
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            1627
-          ],
-          "slot_index": 0
-        },
-        {
-          "name": "MASK",
-          "type": "MASK",
-          "links": null
-        },
-        {
-          "name": "frame_count",
-          "type": "INT",
-          "links": [
-            1642,
-            1654
-          ],
-          "slot_index": 2
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "VHS_LoadImagesPath"
-      },
-      "widgets_values": {
-        "directory": "G:\\Shared drives\\nilor\\R&D\\IPA Weights Revisit\\app-01",
-        "image_load_cap": 4,
-        "skip_first_images": 0,
-        "select_every_nth": 1,
-        "choose folder to upload": "image",
-        "videopreview": {
-          "hidden": false,
-          "paused": false,
-          "params": {
-            "frame_load_cap": 4,
-            "skip_first_frames": 0,
-            "select_every_nth": 1,
-            "filename": "G:\\Shared drives\\nilor\\R&D\\IPA Weights Revisit\\app-01",
-            "type": "path",
-            "format": "folder"
-          },
-          "muted": false
-        }
-      }
-    },
-    {
-      "id": 987,
-      "type": "VHS_LoadImagePath",
-      "pos": [
-        -1350,
-        2830
-      ],
-      "size": [
-        235.24609375,
-        102
-      ],
-      "flags": {},
-      "order": 40,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "vae",
-          "type": "VAE",
-          "link": null,
-          "shape": 7
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            1891
-          ],
-          "slot_index": 0
-        },
-        {
-          "name": "mask",
-          "type": "MASK",
-          "links": null
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "VHS_LoadImagePath"
-      },
-      "widgets_values": {
-        "image": "D:\\nilor-corp\\zenerator\\inputs\\screen-masks\\f_screen-mask.png",
-        "force_size": "Disabled",
-        "custom_width": 512,
-        "custom_height": 512,
-        "videopreview": {
-          "hidden": false,
-          "paused": false,
-          "params": {
-            "filename": "D:\\nilor-corp\\zenerator\\inputs\\screen-masks\\f_screen-mask.png",
-            "type": "path",
-            "format": "video/png"
-          },
-          "muted": false
-        }
-      },
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
-      "id": 926,
-      "type": "VHS_LoadImagePath",
-      "pos": [
-        -1360,
-        3450
-      ],
-      "size": [
-        235.24609375,
-        102
-      ],
-      "flags": {},
-      "order": 41,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "vae",
-          "type": "VAE",
-          "link": null,
-          "shape": 7
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            1886
-          ],
-          "slot_index": 0
-        },
-        {
-          "name": "mask",
-          "type": "MASK",
-          "links": null
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "VHS_LoadImagePath"
-      },
-      "widgets_values": {
-        "image": "D:\\nilor-corp\\zenerator\\inputs\\screen-masks\\f_screen-mask.png",
-        "force_size": "Disabled",
-        "custom_width": 512,
-        "custom_height": 512,
-        "videopreview": {
-          "hidden": false,
-          "paused": false,
-          "params": {
-            "filename": "D:\\nilor-corp\\zenerator\\inputs\\screen-masks\\f_screen-mask.png",
-            "type": "path",
-            "format": "video/png"
-          },
-          "muted": false
-        }
-      },
-      "color": "#323",
-      "bgcolor": "#535"
-    },
-    {
-      "id": 919,
-      "type": "VHS_LoadImagePath",
-      "pos": [
-        1355.320556640625,
-        3091.360107421875
-      ],
-      "size": [
-        235.24609375,
-        102
-      ],
-      "flags": {},
-      "order": 42,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "vae",
-          "type": "VAE",
-          "link": null,
-          "shape": 7
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            1881
-          ],
-          "slot_index": 0
-        },
-        {
-          "name": "mask",
-          "type": "MASK",
-          "links": null
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "VHS_LoadImagePath"
-      },
-      "widgets_values": {
-        "image": "\"D:\\nilor-corp\\zenerator\\inputs\\static-lineart\\poseidon_lineart.png\"",
-        "force_size": "Disabled",
-        "custom_width": 512,
-        "custom_height": 512,
-        "videopreview": {
-          "hidden": false,
-          "paused": false,
-          "params": {
-            "filename": "\"D:\\nilor-corp\\zenerator\\inputs\\static-lineart\\poseidon_lineart.png\"",
-            "type": "path",
-            "format": "video/png\""
-          },
-          "muted": false
-        }
-      }
-    },
-    {
-      "id": 921,
-      "type": "VHS_LoadVideoPath",
-      "pos": [
-        1355.320556640625,
-        3491.360107421875
-      ],
-      "size": [
-        231.8896484375,
-        238
-      ],
-      "flags": {
-        "collapsed": false
-      },
-      "order": 43,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "meta_batch",
-          "type": "VHS_BatchManager",
-          "link": null,
-          "shape": 7
-        },
-        {
-          "name": "vae",
-          "type": "VAE",
-          "link": null,
-          "shape": 7
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            1882
-          ],
-          "slot_index": 0,
-          "shape": 3
-        },
-        {
-          "name": "frame_count",
-          "type": "INT",
-          "links": [],
-          "slot_index": 1,
-          "shape": 3
-        },
-        {
-          "name": "audio",
-          "type": "AUDIO",
-          "links": null,
-          "shape": 3
-        },
-        {
-          "name": "video_info",
-          "type": "VHS_VIDEOINFO",
-          "links": null,
-          "shape": 3
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "VHS_LoadVideoPath"
-      },
-      "widgets_values": {
-        "video": "D:\\nilor-corp\\zenerator\\inputs\\animated-lineart\\medusa_lineart.mp4",
-        "force_rate": 0,
-        "force_size": "Disabled",
-        "custom_width": 512,
-        "custom_height": 512,
-        "frame_load_cap": 0,
-        "skip_first_frames": 0,
-        "select_every_nth": 1,
-        "videopreview": {
-          "hidden": false,
-          "paused": false,
-          "params": {
-            "frame_load_cap": 0,
-            "skip_first_frames": 0,
-            "force_rate": 0,
-            "filename": "D:\\nilor-corp\\zenerator\\inputs\\animated-lineart\\medusa_lineart.mp4",
-            "type": "path",
-            "format": "video/mp4",
-            "select_every_nth": 1
-          }
-        }
-      }
-    },
-    {
       "id": 875,
       "type": "ACN_SparseCtrlLoaderAdvanced",
       "pos": [
@@ -6447,7 +5513,7 @@
         246
       ],
       "flags": {},
-      "order": 112,
+      "order": 106,
       "mode": 0,
       "inputs": [
         {
@@ -6491,42 +5557,6 @@
       "bgcolor": "#535"
     },
     {
-      "id": 997,
-      "type": "Primitive boolean [Crystools]",
-      "pos": [
-        1335.78955078125,
-        3381.46044921875
-      ],
-      "size": [
-        234.9427490234375,
-        58
-      ],
-      "flags": {},
-      "order": 44,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "boolean",
-          "type": "BOOLEAN",
-          "links": [
-            1880
-          ],
-          "slot_index": 0,
-          "shape": 3
-        }
-      ],
-      "title": "Use Animated Lineart Video",
-      "properties": {
-        "Node name for S&R": "Primitive boolean [Crystools]"
-      },
-      "widgets_values": [
-        true
-      ],
-      "color": "#232",
-      "bgcolor": "#353"
-    },
-    {
       "id": 1024,
       "type": "ACN_ScaledSoftControlNetWeights",
       "pos": [
@@ -6538,7 +5568,7 @@
         102
       ],
       "flags": {},
-      "order": 45,
+      "order": 30,
       "mode": 0,
       "inputs": [
         {
@@ -6587,7 +5617,7 @@
         58
       ],
       "flags": {},
-      "order": 66,
+      "order": 58,
       "mode": 0,
       "inputs": [
         {
@@ -6619,42 +5649,6 @@
       "bgcolor": "#535"
     },
     {
-      "id": 1031,
-      "type": "Primitive boolean [Crystools]",
-      "pos": [
-        1329,
-        2819
-      ],
-      "size": [
-        315,
-        58
-      ],
-      "flags": {},
-      "order": 46,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "boolean",
-          "type": "BOOLEAN",
-          "links": [
-            1928
-          ],
-          "slot_index": 0,
-          "shape": 3
-        }
-      ],
-      "title": "Use Depth CN",
-      "properties": {
-        "Node name for S&R": "Primitive boolean [Crystools]"
-      },
-      "widgets_values": [
-        false
-      ],
-      "color": "#232",
-      "bgcolor": "#353"
-    },
-    {
       "id": 1032,
       "type": "Reroute (rgthree)",
       "pos": [
@@ -6666,7 +5660,7 @@
         30
       ],
       "flags": {},
-      "order": 67,
+      "order": 60,
       "mode": 0,
       "inputs": [
         {
@@ -6704,6 +5698,256 @@
       }
     },
     {
+      "id": 1045,
+      "type": "ImpactConditionalBranch",
+      "pos": [
+        1626,
+        2203
+      ],
+      "size": [
+        210,
+        78
+      ],
+      "flags": {},
+      "order": 63,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "tt_value",
+          "type": "IMAGE",
+          "link": 1948
+        },
+        {
+          "name": "ff_value",
+          "type": "IMAGE",
+          "link": 1958
+        },
+        {
+          "name": "cond",
+          "type": "BOOLEAN",
+          "link": 1949,
+          "widget": {
+            "name": "cond"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "*",
+          "type": "IMAGE",
+          "links": [
+            1951
+          ],
+          "slot_index": 0,
+          "label": "IMAGE"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImpactConditionalBranch"
+      },
+      "widgets_values": [
+        false
+      ],
+      "color": "#222",
+      "bgcolor": "#000"
+    },
+    {
+      "id": 1018,
+      "type": "Reroute (rgthree)",
+      "pos": [
+        2504,
+        1969
+      ],
+      "size": [
+        40,
+        30
+      ],
+      "flags": {},
+      "order": 123,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "",
+          "type": "*",
+          "link": 1898,
+          "dir": 3,
+          "has_old_label": true,
+          "label": " "
+        }
+      ],
+      "outputs": [
+        {
+          "name": "*",
+          "type": "CONDITIONING",
+          "links": [
+            1947
+          ],
+          "slot_index": 0,
+          "dir": 4,
+          "has_old_label": true,
+          "label": " "
+        }
+      ],
+      "properties": {
+        "resizable": false,
+        "size": [
+          40,
+          30
+        ]
+      }
+    },
+    {
+      "id": 1019,
+      "type": "Reroute (rgthree)",
+      "pos": [
+        2504,
+        2100
+      ],
+      "size": [
+        40,
+        30
+      ],
+      "flags": {},
+      "order": 124,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "",
+          "type": "*",
+          "link": 1899,
+          "dir": 3,
+          "has_old_label": true,
+          "label": " "
+        }
+      ],
+      "outputs": [
+        {
+          "name": "*",
+          "type": "CONDITIONING",
+          "links": [
+            1913
+          ],
+          "slot_index": 0,
+          "dir": 4,
+          "has_old_label": true,
+          "label": " "
+        }
+      ],
+      "properties": {
+        "resizable": false,
+        "size": [
+          40,
+          30
+        ]
+      }
+    },
+    {
+      "id": 988,
+      "type": "Primitive boolean [Crystools]",
+      "pos": [
+        -1710,
+        2850
+      ],
+      "size": [
+        315,
+        58
+      ],
+      "flags": {},
+      "order": 31,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "boolean",
+          "type": "BOOLEAN",
+          "links": [
+            1892
+          ],
+          "slot_index": 0,
+          "shape": 3
+        }
+      ],
+      "title": "Use Animated Latent Mask Video",
+      "properties": {
+        "Node name for S&R": "Primitive boolean [Crystools]"
+      },
+      "widgets_values": [
+        false
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 879,
+      "type": "VHS_LoadImagesPath",
+      "pos": [
+        -1711.4654541015625,
+        -323.27252197265625
+      ],
+      "size": [
+        242.24609375,
+        194
+      ],
+      "flags": {},
+      "order": 32,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "meta_batch",
+          "type": "VHS_BatchManager",
+          "link": null,
+          "shape": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            1627
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        },
+        {
+          "name": "frame_count",
+          "type": "INT",
+          "links": [
+            1642,
+            1654
+          ],
+          "slot_index": 2
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VHS_LoadImagesPath"
+      },
+      "widgets_values": {
+        "directory": "C:\\nilor-corp\\ComfyUI\\input\\WorkFlower\\Ref_Image\\2024-12-04-21-00-22",
+        "image_load_cap": 4,
+        "skip_first_images": 0,
+        "select_every_nth": 1,
+        "choose folder to upload": "image",
+        "videopreview": {
+          "hidden": false,
+          "paused": false,
+          "params": {
+            "frame_load_cap": 4,
+            "skip_first_frames": 0,
+            "select_every_nth": 1,
+            "filename": "C:\\nilor-corp\\ComfyUI\\input\\WorkFlower\\Ref_Image\\2024-12-04-21-00-22",
+            "type": "path",
+            "format": "folder"
+          },
+          "muted": false
+        }
+      }
+    },
+    {
       "id": 1043,
       "type": "VHS_LoadVideoPath",
       "pos": [
@@ -6717,7 +5961,7 @@
       "flags": {
         "collapsed": false
       },
-      "order": 47,
+      "order": 33,
       "mode": 0,
       "inputs": [
         {
@@ -6767,7 +6011,7 @@
         "Node name for S&R": "VHS_LoadVideoPath"
       },
       "widgets_values": {
-        "video": "D:\\nilor-corp\\zenerator\\inputs\\animated-lineart\\medusa_lineart.mp4",
+        "video": "C:\\nilor-corp\\zenerator\\inputs/animated-depths/SOL_cube-01_depth.mp4",
         "force_rate": 0,
         "force_size": "Disabled",
         "custom_width": 512,
@@ -6782,7 +6026,7 @@
             "frame_load_cap": 0,
             "skip_first_frames": 0,
             "force_rate": 0,
-            "filename": "D:\\nilor-corp\\zenerator\\inputs\\animated-lineart\\medusa_lineart.mp4",
+            "filename": "C:\\nilor-corp\\zenerator\\inputs/animated-depths/SOL_cube-01_depth.mp4",
             "type": "path",
             "format": "video/mp4",
             "select_every_nth": 1
@@ -6791,20 +6035,28 @@
       }
     },
     {
-      "id": 899,
-      "type": "VHS_LoadImagePath",
+      "id": 827,
+      "type": "VHS_LoadVideoPath",
       "pos": [
-        1331.250244140625,
-        1989.37548828125
+        1310.1177978515625,
+        985.9779052734375
       ],
       "size": [
-        235.24609375,
-        102
+        231.8896484375,
+        238
       ],
-      "flags": {},
-      "order": 48,
+      "flags": {
+        "collapsed": false
+      },
+      "order": 34,
       "mode": 0,
       "inputs": [
+        {
+          "name": "meta_batch",
+          "type": "VHS_BatchManager",
+          "link": null,
+          "shape": 7
+        },
         {
           "name": "vae",
           "type": "VAE",
@@ -6817,35 +6069,180 @@
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            1950
+            1598
           ],
-          "slot_index": 0
+          "slot_index": 0,
+          "shape": 3
         },
         {
-          "name": "mask",
-          "type": "MASK",
-          "links": null
+          "name": "frame_count",
+          "type": "INT",
+          "links": [],
+          "slot_index": 1,
+          "shape": 3
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": null,
+          "shape": 3
+        },
+        {
+          "name": "video_info",
+          "type": "VHS_VIDEOINFO",
+          "links": null,
+          "shape": 3
         }
       ],
       "properties": {
-        "Node name for S&R": "VHS_LoadImagePath"
+        "Node name for S&R": "VHS_LoadVideoPath"
       },
       "widgets_values": {
-        "image": "D:\\nilor-corp\\zenerator\\inputs\\screen-depths\\g_depth.png",
+        "video": "C:\\nilor-corp\\zenerator\\inputs/animated-depths/SOL_cube-01_depth.mp4",
+        "force_rate": 0,
         "force_size": "Disabled",
         "custom_width": 512,
         "custom_height": 512,
+        "frame_load_cap": 0,
+        "skip_first_frames": 0,
+        "select_every_nth": 1,
         "videopreview": {
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "D:\\nilor-corp\\zenerator\\inputs\\screen-depths\\g_depth.png",
+            "frame_load_cap": 0,
+            "skip_first_frames": 0,
+            "force_rate": 0,
+            "filename": "C:\\nilor-corp\\zenerator\\inputs/animated-depths/SOL_cube-01_depth.mp4",
             "type": "path",
-            "format": "video/png"
-          },
-          "muted": false
+            "format": "video/mp4",
+            "select_every_nth": 1
+          }
         }
       }
+    },
+    {
+      "id": 921,
+      "type": "VHS_LoadVideoPath",
+      "pos": [
+        1355.320556640625,
+        3491.360107421875
+      ],
+      "size": [
+        231.8896484375,
+        238
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 35,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "meta_batch",
+          "type": "VHS_BatchManager",
+          "link": null,
+          "shape": 7
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": null,
+          "shape": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            1882
+          ],
+          "slot_index": 0,
+          "shape": 3
+        },
+        {
+          "name": "frame_count",
+          "type": "INT",
+          "links": [],
+          "slot_index": 1,
+          "shape": 3
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": null,
+          "shape": 3
+        },
+        {
+          "name": "video_info",
+          "type": "VHS_VIDEOINFO",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VHS_LoadVideoPath"
+      },
+      "widgets_values": {
+        "video": "C:\\nilor-corp\\zenerator\\inputs\\animated-lineart\\medusa_lineart.mp4",
+        "force_rate": 0,
+        "force_size": "Disabled",
+        "custom_width": 512,
+        "custom_height": 512,
+        "frame_load_cap": 0,
+        "skip_first_frames": 0,
+        "select_every_nth": 1,
+        "videopreview": {
+          "hidden": false,
+          "paused": false,
+          "params": {
+            "frame_load_cap": 0,
+            "skip_first_frames": 0,
+            "force_rate": 0,
+            "filename": "C:\\nilor-corp\\zenerator\\inputs\\animated-lineart\\medusa_lineart.mp4",
+            "type": "path",
+            "format": "video/mp4",
+            "select_every_nth": 1
+          }
+        }
+      }
+    },
+    {
+      "id": 1031,
+      "type": "Primitive boolean [Crystools]",
+      "pos": [
+        1329,
+        2819
+      ],
+      "size": [
+        315,
+        58
+      ],
+      "flags": {},
+      "order": 36,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "boolean",
+          "type": "BOOLEAN",
+          "links": [
+            1928
+          ],
+          "slot_index": 0,
+          "shape": 3
+        }
+      ],
+      "title": "Use Depth CN",
+      "properties": {
+        "Node name for S&R": "Primitive boolean [Crystools]"
+      },
+      "widgets_values": [
+        true
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
     },
     {
       "id": 1044,
@@ -6859,7 +6256,7 @@
         58
       ],
       "flags": {},
-      "order": 49,
+      "order": 37,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -6884,34 +6281,315 @@
       "bgcolor": "#353"
     },
     {
-      "id": 1045,
+      "id": 923,
+      "type": "VHS_LoadVideoPath",
+      "pos": [
+        -1340,
+        2460
+      ],
+      "size": [
+        231.8896484375,
+        238
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 38,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "meta_batch",
+          "type": "VHS_BatchManager",
+          "link": null,
+          "shape": 7
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": null,
+          "shape": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            1786
+          ],
+          "slot_index": 0,
+          "shape": 3
+        },
+        {
+          "name": "frame_count",
+          "type": "INT",
+          "links": [
+            1734
+          ],
+          "slot_index": 1,
+          "shape": 3
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": null,
+          "shape": 3
+        },
+        {
+          "name": "video_info",
+          "type": "VHS_VIDEOINFO",
+          "links": [],
+          "slot_index": 3,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VHS_LoadVideoPath"
+      },
+      "widgets_values": {
+        "video": "C:/nilor-corp/zenerator/inputs//animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
+        "force_rate": 0,
+        "force_size": "Disabled",
+        "custom_width": 512,
+        "custom_height": 512,
+        "frame_load_cap": 0,
+        "skip_first_frames": 0,
+        "select_every_nth": 1,
+        "videopreview": {
+          "hidden": false,
+          "paused": false,
+          "params": {
+            "frame_load_cap": 0,
+            "skip_first_frames": 0,
+            "force_rate": 0,
+            "filename": "C:/nilor-corp/zenerator/inputs//animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4",
+            "type": "path",
+            "format": "video/mp4",
+            "select_every_nth": 1
+          }
+        }
+      },
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 1048,
+      "type": "LoadImageFromPath",
+      "pos": [
+        -1350,
+        2847
+      ],
+      "size": [
+        228.0384063720703,
+        78
+      ],
+      "flags": {},
+      "order": 39,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            1956
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImageFromPath"
+      },
+      "widgets_values": [
+        "C:\\nilor-corp\\zenerator\\inputs\\screen-masks\\SOL_cube-01_screen-mask.png"
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 997,
+      "type": "Primitive boolean [Crystools]",
+      "pos": [
+        1351,
+        3373
+      ],
+      "size": [
+        234.9427490234375,
+        58
+      ],
+      "flags": {},
+      "order": 40,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "boolean",
+          "type": "BOOLEAN",
+          "links": [
+            1880
+          ],
+          "slot_index": 0,
+          "shape": 3
+        }
+      ],
+      "title": "Use Animated Lineart Video",
+      "properties": {
+        "Node name for S&R": "Primitive boolean [Crystools]"
+      },
+      "widgets_values": [
+        false
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 1049,
+      "type": "LoadImageFromPath",
+      "pos": [
+        1352,
+        3123
+      ],
+      "size": [
+        228.0384063720703,
+        78
+      ],
+      "flags": {},
+      "order": 41,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            1957
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImageFromPath"
+      },
+      "widgets_values": [
+        "C:\\nilor-corp\\zenerator\\inputs\\static-lineart\\poseidon_lineart.png"
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 1050,
+      "type": "LoadImageFromPath",
+      "pos": [
+        1354,
+        2001
+      ],
+      "size": [
+        228.0384063720703,
+        78
+      ],
+      "flags": {},
+      "order": 42,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            1958
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImageFromPath"
+      },
+      "widgets_values": [
+        "C:\\nilor-corp\\zenerator\\inputs\\screen-depths\\f_depth.png"
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 979,
+      "type": "Primitive boolean [Crystools]",
+      "pos": [
+        -1780,
+        3030
+      ],
+      "size": [
+        315,
+        58
+      ],
+      "flags": {},
+      "order": 43,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "boolean",
+          "type": "BOOLEAN",
+          "links": [
+            1896
+          ],
+          "slot_index": 0,
+          "shape": 3
+        }
+      ],
+      "title": "Use Latent Mask",
+      "properties": {
+        "Node name for S&R": "Primitive boolean [Crystools]"
+      },
+      "widgets_values": [
+        true
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 1016,
       "type": "ImpactConditionalBranch",
       "pos": [
-        1626,
-        2203
+        -1058,
+        2980
       ],
       "size": [
         210,
         78
       ],
       "flags": {},
-      "order": 68,
+      "order": 79,
       "mode": 0,
       "inputs": [
         {
           "name": "tt_value",
           "type": "IMAGE",
-          "link": 1948
+          "link": 1894
         },
         {
           "name": "ff_value",
           "type": "IMAGE",
-          "link": 1950
+          "link": 1895
         },
         {
           "name": "cond",
           "type": "BOOLEAN",
-          "link": 1949,
+          "link": 1896,
           "widget": {
             "name": "cond"
           }
@@ -6922,7 +6600,7 @@
           "name": "*",
           "type": "IMAGE",
           "links": [
-            1951
+            1959
           ],
           "slot_index": 0,
           "label": "IMAGE"
@@ -6938,94 +6616,143 @@
       "bgcolor": "#000"
     },
     {
-      "id": 1018,
-      "type": "Reroute (rgthree)",
+      "id": 984,
+      "type": "MaskToImage",
       "pos": [
-        2504,
-        1969
+        -1350,
+        3390
       ],
       "size": [
-        40,
-        30
+        186.0034942626953,
+        30.043575286865234
       ],
       "flags": {},
-      "order": 128,
+      "order": 48,
       "mode": 0,
       "inputs": [
         {
-          "name": "",
-          "type": "*",
-          "link": 1898,
-          "dir": 3,
-          "has_old_label": true,
-          "label": " "
+          "name": "mask",
+          "type": "MASK",
+          "link": 1809
         }
       ],
       "outputs": [
         {
-          "name": "*",
-          "type": "CONDITIONING",
+          "name": "IMAGE",
+          "type": "IMAGE",
           "links": [
-            1947
+            1895
           ],
-          "slot_index": 0,
-          "dir": 4,
-          "has_old_label": true,
-          "label": " "
+          "slot_index": 0
         }
       ],
       "properties": {
-        "resizable": false,
-        "size": [
-          40,
-          30
-        ]
-      }
+        "Node name for S&R": "MaskToImage"
+      },
+      "widgets_values": [],
+      "color": "#ffffff",
+      "bgcolor": "#ffffff"
     },
     {
-      "id": 1019,
-      "type": "Reroute (rgthree)",
+      "id": 968,
+      "type": "Note",
       "pos": [
-        2504,
-        2100
+        -1588,
+        2727
       ],
       "size": [
-        40,
-        30
+        210,
+        60
       ],
       "flags": {},
-      "order": 129,
+      "order": 44,
       "mode": 0,
-      "inputs": [
-        {
-          "name": "",
-          "type": "*",
-          "link": 1899,
-          "dir": 3,
-          "has_old_label": true,
-          "label": " "
-        }
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "Screen Mask"
       ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 791,
+      "type": "JWInteger",
+      "pos": [
+        -1451.193359375,
+        193.75128173828125
+      ],
+      "size": [
+        216,
+        60
+      ],
+      "flags": {},
+      "order": 45,
+      "mode": 0,
+      "inputs": [],
       "outputs": [
         {
-          "name": "*",
-          "type": "CONDITIONING",
+          "name": "INT",
+          "type": "INT",
           "links": [
-            1913
+            1585,
+            1618,
+            1628,
+            1784
           ],
           "slot_index": 0,
-          "dir": 4,
-          "has_old_label": true,
-          "label": " "
+          "shape": 3
         }
       ],
+      "title": "Width",
       "properties": {
-        "resizable": false,
-        "size": [
-          40,
-          30
-        ]
-      }
+        "Node name for S&R": "JWInteger"
+      },
+      "widgets_values": [
+        1280
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 792,
+      "type": "JWInteger",
+      "pos": [
+        -1447.2103271484375,
+        316.1779479980469
+      ],
+      "size": [
+        216,
+        60
+      ],
+      "flags": {},
+      "order": 46,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            1586,
+            1619,
+            1629,
+            1785
+          ],
+          "slot_index": 0,
+          "shape": 3
+        }
+      ],
+      "title": "Height",
+      "properties": {
+        "Node name for S&R": "JWInteger"
+      },
+      "widgets_values": [
+        720
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
     }
   ],
   "links": [
@@ -7702,14 +7429,6 @@
       "INT"
     ],
     [
-      1764,
-      948,
-      0,
-      955,
-      0,
-      "IMAGE"
-    ],
-    [
       1766,
       942,
       0,
@@ -8030,14 +7749,6 @@
       "BOOLEAN"
     ],
     [
-      1881,
-      919,
-      0,
-      1011,
-      1,
-      "*"
-    ],
-    [
       1882,
       921,
       0,
@@ -8062,52 +7773,12 @@
       "TIMESTEP_KEYFRAME"
     ],
     [
-      1885,
-      984,
-      0,
-      1013,
-      1,
-      "*"
-    ],
-    [
-      1886,
-      926,
-      0,
-      1013,
-      0,
-      "IMAGE"
-    ],
-    [
-      1887,
-      980,
-      0,
-      1013,
-      2,
-      "BOOLEAN"
-    ],
-    [
-      1888,
-      1013,
-      0,
-      948,
-      1,
-      "IMAGE"
-    ],
-    [
       1890,
       962,
       0,
       1015,
       0,
       "*"
-    ],
-    [
-      1891,
-      987,
-      0,
-      1015,
-      1,
-      "IMAGE"
     ],
     [
       1892,
@@ -8140,14 +7811,6 @@
       1016,
       2,
       "BOOLEAN"
-    ],
-    [
-      1897,
-      1016,
-      0,
-      948,
-      0,
-      "IMAGE"
     ],
     [
       1898,
@@ -8478,19 +8141,43 @@
       "BOOLEAN"
     ],
     [
-      1950,
-      899,
+      1951,
+      1045,
+      0,
+      896,
+      3,
+      "IMAGE"
+    ],
+    [
+      1956,
+      1048,
+      0,
+      1015,
+      1,
+      "IMAGE"
+    ],
+    [
+      1957,
+      1049,
+      0,
+      1011,
+      1,
+      "IMAGE"
+    ],
+    [
+      1958,
+      1050,
       0,
       1045,
       1,
       "IMAGE"
     ],
     [
-      1951,
-      1045,
+      1959,
+      1016,
       0,
-      896,
-      3,
+      955,
+      0,
       "IMAGE"
     ]
   ],
@@ -8655,11 +8342,11 @@
   "config": {},
   "extra": {
     "ds": {
-      "scale": 0.6303940863128835,
-      "offset": [
-        1115.9629396427829,
-        -1039.3935593974552
-      ]
+      "scale": 0.513158118230707,
+      "offset": {
+        "0": -215.5785675048828,
+        "1": -870.5987548828125
+      }
     },
     "ue_links": []
   },

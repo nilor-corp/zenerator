@@ -69,7 +69,6 @@
                 "filename-prefix": "Zenerator/Zenon/AE-it",
 
                 "image-mask-path": "./inputs/screen-masks/wide_screen-mask.png",
-                "screen-mask-path": "./inputs/screen-masks/wide_screen-mask.png",
 
                 "image-depth-path": "./inputs/screen-depths/f_depth.png"
             }
@@ -83,7 +82,6 @@
                 "filename-prefix": "Zenerator/Zenon/A-it",
 
                 "image-mask-path": "./inputs/screen-masks/square_screen-mask.png",
-                "screen-mask-path": "./inputs/screen-masks/square_screen-mask.png",
 
                 "image-depth-path": "./inputs/screen-depths/f_depth.png"
             }
@@ -97,7 +95,6 @@
                 "filename-prefix": "Zenerator/Zenon/B-it",
 
                 "image-mask-path": "./inputs/screen-masks/square_screen-mask.png",
-                "screen-mask-path": "./inputs/screen-masks/square_screen-mask.png",
 
                 "image-depth-path": "./inputs/screen-depths/f_depth.png"
             }
@@ -111,7 +108,6 @@
                 "filename-prefix": "Zenerator/Zenon/C-it",
 
                 "image-mask-path": "./inputs/screen-masks/square_screen-mask.png",
-                "screen-mask-path": "./inputs/screen-masks/square_screen-mask.png",
 
                 "image-depth-path": "./inputs/screen-depths/f_depth.png"
             }
@@ -125,7 +121,6 @@
                 "filename-prefix": "Zenerator/Zenon/D-it",
 
                 "image-mask-path": "./inputs/screen-masks/square_screen-mask.png",
-                "screen-mask-path": "./inputs/screen-masks/square_screen-mask.png",
 
                 "image-depth-path": "./inputs/screen-depths/f_depth.png"
             }
@@ -139,7 +134,6 @@
                 "filename-prefix": "Zenerator/Zenon/E-it",
 
                 "image-mask-path": "./inputs/screen-masks/square_screen-mask.png",
-                "screen-mask-path": "./inputs/screen-masks/square_screen-mask.png",
 
                 "image-depth-path": "./inputs/screen-depths/f_depth.png"
             }
@@ -153,7 +147,6 @@
                 "filename-prefix": "Zenerator/Zenon/F-it",
 
                 "image-mask-path": "./inputs/screen-masks/f_screen-mask.png",
-                "screen-mask-path": "./inputs/screen-masks/f_screen-mask.png",
 
                 "image-depth-path": "./inputs/screen-depths/f_depth.png"
             }
@@ -167,7 +160,6 @@
                 "filename-prefix": "Zenerator/Zenon/G1-it",
 
                 "image-mask-path": "./inputs/screen-masks/g_screen-mask.png",
-                "screen-mask-path": "./inputs/screen-masks/g_screen-mask.png",
 
                 "image-depth-path": "./inputs/screen-depths/g_depth.png"
             }
@@ -181,7 +173,6 @@
                 "filename-prefix": "Zenerator/Zenon/G2-it",
 
                 "image-mask-path": "./inputs/screen-masks/g_screen-mask.png",
-                "screen-mask-path": "./inputs/screen-masks/g_screen-mask.png",
 
                 "image-depth-path": "./inputs/screen-depths/g_depth.png"
             }
@@ -195,7 +186,6 @@
                 "filename-prefix": "Zenerator/Zenon/H-it",
 
                 "image-mask-path": "./inputs/screen-masks/h_screen-mask.png",
-                "screen-mask-path": "./inputs/screen-masks/h_screen-mask.png",
 
                 "image-depth-path": "./inputs/screen-depths/h_depth.png"
             }
@@ -211,7 +201,6 @@
                 "positive-prompt": "medusa",
 
                 "image-mask-path": "./inputs/screen-masks/medusa_screen-mask.png",
-                "screen-mask-path": "./inputs/screen-masks/medusa_screen_screen-mask.png",
 
                 "image-depth-path": "./inputs/screen-depths/medusa_depth.png",
 
@@ -230,7 +219,6 @@
                 "positive-prompt": "poseidon",
 
                 "image-mask-path": "./inputs/screen-masks/poseidon_screen-mask.png",
-                "screen-mask-path": "./inputs/screen-masks/poseidon_screen_screen-mask.png",
 
                 "image-depth-path": "./inputs/screen-depths/poseidon_depth.png",
 
@@ -350,7 +338,7 @@
               "image-mask-path": {
                 "type": "path",
                 "label": "Path of Screen Mask Image",
-                "node-id": "[\"987\"][\"inputs\"][\"image\"]",
+                "node-id": "[\"1048\"][\"inputs\"][\"image\"]",
                 "value": "./inputs/screen-masks/f_screen-mask.png"
               },
               "use-animated-mask": {
@@ -373,23 +361,10 @@
                     "minimum": 1
                   }
                 }
-              },
-              "use-screen-mask": {
-                "type": "toggle-group",
-                "label": "Use Screen Mask",
-                "node-id": "[\"980\"][\"inputs\"][\"boolean\"]",
-                "value": false,
-                "inputs": {
-                  "screen-mask-path": {
-                    "type": "path",
-                    "label": "Path of Screen Mask Image",
-                    "node-id": "[\"926\"][\"inputs\"][\"image\"]",
-                    "value": "./inputs/screen-masks/square_screen-mask.png"
-                  }
-                }
               }
             }
           },
+
           "use-depth-controlnet": {
             "type": "toggle-group",
             "label": "Use Depth ControlNet",
@@ -415,7 +390,7 @@
               "image-depth-path": {
                 "type": "path",
                 "label": "Path of Depth Image",
-                "node-id": "[\"899\"][\"inputs\"][\"image\"]",
+                "node-id": "[\"1050\"][\"inputs\"][\"image\"]",
                 "value": "./inputs/screen-depths/medusa_depth.png"
               },
               "use-animated-depth": {
@@ -466,7 +441,7 @@
               "image-lineart-path": {
                 "type": "path",
                 "label": "Path of LineArt Image",
-                "node-id": "[\"919\"][\"inputs\"][\"image\"]",
+                "node-id": "[\"1049\"][\"inputs\"][\"image\"]",
                 "value": "./inputs/static-lineart/medusa_lineart.png"
               },
               "use-animated-lineart": {
@@ -894,7 +869,6 @@
                 "filename-prefix": "Zenerator/Zenon/AE-sm",
 
                 "image-mask-path": "./inputs/screen-masks/wide_screen-mask.png",
-                "screen-mask-path": "./inputs/screen-masks/wide_screen-mask.png",
 
                 "image-depth-path": "./inputs/screen-depths/f_depth.png"
             }
@@ -908,7 +882,6 @@
                 "filename-prefix": "Zenerator/Zenon/A-sm",
 
                 "image-mask-path": "./inputs/screen-masks/square_screen-mask.png",
-                "screen-mask-path": "./inputs/screen-masks/square_screen-mask.png",
 
                 "image-depth-path": "./inputs/screen-depths/f_depth.png"
             }
@@ -922,7 +895,6 @@
                 "filename-prefix": "Zenerator/Zenon/B-sm",
 
                 "image-mask-path": "./inputs/screen-masks/square_screen-mask.png",
-                "screen-mask-path": "./inputs/screen-masks/square_screen-mask.png",
 
                 "image-depth-path": "./inputs/screen-depths/f_depth.png"
             }
@@ -936,7 +908,6 @@
                 "filename-prefix": "Zenerator/Zenon/C-sm",
 
                 "image-mask-path": "./inputs/screen-masks/square_screen-mask.png",
-                "screen-mask-path": "./inputs/screen-masks/square_screen-mask.png",
 
                 "image-depth-path": "./inputs/screen-depths/f_depth.png"
             }
@@ -950,7 +921,6 @@
                 "filename-prefix": "Zenerator/Zenon/D-sm",
 
                 "image-mask-path": "./inputs/screen-masks/square_screen-mask.png",
-                "screen-mask-path": "./inputs/screen-masks/square_screen-mask.png",
 
                 "image-depth-path": "./inputs/screen-depths/f_depth.png"
             }
@@ -964,7 +934,6 @@
                 "filename-prefix": "Zenerator/Zenon/E-sm",
 
                 "image-mask-path": "./inputs/screen-masks/square_screen-mask.png",
-                "screen-mask-path": "./inputs/screen-masks/square_screen-mask.png",
 
                 "image-depth-path": "./inputs/screen-depths/f_depth.png"
             }
@@ -978,7 +947,6 @@
                 "filename-prefix": "Zenerator/Zenon/F-sm",
 
                 "image-mask-path": "./inputs/screen-masks/f_screen-mask.png",
-                "screen-mask-path": "./inputs/screen-masks/f_screen-mask.png",
 
                 "image-depth-path": "./inputs/screen-depths/f_depth.png"
             }
@@ -992,7 +960,6 @@
                 "filename-prefix": "Zenerator/Zenon/G1-sm",
 
                 "image-mask-path": "./inputs/screen-masks/g_screen-mask.png",
-                "screen-mask-path": "./inputs/screen-masks/g_screen-mask.png",
 
                 "image-depth-path": "./inputs/screen-depths/g_depth.png"
             }
@@ -1006,7 +973,6 @@
                 "filename-prefix": "Zenerator/Zenon/G2-sm",
 
                 "image-mask-path": "./inputs/screen-masks/g_screen-mask.png",
-                "screen-mask-path": "./inputs/screen-masks/g_screen-mask.png",
 
                 "image-depth-path": "./inputs/screen-depths/g_depth.png"
             }
@@ -1020,7 +986,6 @@
                 "filename-prefix": "Zenerator/Zenon/H-sm",
 
                 "image-mask-path": "./inputs/screen-masks/h_screen-mask.png",
-                "screen-mask-path": "./inputs/screen-masks/h_screen-mask.png",
 
                 "image-depth-path": "./inputs/screen-depths/h_depth.png"
             }
@@ -1036,7 +1001,6 @@
                 "positive-prompt": "medusa",
 
                 "image-mask-path": "./inputs/screen-masks/medusa_screen-mask.png",
-                "screen-mask-path": "./inputs/screen-masks/medusa_screen_screen-mask.png",
 
                 "image-depth-path": "./inputs/screen-depths/medusa_depth.png",
 
@@ -1055,7 +1019,6 @@
                 "positive-prompt": "poseidon",
 
                 "image-mask-path": "./inputs/screen-masks/poseidon_screen-mask.png",
-                "screen-mask-path": "./inputs/screen-masks/poseidon_screen_screen-mask.png",
 
                 "image-depth-path": "./inputs/screen-depths/poseidon_depth.png",
 
