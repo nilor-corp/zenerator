@@ -226,8 +226,8 @@
                 "video-lineart-path": "./inputs/animated-lineart/poseidon_lineart.mp4"
             }
         },
-        "Cube 01": {
-            "name": "Cube 01",
+        "Solitaire Cube 01": {
+            "name": "Solitaire Cube 01",
             "description": "Preset for Solitaire's anamorphic cube",
             "values": {
                 "width": 1280,
