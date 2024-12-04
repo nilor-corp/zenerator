@@ -138,6 +138,9 @@ Congratulations, you are finished installing Zenerator!
 ### Test your Installation
 * Following the [Usage](#usage) instructions below, with both ComfyUI and Zenerator initialized please run the "Test" workflow tab to ensure that your installation is functioning properly.
 
+> [!NOTE]
+> The first time you run a workflow on a machine, expect it to take longer to begin generating because some custom nodes will need to download models. Subsequent runs of the same workflow will take less time to start generating.
+
 
 ## Usage
 You will need to run ComfyUI and Zenerator in seperate instances of Powershell.
