@@ -25,8 +25,8 @@ Zenerator is a collection of ComfyUI workflows by Nilor Studio that we commonly 
 <!-- TODO: brag about how Zenerator has already been used to make production-quality work -->
 
 ## Dependencies
-- Python
-- Cuda version 12.11
+- [Python 3.12.7](https://www.python.org/downloads/release/python-3127/)
+- [CUDA 12.11](https://developer.nvidia.com/cuda-12-1-1-download-archive)
 - SSH connection to the [Nilor Corp organization on HuggingFace](https://huggingface.co/nilor-corp)
 - Git and LFS
 
