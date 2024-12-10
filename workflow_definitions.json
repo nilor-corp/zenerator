@@ -209,7 +209,8 @@
                 "node-id": "[\"1024\"][\"inputs\"][\"uncond_multiplier\"]",
                 "value": 1.0,
                 "minimum": 0.0,
-                "maximum": 1.0
+                "maximum": 1.0,
+                "step": 0.1
               },
               "depth-strength": {
                 "type": "float",
@@ -269,7 +270,8 @@
                 "node-id": "[\"1012\"][\"inputs\"][\"uncond_multiplier\"]",
                 "value": 1.0,
                 "minimum": 0.0,
-                "maximum": 1.0
+                "maximum": 1.0,
+                "step": 0.1
               },
               "lineart-strength": {
                 "type": "float",
@@ -329,7 +331,8 @@
                 "node-id": "[\"1035\"][\"inputs\"][\"uncond_multiplier\"]",
                 "value": 1.0,
                 "minimum": 0.0,
-                "maximum": 1.0
+                "maximum": 1.0,
+                "step": 0.1
               },
               "qr-strength": {
                 "type": "float",
