@@ -17,7 +17,7 @@ with open("config.json") as f:
 
 
 COMFY_ROOT = os.path.normpath(config["COMFY_ROOT"])
-IN_DIR = os.path.join(COMFY_ROOT, "input", "WorkFlower")
+IN_DIR = os.path.join(COMFY_ROOT, "input", "Zenerator")
 
 
 def sanitize_name(name):
