@@ -58,6 +58,7 @@ prompt = {}
 status = {}
 previous_content = ""
 tick_timer = None
+download_progress = {"current": 0, "total": 0, "status": ""}
 
 def signal_handler(signum, frame):
     global running, tick_timer, threads
@@ -693,7 +694,8 @@ def select_dynamic_input_option(selected_option, choices):
 
     return updaters
 
-def process_dynamic_input(selected_option, possible_options, input_type, *args):
+
+def process_dynamic_input(selected_option, possible_options, input_type, *args, progress=gr.Progress()):
     print("\nProcessing dynamic input")
     print(f"Selected Option: {selected_option}")
     print(f"Possible Options: {possible_options}")
@@ -724,7 +726,7 @@ def process_dynamic_input(selected_option, possible_options, input_type, *args):
         if selected_option == "filepath":
             result = organise_local_files(selected_value, input_type, max_images=max_images)
         elif selected_option == "nilor collection":
-            result = resolve_online_collection(selected_value, max_images=max_images)
+            result = resolve_online_collection(selected_value, max_images=max_images, progress=progress)
         elif selected_option == "upload":
             result = copy_uploaded_files_to_local_dir(selected_value, input_type, max_files=max_images)
     elif input_type == "video":
@@ -735,6 +737,7 @@ def process_dynamic_input(selected_option, possible_options, input_type, *args):
 
     # Return values for all components
     return list(option_values) + [result]
+
 
 def create_dynamic_input(input_type, choices, tooltips, text_label, identifier, additional_information=None):
     markdown_text = f"##### {input_type.capitalize()} Input"
@@ -784,6 +787,64 @@ def create_dynamic_input(input_type, choices, tooltips, text_label, identifier, 
             outputs=possible_inputs
         )
 
+        # Handle input submission with progress tracking
+        def process_with_progress(*args, progress=gr.Progress()):
+            print(f"Args: {args}")
+            
+            selected_opt = args[0]  # First arg is selected option
+            choices_state = args[1]  # Second arg is choices State
+            input_type_state = args[2]  # Third arg is input_type State
+
+            # Initialize variables
+            max_images = None
+            input_values = []
+
+            arg_index = 3  # Starting index for additional arguments
+
+            # If limit controls exist, they come next
+            if limit_enabled and limit_value:
+                limit_enabled_value = args[arg_index]
+                limit_value_value = args[arg_index + 1]
+                arg_index += 2  # Increment index since we have consumed two arguments
+
+                print(f"Extracted limit_enabled_value: {limit_enabled_value}")
+                print(f"Extracted limit_value_value: {limit_value_value}")
+
+                max_images = int(limit_value_value) if limit_enabled_value else None
+            else:
+                limit_enabled_value = None
+                limit_value_value = None
+
+            # The rest of the args are input values
+            input_values = list(args[arg_index:])
+            
+            # Debugging output
+            print(f"Selected Option: {selected_opt}")
+            print(f"Limit Enabled: {limit_enabled_value}")
+            print(f"Limit Value: {limit_value_value}")
+            print(f"Input Values: {input_values}")
+            
+            # Get the selected input value based on the selected option
+            opt_index = choices.index(selected_opt)
+            if opt_index < len(input_values):
+                selected_value = input_values[opt_index]
+            else:
+                print(f"Error: Index {opt_index} out of range for input_values with length {len(input_values)}")
+                selected_value = None  # Handle this case appropriately
+            
+            if selected_opt == "nilor collection":
+                progress(0, desc="Requesting collection...")
+                result = resolve_online_collection(selected_value, max_images=max_images, progress=progress)
+            elif selected_opt == "filepath":
+                result = organise_local_files(selected_value, input_type_state, max_images=max_images, shuffle=False)
+            elif selected_opt == "upload":
+                result = copy_uploaded_files_to_local_dir(selected_value, input_type_state, max_files=max_images, shuffle=False)
+            else:
+                result = process_dynamic_input(selected_opt, choices_state, input_type_state, *input_values)
+            
+            # Return all input values plus result
+            return input_values + [result]
+
         # Prepare the inputs list for the submit/upload events
         # Only include limit controls if they are not None
         optional_inputs = []
@@ -796,13 +857,13 @@ def create_dynamic_input(input_type, choices, tooltips, text_label, identifier, 
         for input_box in possible_inputs:
             if isinstance(input_box, gr.Textbox):
                 input_box.submit(
-                    process_dynamic_input,
+                    fn=process_with_progress,
                     inputs=event_inputs,
                     outputs=possible_inputs + [output]
                 )
             elif isinstance(input_box, (gr.File, gr.Gallery)):
                 input_box.upload(
-                    process_dynamic_input,
+                    fn=process_with_progress,
                     inputs=event_inputs,
                     outputs=possible_inputs + [output]
                 )
@@ -1085,7 +1146,6 @@ def create_tab_interface(workflow_name):
 
     return components, component_data_dict
 
-
 def load_demo():
     global ws, tick_timer, threads
     print("Loading the demo!!!")
@@ -1184,6 +1244,12 @@ html {
     font-family: monospace;
 }
 """    
+
+def update_download_progress():
+    if download_progress["total"] > 0:
+        progress = download_progress["current"] / download_progress["total"]
+        return gr.update(value=download_progress["status"]), progress
+    return gr.update(value=""), 0
 
 with gr.Blocks(title="Zenerator", theme=gr.themes.Ocean(font=gr.themes.GoogleFont("DM Sans")), css=custom_css) as demo:
     tick_timer = gr.Timer(value=1.0)

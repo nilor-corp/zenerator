@@ -45,8 +45,12 @@ def download_image(i, image_url, directory, max_images, num_images):
     print(f"Saved image {i+1} to {directory}")
 
 
-def resolve_online_collection(collection_name, max_images=None, shuffle=False):
+def resolve_online_collection(collection_name, max_images=None, shuffle=False, progress=None):
     try:
+         # Reset progress
+        if progress is not None:
+            progress(0, desc="Requesting image URLs...")
+
         apiKey = os.environ["NILOR_API_KEY"]
         url = (
             f"{os.environ['NILOR_API_URI']}/collection/api-get-collection-image-urls-by-name"
@@ -66,15 +70,18 @@ def resolve_online_collection(collection_name, max_images=None, shuffle=False):
         print(f"Received {len(image_urls)} image URLs")
 
         num_images = len(image_urls)
+        downloaded = 0  # Counter for downloaded images
 
-        if max_images is not None:
-            num_images = min(max_images, num_images)
-            if shuffle:
-                image_urls = random.sample(image_urls, min(max_images, len(image_urls)))
-                print(f"Randomly selected {len(image_urls)} image URLs")
-            else:
-                image_urls = image_urls[:max_images]
-                print(f"Selected first {len(image_urls)} image URLs")
+        if max_images:
+            print(f"Selected first {max_images} image URLs")
+            image_urls = image_urls[:max_images]
+            num_images = max_images
+        
+        if progress is not None:
+            progress(0.01, desc=f"Downloading {num_images} images...")
+            
+        if shuffle:
+            random.shuffle(image_urls)
 
         sanitized_name = sanitize_name(collection_name)
         current_datetime = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
@@ -82,26 +89,34 @@ def resolve_online_collection(collection_name, max_images=None, shuffle=False):
         os.makedirs(directory, exist_ok=True)
         print(f"Created directory for images: {directory}")
 
-        # print(image_urls)
+        if progress is not None:
+            progress(0.02, desc=f"Downloading {len(image_urls)} images...")
 
         with ThreadPoolExecutor() as executor:
-            futures = [
-                executor.submit(
-                    download_image, i, url, directory, max_images, num_images
-                )
+            futures = {
+                executor.submit(download_image, i, url, directory, max_images, num_images): i
                 for i, url in enumerate(image_urls)
-            ]
+            }
+
             for future in as_completed(futures):
+                i = futures[future]
                 try:
                     future.result()
+                    downloaded += 1
+                    if progress is not None:
+                        progress(0.1 + 0.8 * (downloaded / num_images), desc=f"Downloaded {downloaded}/{num_images} images")
                 except Exception as e:
-                    print(f"An error occurred: {e}")
+                    print(f"An error occurred while downloading image {i}: {e}")
 
         print(f"Finished downloading images for collection: {collection_name}")
+        if progress is not None:
+            progress(1.0, desc="Download complete!")
         return directory
 
     except Exception as e:
         print(f"Failed to resolve online collection: {e}")
+        if progress is not None:
+            progress(1.0, desc=f"Error: {str(e)}")
         return None
 
 
