@@ -58,6 +58,10 @@ Zenerator is a collection of ComfyUI workflows by Nilor Studio that we commonly 
     ```console
     comfy --workspace=ComfyUI install
     ```
+
+> [!TIP]
+> If during this step you get an error that says `ERROR: No matching distribution found for torch`, you may have an incompatible version of Python installed. Torch documentation states that it is only compatible up to version [Python 3.12.7](https://www.python.org/downloads/release/python-3127/), as we have recommended in the [Dependencies](#dependencies) above. To resolve this error, install [Python 3.12.7](https://www.python.org/downloads/release/python-3127/), and start the installation process over again using that version of Python. 
+
 2. Running the above command will cause the terminal to prompt the user for input in the terminal. Select either "nvidia", "amd", or "intel_arc" for the first question (depending on which GPU you have), and type "y" to agree to the second question about which repository to clone from.
     
 > [!WARNING]
