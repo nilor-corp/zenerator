@@ -202,6 +202,15 @@
             "node-id": "[\"1031\"][\"inputs\"][\"boolean\"]",
             "value": false,
             "inputs": {
+              "depth-soft-weight": {
+                "type": "slider",
+                "label": "Depth Soft Weight",
+                "info": "Higher is less influence",
+                "node-id": "[\"1024\"][\"inputs\"][\"uncond_multiplier\"]",
+                "value": 1.0,
+                "minimum": 0.0,
+                "maximum": 1.0
+              },
               "depth-strength": {
                 "type": "float",
                 "label": "Depth Strength",
@@ -253,6 +262,15 @@
             "node-id": "[\"990\"][\"inputs\"][\"boolean\"]",
             "value": false,
             "inputs": {
+              "lineart-soft-weight": {
+                "type": "slider",
+                "label": "LineArt Soft Weight",
+                "info": "Higher is less influence",
+                "node-id": "[\"1012\"][\"inputs\"][\"uncond_multiplier\"]",
+                "value": 1.0,
+                "minimum": 0.0,
+                "maximum": 1.0
+              },
               "lineart-strength": {
                 "type": "float",
                 "label": "LineArt Strength",
@@ -304,6 +322,15 @@
             "node-id": "[\"1033\"][\"inputs\"][\"boolean\"]",
             "value": false,
             "inputs": {
+              "qr-soft-weight": {
+                "type": "slider",
+                "label": "QR Soft Weight",
+                "info": "Higher is less influence",
+                "node-id": "[\"1035\"][\"inputs\"][\"uncond_multiplier\"]",
+                "value": 1.0,
+                "minimum": 0.0,
+                "maximum": 1.0
+              },
               "qr-strength": {
                 "type": "float",
                 "label": "QR Strength",
