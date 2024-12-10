@@ -30,16 +30,30 @@ QUEUE_URLS = []
 ROOT_DIR = str(Path(__file__).parent.resolve())
 COMFY_ROOT = str(Path(config["COMFY_ROOT"]).resolve())
 
-OUT_DIR = str(Path(COMFY_ROOT) / "output" / "Zenerator")
-MODELS_DIR = str(Path(COMFY_ROOT) / "models")
-LORA_DIR = str(Path(MODELS_DIR) / "loras")
-INPUTS_DIR = str(Path(ROOT_DIR) / "inputs")
+OUT_DIR = str((Path(COMFY_ROOT) / "output" / "Zenerator").resolve())
+MODELS_DIR = str((Path(COMFY_ROOT) / "models").resolve())
+LORA_DIR = str((Path(MODELS_DIR) / "loras").resolve())
+INPUTS_DIR = str((Path(ROOT_DIR) / "inputs").resolve())
 
-TENSORRT_NODES_DIR = str(Path(COMFY_ROOT) / "custom_nodes" / "ComfyUI-Upscaler-Tensorrt")
-TENSORRT_DIR = str(Path(MODELS_DIR) / "tensorrt")
-UPSCALER_DIR = str(Path(TENSORRT_DIR) / "upscaler")
-UPSCALER_PATH = str(Path(UPSCALER_DIR) / "realistic.engine")
-ONNX_PATH = str(Path(ROOT_DIR) / "models" / "realistic.onnx")
+allowed_paths = []
+base_paths = [
+    os.path.abspath(COMFY_ROOT),
+    os.path.abspath(OUT_DIR),
+    os.path.abspath(LORA_DIR),
+    os.path.abspath(INPUTS_DIR)
+]
+
+for path in base_paths:
+    allowed_paths.append(str(path))
+    allowed_paths.append(str(path).replace('\\', '/'))
+
+print(f"Allowed paths: {allowed_paths}")
+
+TENSORRT_NODES_DIR = str((Path(COMFY_ROOT) / "custom_nodes" / "ComfyUI-Upscaler-Tensorrt").resolve())
+TENSORRT_DIR = str((Path(MODELS_DIR) / "tensorrt").resolve())
+UPSCALER_DIR = str((Path(TENSORRT_DIR) / "upscaler").resolve())
+UPSCALER_PATH = str((Path(UPSCALER_DIR) / "realistic.engine").resolve())
+ONNX_PATH = str((Path(ROOT_DIR) / "models" / "realistic.onnx").resolve())
 
 # Ensure required directories exist
 for directory in [OUT_DIR, INPUTS_DIR, TENSORRT_DIR, UPSCALER_DIR]:
@@ -1376,11 +1390,7 @@ with gr.Blocks(title="Zenerator", theme=gr.themes.Ocean(font=gr.themes.GoogleFon
     if __name__ == "__main__":
         setup_signal_handlers()
         demo.launch(
-            allowed_paths=[
-                str(Path(COMFY_ROOT).resolve()),
-                str(Path(OUT_DIR).resolve()),
-                str(Path(LORA_DIR).resolve()),
-                str(Path(INPUTS_DIR).resolve())
-            ],
+            allowed_paths=allowed_paths,
             favicon_path="favicon.png"
         )
+
