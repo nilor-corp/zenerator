@@ -231,6 +231,7 @@
               "image-depth-path": {
                 "type": "path",
                 "label": "Path of Depth Image",
+                "info": "Depth image should be a greyscale 0-1 image where white is the closest and black is the furthest",
                 "node-id": "[\"1050\"][\"inputs\"][\"image\"]",
                 "value": "./inputs/screen-depths/medusa_depth.png"
               },
@@ -243,6 +244,7 @@
                   "video-depth-path": {
                     "type": "path",
                     "label": "Path of Animated Depth Video",
+                    "info": "Depth video should be a greyscale 0-1 image where white is the closest and black is the furthest",
                     "node-id": "[\"1043\"][\"inputs\"][\"video\"]",
                     "value": "./inputs/animated-masks/mask_wide_InkSplatter_24fps_15s_360f.mp4"
                   },
