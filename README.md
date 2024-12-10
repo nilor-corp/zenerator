@@ -25,6 +25,7 @@ Zenerator is a collection of ComfyUI workflows by Nilor Studio that we commonly 
 <!-- TODO: brag about how Zenerator has already been used to make production-quality work -->
 
 ## Dependencies
+- 61 GB of available storage
 - [Python 3.12.7](https://www.python.org/downloads/release/python-3127/)
 - [CUDA 12.11](https://developer.nvidia.com/cuda-12-1-1-download-archive)
 - SSH connection to the [Nilor Corp organization on HuggingFace](https://huggingface.co/nilor-corp)
@@ -49,6 +50,7 @@ Zenerator is a collection of ComfyUI workflows by Nilor Studio that we commonly 
     ```console
     python.exe -m pip install --upgrade pip
     pip install comfy-cli
+    pip install ultralytics     # should prevent an error when installing ComfyUI-Impact-Pack later
     ```
 
 ### Install ComfyUI
