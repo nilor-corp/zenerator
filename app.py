@@ -834,7 +834,12 @@ def create_dynamic_input(input_type, choices, tooltips, text_label, identifier, 
             
             if selected_opt == "nilor collection":
                 progress(0, desc="Requesting collection...")
-                result = resolve_online_collection(selected_value, max_images=max_images, progress=progress)
+                try:
+                    result = resolve_online_collection(selected_value, max_images=max_images, progress=progress)
+                except Exception as e:
+                    result = None
+                    print(f"Failed to resolve online collection: {e}")
+                    gr.Warning(f"Error resolving collection: {e}")
             elif selected_opt == "filepath":
                 result = organise_local_files(selected_value, input_type_state, max_images=max_images, shuffle=False)
             elif selected_opt == "upload":
