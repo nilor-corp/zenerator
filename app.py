@@ -246,6 +246,7 @@ def check_current_progress(ws):
                     #print(f"Message: {message}")
                     if message['type'] == 'executing':
                         data = message['data']
+                        prompt_id = data['prompt_id']
                         if data['node'] is None and data['prompt_id'] == prompt_id:
                            check_current_progress_running = False
                            break #Execution is done
