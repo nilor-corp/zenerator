@@ -1020,8 +1020,9 @@ def process_input(input_context, input_key):
                     # Use the mapping to create components based on input_type
                     component = component_constructor(label=input_label, elem_id=input_key, value=input_value, minimum=input_minimum, maximum=input_maximum, step=input_step, interactive=input_interactive, scale=100, info=input_info)
 
-                    # Compact Reset button with reduced width, initially hidden
-                    reset_button = gr.Button("↺", visible=False, elem_id="reset-button", scale=1, variant="secondary", min_width=5)
+                    if input_type != "slider": # not required for slider
+                        # Compact Reset button with reduced width, initially hidden
+                        reset_button = gr.Button("↺", visible=False, elem_id="reset-button", scale=1, variant="secondary", min_width=5)
             elif input_type == "radio":
                 with gr.Row(equal_height=True):
                     # Use the mapping to create components based on input_type
