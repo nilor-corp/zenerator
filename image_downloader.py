@@ -197,6 +197,8 @@ def organise_local_files(dir, input_type, max_images=None, shuffle=False, reorga
             if file.lower().endswith((".png", ".jpg", ".jpeg", ".gif", ".bmp")):
                 files.append(file)
         
+        files.sort()  # Sort files alphabetically
+
         print(f"Sorted files: {files}")
         
         if not files:
