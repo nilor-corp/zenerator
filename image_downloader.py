@@ -194,7 +194,7 @@ def organise_local_files(dir, input_type, max_images=None, shuffle=False, reorga
         
         files = []
         for file in os.listdir(dir):
-            if file.lower().endswith((".png", ".jpg", ".jpeg", ".gif", ".bmp")):
+            if file.lower().endswith(tuple(Image.registered_extensions().keys())): # all types of images
                 files.append(file)
         
         files.sort()  # Sort files alphabetically
