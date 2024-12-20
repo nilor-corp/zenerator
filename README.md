@@ -20,7 +20,7 @@
 <!-- TODO: add Zenerator banner -->
 
 # Zenerator
-Zenerator is a collection of ComfyUI workflows by Nilor Studio that we commonly use to produce art, conveniently packaged up in an easy-to-use Gradio application. The application was made to be extensible, so that others can produce Gradio UIs for [their own custom workflows via JSON](#making-custom-workflow-tabs).  
+**Zenerator** is a collection of ComfyUI workflows by Nilor Studio that we commonly use to produce art, conveniently packaged up in an easy-to-use Gradio application. The application was made to be extensible, so that others can produce Gradio UIs for [their own custom workflows via JSON](#making-custom-workflow-tabs).  
 
 <!-- TODO: brag about how Zenerator has already been used to make production-quality work -->
 
@@ -43,12 +43,12 @@ Zenerator is a collection of ComfyUI workflows by Nilor Studio that we commonly 
     cd nilor-corp
     python -m venv venv
     .\venv\Scripts\activate
+    python.exe -m pip install --upgrade pip
     ```
 
 ### Install comfy-cli
 * In the `.\nilor-corp\` directory:
     ```console
-    python.exe -m pip install --upgrade pip
     pip install comfy-cli
     pip install ultralytics     # should prevent an error when installing ComfyUI-Impact-Pack later
     ```
@@ -65,7 +65,7 @@ Zenerator is a collection of ComfyUI workflows by Nilor Studio that we commonly 
 2. Running the above command will cause the terminal to prompt the user for input in the terminal. Select either "nvidia", "amd", or "intel_arc" for the first question (depending on which GPU you have), and type "y" to agree to the second question about which repository to clone from.
     
 > [!WARNING]
-> Zenerator has only been tested on Nvidia GPUs.
+> **Zenerator** has only been tested on Nvidia GPUs.
 
 3. 
     ```console
@@ -101,6 +101,7 @@ Zenerator is a collection of ComfyUI workflows by Nilor Studio that we commonly 
 ### Provision ComfyUI
 1. In the `.\nilor-corp\` directory, still within the `venv` virtual environment:
     ```console
+    pip install ultralytics     # should prevent an error when installing ComfyUI-Impact-Pack via the Snapshot
     cd zenerator
     cp .\ComfyUI-Manager-Snapshots\zenerator-snapshot.json ..\ComfyUI\custom_nodes\ComfyUI-Manager\snapshots\
     cd ..           # should put you in .\nilor-corp\ directory
@@ -123,15 +124,15 @@ Zenerator is a collection of ComfyUI workflows by Nilor Studio that we commonly 
     cd zenerator
     python -m pip install --no-cache-dir -r requirements.txt
     ```
-3. Then run Zenerator to install the last remaining TensorRT dependencies by entering the following:
+3. Then run **Zenerator** to install the last remaining TensorRT dependencies by entering the following:
     ```console
     gradio app.py
     ```
 
-Congratulations, you are finished installing Zenerator!
+Congratulations, you are finished installing **Zenerator**!
 
 ### Directory Structure
-* If you have installed Zenerator correctly, your directory structure should look like this:
+* If you have installed **Zenerator** correctly, your directory structure should look like this:
     ```
     nilor-corp
     ├── ComfyUI
@@ -140,14 +141,14 @@ Congratulations, you are finished installing Zenerator!
     ```
 
 ### Test your Installation
-* Following the [Usage](#usage) instructions below, with both ComfyUI and Zenerator initialized please run the "Test" workflow tab to ensure that your installation is functioning properly.
+* Following the [Usage](#usage) instructions below, with both ComfyUI and **Zenerator** initialized please run the "Test" workflow tab to ensure that your installation is functioning properly.
 
 > [!NOTE]
 > The first time you run a workflow on a machine, expect it to take longer to begin generating because some custom nodes will need to download models. Subsequent runs of the same workflow will take less time to start generating.
 
 
 ## Usage
-You will need to run ComfyUI and Zenerator in seperate instances of Powershell.
+You will need to run ComfyUI and **Zenerator** in seperate instances of Powershell.
 
 ### Run ComfyUI
 * In the first instance of Powershell, from the `.\nilor-corp\` directory:
@@ -168,13 +169,39 @@ You will need to run ComfyUI and Zenerator in seperate instances of Powershell.
     ```
 
 > [!NOTE]
-> The first time you launch Zenerator, expect the startup to be delayed because it needs to build a TensorRT engine in order for the "Upscale Video (TensorRT)" workflow tab to work. This shouldn't take more than a few minutes and should only occur once.
+> The first time you launch **Zenerator**, expect the startup to be delayed because it needs to build a TensorRT engine in order for the "Upscale Video (TensorRT)" workflow tab to work. This shouldn't take more than a few minutes and should only occur once.
 
 > [!TIP]
 > Generated outputs can be found in: `.\nilor-corp\ComfyUI\output\Zenerator\` directory.
 
+## Updating
+
+### Update Zenerator
+* In an instance of Powershell, from the `.\nilor-corp\` directory:
+    ```console
+    .\venv\scripts\activate
+    cd zenerator
+    git pull
+    ```
+    
+### Update ComfyUI Models
+* In the `.\nilor-corp\` directory:
+    ```console
+    cd .\ComfyUI\models
+    git pull
+    ```
+
+### Update ComfyUI Snapshot
+* Follow the same instructions as the [Provision ComfyUI](#provision-comfyui) section. Do not continue beyond that section, only that section's instructions need to be followed.
+
+> [!NOTE]
+> At some point in the future, ComfyUI and/or comfy-cli will need to be updated. When the time comes, we will update this README with additional steps as needed.
+
+You have finished updating **Zenerator**!
 
 ## Advanced Usage
+> [!WARNING]
+> Proceed at your own risk. Only follow these instructions if you know what you are doing, or you may break your **Zenerator** installation.
 
 ### Making a Custom Workflow Tab
 > [!IMPORTANT]
