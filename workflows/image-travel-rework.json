@@ -613,7 +613,7 @@
   "879": {
     "inputs": {
       "directory": "C:\\nilor-corp\\ComfyUI\\input\\WorkFlower\\Ref_Image\\2024-12-04-21-00-22",
-      "image_load_cap": 4,
+      "image_load_cap": 0,
       "skip_first_images": 0,
       "select_every_nth": 1
     },
