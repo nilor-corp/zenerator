@@ -1,6 +1,6 @@
 {
-  "last_node_id": 42,
-  "last_link_id": 104,
+  "last_node_id": 47,
+  "last_link_id": 105,
   "nodes": [
     {
       "id": 8,
@@ -17,7 +17,7 @@
         "collapsed": false,
         "pinned": false
       },
-      "order": 12,
+      "order": 13,
       "mode": 0,
       "inputs": [
         {
@@ -63,7 +63,7 @@
       "flags": {
         "pinned": false
       },
-      "order": 7,
+      "order": 8,
       "mode": 0,
       "inputs": [
         {
@@ -173,7 +173,7 @@
       "flags": {
         "pinned": false
       },
-      "order": 8,
+      "order": 9,
       "mode": 0,
       "inputs": [
         {
@@ -296,7 +296,7 @@
         "collapsed": false,
         "pinned": false
       },
-      "order": 11,
+      "order": 12,
       "mode": 0,
       "inputs": [
         {
@@ -370,7 +370,7 @@
         "collapsed": false,
         "pinned": false
       },
-      "order": 10,
+      "order": 11,
       "mode": 0,
       "inputs": [
         {
@@ -456,9 +456,18 @@
       "flags": {
         "pinned": false
       },
-      "order": 3,
+      "order": 7,
       "mode": 0,
-      "inputs": [],
+      "inputs": [
+        {
+          "name": "noise_seed",
+          "type": "INT",
+          "link": 105,
+          "widget": {
+            "name": "noise_seed"
+          }
+        }
+      ],
       "outputs": [
         {
           "name": "NOISE",
@@ -473,7 +482,7 @@
         "Node name for S&R": "RandomNoise"
       },
       "widgets_values": [
-        874162967453337,
+        818701206371700,
         "randomize"
       ],
       "color": "#323",
@@ -494,7 +503,7 @@
       "flags": {
         "pinned": false
       },
-      "order": 4,
+      "order": 3,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -532,7 +541,7 @@
       "flags": {
         "pinned": false
       },
-      "order": 5,
+      "order": 4,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -567,7 +576,7 @@
         728.5762329101562
       ],
       "flags": {},
-      "order": 13,
+      "order": 14,
       "mode": 0,
       "inputs": [
         {
@@ -598,7 +607,7 @@
       "flags": {
         "pinned": false
       },
-      "order": 9,
+      "order": 10,
       "mode": 0,
       "inputs": [
         {
@@ -627,6 +636,41 @@
       "color": "#223",
       "bgcolor": "#335",
       "shape": 1
+    },
+    {
+      "id": 47,
+      "type": "Seed (rgthree)",
+      "pos": [
+        2469.68115234375,
+        -78.5516357421875
+      ],
+      "size": [
+        210,
+        130
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "SEED",
+          "type": "INT",
+          "links": [
+            105
+          ],
+          "shape": 3,
+          "dir": 4,
+          "slot_index": 0
+        }
+      ],
+      "properties": {},
+      "widgets_values": [
+        -1,
+        null,
+        null,
+        null
+      ]
     }
   ],
   "links": [
@@ -749,16 +793,24 @@
       27,
       0,
       "CONDITIONING"
+    ],
+    [
+      105,
+      47,
+      0,
+      25,
+      0,
+      "INT"
     ]
   ],
   "groups": [],
   "config": {},
   "extra": {
     "ds": {
-      "scale": 0.4452142011441489,
+      "scale": 1.8597702067272497,
       "offset": [
-        631.7163022359216,
-        1194.2764889032412
+        -1742.1715166640702,
+        303.00814139397454
       ]
     },
     "ue_links": []

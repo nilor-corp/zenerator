@@ -101,7 +101,10 @@
   },
   "25": {
     "inputs": {
-      "noise_seed": 874162967453337
+      "noise_seed": [
+        "47",
+        0
+      ]
     },
     "class_type": "RandomNoise"
   },
@@ -153,5 +156,11 @@
       ]
     },
     "class_type": "SaveImage"
+  },
+  "47": {
+    "inputs": {
+      "seed": -1
+    },
+    "class_type": "Seed (rgthree)"
   }
 }
