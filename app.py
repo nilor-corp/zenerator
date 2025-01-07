@@ -26,12 +26,6 @@ import torch
 import signal
 import sys
 
-from fastapi import FastAPI
-from api_routes import api_router
-
-app = FastAPI()
-app.include_router(api_router)
-
 with open("config.json") as f:
     config = json.load(f)
 
