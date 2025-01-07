@@ -682,7 +682,15 @@ def run_workflow_with_name(workflow_name, raw_components, component_info_dict, p
             # access the component_info_dict using component.elem_id and add a value field = arg
             component_info_dict[component.elem_id]["value"] = arg
 
-        return run_workflow(workflow_name, progress, **component_info_dict, )
+        return run_workflow(
+            workflow_filename,
+            progress,
+            **component_info_dict,
+        )
+
+    # Set descriptive name and docstring
+    wrapper.__name__ = workflow_name
+    wrapper.__doc__ = workflow_definitions[workflow_name].get("description", "")
 
     return wrapper
 
@@ -1299,26 +1307,57 @@ with gr.Blocks(title="Zenerator", theme=gr.themes.Ocean(font=gr.themes.GoogleFon
                             with gr.Column():
                                 with gr.Group():
                                     with gr.Row(equal_height=True):
-                                        comfy_url_and_port_selector = gr.Dropdown(label="ComfyUI Port", choices=COMFY_PORTS, value=COMFY_PORTS[0], interactive=True, scale=1)
-                                        print(f"Default ComfyUI Port: {comfy_url_and_port_selector.value}")
-                                        comfy_url_and_port_selector.change(select_correct_port, inputs=[comfy_url_and_port_selector])
-                                        run_button = gr.Button("Run Workflow", variant="primary", scale=3, elem_id="run-button")
-                                    with gr.Accordion("Workflow Info", open=False, elem_id="workflow-info"):
-                                        info = gr.Markdown(workflow_definitions[workflow_name].get("description", ""))
+                                        comfy_url_and_port_selector = gr.Dropdown(
+                                            label="ComfyUI Port",
+                                            choices=COMFY_PORTS,
+                                            value=COMFY_PORTS[0],
+                                            interactive=True,
+                                            scale=1,
+                                        )
+                                        print(
+                                            f"Default ComfyUI Port: {comfy_url_and_port_selector.value}"
+                                        )
+                                        comfy_url_and_port_selector.change(
+                                            select_correct_port,
+                                            inputs=[comfy_url_and_port_selector],
+                                        )
+                                        run_button = gr.Button(
+                                            "Run Workflow",
+                                            variant="primary",
+                                            scale=3,
+                                            elem_id="run-button",
+                                        )
+                                    with gr.Accordion(
+                                        "Workflow Info",
+                                        open=False,
+                                        elem_id="workflow-info",
+                                    ):
+                                        info = gr.Markdown(
+                                            workflow_definitions[workflow_name].get(
+                                                "description", ""
+                                            )
+                                        )
 
                                 # also make a dictionary with the components' data
-                                components, component_dict = create_tab_interface(workflow_name)
+                                components, component_dict = create_tab_interface(
+                                    workflow_name
+                                )
 
-                            output_type = workflow_definitions[workflow_name]["outputs"].get("type", "")  
-                                             
+                            output_type = workflow_definitions[workflow_name][
+                                "outputs"
+                            ].get("type", "")
+
                     run_button.click(
-                        fn=run_workflow_with_name(workflow_filename, components, component_dict),
+                        fn=run_workflow_with_name(
+                            workflow_filename, workflow_name, components, component_dict
+                        ),
                         inputs=components,
-                        #outputs=[gen_component],
+                        # outputs=[gen_component],
                         trigger_mode="multiple",
-                        #show_progress="full"
+                        # show_progress="full"
+                        api_name=f"workflow/{workflow_name}",
                     )
-                        
+
         with gr.Column(scale=4):
             # TODO: is it possible to preview only an output that was produced by this workflow tab? otherwise this should probably exist outside of the workflow tab
             gr.Markdown("### Output Preview")
