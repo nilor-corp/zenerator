@@ -3,19 +3,25 @@
     "inputs": {
       "seed": -1
     },
-    "class_type": "Seed (rgthree)"
+    "class_type": "Seed (rgthree)",
+    "_meta": {
+      "title": "Seed (rgthree)"
+    }
   },
   "437": {
     "inputs": {
       "vae_name": "vae-ft-mse-840000-ema-pruned.safetensors"
     },
-    "class_type": "VAELoader"
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE"
+    }
   },
   "439": {
     "inputs": {
       "beta_schedule": "lcm avg(sqrt_linear,linear)",
       "model": [
-        "764",
+        "1058",
         0
       ],
       "m_models": [
@@ -23,7 +29,7 @@
         0
       ],
       "context_options": [
-        "442",
+        "1052",
         0
       ],
       "sample_settings": [
@@ -31,7 +37,10 @@
         0
       ]
     },
-    "class_type": "ADE_UseEvolvedSampling"
+    "class_type": "ADE_UseEvolvedSampling",
+    "_meta": {
+      "title": "Use Evolved Sampling 🎭🅐🅓②"
+    }
   },
   "440": {
     "inputs": {
@@ -48,35 +57,44 @@
         0
       ]
     },
-    "class_type": "ADE_ApplyAnimateDiffModelSimple"
+    "class_type": "ADE_ApplyAnimateDiffModelSimple",
+    "_meta": {
+      "title": "Apply AnimateDiff Model 🎭🅐🅓②"
+    }
   },
   "441": {
     "inputs": {
       "model_name": "v3_sd15_mm.ckpt"
     },
-    "class_type": "ADE_LoadAnimateDiffModel"
+    "class_type": "ADE_LoadAnimateDiffModel",
+    "_meta": {
+      "title": "Load AnimateDiff Model 🎭🅐🅓②"
+    }
   },
   "442": {
     "inputs": {
       "context_length": 16,
       "context_stride": 1,
       "context_overlap": 6,
-      "closed_loop": [
-        "1040",
-        0
-      ],
+      "closed_loop": true,
       "fuse_method": "pyramid",
       "use_on_equal_length": false,
       "start_percent": 0,
       "guarantee_steps": 1
     },
-    "class_type": "ADE_LoopedUniformContextOptions"
+    "class_type": "ADE_LoopedUniformContextOptions",
+    "_meta": {
+      "title": "Context Options◆Looped Uniform 🎭🅐🅓"
+    }
   },
   "443": {
     "inputs": {
       "float_val": 1.3
     },
-    "class_type": "ADE_MultivalDynamic"
+    "class_type": "ADE_MultivalDynamic",
+    "_meta": {
+      "title": "Motion Scale 🎭🅐🅓"
+    }
   },
   "445": {
     "inputs": {
@@ -106,7 +124,10 @@
         0
       ]
     },
-    "class_type": "KSampler"
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
   },
   "446": {
     "inputs": {
@@ -117,6 +138,7 @@
       "pix_fmt": "yuv420p10le",
       "crf": 19,
       "save_metadata": true,
+      "trim_to_audio": false,
       "pingpong": false,
       "save_output": true,
       "images": [
@@ -124,7 +146,10 @@
         0
       ]
     },
-    "class_type": "VHS_VideoCombine"
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
   },
   "447": {
     "inputs": {
@@ -137,7 +162,10 @@
         0
       ]
     },
-    "class_type": "VAEDecode"
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
   },
   "596": {
     "inputs": {
@@ -148,13 +176,19 @@
         0
       ]
     },
-    "class_type": "ADE_AnimateDiffLoRALoader"
+    "class_type": "ADE_AnimateDiffLoRALoader",
+    "_meta": {
+      "title": "Load AnimateDiff LoRA 🎭🅐🅓"
+    }
   },
   "602": {
     "inputs": {
       "ckpt_name": "juggernaut_reborn.safetensors"
     },
-    "class_type": "CheckpointLoaderSimple"
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "Load Checkpoint"
+    }
   },
   "631": {
     "inputs": {
@@ -171,7 +205,10 @@
         0
       ]
     },
-    "class_type": "ACN_SparseCtrlRGBPreprocessor"
+    "class_type": "ACN_SparseCtrlRGBPreprocessor",
+    "_meta": {
+      "title": "RGB SparseCtrl 🛂🅐🅒🅝"
+    }
   },
   "633": {
     "inputs": {
@@ -195,7 +232,10 @@
         0
       ]
     },
-    "class_type": "ACN_AdvancedControlNetApply"
+    "class_type": "ACN_AdvancedControlNetApply",
+    "_meta": {
+      "title": "Apply Advanced ControlNet 🛂🅐🅒🅝"
+    }
   },
   "634": {
     "inputs": {
@@ -204,7 +244,10 @@
         0
       ]
     },
-    "class_type": "ACN_SparseCtrlIndexMethodNode"
+    "class_type": "ACN_SparseCtrlIndexMethodNode",
+    "_meta": {
+      "title": "SparseCtrl Index Method 🛂🅐🅒🅝"
+    }
   },
   "666": {
     "inputs": {
@@ -215,13 +258,19 @@
         0
       ]
     },
-    "class_type": "LoraLoaderModelOnly"
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "LoraLoaderModelOnly"
+    }
   },
   "673": {
     "inputs": {
       "value": 0
     },
-    "class_type": "JWInteger"
+    "class_type": "JWInteger",
+    "_meta": {
+      "title": "End Padding Frames"
+    }
   },
   "676": {
     "inputs": {
@@ -230,7 +279,10 @@
         0
       ]
     },
-    "class_type": "InvertMask"
+    "class_type": "InvertMask",
+    "_meta": {
+      "title": "InvertMask"
+    }
   },
   "721": {
     "inputs": {
@@ -251,7 +303,10 @@
         1
       ]
     },
-    "class_type": "BatchPromptSchedule"
+    "class_type": "BatchPromptSchedule",
+    "_meta": {
+      "title": "Batch Prompt Schedule 📅🅕🅝"
+    }
   },
   "722": {
     "inputs": {
@@ -261,7 +316,10 @@
         1
       ]
     },
-    "class_type": "CLIPTextEncode"
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
   },
   "726": {
     "inputs": {
@@ -271,7 +329,10 @@
         0
       ]
     },
-    "class_type": "ADE_AnimateDiffLoRALoader"
+    "class_type": "ADE_AnimateDiffLoRALoader",
+    "_meta": {
+      "title": "Load AnimateDiff LoRA 🎭🅐🅓"
+    }
   },
   "730": {
     "inputs": {
@@ -281,7 +342,10 @@
       ],
       "output": ""
     },
-    "class_type": "Display Int (rgthree)"
+    "class_type": "Display Int (rgthree)",
+    "_meta": {
+      "title": "Display Int (rgthree)"
+    }
   },
   "732": {
     "inputs": {
@@ -291,7 +355,10 @@
         0
       ]
     },
-    "class_type": "ImageToMask"
+    "class_type": "ImageToMask",
+    "_meta": {
+      "title": "Convert Image to Mask"
+    }
   },
   "744": {
     "inputs": {
@@ -301,7 +368,10 @@
       "seed_offset": 0,
       "adapt_denoise_steps": false
     },
-    "class_type": "ADE_AnimateDiffSamplingSettings"
+    "class_type": "ADE_AnimateDiffSamplingSettings",
+    "_meta": {
+      "title": "Sample Settings 🎭🅐🅓"
+    }
   },
   "746": {
     "inputs": {
@@ -311,7 +381,10 @@
         1
       ]
     },
-    "class_type": "ControlNetLoaderAdvanced"
+    "class_type": "ControlNetLoaderAdvanced",
+    "_meta": {
+      "title": "Load Advanced ControlNet Model 🛂🅐🅒🅝"
+    }
   },
   "748": {
     "inputs": {
@@ -335,7 +408,10 @@
         0
       ]
     },
-    "class_type": "ACN_AdvancedControlNetApply"
+    "class_type": "ACN_AdvancedControlNetApply",
+    "_meta": {
+      "title": "Apply Advanced ControlNet 🛂🅐🅒🅝"
+    }
   },
   "755": {
     "inputs": {
@@ -352,7 +428,10 @@
         4
       ]
     },
-    "class_type": "EmptyLatentImage"
+    "class_type": "EmptyLatentImage",
+    "_meta": {
+      "title": "Empty Latent Image"
+    }
   },
   "759": {
     "inputs": {
@@ -384,13 +463,19 @@
         0
       ]
     },
-    "class_type": "IPAdapterClipVisionEnhancerBatch"
+    "class_type": "IPAdapterClipVisionEnhancerBatch",
+    "_meta": {
+      "title": "IPAdapter ClipVision Enhancer Batch"
+    }
   },
   "760": {
     "inputs": {
       "value": 3
     },
-    "class_type": "JWInteger"
+    "class_type": "JWInteger",
+    "_meta": {
+      "title": "Enhance Tiles"
+    }
   },
   "761": {
     "inputs": {
@@ -400,7 +485,10 @@
         0
       ]
     },
-    "class_type": "SimpleMath+"
+    "class_type": "SimpleMath+",
+    "_meta": {
+      "title": "🔧 Simple Math"
+    }
   },
   "762": {
     "inputs": {
@@ -419,7 +507,10 @@
         0
       ]
     },
-    "class_type": "ImageScale"
+    "class_type": "ImageScale",
+    "_meta": {
+      "title": "Upscale Image"
+    }
   },
   "763": {
     "inputs": {
@@ -429,7 +520,10 @@
         0
       ]
     },
-    "class_type": "IPAdapterUnifiedLoader"
+    "class_type": "IPAdapterUnifiedLoader",
+    "_meta": {
+      "title": "IPAdapter Unified Loader"
+    }
   },
   "764": {
     "inputs": {
@@ -461,7 +555,10 @@
         0
       ]
     },
-    "class_type": "IPAdapterClipVisionEnhancerBatch"
+    "class_type": "IPAdapterClipVisionEnhancerBatch",
+    "_meta": {
+      "title": "IPAdapter ClipVision Enhancer Batch"
+    }
   },
   "765": {
     "inputs": {
@@ -480,25 +577,34 @@
         1
       ]
     },
-    "class_type": "ImageScale"
+    "class_type": "ImageScale",
+    "_meta": {
+      "title": "Upscale Image"
+    }
   },
   "791": {
     "inputs": {
-      "value": 1280
+      "value": 576
     },
-    "class_type": "JWInteger"
+    "class_type": "JWInteger",
+    "_meta": {
+      "title": "Width"
+    }
   },
   "792": {
     "inputs": {
-      "value": 720
+      "value": 1024
     },
-    "class_type": "JWInteger"
+    "class_type": "JWInteger",
+    "_meta": {
+      "title": "Height"
+    }
   },
   "804": {
     "inputs": {
       "animation_type_1": "Fade",
       "animation_type_2": "Fade",
-      "animation_type_3": "GrowingCircle",
+      "animation_type_3": "Fade",
       "animation_type_4": "Fade",
       "animation_type_5": "Fade",
       "animation_type_6": "TopDown",
@@ -547,7 +653,10 @@
       "edge_fx_fade_balance": 0.5,
       "venetian_bars": 4
     },
-    "class_type": "DynamicAnimatedWeightsHelper"
+    "class_type": "DynamicAnimatedWeightsHelper",
+    "_meta": {
+      "title": "Dynamic Animated Weights"
+    }
   },
   "805": {
     "inputs": {
@@ -572,7 +681,10 @@
         0
       ]
     },
-    "class_type": "MaskSequenceHelper"
+    "class_type": "MaskSequenceHelper",
+    "_meta": {
+      "title": "Mask Sequence Helper"
+    }
   },
   "827": {
     "inputs": {
@@ -585,13 +697,19 @@
       "skip_first_frames": 0,
       "select_every_nth": 1
     },
-    "class_type": "VHS_LoadVideoPath"
+    "class_type": "VHS_LoadVideoPath",
+    "_meta": {
+      "title": "Load Video (Path) 🎥🅥🅗🅢"
+    }
   },
   "840": {
     "inputs": {
       "text": ""
     },
-    "class_type": "JWStringMultiline"
+    "class_type": "JWStringMultiline",
+    "_meta": {
+      "title": "Prepend Prompt"
+    }
   },
   "875": {
     "inputs": {
@@ -608,16 +726,22 @@
         0
       ]
     },
-    "class_type": "ACN_SparseCtrlLoaderAdvanced"
+    "class_type": "ACN_SparseCtrlLoaderAdvanced",
+    "_meta": {
+      "title": "Load SparseCtrl Model 🛂🅐🅒🅝"
+    }
   },
   "879": {
     "inputs": {
-      "directory": "C:\\nilor-corp\\ComfyUI\\input\\WorkFlower\\Ref_Image\\2024-12-04-21-00-22",
-      "image_load_cap": 0,
+      "directory": "G:\\Shared drives\\nilor\\Projects\\020_Snapping_Turtles\\snapping-turtles\\image-travel-06",
+      "image_load_cap": 4,
       "skip_first_images": 0,
       "select_every_nth": 1
     },
-    "class_type": "VHS_LoadImagesPath"
+    "class_type": "VHS_LoadImagesPath",
+    "_meta": {
+      "title": "Load Images (Path) 🎥🅥🅗🅢"
+    }
   },
   "880": {
     "inputs": {
@@ -638,7 +762,10 @@
         0
       ]
     },
-    "class_type": "ImageResize+"
+    "class_type": "ImageResize+",
+    "_meta": {
+      "title": "🔧 Image Resize"
+    }
   },
   "890": {
     "inputs": {
@@ -652,7 +779,10 @@
       ],
       "type": "starts"
     },
-    "class_type": "Nilor n Fractions of Int"
+    "class_type": "Nilor n Fractions of Int",
+    "_meta": {
+      "title": "👺 Nilor n Fractions of Int"
+    }
   },
   "891": {
     "inputs": {
@@ -662,7 +792,10 @@
       ],
       "use_commas": "false"
     },
-    "class_type": "Int to String"
+    "class_type": "Int to String",
+    "_meta": {
+      "title": "Int to String (Mikey)"
+    }
   },
   "892": {
     "inputs": {
@@ -672,7 +805,10 @@
         0
       ]
     },
-    "class_type": "StringListToString"
+    "class_type": "StringListToString",
+    "_meta": {
+      "title": "String List to String"
+    }
   },
   "893": {
     "inputs": {
@@ -682,7 +818,10 @@
         0
       ]
     },
-    "class_type": "easy showAnything"
+    "class_type": "easy showAnything",
+    "_meta": {
+      "title": "Show Any"
+    }
   },
   "894": {
     "inputs": {
@@ -692,7 +831,10 @@
         1
       ]
     },
-    "class_type": "ControlNetLoaderAdvanced"
+    "class_type": "ControlNetLoaderAdvanced",
+    "_meta": {
+      "title": "Load Advanced ControlNet Model 🛂🅐🅒🅝"
+    }
   },
   "896": {
     "inputs": {
@@ -716,7 +858,10 @@
         0
       ]
     },
-    "class_type": "ACN_AdvancedControlNetApply"
+    "class_type": "ACN_AdvancedControlNetApply",
+    "_meta": {
+      "title": "Apply Advanced ControlNet 🛂🅐🅒🅝"
+    }
   },
   "917": {
     "inputs": {
@@ -726,7 +871,10 @@
         1
       ]
     },
-    "class_type": "ControlNetLoaderAdvanced"
+    "class_type": "ControlNetLoaderAdvanced",
+    "_meta": {
+      "title": "Load Advanced ControlNet Model 🛂🅐🅒🅝"
+    }
   },
   "918": {
     "inputs": {
@@ -750,7 +898,10 @@
         0
       ]
     },
-    "class_type": "ACN_AdvancedControlNetApply"
+    "class_type": "ACN_AdvancedControlNetApply",
+    "_meta": {
+      "title": "Apply Advanced ControlNet 🛂🅐🅒🅝"
+    }
   },
   "921": {
     "inputs": {
@@ -763,7 +914,10 @@
       "skip_first_frames": 0,
       "select_every_nth": 1
     },
-    "class_type": "VHS_LoadVideoPath"
+    "class_type": "VHS_LoadVideoPath",
+    "_meta": {
+      "title": "Load Video (Path) 🎥🅥🅗🅢"
+    }
   },
   "923": {
     "inputs": {
@@ -776,7 +930,10 @@
       "skip_first_frames": 0,
       "select_every_nth": 1
     },
-    "class_type": "VHS_LoadVideoPath"
+    "class_type": "VHS_LoadVideoPath",
+    "_meta": {
+      "title": "Load Video (Path) 🎥🅥🅗🅢"
+    }
   },
   "928": {
     "inputs": {
@@ -786,7 +943,10 @@
         0
       ]
     },
-    "class_type": "ImageExtractChannel"
+    "class_type": "ImageExtractChannel",
+    "_meta": {
+      "title": "Image Extract Channel"
+    }
   },
   "938": {
     "inputs": {
@@ -795,7 +955,10 @@
         0
       ]
     },
-    "class_type": "VHS_GetLatentCount"
+    "class_type": "VHS_GetLatentCount",
+    "_meta": {
+      "title": "Get Latent Count 🎥🅥🅗🅢"
+    }
   },
   "939": {
     "inputs": {
@@ -805,7 +968,10 @@
         0
       ]
     },
-    "class_type": "easy showAnything"
+    "class_type": "easy showAnything",
+    "_meta": {
+      "title": "Show Any"
+    }
   },
   "941": {
     "inputs": {
@@ -823,7 +989,10 @@
         0
       ]
     },
-    "class_type": "VAEEncodeForInpaint"
+    "class_type": "VAEEncodeForInpaint",
+    "_meta": {
+      "title": "VAE Encode (for Inpainting)"
+    }
   },
   "942": {
     "inputs": {
@@ -836,7 +1005,10 @@
         0
       ]
     },
-    "class_type": "VAEDecode"
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
   },
   "955": {
     "inputs": {
@@ -850,7 +1022,10 @@
         0
       ]
     },
-    "class_type": "ChangeImageBatchSize //Inspire"
+    "class_type": "ChangeImageBatchSize //Inspire",
+    "_meta": {
+      "title": "Change Image Batch Size (Inspire)"
+    }
   },
   "956": {
     "inputs": {
@@ -865,7 +1040,10 @@
         0
       ]
     },
-    "class_type": "ImageBlend"
+    "class_type": "ImageBlend",
+    "_meta": {
+      "title": "Image Blend"
+    }
   },
   "962": {
     "inputs": {
@@ -886,7 +1064,10 @@
         0
       ]
     },
-    "class_type": "ImageResize+"
+    "class_type": "ImageResize+",
+    "_meta": {
+      "title": "🔧 Image Resize"
+    }
   },
   "963": {
     "inputs": {
@@ -899,13 +1080,19 @@
         0
       ]
     },
-    "class_type": "SetLatentNoiseMask"
+    "class_type": "SetLatentNoiseMask",
+    "_meta": {
+      "title": "Set Latent Noise Mask"
+    }
   },
   "972": {
     "inputs": {
       "value": 128
     },
-    "class_type": "JWInteger"
+    "class_type": "JWInteger",
+    "_meta": {
+      "title": " Num Frames"
+    }
   },
   "973": {
     "inputs": {
@@ -928,7 +1115,10 @@
         0
       ]
     },
-    "class_type": "SimpleMathDual+"
+    "class_type": "SimpleMathDual+",
+    "_meta": {
+      "title": "🔧 Simple Math Dual"
+    }
   },
   "976": {
     "inputs": {
@@ -938,7 +1128,10 @@
       ],
       "output": ""
     },
-    "class_type": "Display Int (rgthree)"
+    "class_type": "Display Int (rgthree)",
+    "_meta": {
+      "title": "Display Int (rgthree)"
+    }
   },
   "977": {
     "inputs": {
@@ -948,13 +1141,19 @@
       ],
       "output": ""
     },
-    "class_type": "Display Int (rgthree)"
+    "class_type": "Display Int (rgthree)",
+    "_meta": {
+      "title": "Display Int (rgthree)"
+    }
   },
   "979": {
     "inputs": {
-      "boolean": true
+      "boolean": false
     },
-    "class_type": "Primitive boolean [Crystools]"
+    "class_type": "Primitive boolean [Crystools]",
+    "_meta": {
+      "title": "Use Latent Mask"
+    }
   },
   "983": {
     "inputs": {
@@ -962,7 +1161,10 @@
       "width": 512,
       "height": 512
     },
-    "class_type": "SolidMask"
+    "class_type": "SolidMask",
+    "_meta": {
+      "title": "SolidMask"
+    }
   },
   "984": {
     "inputs": {
@@ -971,25 +1173,37 @@
         0
       ]
     },
-    "class_type": "MaskToImage"
+    "class_type": "MaskToImage",
+    "_meta": {
+      "title": "Convert Mask to Image"
+    }
   },
   "988": {
     "inputs": {
       "boolean": false
     },
-    "class_type": "Primitive boolean [Crystools]"
+    "class_type": "Primitive boolean [Crystools]",
+    "_meta": {
+      "title": "Use Animated Latent Mask Video"
+    }
   },
   "990": {
     "inputs": {
       "boolean": false
     },
-    "class_type": "Primitive boolean [Crystools]"
+    "class_type": "Primitive boolean [Crystools]",
+    "_meta": {
+      "title": "Use Lineart CN"
+    }
   },
   "997": {
     "inputs": {
       "boolean": false
     },
-    "class_type": "Primitive boolean [Crystools]"
+    "class_type": "Primitive boolean [Crystools]",
+    "_meta": {
+      "title": "Use Animated Lineart Video"
+    }
   },
   "1008": {
     "inputs": {
@@ -1006,7 +1220,10 @@
         0
       ]
     },
-    "class_type": "ImpactConditionalBranch"
+    "class_type": "ImpactConditionalBranch",
+    "_meta": {
+      "title": "ImpactConditionalBranch"
+    }
   },
   "1009": {
     "inputs": {
@@ -1023,7 +1240,10 @@
         0
       ]
     },
-    "class_type": "ImpactConditionalBranch"
+    "class_type": "ImpactConditionalBranch",
+    "_meta": {
+      "title": "ImpactConditionalBranch"
+    }
   },
   "1011": {
     "inputs": {
@@ -1040,14 +1260,20 @@
         0
       ]
     },
-    "class_type": "ImpactConditionalBranch"
+    "class_type": "ImpactConditionalBranch",
+    "_meta": {
+      "title": "ImpactConditionalBranch"
+    }
   },
   "1012": {
     "inputs": {
       "base_multiplier": 0.825,
       "uncond_multiplier": 1
     },
-    "class_type": "ACN_ScaledSoftControlNetWeights"
+    "class_type": "ACN_ScaledSoftControlNetWeights",
+    "_meta": {
+      "title": "Scaled Soft Weights 🛂🅐🅒🅝"
+    }
   },
   "1015": {
     "inputs": {
@@ -1064,7 +1290,10 @@
         0
       ]
     },
-    "class_type": "ImpactConditionalBranch"
+    "class_type": "ImpactConditionalBranch",
+    "_meta": {
+      "title": "ImpactConditionalBranch"
+    }
   },
   "1016": {
     "inputs": {
@@ -1081,7 +1310,10 @@
         0
       ]
     },
-    "class_type": "ImpactConditionalBranch"
+    "class_type": "ImpactConditionalBranch",
+    "_meta": {
+      "title": "ImpactConditionalBranch"
+    }
   },
   "1022": {
     "inputs": {
@@ -1098,7 +1330,10 @@
         0
       ]
     },
-    "class_type": "ImpactConditionalBranch"
+    "class_type": "ImpactConditionalBranch",
+    "_meta": {
+      "title": "ImpactConditionalBranch"
+    }
   },
   "1023": {
     "inputs": {
@@ -1115,14 +1350,20 @@
         0
       ]
     },
-    "class_type": "ImpactConditionalBranch"
+    "class_type": "ImpactConditionalBranch",
+    "_meta": {
+      "title": "ImpactConditionalBranch"
+    }
   },
   "1024": {
     "inputs": {
       "base_multiplier": 0.825,
       "uncond_multiplier": 1
     },
-    "class_type": "ACN_ScaledSoftControlNetWeights"
+    "class_type": "ACN_ScaledSoftControlNetWeights",
+    "_meta": {
+      "title": "Scaled Soft Weights 🛂🅐🅒🅝"
+    }
   },
   "1027": {
     "inputs": {
@@ -1139,7 +1380,10 @@
         1
       ]
     },
-    "class_type": "ImpactConditionalBranch"
+    "class_type": "ImpactConditionalBranch",
+    "_meta": {
+      "title": "ImpactConditionalBranch"
+    }
   },
   "1028": {
     "inputs": {
@@ -1156,50 +1400,74 @@
         0
       ]
     },
-    "class_type": "ImpactConditionalBranch"
+    "class_type": "ImpactConditionalBranch",
+    "_meta": {
+      "title": "ImpactConditionalBranch"
+    }
   },
   "1031": {
     "inputs": {
-      "boolean": true
+      "boolean": false
     },
-    "class_type": "Primitive boolean [Crystools]"
+    "class_type": "Primitive boolean [Crystools]",
+    "_meta": {
+      "title": "Use Depth CN"
+    }
   },
   "1033": {
     "inputs": {
       "boolean": false
     },
-    "class_type": "Primitive boolean [Crystools]"
+    "class_type": "Primitive boolean [Crystools]",
+    "_meta": {
+      "title": "Use QR CN"
+    }
   },
   "1035": {
     "inputs": {
       "base_multiplier": 0.825,
       "uncond_multiplier": 1
     },
-    "class_type": "ACN_ScaledSoftControlNetWeights"
+    "class_type": "ACN_ScaledSoftControlNetWeights",
+    "_meta": {
+      "title": "Scaled Soft Weights 🛂🅐🅒🅝"
+    }
   },
   "1037": {
     "inputs": {
       "float": 0.38
     },
-    "class_type": "Primitive float [Crystools]"
+    "class_type": "Primitive float [Crystools]",
+    "_meta": {
+      "title": "Hold Ratio"
+    }
   },
   "1038": {
     "inputs": {
       "float": 0.63
     },
-    "class_type": "Primitive float [Crystools]"
+    "class_type": "Primitive float [Crystools]",
+    "_meta": {
+      "title": "Transition Ratio"
+    }
   },
   "1040": {
     "inputs": {
       "boolean": true
     },
-    "class_type": "Primitive boolean [Crystools]"
+    "class_type": "Primitive boolean [Crystools]",
+    "_meta": {
+      "title": "Loop"
+    }
   },
   "1041": {
     "inputs": {
       "float": 0.4
     },
-    "class_type": "Primitive float [Crystools]"
+    "class_type": "Primitive float [Crystools]",
+    "_meta": {
+      "title": "Liquid Strength"
+    }
   },
   "1043": {
     "inputs": {
@@ -1212,13 +1480,19 @@
       "skip_first_frames": 0,
       "select_every_nth": 1
     },
-    "class_type": "VHS_LoadVideoPath"
+    "class_type": "VHS_LoadVideoPath",
+    "_meta": {
+      "title": "Load Video (Path) 🎥🅥🅗🅢"
+    }
   },
   "1044": {
     "inputs": {
       "boolean": true
     },
-    "class_type": "Primitive boolean [Crystools]"
+    "class_type": "Primitive boolean [Crystools]",
+    "_meta": {
+      "title": "Use Animated Depth Video"
+    }
   },
   "1045": {
     "inputs": {
@@ -1235,24 +1509,175 @@
         0
       ]
     },
-    "class_type": "ImpactConditionalBranch"
+    "class_type": "ImpactConditionalBranch",
+    "_meta": {
+      "title": "ImpactConditionalBranch"
+    }
   },
   "1048": {
     "inputs": {
       "image": "C:\\nilor-corp\\zenerator\\inputs\\screen-masks\\SOL_cube-01_screen-mask.png"
     },
-    "class_type": "LoadImageFromPath"
+    "class_type": "LoadImageFromPath",
+    "_meta": {
+      "title": "Load Image From Path"
+    }
   },
   "1049": {
     "inputs": {
       "image": "C:\\nilor-corp\\zenerator\\inputs\\static-lineart\\poseidon_lineart.png"
     },
-    "class_type": "LoadImageFromPath"
+    "class_type": "LoadImageFromPath",
+    "_meta": {
+      "title": "Load Image From Path"
+    }
   },
   "1050": {
     "inputs": {
       "image": "C:\\nilor-corp\\zenerator\\inputs\\screen-depths\\f_depth.png"
     },
-    "class_type": "LoadImageFromPath"
+    "class_type": "LoadImageFromPath",
+    "_meta": {
+      "title": "Load Image From Path"
+    }
+  },
+  "1051": {
+    "inputs": {
+      "context_length": 16,
+      "context_stride": 1,
+      "context_overlap": 6,
+      "fuse_method": "pyramid",
+      "use_on_equal_length": false,
+      "start_percent": 0,
+      "guarantee_steps": 1
+    },
+    "class_type": "ADE_StandardUniformContextOptions",
+    "_meta": {
+      "title": "Context Options◆Standard Uniform 🎭🅐🅓"
+    }
+  },
+  "1052": {
+    "inputs": {
+      "cond": [
+        "1040",
+        0
+      ],
+      "tt_value": [
+        "442",
+        0
+      ],
+      "ff_value": [
+        "1051",
+        0
+      ]
+    },
+    "class_type": "ImpactConditionalBranch",
+    "_meta": {
+      "title": "ImpactConditionalBranch"
+    }
+  },
+  "1053": {
+    "inputs": {
+      "preset": "PLUS (high strength)",
+      "model": [
+        "666",
+        0
+      ]
+    },
+    "class_type": "IPAdapterUnifiedLoader",
+    "_meta": {
+      "title": "IPAdapter Unified Loader"
+    }
+  },
+  "1054": {
+    "inputs": {
+      "weight": 0.8,
+      "weight_type": "linear",
+      "start_at": 0,
+      "end_at": 1,
+      "sharpening": 0,
+      "embeds_scaling": "V only",
+      "encode_batch_size": 64,
+      "model": [
+        "1053",
+        0
+      ],
+      "ipadapter": [
+        "1053",
+        1
+      ],
+      "image": [
+        "805",
+        0
+      ],
+      "attn_mask": [
+        "676",
+        0
+      ]
+    },
+    "class_type": "IPAdapterTiledBatch",
+    "_meta": {
+      "title": "IPAdapter Tiled Batch"
+    }
+  },
+  "1055": {
+    "inputs": {
+      "weight": 0.8,
+      "weight_type": "linear",
+      "start_at": 0,
+      "end_at": 1,
+      "sharpening": 0,
+      "embeds_scaling": "V only",
+      "encode_batch_size": 64,
+      "model": [
+        "1054",
+        0
+      ],
+      "ipadapter": [
+        "1053",
+        1
+      ],
+      "image": [
+        "805",
+        1
+      ],
+      "attn_mask": [
+        "732",
+        0
+      ]
+    },
+    "class_type": "IPAdapterTiledBatch",
+    "_meta": {
+      "title": "IPAdapter Tiled Batch"
+    }
+  },
+  "1057": {
+    "inputs": {
+      "boolean": true
+    },
+    "class_type": "Primitive boolean [Crystools]",
+    "_meta": {
+      "title": "IPAdapter Tiled"
+    }
+  },
+  "1058": {
+    "inputs": {
+      "cond": [
+        "1057",
+        0
+      ],
+      "tt_value": [
+        "1055",
+        0
+      ],
+      "ff_value": [
+        "764",
+        0
+      ]
+    },
+    "class_type": "ImpactConditionalBranch",
+    "_meta": {
+      "title": "ImpactConditionalBranch"
+    }
   }
 }

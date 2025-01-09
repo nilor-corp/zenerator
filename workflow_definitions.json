@@ -151,6 +151,13 @@
             "node-id": "[\"1040\"][\"inputs\"][\"boolean\"]",
             "value": true
           },
+          "ipadapter-tiled":{
+            "type": "bool",
+            "label": "IPAdapter Tiled",
+            "node-id": "[\"1057\"][\"inputs\"][\"boolean\"]",
+            "value": true,
+            "info": "Use IPAdapter Tiled instead of IPAdapter ClipVision Enhancer. Tiled might work better with non-square images; Enhancer might give a quality boost."
+          },
           "liquid-strength": {
             "type": "float",
             "label": "Liquid Strength",
@@ -407,7 +414,7 @@
             "type": "enum",
             "label": "Animation Type 02",
             "node-id": "[\"804\"][\"inputs\"][\"animation_type_2\"]",
-            "value": "GrowingCircle",
+            "value": "Fade",
             "choices": [
               "LeftToRight",
               "RightToLeft",
@@ -463,7 +470,7 @@
             "type": "enum",
             "label": "Animation Type 04",
             "node-id": "[\"804\"][\"inputs\"][\"animation_type_4\"]",
-            "value": "ShrinkingCircle",
+            "value": "Fade",
             "choices": [
               "LeftToRight",
               "RightToLeft",
@@ -631,7 +638,7 @@
             "type": "enum",
             "label": "Animation Type 10",
             "node-id": "[\"804\"][\"inputs\"][\"animation_type_10\"]",
-            "value": "TopDown",
+            "value": "Fade",
             "choices": [
               "LeftToRight",
               "RightToLeft",
