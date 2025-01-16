@@ -556,7 +556,7 @@ def get_latest_content(folder, type):
 def check_for_new_content():
     global previous_content, job_tracking, current_output_type
 
-    print(f"Checking for new content of type: {current_output_type}")
+    # print(f"Checking for new content of type: {current_output_type}")
     latest_content = get_latest_content(OUT_DIR, current_output_type)
 
     if latest_content != previous_content and latest_content is not None:
