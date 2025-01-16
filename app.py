@@ -763,6 +763,7 @@ def run_workflow(workflow_name, progress, **kwargs):
                     "output_file": None
                 }
                 print(f"Added job to tracking: {prompt_id}")  # Debug print
+                return prompt_id   
             return None
 
         except KeyboardInterrupt:
@@ -1646,6 +1647,7 @@ with gr.Blocks(
                             workflow_filename, workflow_name, components, component_dict
                         ),
                         inputs=components,
+                        outputs=gr.Text(visible=False),
                         # outputs=[gen_component],
                         trigger_mode="multiple",
                         # show_progress="full"
