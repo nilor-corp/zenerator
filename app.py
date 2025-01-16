@@ -86,6 +86,7 @@ download_progress = {"current": 0, "total": 0, "status": ""}
 job_tracking = {}  # Maps prompt_ids to job metadata
 result_component = None  # Will hold our result component for API access
 
+
 def signal_handler(signum, frame):
     global running, tick_timer, threads
     print("\nShutdown signal received. Cleaning up...")
@@ -222,7 +223,7 @@ def reconnect(client_id, max_retries=5):
         if ws:
             return ws
         retries += 1
-        time.sleep(2)  # Wait before retrying
+        time.sleep(1)  # Wait before retrying
     print("Max retries reached. Could not reconnect.")
     return None
 
@@ -267,13 +268,15 @@ def check_current_progress():
                         print("WebSocket disconnected, waiting for reconnection...")
                         time.sleep(1)
                         continue
-                        
+
                     message = ws.recv()
                     if message is not None:
                         message = json.loads(message)
                         if message["type"] == "status":
                             data = message["data"]
-                            queue_remaining = data["status"]["exec_info"]["queue_remaining"]
+                            queue_remaining = data["status"]["exec_info"][
+                                "queue_remaining"
+                            ]
                             print("Queue remaining: " + str(queue_remaining))
 
                         elif message["type"] == "execution_start":
@@ -285,11 +288,16 @@ def check_current_progress():
                             data = message["data"]
                             prompt_id = data["prompt_id"]
                             print("Executed : " + prompt_id)
-                            
+
                 except websocket.WebSocketConnectionClosedException:
                     print("WebSocket connection closed normally")
                     time.sleep(1)
-                except (ConnectionResetError, ConnectionError, BrokenPipeError, OSError) as e:
+                except (
+                    ConnectionResetError,
+                    ConnectionError,
+                    BrokenPipeError,
+                    OSError,
+                ) as e:
                     if isinstance(e, ConnectionResetError) and e.winerror == 10054:
                         # This is the expected error when ComfyUI closes the connection
                         print("ComfyUI closed the connection (normal behavior)")
@@ -301,7 +309,7 @@ def check_current_progress():
                     time.sleep(1)
             else:
                 time.sleep(1)  # Wait before checking ws again
-                    
+
     except Exception as e:
         print(f"Error in check_current_progress: {str(e)}")
 
@@ -326,11 +334,8 @@ def comfy_POST(endpoint, message):
 
 
 def post_prompt(workflow):
-    prompt_data = {
-        "prompt": workflow,
-        "client_id": "app"
-    }
-    
+    prompt_data = {"prompt": workflow, "client_id": "app"}
+
     response = requests.post(f"{selected_port_url}/prompt", json=prompt_data)
     if response.ok:
         data = response.json()
@@ -538,40 +543,47 @@ def get_latest_video_with_prefix(folder, prefix):
     return latest_video
 
 
+def get_latest_content(folder, type):
+    if type == "image":
+        return get_latest_image(folder)
+    elif type == "video":
+        return get_latest_video(folder)
+
+
 # endregion
 
 
 # region Info Checkers
-def check_for_new_content():
+def check_for_new_content(file_output_type: str):
     global previous_content, job_tracking
-    
-    latest_content = get_latest_video(OUT_DIR)
+
+    latest_content = get_latest_content(OUT_DIR, file_output_type)
+
     if latest_content != previous_content and latest_content is not None:
         print(f"New content found: {latest_content}")
         print(f"Current job tracking state: {job_tracking}")  # Debug print
-        
+
         # Find the most recent pending job
         pending_jobs = {
-            pid: data for pid, data in job_tracking.items() 
+            pid: data
+            for pid, data in job_tracking.items()
             if data["status"] == "pending"
         }
         print(f"Pending jobs found: {pending_jobs}")  # Debug print
-        
+
         if pending_jobs:
             # Get the oldest pending job (FIFO)
             prompt_id = min(
-                pending_jobs.keys(),
-                key=lambda pid: pending_jobs[pid]["timestamp"]
+                pending_jobs.keys(), key=lambda pid: pending_jobs[pid]["timestamp"]
             )
             # Update job with output file
-            job_tracking[prompt_id].update({
-                "status": "completed",
-                "output_file": latest_content
-            })
+            job_tracking[prompt_id].update(
+                {"status": "completed", "output_file": latest_content}
+            )
             print(f"Associated output {latest_content} with job {prompt_id}")
         else:
             print("No pending jobs found to associate with new content")  # Debug print
-            
+
         previous_content = latest_content
         return gr.update(value=latest_content)
     return gr.update(value=previous_content)
@@ -717,7 +729,7 @@ def check_interrupt_visibility():
 
 def run_workflow(workflow_name, progress, **kwargs):
     global previous_content, job_tracking
-    
+
     # Print the input arguments for debugging
     print("inside run workflow with kwargs: " + str(kwargs))
 
@@ -760,10 +772,10 @@ def run_workflow(workflow_name, progress, **kwargs):
                     "timestamp": time.time(),
                     "workflow_name": workflow_name,
                     "status": "pending",
-                    "output_file": None
+                    "output_file": None,
                 }
                 print(f"Added job to tracking: {prompt_id}")  # Debug print
-                return prompt_id   
+                return prompt_id
             return None
 
         except KeyboardInterrupt:
@@ -779,7 +791,7 @@ def get_job_result(prompt_id):
             "status": job["status"],
             "output_file": job["output_file"],
             "workflow_name": job["workflow_name"],
-            "timestamp": job["timestamp"]
+            "timestamp": job["timestamp"],
         }
     return {"status": "not_found"}
 
@@ -1659,7 +1671,11 @@ with gr.Blocks(
             gr.Markdown("### Output Preview")
             with gr.Group():
                 if output_type == "image":
-                    output_player = gr.Image(show_label=False, interactive=False)
+                    latest_content = get_latest_image(OUT_DIR)
+                    if latest_content is not None:
+                        output_player = gr.Image(
+                            show_label=False, interactive=False, value=latest_content
+                        )
                 else:
                     # populate the Output Preview with the latest video in the output directory
                     latest_content = get_latest_video(OUT_DIR)
@@ -1682,6 +1698,7 @@ with gr.Blocks(
 
                 tick_timer.tick(
                     fn=check_for_new_content,
+                    inputs=[gr.State(output_type)],
                     outputs=[output_player],
                     show_progress="hidden",
                 )
@@ -1738,7 +1755,7 @@ with gr.Blocks(
     if __name__ == "__main__":
         setup_signal_handlers()
         demo.queue()
-        
+
         # Create hidden components for the result endpoint
         result_input = gr.Text(visible=False)
         result_output = gr.JSON(visible=False)
@@ -1746,7 +1763,7 @@ with gr.Blocks(
             fn=get_job_result,
             inputs=result_input,
             outputs=result_output,
-            api_name="workflow_result"
+            api_name="workflow_result",
         )
-        
+
         demo.launch(allowed_paths=allowed_paths, favicon_path="favicon.png")
