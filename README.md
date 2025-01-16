@@ -27,7 +27,7 @@
 ## Dependencies
 - 61 GB of available storage
 - [Python 3.12.7](https://www.python.org/downloads/release/python-3127/)
-- [CUDA 12.11](https://developer.nvidia.com/cuda-12-1-1-download-archive)
+- [CUDA 12.1 Update 1](https://developer.nvidia.com/cuda-12-1-1-download-archive)
 - SSH connection to the [Nilor Corp organization on HuggingFace](https://huggingface.co/nilor-corp)
 - Git and LFS
 
