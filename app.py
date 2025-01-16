@@ -82,9 +82,9 @@ previous_content = ""
 tick_timer = None
 download_progress = {"current": 0, "total": 0, "status": ""}
 
-# Add near other global variables
 job_tracking = {}  # Maps prompt_ids to job metadata
 result_component = None  # Will hold our result component for API access
+current_output_type = "image"
 
 
 def signal_handler(signum, frame):
@@ -555,9 +555,9 @@ def get_latest_content(folder, type):
 
 # region Info Checkers
 def check_for_new_content(file_output_type: str):
-    global previous_content, job_tracking
+    global previous_content, job_tracking, current_output_type
 
-    latest_content = get_latest_content(OUT_DIR, file_output_type)
+    latest_content = get_latest_content(OUT_DIR, current_output_type)
 
     if latest_content != previous_content and latest_content is not None:
         print(f"New content found: {latest_content}")
@@ -803,10 +803,12 @@ def run_workflow_with_name(
     component_info_dict,
     progress=gr.Progress(track_tqdm=True),
 ):
-    for component in raw_components:
-        print(f"Component: {component.label}")
+    output_type = workflow_definitions[workflow_name]["outputs"].get("type", "")
 
     def wrapper(*args):
+        global current_output_type
+        current_output_type = output_type  # Set the type when workflow runs
+
         # match the component to the arg
         for component, arg in zip(raw_components, args):
             # check if component is path type and convert to absolute path if needed
