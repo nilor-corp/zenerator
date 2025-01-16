@@ -496,8 +496,7 @@ def get_all_images(folder):
 
 
 def get_latest_image(folder):
-    image_files = get_all_images(folder)
-    image_files.sort(key=lambda x: os.path.getmtime(os.path.join(folder, x)))
+    image_files = get_all_images(folder)  # Already sorted in get_all_images
     latest_image = os.path.join(folder, image_files[-1]) if image_files else None
     return latest_image
 
@@ -554,9 +553,10 @@ def get_latest_content(folder, type):
 
 
 # region Info Checkers
-def check_for_new_content(file_output_type: str):
+def check_for_new_content():
     global previous_content, job_tracking, current_output_type
 
+    print(f"Checking for new content of type: {current_output_type}")
     latest_content = get_latest_content(OUT_DIR, current_output_type)
 
     if latest_content != previous_content and latest_content is not None:
@@ -808,6 +808,7 @@ def run_workflow_with_name(
     def wrapper(*args):
         global current_output_type
         current_output_type = output_type  # Set the type when workflow runs
+        print(f"I just got told to make a(n) {current_output_type}")
 
         # match the component to the arg
         for component, arg in zip(raw_components, args):
@@ -1700,7 +1701,6 @@ with gr.Blocks(
 
                 tick_timer.tick(
                     fn=check_for_new_content,
-                    inputs=[gr.State(output_type)],
                     outputs=[output_player],
                     show_progress="hidden",
                 )
