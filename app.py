@@ -82,6 +82,8 @@ previous_content = ""
 tick_timer = None
 download_progress = {"current": 0, "total": 0, "status": ""}
 
+# Add near other global variables
+job_tracking = {}  # Maps prompt_ids to job metadata
 
 def signal_handler(signum, frame):
     global running, tick_timer, threads
@@ -540,22 +542,38 @@ def get_latest_video_with_prefix(folder, prefix):
 
 # region Info Checkers
 def check_for_new_content():
-    global latest_content, previous_content
-    # print(f"Checking for new content in: {OUT_DIR}\n")
-
-    latest_content = ""
-    if output_type == "image":
-        latest_content = get_latest_image(OUT_DIR)
-    else:
-        latest_content = get_latest_video(OUT_DIR)
-
-    if latest_content != previous_content:
+    global previous_content, job_tracking
+    
+    latest_content = get_latest_video(OUT_DIR)
+    if latest_content != previous_content and latest_content is not None:
         print(f"New content found: {latest_content}")
+        print(f"Current job tracking state: {job_tracking}")  # Debug print
+        
+        # Find the most recent pending job
+        pending_jobs = {
+            pid: data for pid, data in job_tracking.items() 
+            if data["status"] == "pending"
+        }
+        print(f"Pending jobs found: {pending_jobs}")  # Debug print
+        
+        if pending_jobs:
+            # Get the oldest pending job (FIFO)
+            prompt_id = min(
+                pending_jobs.keys(),
+                key=lambda pid: pending_jobs[pid]["timestamp"]
+            )
+            # Update job with output file
+            job_tracking[prompt_id].update({
+                "status": "completed",
+                "output_file": latest_content
+            })
+            print(f"Associated output {latest_content} with job {prompt_id}")
+        else:
+            print("No pending jobs found to associate with new content")  # Debug print
+            
         previous_content = latest_content
-
-    # output_filepath_component = gr.Markdown(f"{latest_content}")
-
-    return gr.update(value=latest_content)
+        return gr.update(value=latest_content)
+    return gr.update(value=previous_content)
 
 
 previous_vram_used = -1.0
@@ -697,11 +715,10 @@ def check_interrupt_visibility():
 
 
 def run_workflow(workflow_name, progress, **kwargs):
-    global previous_content
-
+    global previous_content, job_tracking
+    
     # Print the input arguments for debugging
     print("inside run workflow with kwargs: " + str(kwargs))
-    # print("workflow_definitions: " + str(workflow_definitions[workflow_name]))
 
     # Construct the path to the workflow JSON file
     workflow_json = "./workflows/" + workflow_name
@@ -737,9 +754,15 @@ def run_workflow(workflow_name, progress, **kwargs):
         try:
             prompt_id = post_prompt(workflow)
             if prompt_id:
-                # Store the prompt_id somewhere if needed
-                pass  # For now, we'll just pass
-            return None  # Return None to avoid the Gradio warning
+                # Store job information
+                job_tracking[prompt_id] = {
+                    "timestamp": time.time(),
+                    "workflow_name": workflow_name,
+                    "status": "pending",
+                    "output_file": None
+                }
+                print(f"Added job to tracking: {prompt_id}")  # Debug print
+            return None
 
         except KeyboardInterrupt:
             print("Interrupted by user. Exiting...")
