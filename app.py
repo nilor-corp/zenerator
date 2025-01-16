@@ -324,9 +324,20 @@ def comfy_POST(endpoint, message):
         print(f"Error querying the GET endpoint {endpoint}: ", e)
 
 
-def post_prompt(prompt_workflow):
-    message = {"prompt": prompt_workflow}
-    return comfy_POST("prompt", message)
+def post_prompt(workflow):
+    prompt_data = {
+        "prompt": workflow,
+        "client_id": "app"
+    }
+    
+    response = requests.post(f"{selected_port_url}/prompt", json=prompt_data)
+    if response.ok:
+        data = response.json()
+        prompt_id = data.get("prompt_id")
+        if prompt_id:
+            print(f"Successfully submitted job with ID: {prompt_id}")
+            return prompt_id
+    return None
 
 
 def post_interrupt():
@@ -726,9 +737,11 @@ def run_workflow(workflow_name, progress, **kwargs):
             current_section[final_key] = new_value
 
         try:
-            print(f"!!!!!!!!!\nSubmitting workflow:\n{workflow}\n!!!!!!!!!")
-
-            post_prompt(workflow)
+            prompt_id = post_prompt(workflow)
+            if prompt_id:
+                # Store the prompt_id somewhere if needed
+                pass  # For now, we'll just pass
+            return None  # Return None to avoid the Gradio warning
 
         except KeyboardInterrupt:
             print("Interrupted by user. Exiting...")
