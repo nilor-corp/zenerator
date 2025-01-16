@@ -253,56 +253,54 @@ check_current_progress_running = False
 current_progress_data = {}
 
 
-def check_current_progress(ws):
-    global check_current_progress_running, current_progress_data
-
-    check_current_progress_running = True
-
-    while check_current_progress_running and ws and ws.connected:  # Add running check
-        try:
-            out = ws.recv()
-            if not out:  # Check if we received empty data
-                break
-
-            if isinstance(out, str):
+def check_current_progress():
+    global executing, ws
+    try:
+        while running:
+            if ws:
                 try:
-                    message = json.loads(out)
-                    # print(f"Message: {message}")
-                    if message["type"] == "executing":
-                        data = message["data"]
-                        prompt_id = data["prompt_id"]
-                        if data["node"] is None and data["prompt_id"] == prompt_id:
-                            check_current_progress_running = False
-                            break  # Execution is done
-                    elif message["type"] == "status":
-                        data = message["data"]
-                        queue_remaining = data["status"]["exec_info"]["queue_remaining"]
-                        print("Queue remaining: " + str(queue_remaining))
-                    elif message["type"] == "execution_start":
-                        executing = True
-                        print("Executing!")
-                    elif message["type"] == "executed":
-                        data = message["data"]
-                        prompt_id = data["prompt_id"]
-                        print("Executed : " + prompt_id)
-                    elif message["type"] == "progress":
-                        data = message["data"]
-                        current_progress_data = data
-                except json.JSONDecodeError:
-                    print("Received invalid JSON data, skipping...")
-                    continue
+                    # Check if connection is still valid
+                    if not ws.connected:
+                        print("WebSocket disconnected, waiting for reconnection...")
+                        time.sleep(1)
+                        continue
+                        
+                    message = ws.recv()
+                    if message is not None:
+                        message = json.loads(message)
+                        if message["type"] == "status":
+                            data = message["data"]
+                            queue_remaining = data["status"]["exec_info"]["queue_remaining"]
+                            print("Queue remaining: " + str(queue_remaining))
+
+                        elif message["type"] == "execution_start":
+                            data = message["data"]
+                            executing = True
+                            print("Executing!")
+
+                        elif message["type"] == "executed":
+                            data = message["data"]
+                            prompt_id = data["prompt_id"]
+                            print("Executed : " + prompt_id)
+                            
+                except websocket.WebSocketConnectionClosedException:
+                    print("WebSocket connection closed normally")
+                    time.sleep(1)
+                except (ConnectionResetError, ConnectionError, BrokenPipeError, OSError) as e:
+                    if isinstance(e, ConnectionResetError) and e.winerror == 10054:
+                        # This is the expected error when ComfyUI closes the connection
+                        print("ComfyUI closed the connection (normal behavior)")
+                    else:
+                        print(f"Connection error: {str(e)}")
+                    time.sleep(1)
+                except Exception as e:
+                    print(f"Unexpected error: {str(e)}")
+                    time.sleep(1)
             else:
-                continue  # previews are binary data
-
-        except websocket.WebSocketConnectionClosedException:
-            print("WebSocket connection closed, stopping progress check")
-            break
-        except Exception as e:
-            print(f"Error in progress check: {type(e).__name__}: {e}")
-            break
-
-    check_current_progress_running = False
-    current_progress_data = {}
+                time.sleep(1)  # Wait before checking ws again
+                    
+    except Exception as e:
+        print(f"Error in check_current_progress: {str(e)}")
 
 
 # endregion
@@ -1446,7 +1444,7 @@ def load_demo():
                 target=send_heartbeat, args=(ws,), daemon=True
             )
             progress_thread = threading.Thread(
-                target=check_current_progress, args=(ws,), daemon=True
+                target=check_current_progress, daemon=True
             )
 
             threads = [heartbeat_thread, progress_thread]
