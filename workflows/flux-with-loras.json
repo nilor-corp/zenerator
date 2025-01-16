@@ -1,0 +1,166 @@
+{
+  "6": {
+    "inputs": {
+      "text": "tarot card, \ngloopy toxic beasts",
+      "clip": [
+        "34",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode"
+  },
+  "8": {
+    "inputs": {
+      "samples": [
+        "13",
+        0
+      ],
+      "vae": [
+        "10",
+        0
+      ]
+    },
+    "class_type": "VAEDecode"
+  },
+  "10": {
+    "inputs": {
+      "vae_name": "ae.safetensors"
+    },
+    "class_type": "VAELoader"
+  },
+  "11": {
+    "inputs": {
+      "clip_name1": "t5xxl_fp16.safetensors",
+      "clip_name2": "clip_l.safetensors",
+      "type": "flux"
+    },
+    "class_type": "DualCLIPLoader"
+  },
+  "12": {
+    "inputs": {
+      "unet_name": "flux1-dev.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader"
+  },
+  "13": {
+    "inputs": {
+      "noise": [
+        "25",
+        0
+      ],
+      "guider": [
+        "22",
+        0
+      ],
+      "sampler": [
+        "16",
+        0
+      ],
+      "sigmas": [
+        "17",
+        0
+      ],
+      "latent_image": [
+        "28",
+        0
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced"
+  },
+  "16": {
+    "inputs": {
+      "sampler_name": "ipndm"
+    },
+    "class_type": "KSamplerSelect"
+  },
+  "17": {
+    "inputs": {
+      "scheduler": "sgm_uniform",
+      "steps": 39,
+      "denoise": 1,
+      "model": [
+        "34",
+        0
+      ]
+    },
+    "class_type": "BasicScheduler"
+  },
+  "22": {
+    "inputs": {
+      "model": [
+        "34",
+        0
+      ],
+      "conditioning": [
+        "27",
+        0
+      ]
+    },
+    "class_type": "BasicGuider"
+  },
+  "25": {
+    "inputs": {
+      "noise_seed": [
+        "47",
+        0
+      ]
+    },
+    "class_type": "RandomNoise"
+  },
+  "27": {
+    "inputs": {
+      "guidance": 2.8000000000000003,
+      "conditioning": [
+        "6",
+        0
+      ]
+    },
+    "class_type": "FluxGuidance"
+  },
+  "28": {
+    "inputs": {
+      "width": 576,
+      "height": 1024,
+      "batch_size": 1
+    },
+    "class_type": "EmptyLatentImage"
+  },
+  "34": {
+    "inputs": {
+      "lora_01": "FluxD\\flux-lora-vintage-tarot.safetensors",
+      "strength_01": 0.3,
+      "lora_02": "FluxD\\nilor\\FluxD_Nilor_Instagram_art_lora_v02.safetensors",
+      "strength_02": 0.3,
+      "lora_03": "FluxD\\nilor\\FluxD_Nilor_Snapping_Turtles.safetensors",
+      "strength_03": 0.9,
+      "lora_04": "None",
+      "strength_04": 0,
+      "model": [
+        "12",
+        0
+      ],
+      "clip": [
+        "11",
+        0
+      ]
+    },
+    "class_type": "Lora Loader Stack (rgthree)"
+  },
+  "40": {
+    "inputs": {
+      "filename_prefix": "flux-testing\\20250106\\tarot_",
+      "images": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "SaveImage"
+  },
+  "47": {
+    "inputs": {
+      "seed": -1
+    },
+    "class_type": "Seed (rgthree)"
+  }
+}

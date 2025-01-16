@@ -60,24 +60,24 @@
     "filename": "image-travel-rework.json",
     "description": "Create a video that travels between images.",
     "presets": {
-        "Square": {
-            "name": "Square",
-            "description": "Preset with 1:1 aspect ratio for square video output",
-            "values": {
-                "width": 1024,
-                "height": 1024,
-                "filename-prefix": "Zenerator/square-it"
-            }
-        },
-        "Wide": {
-            "name": "Wide",
-            "description": "Preset with 16:9 aspect ratio for widescreen video output",
-            "values": {
-                "width": 1365,
-                "height": 768,
-                "filename-prefix": "Zenerator/wide-it"
-            }
+      "Square": {
+        "name": "Square",
+        "description": "Preset with 1:1 aspect ratio for square video output",
+        "values": {
+          "width": 1024,
+          "height": 1024,
+          "filename-prefix": "Zenerator/square-it"
         }
+      },
+      "Wide": {
+        "name": "Wide",
+        "description": "Preset with 16:9 aspect ratio for widescreen video output",
+        "values": {
+          "width": 1365,
+          "height": 768,
+          "filename-prefix": "Zenerator/wide-it"
+        }
+      }
     },
     "inputs": {
       "output-specifications": {
@@ -821,6 +821,119 @@
     },
     "outputs": {
       "type": "video"
+    }
+  },
+  "flux-with-loras": {
+    "name": "Flux with Loras",
+    "filename": "flux-with-loras.json",
+    "description": "Create an image from a description with control over loras and their strength.",
+    "inputs": {
+      "output-specifications": {
+        "type": "group",
+        "label": "Output Specifications",
+        "inputs": {
+          "width": {
+            "type": "int",
+            "label": "Width",
+            "node-id": "[\"28\"][\"inputs\"][\"width\"]",
+            "value": 1024,
+            "minimum": 128,
+            "maximum": 4096
+          },
+          "height": {
+            "type": "int",
+            "label": "Height",
+            "node-id": "[\"28\"][\"inputs\"][\"height\"]",
+            "value": 1024,
+            "minimum": 128,
+            "maximum": 4096
+          },
+          "filename-prefix": {
+            "type": "string",
+            "label": "Filename Prefix",
+            "node-id": "[\"40\"][\"inputs\"][\"filename_prefix\"]",
+            "value": "flux-with-loras/image-"
+          }
+        }
+      },
+      "input-specifications": {
+        "type": "group",
+        "label": "Input Specifications",
+        "inputs": {
+          "positive-prompt": {
+            "type": "string",
+            "label": "Text Prompt",
+            "node-id": "[\"6\"][\"inputs\"][\"text\"]",
+            "value": "",
+            "info": "Generate an image from this prompt"
+          }
+        }
+      },
+      "lora-settings": {
+        "type": "group",
+        "label": "Lora Settings",
+        "inputs": {
+          "lora-01": {
+            "type": "string",
+            "label": "Lora 01",
+            "node-id": "[\"34\"][\"inputs\"][\"lora_01\"]",
+            "value": "FluxD\\flux-lora-vintage-tarot.safetensors"
+          },
+          "strength-01": {
+            "type": "float",
+            "label": "Strength 01",
+            "node-id": "[\"34\"][\"inputs\"][\"strength_01\"]",
+            "value": 0.3,
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          "lora-02": {
+            "type": "string",
+            "label": "Lora 02",
+            "node-id": "[\"34\"][\"inputs\"][\"lora_02\"]",
+            "value": "FluxD\\nilor\\FluxD_Nilor_Instagram_art_lora_v02.safetensors"
+          },
+          "strength-02": {
+            "type": "float",
+            "label": "Strength 02",
+            "node-id": "[\"34\"][\"inputs\"][\"strength_02\"]",
+            "value": 0.3,
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          "lora-03": {
+            "type": "string",
+            "label": "Lora 03",
+            "node-id": "[\"34\"][\"inputs\"][\"lora_03\"]",
+            "value": "FluxD\\nilor\\FluxD_Nilor_Snapping_Turtles.safetensors"
+          },
+          "strength-03": {
+            "type": "float",
+            "label": "Strength 03",
+            "node-id": "[\"34\"][\"inputs\"][\"strength_03\"]",
+            "value": 0.9,
+            "minimum": 0.0,
+            "maximum": 1.0
+          }
+        }
+      },
+      "extra-settings": {
+        "type": "group",
+        "label": "Extra Settings",
+        "inputs": {
+          "diffusion-steps": {
+            "type": "int",
+            "label": "Diffusion Steps",
+            "node-id": "[\"17\"][\"inputs\"][\"steps\"]",
+            "value": 39,
+            "minimum": 1,
+            "maximum": 100
+          }
+        }
+      }
+    },
+    "outputs": {
+      "type": "image"
     }
   }
 }
