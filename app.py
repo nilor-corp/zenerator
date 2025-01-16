@@ -84,6 +84,7 @@ download_progress = {"current": 0, "total": 0, "status": ""}
 
 # Add near other global variables
 job_tracking = {}  # Maps prompt_ids to job metadata
+result_component = None  # Will hold our result component for API access
 
 def signal_handler(signum, frame):
     global running, tick_timer, threads
@@ -767,6 +768,19 @@ def run_workflow(workflow_name, progress, **kwargs):
         except KeyboardInterrupt:
             print("Interrupted by user. Exiting...")
             return None
+
+
+def get_job_result(prompt_id):
+    """Get the current status and result for a job"""
+    if prompt_id in job_tracking:
+        job = job_tracking[prompt_id]
+        return {
+            "status": job["status"],
+            "output_file": job["output_file"],
+            "workflow_name": job["workflow_name"],
+            "timestamp": job["timestamp"]
+        }
+    return {"status": "not_found"}
 
 
 def run_workflow_with_name(
@@ -1722,4 +1736,15 @@ with gr.Blocks(
     if __name__ == "__main__":
         setup_signal_handlers()
         demo.queue()
+        
+        # Create hidden components for the result endpoint
+        result_input = gr.Text(visible=False)
+        result_output = gr.JSON(visible=False)
+        demo.load(
+            fn=get_job_result,
+            inputs=result_input,
+            outputs=result_output,
+            api_name="workflow_result"
+        )
+        
         demo.launch(allowed_paths=allowed_paths, favicon_path="favicon.png")
