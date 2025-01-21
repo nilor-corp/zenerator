@@ -412,23 +412,16 @@ def comfy_GET(endpoint):
 
 
 def get_queue():
-    global queue, queue_running, queue_pending, queue_failed
-
-    queue = comfy_GET("queue")
-    if queue is None:
-        print("/queue GET response is empty")
+    """Get the current queue status"""
+    try:
+        queue = comfy_GET("queue")
+        queue_running = queue.get("queue_running", [])
+        queue_pending = queue.get("queue_pending", [])
+        queue_failed = queue.get("queue_failed", [])
+        return [queue_running, queue_pending, queue_failed]
+    except Exception as e:
+        print(f"Error getting queue: {str(e)}")
         return [[], [], []]
-
-    queue_running = queue.get("queue_running", [])
-    # print(f"queue_running: {len(queue_running)}")
-
-    queue_pending = queue.get("queue_pending", [])
-    # print(f"queue_pending: {len(queue_pending)}")
-
-    queue_failed = queue.get("queue_failed", [])
-    # print(f"queue_failed: {len(queue_failed)}")
-
-    return [queue_running, queue_pending, queue_failed]
 
 
 def get_running_prompt_id():
@@ -811,12 +804,10 @@ def check_gen_progress_visibility():
     try:
         [queue_running, queue_pending, queue_failed] = get_queue()
         current_step = current_progress_data.get("value", None)
-        visibility = (current_step is not None) and (queue_running > 0)
+        # Check if there are any running jobs by looking at length of queue_running
+        visibility = (current_step is not None) and len(queue_running) > 0
     except:
         visibility = False
-    print(
-        f"Progress visibility: {visibility} (step: {current_step}, running: {queue_running})"
-    )
     return gr.update(visible=visibility)
 
 
@@ -824,12 +815,10 @@ def check_interrupt_visibility():
     """Check if queue info should be visible"""
     try:
         [queue_running, queue_pending, queue_failed] = get_queue()
-        visibility = (queue_running > 0) or (queue_pending > 0)
+        # Check lengths of running and pending queues
+        visibility = len(queue_running) > 0 or len(queue_pending) > 0
     except:
         visibility = False
-    print(
-        f"Queue visibility: {visibility} (running: {queue_running}, pending: {queue_pending})"
-    )
     return gr.update(visible=visibility)
 
 
