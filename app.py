@@ -286,21 +286,20 @@ def check_current_progress():
                         print(f"WebSocket message type: {message['type']}")  # Debug
 
                         if message["type"] == "status":
-                            status = get_status()
-                            print(f"Status response: {status}")  # Debug
-                            if status and "exec_info" in status:
+                            status_data = message["data"]["status"]
+                            if "exec_info" in status_data:
                                 current_progress_data = {
-                                    "value": status["exec_info"].get("value", 0),
-                                    "max": status["exec_info"].get("max", 0),
-                                    "prompt_id": status.get("prompt_id", "N/A"),
+                                    "value": status_data["exec_info"].get("value", 0),
+                                    "max": status_data["exec_info"].get("max", 0),
+                                    "prompt_id": status_data.get("prompt_id", "N/A"),
                                 }
                                 print(
                                     f"Updated progress data: {current_progress_data}"
                                 )  # Debug
-                            queue_remaining = message["data"]["status"]["exec_info"][
-                                "queue_remaining"
-                            ]
-                            print("Queue remaining: " + str(queue_remaining))
+                                queue_remaining = status_data["exec_info"][
+                                    "queue_remaining"
+                                ]
+                                print("Queue remaining: " + str(queue_remaining))
 
                         elif message["type"] == "execution_start":
                             executing = True
