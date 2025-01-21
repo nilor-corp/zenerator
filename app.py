@@ -270,12 +270,11 @@ current_progress_data = {}
 
 
 def check_current_progress():
-    global executing, ws
+    global executing, ws, current_progress_data
     try:
         while running:
             if ws:
                 try:
-                    # Check if connection is still valid
                     if not ws.connected:
                         print("WebSocket disconnected, waiting for reconnection...")
                         time.sleep(1)
@@ -284,22 +283,27 @@ def check_current_progress():
                     message = ws.recv()
                     if message is not None:
                         message = json.loads(message)
+
                         if message["type"] == "status":
-                            data = message["data"]
-                            queue_remaining = data["status"]["exec_info"][
+                            status = get_status()
+                            if status and "exec_info" in status:
+                                current_progress_data = {
+                                    "value": status["exec_info"].get("value", 0),
+                                    "max": status["exec_info"].get("max", 0),
+                                    "prompt_id": status.get("prompt_id", "N/A"),
+                                }
+                            queue_remaining = message["data"]["status"]["exec_info"][
                                 "queue_remaining"
                             ]
                             print("Queue remaining: " + str(queue_remaining))
 
                         elif message["type"] == "execution_start":
-                            data = message["data"]
                             executing = True
                             print("Executing!")
 
                         elif message["type"] == "executed":
-                            data = message["data"]
-                            prompt_id = data["prompt_id"]
-                            print("Executed : " + prompt_id)
+                            prompt_id = message["data"]["prompt_id"]
+                            print("Executed: " + prompt_id)
 
                 except websocket.WebSocketConnectionClosedException:
                     print("WebSocket connection closed normally")
