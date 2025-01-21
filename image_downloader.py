@@ -141,12 +141,14 @@ def process_files(
             print(f"Source: {src}")
 
             ext = os.path.splitext(file)[1]
-            dst = os.path.join(destination, f"{input_type}_0000{ext}")
+            new_filename = f"{input_type}_0000{ext}"
+            dst = os.path.join(destination, new_filename)
             dst = os.path.abspath(dst)
 
             if os.path.exists(src):
                 shutil.copy(src, dst)
-                print(f"Copied file to {destination}")
+                print(f"Copied file to {dst}")
+                return dst  # Return the path to the actual file for single files
             else:
                 print(f"Source file not found: {src}")
                 return None
@@ -176,7 +178,7 @@ def process_files(
                     print(f"Source file not found: {src}")
                     return None
 
-        return os.path.abspath(destination)
+            return os.path.abspath(destination)
 
     except Exception as e:
         print(f"Error processing files: {str(e)}")
