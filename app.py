@@ -769,18 +769,34 @@ def check_progress():
         return gr.update(value="")
 
 
+# def check_gen_progress_visibility():
+#     try:
+#         [queue_running, queue_pending, queue_failed] = get_queue()
+#         has_progress = bool(current_progress_data)
+#         visibility = has_progress and len(queue_running) > 0
+#         print(
+#             f"Progress visibility check - Has progress: {has_progress}, Queue running: {len(queue_running)}"
+#         )  # Debug
+#         return gr.update(visible=visibility)
+#     except Exception as e:
+#         print(f"Error in check_gen_progress_visibility: {e}")
+#         return gr.update(visible=False)
+
+
 def check_gen_progress_visibility():
+    global current_progress_data, current_queue_info
     try:
-        [queue_running, queue_pending, queue_failed] = get_queue()
-        has_progress = bool(current_progress_data)
-        visibility = has_progress and len(queue_running) > 0
-        print(
-            f"Progress visibility check - Has progress: {has_progress}, Queue running: {len(queue_running)}"
-        )  # Debug
-        return gr.update(visible=visibility)
-    except Exception as e:
-        print(f"Error in check_gen_progress_visibility: {e}")
-        return gr.update(visible=False)
+        print(f"current_progress_data: {current_progress_data}")
+        prompt_id = current_progress_data.get("prompt_id", None)
+        current_step = current_progress_data.get("value", None)
+
+        queue_running = current_queue_info[5]
+
+        # print(f"Prompt ID: {prompt_id}, Current Step: {current_step}")
+        visibility = (current_step != None) and (queue_running > 0)
+    except:
+        visibility = False
+    return gr.update(visible=visibility)
 
 
 def check_interrupt_visibility():
