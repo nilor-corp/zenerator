@@ -284,6 +284,9 @@ def check_current_progress():
                     if message is not None:
                         message = json.loads(message)
                         print(f"WebSocket message type: {message['type']}")  # Debug
+                        print(
+                            f"Full WebSocket message: {message}"
+                        )  # Debug full message structure
 
                         if message["type"] == "status":
                             status_data = message["data"]["status"]
