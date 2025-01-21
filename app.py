@@ -287,16 +287,21 @@ def check_current_progress(ws):
                 try:
                     message = json.loads(out)
                     print(f"WebSocket message: {message}")  # Debug
+
                     if message["type"] == "progress":
                         data = message["data"]
                         current_progress_data = data
                         print(f"Progress data updated: {data}")  # Debug
                     elif message["type"] == "executing":
                         data = message["data"]
-                        prompt_id = data["prompt_id"]
-                        if data["node"] is None and data["prompt_id"] == prompt_id:
-                            check_current_progress_running = False
-                            break  # Execution is done
+                        current_progress_data = data
+                        print(f"Execution data updated: {data}")  # Debug
+                    elif message["type"] == "status":
+                        if "status" in message["data"]:
+                            status_data = message["data"]["status"]
+                            if "exec_info" in status_data:
+                                current_progress_data = status_data["exec_info"]
+                                print(f"Status data updated: {status_data}")  # Debug
                 except json.JSONDecodeError:
                     print("Received invalid JSON data, skipping...")
                     continue
@@ -335,7 +340,11 @@ def comfy_POST(endpoint, message):
 
 def post_prompt(workflow):
     """Submit a workflow prompt to ComfyUI"""
-    prompt_data = {"prompt": workflow, "client_id": "app"}
+    global client_id  # Add this to access the UUID we created
+    prompt_data = {
+        "prompt": workflow,
+        "client_id": client_id,
+    }  # Use the UUID instead of "app"
 
     try:
         print(f"Attempting to post prompt to {selected_port_url}/prompt")
