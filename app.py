@@ -90,6 +90,9 @@ current_output_type = "image"
 
 initial_timestamp = 0  # Time when the system started
 
+latest_known_image = None
+latest_known_video = None
+
 
 class ContentType(Enum):
     IMAGE = "image"
@@ -604,49 +607,48 @@ def track_generation_job(job_id: str, workflow_name: str):
 
 
 def initialize_content_tracking():
-    """Capture the timestamp of the latest file at startup"""
-    global initial_timestamp
+    """Record the latest content files at startup"""
+    global latest_known_image, latest_known_video
     print("\nInitializing content tracking...")
 
-    latest_time = 0
-    for content_type in ContentType:
-        content = get_latest_content(OUT_DIR, content_type.value)
-        if content and os.path.getmtime(content) > latest_time:
-            latest_time = os.path.getmtime(content)
+    latest_known_image = get_latest_content(OUT_DIR, ContentType.IMAGE.value)
+    latest_known_video = get_latest_content(OUT_DIR, ContentType.VIDEO.value)
 
-    initial_timestamp = latest_time
-    print(f"Initialized with timestamp cutoff: {initial_timestamp}")
+    print(f"Initial image: {latest_known_image}")
+    print(f"Initial video: {latest_known_video}")
 
 
 def check_for_new_content():
     """Check for new content and associate with correct job"""
+    global latest_known_image, latest_known_video
+
     try:
         print("\nChecking for new content...")
         print(f"Current job tracking: {job_tracking}")
+        print(f"Latest known image: {latest_known_image}")
+        print(f"Latest known video: {latest_known_video}")
 
         for content_type in ContentType:
             print(f"\nChecking for new {content_type.value} content...")
-            latest_content = get_latest_content(OUT_DIR, content_type.value)
+            current_latest = get_latest_content(OUT_DIR, content_type.value)
 
-            if latest_content is None:
-                print(f"No {content_type.value} content found in {OUT_DIR}")
+            if current_latest is None:
+                print(f"No {content_type.value} content found")
                 continue
 
-            # Skip files that existed at startup
-            if os.path.getmtime(latest_content) <= initial_timestamp:
-                print(f"Skipping pre-existing file: {latest_content}")
-                continue
-
-            # Check if this file was already assigned
-            already_assigned = any(
-                job["output_file"] == latest_content for job in job_tracking.values()
+            # Compare with our known latest file
+            known_latest = (
+                latest_known_image
+                if content_type == ContentType.IMAGE
+                else latest_known_video
             )
 
-            if already_assigned:
-                print(
-                    f"Output file {latest_content} already assigned to a job, skipping"
-                )
+            if current_latest == known_latest:
+                print(f"No new {content_type.value} content (still at {known_latest})")
                 continue
+
+            print(f"Found new {content_type.value}: {current_latest}")
+            print(f"Previous known {content_type.value}: {known_latest}")
 
             # Find pending jobs of this type
             pending_jobs = {
@@ -658,35 +660,42 @@ def check_for_new_content():
             }
 
             if not pending_jobs:
-                print(f"No pending jobs found for {content_type.value}")
+                print(
+                    f"No pending jobs found for {content_type.value}, updating known latest"
+                )
+                # Update our known latest even without a job
+                if content_type == ContentType.IMAGE:
+                    latest_known_image = current_latest
+                else:
+                    latest_known_video = current_latest
                 continue
 
-            print(f"Found {len(pending_jobs)} pending {content_type.value} jobs")
+            print(f"Found {len(pending_jobs)} pending {content_type.value} jobs:")
+            for pid, data in pending_jobs.items():
+                print(f"  Job {pid}: submitted at {data['timestamp']}")
 
             # Get the oldest pending job
             oldest_job_id = min(
                 pending_jobs.keys(), key=lambda pid: pending_jobs[pid]["timestamp"]
             )
-            print(f"Selected oldest job {oldest_job_id} for output assignment")
+            print(f"Selected oldest job {oldest_job_id}")
 
-            print(f"Assigning {latest_content} to job {oldest_job_id}")
+            # Assign the file to the job
             job_tracking[oldest_job_id].update(
-                {"status": "completed", "output_file": latest_content}
+                {"status": "completed", "output_file": current_latest}
             )
+
+            # Update our known latest
+            if content_type == ContentType.IMAGE:
+                latest_known_image = current_latest
+            else:
+                latest_known_video = current_latest
+
             print(
-                f"Successfully associated output {latest_content} with job {oldest_job_id}"
+                f"Successfully associated new {content_type.value} {current_latest} with job {oldest_job_id}"
             )
 
-            # Debug dump of all job statuses
-            print("\nCurrent job tracking status:")
-            for job_id, job_data in job_tracking.items():
-                print(f"Job {job_id}:")
-                print(f"  Type: {job_data['type'].value}")
-                print(f"  Status: {job_data['status']}")
-                print(f"  Workflow: {job_data['workflow_name']}")
-                print(f"  Output: {job_data['output_file']}")
-
-        return gr.update(value=latest_content if latest_content else None)
+        return gr.update(value=current_latest if current_latest else None)
 
     except Exception as e:
         print(f"Error checking for new content: {str(e)}")
