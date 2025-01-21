@@ -768,14 +768,15 @@ def check_progress():
     try:
         if current_progress_data:
             value = current_progress_data.get("value", 0)
-            max_value = current_progress_data.get("max", 0)
-            progress_text = f"Step {value} of {max_value}"
-            print(f"Progress update: {progress_text}")  # Debug
-            return gr.update(value=progress_text)
-        return gr.update(value="")
+            max_value = current_progress_data.get("max", 1)  # Prevent div by zero
+            if max_value > 0:  # Only calculate progress if we have valid max
+                progress = value / max_value
+                print(f"Progress update: {value}/{max_value} = {progress:.2%}")
+                return gr.update(value=progress)
+        return gr.update(value=0)
     except Exception as e:
         print(f"Error in check_progress: {e}")
-        return gr.update(value="")
+        return gr.update(value=0)
 
 
 def check_gen_progress_visibility():
@@ -1800,7 +1801,7 @@ with gr.Blocks(
                 )
 
             with gr.Group(visible=False) as gen_progress_group:
-                gen_component = gr.Textbox(
+                gen_component = gr.Progress(
                     label="Generation Progress", interactive=False, visible=True
                 )
 
