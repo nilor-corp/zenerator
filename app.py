@@ -1016,22 +1016,6 @@ def create_dynamic_input(
         selected_option = gr.Radio(choices, label=text_label, value=choices[0])
         print(f"Choices: {choices}")
 
-        # Add optional limit controls only for multiple images input type
-        if input_type == "images":
-            with gr.Accordion("Advanced Options", open=False):
-                limit_enabled = gr.Checkbox(label="Limit number of images", value=False)
-                limit_value = gr.Number(
-                    label="Max images",
-                    value=4,
-                    minimum=1,
-                    step=1,
-                    interactive=True,
-                    visible=True,
-                )
-        else:
-            limit_enabled = None
-            limit_value = None
-
         # Initialize possible_inputs based on input_type
         if input_type == "images":
             possible_inputs = [
@@ -1043,7 +1027,7 @@ def create_dynamic_input(
                 ),
                 gr.Gallery(label=choices[2], show_label=False, visible=False),
             ]
-        elif input_type == "image":  # New single image type
+        elif input_type == "image":  # Single image type
             possible_inputs = [
                 gr.Textbox(
                     label=choices[0], show_label=False, visible=True, info=tooltips[0]
@@ -1081,6 +1065,9 @@ def create_dynamic_input(
             outputs=possible_inputs,
         )
 
+        # Make sure we return all three values
+        return selected_option, possible_inputs, output
+
         # Handle input submission with progress tracking
 
 
@@ -1105,6 +1092,10 @@ def process_with_progress(selected_option, choices, input_type, *args):
             limit_value = args[1]
             max_images = int(limit_value) if limit_enabled else None
 
+            # Get the actual input values after the limit controls
+            option_values = args[2 : 2 + len(choices)]
+            selected_value = option_values[opt_index]
+
             if selected_option == "filepath":
                 return organise_local_files(
                     selected_value, input_type, max_images=max_images
@@ -1121,7 +1112,7 @@ def process_with_progress(selected_option, choices, input_type, *args):
             elif selected_option == "upload":
                 return copy_uploaded_files_to_local_dir(selected_value, input_type)
 
-        # Return all input values plus result
+        # Return all input values
         return list(args)
 
     except Exception as e:
