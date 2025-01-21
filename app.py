@@ -815,65 +815,62 @@ def check_interrupt_visibility():
 
 
 def run_workflow(workflow_name, progress, **kwargs):
+    """Run a workflow with the given parameters"""
     try:
-        # Print the input arguments for debugging
+        print(f"\nAttempting to run workflow: {workflow_name}")
         print("inside run workflow with kwargs: " + str(kwargs))
 
-        # Construct the path to the workflow JSON file
-        workflow_json = "./workflows/" + workflow_name
+        # Load workflow
+        workflow_path = f"workflows/{workflow_name}.json"
+        print(f"Loading workflow from: {workflow_path}")
 
-        # Open the workflow JSON file
-        with open(workflow_json, "r", encoding="utf-8") as file:
-            # Load the JSON data
-            workflow = json.load(file)
+        try:
+            with open(workflow_path, "r", encoding="utf-8") as f:
+                workflow = json.load(f)
+                print("Successfully loaded workflow JSON")
+        except FileNotFoundError:
+            print(f"ERROR: Workflow file not found at {workflow_path}")
+            return None
+        except json.JSONDecodeError as e:
+            print(f"ERROR: Invalid JSON in workflow file: {str(e)}")
+            return None
 
-            # Iterate through changes requested via kwargs
-            for change_request in kwargs.values():
-                # Extract the node path and the new value from the change request
-                node_path = change_request["node-id"]
-                new_value = change_request["value"]
+        # Update workflow with parameters
+        for param_name, param_data in kwargs.items():
+            node_path = param_data["node-id"]
+            value = param_data["value"]
+            print(f"Intending to change {node_path} to {value}")
 
-                # Log the intended change for debugging
-                print(f"Intending to change {node_path} to {new_value}")
+            try:
+                # Parse the node path
+                path_parts = json.loads(node_path)
+                current = workflow
+                for part in path_parts[:-1]:
+                    current = current[part]
 
-                # Process the node path into a list of keys
-                path_keys = node_path.strip("[]").split("][")
-                path_keys = [key.strip('"') for key in path_keys]
-
-                # Navigate through the workflow data to the last key
-                current_section = workflow
-                for key in path_keys[:-1]:  # Exclude the last key for now
-                    current_section = current_section[key]
-
-                # Update the value at the final key
-                final_key = path_keys[-1]
-                print(f"Updating {current_section[final_key]} to {new_value}")
-                current_section[final_key] = new_value
-
-            # Set content type based on workflow definition
-            content_type = get_content_type_from_workflow(workflow_name)
-
-            # Submit workflow
-            print(f"Submitting workflow to ComfyUI...")
-            prompt_id = post_prompt(workflow)
-            print(f"post_prompt returned: {prompt_id}")
-
-            if not prompt_id:
-                print("Warning: No prompt ID returned from post_prompt")
+                old_value = current[path_parts[-1]]
+                print(f"Updating {old_value} to {value}")
+                current[path_parts[-1]] = value
+            except Exception as e:
+                print(f"ERROR: Failed to update parameter {param_name}: {str(e)}")
                 return None
 
-            # Store job information
-            job_tracking[prompt_id] = {
-                "timestamp": time.time(),
-                "workflow_name": workflow_name,
-                "status": "pending",
-                "output_file": None,
-            }
-            print(f"Added job to tracking: {prompt_id}")  # Debug print
-            return prompt_id
+        print("\nSubmitting workflow to ComfyUI...")
+        prompt_id = post_prompt(workflow)
+        print(f"post_prompt returned: {prompt_id}")
+
+        if not prompt_id:
+            print("ERROR: No prompt ID returned from post_prompt")
+            return None
+
+        # Track the job
+        track_generation_job(prompt_id, workflow_name)
+        print(f"Successfully tracked job {prompt_id} for {workflow_name}")
+        return prompt_id
 
     except Exception as e:
-        print(f"Error running workflow: {str(e)}")
+        print(f"ERROR in run_workflow: {str(e)}")
+        print(f"Stack trace: {traceback.format_exc()}")
         return None
 
 
