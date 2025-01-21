@@ -269,53 +269,56 @@ check_current_progress_running = False
 current_progress_data = {}
 
 
-def check_current_progress():
-    global executing, ws, current_progress_data
-    try:
-        while running:
-            # Poll the status endpoint for job progress
-            status = get_status()
-            if status != "N/A" and isinstance(status, dict):
-                if "exec_info" in status:
-                    current_progress_data = {
-                        "value": status["exec_info"].get("value", 0),
-                        "max": status["exec_info"].get("max", 0),
-                        "prompt_id": status.get("prompt_id", "N/A"),
-                    }
-                    print(
-                        f"check_current_progress updating data: {current_progress_data}"
-                    )  # Debug
+def check_current_progress(ws):
+    global check_current_progress_running, current_progress_data
 
-            # Still use websocket for execution events
-            if ws:
+    check_current_progress_running = True
+
+    while check_current_progress_running and ws and ws.connected:  # Add running check
+        try:
+            out = ws.recv()
+            if not out:  # Check if we received empty data
+                break
+
+            if isinstance(out, str):
                 try:
-                    if not ws.connected:
-                        print("WebSocket disconnected, waiting for reconnection...")
-                        time.sleep(1)
-                        continue
+                    message = json.loads(out)
+                    # print(f"Message: {message}")
+                    if message["type"] == "executing":
+                        data = message["data"]
+                        prompt_id = data["prompt_id"]
+                        if data["node"] is None and data["prompt_id"] == prompt_id:
+                            check_current_progress_running = False
+                            break  # Execution is done
+                    elif message["type"] == "status":
+                        data = message["data"]
+                        queue_remaining = data["status"]["exec_info"]["queue_remaining"]
+                        print("Queue remaining: " + str(queue_remaining))
+                    elif message["type"] == "execution_start":
+                        executing = True
+                        print("Executing!")
+                    elif message["type"] == "executed":
+                        data = message["data"]
+                        prompt_id = data["prompt_id"]
+                        print("Executed : " + prompt_id)
+                    elif message["type"] == "progress":
+                        data = message["data"]
+                        current_progress_data = data
+                except json.JSONDecodeError:
+                    print("Received invalid JSON data, skipping...")
+                    continue
+            else:
+                continue  # previews are binary data
 
-                    message = ws.recv()
-                    if message is not None:
-                        message = json.loads(message)
+        except websocket.WebSocketConnectionClosedException:
+            print("WebSocket connection closed, stopping progress check")
+            break
+        except Exception as e:
+            print(f"Error in progress check: {type(e).__name__}: {e}")
+            break
 
-                        if message["type"] == "execution_start":
-                            executing = True
-                            print("Executing!")
-                        elif message["type"] == "executed":
-                            prompt_id = message["data"]["prompt_id"]
-                            print("Executed: " + prompt_id)
-
-                except websocket.WebSocketConnectionClosedException:
-                    print("WebSocket connection closed normally")
-                    time.sleep(1)
-                except Exception as e:
-                    print(f"Error in websocket loop: {str(e)}")  # Debug
-                    time.sleep(1)
-
-            time.sleep(1)  # Poll every second
-
-    except Exception as e:
-        print(f"Error in check_current_progress: {str(e)}")  # Debug
+    check_current_progress_running = False
+    current_progress_data = {}
 
 
 # endregion
@@ -774,6 +777,9 @@ def check_progress(progress=gr.Progress()):
         try:
             if current_progress_data != previous_progress_data:
                 previous_progress_data = current_progress_data
+
+            # debug by showing the data
+            print(f"check_progress sees progress data: {current_progress_data}")
 
             progress_tuple = (
                 current_progress_data.get("value", 0),
