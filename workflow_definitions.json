@@ -754,7 +754,7 @@
             "type": "string",
             "label": "Filename Prefix",
             "node-id": "[\"44\"][\"inputs\"][\"filename_prefix\"]",
-            "value": "cogvideox-i2v/cogvideox-i2v"
+            "value": "Zenerator/cogvideox-i2v"
           },
           "num_frames": {
             "type": "int",
