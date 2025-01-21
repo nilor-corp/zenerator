@@ -151,7 +151,7 @@
             "node-id": "[\"1040\"][\"inputs\"][\"boolean\"]",
             "value": true
           },
-          "ipadapter-tiled":{
+          "ipadapter-tiled": {
             "type": "bool",
             "label": "IPAdapter Tiled",
             "node-id": "[\"1057\"][\"inputs\"][\"boolean\"]",
@@ -717,6 +717,82 @@
               "RandomNoVenetian"
             ],
             "interactive": false
+          }
+        }
+      }
+    },
+    "outputs": {
+      "type": "video"
+    }
+  },
+  "cogvideox-i2v": {
+    "name": "CogVideoX I2V",
+    "filename": "cogvideox-i2v.json",
+    "description": "CogVideoX I2V",
+    "inputs": {
+      "output-specifications": {
+        "type": "group",
+        "label": "Output Specifications",
+        "inputs": {
+          "width": {
+            "type": "int",
+            "label": "Width",
+            "node-id": "[\"73\"][\"inputs\"][\"value\"]",
+            "value": 1024,
+            "minimum": 128,
+            "maximum": 4096
+          },
+          "height": {
+            "type": "int",
+            "label": "Height",
+            "node-id": "[\"74\"][\"inputs\"][\"value\"]",
+            "value": 576,
+            "minimum": 128,
+            "maximum": 4096
+          },
+          "filename-prefix": {
+            "type": "string",
+            "label": "Filename Prefix",
+            "node-id": "[\"44\"][\"inputs\"][\"filename_prefix\"]",
+            "value": "cogvideox-i2v/cogvideox-i2v"
+          },
+          "num_frames": {
+            "type": "int",
+            "label": "Number of Frames",
+            "node-id": "[\"75\"][\"inputs\"][\"value\"]",
+            "value": 49,
+            "minimum": 16
+          },
+          "steps": {
+            "type": "int",
+            "label": "Steps",
+            "node-id": "[\"76\"][\"inputs\"][\"value\"]",
+            "value": 50,
+            "minimum": 1
+          }
+        }
+      },
+      "input-specifications": {
+        "type": "group",
+        "label": "Input Specifications",
+        "inputs": {
+          "positive-prompt": {
+            "type": "text",
+            "label": "Positive Prompt",
+            "node-id": "[\"30\"][\"inputs\"][\"prompt\"]",
+            "value": "extremely detailed"
+          },
+          "negative-prompt": {
+            "type": "text",
+            "label": "Negative Prompt",
+            "node-id": "[\"31\"][\"inputs\"][\"prompt\"]",
+            "value": "The video is low quality, it has a low resolution. Watermark present in each frame. Strange motion trajectory."
+          },
+          "image-input": {
+            "type": "image",
+            "label": "Image Input",
+            "node-id": "[\"72\"][\"inputs\"][\"image\"]",
+            "value": ""
           }
         }
       }
