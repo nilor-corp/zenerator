@@ -93,6 +93,12 @@ initial_timestamp = 0  # Time when the system started
 latest_known_image = None
 latest_known_video = None
 
+check_current_progress_running = False
+current_progress_data = {}
+previous_progress_data = {}
+current_queue_info = [-1, -1, -1, -1, -1, -1]
+previous_queue_info = [-1, -1, -1, -1, -1, -1]
+
 
 class ContentType(Enum):
     IMAGE = "image"
@@ -265,50 +271,37 @@ def send_heartbeat(ws):
             break
 
 
-check_current_progress_running = False
-current_progress_data = {}
-
-
 def check_current_progress(ws):
     global check_current_progress_running, current_progress_data
 
     check_current_progress_running = True
+    print("Starting progress check thread")  # Debug
 
-    while check_current_progress_running and ws and ws.connected:  # Add running check
+    while check_current_progress_running and ws and ws.connected:
         try:
             out = ws.recv()
             if not out:  # Check if we received empty data
-                break
+                continue
 
             if isinstance(out, str):
                 try:
                     message = json.loads(out)
-                    # print(f"Message: {message}")
-                    if message["type"] == "executing":
+                    print(f"WebSocket message: {message}")  # Debug
+                    if message["type"] == "progress":
+                        data = message["data"]
+                        current_progress_data = data
+                        print(f"Progress data updated: {data}")  # Debug
+                    elif message["type"] == "executing":
                         data = message["data"]
                         prompt_id = data["prompt_id"]
                         if data["node"] is None and data["prompt_id"] == prompt_id:
                             check_current_progress_running = False
                             break  # Execution is done
-                    elif message["type"] == "status":
-                        data = message["data"]
-                        queue_remaining = data["status"]["exec_info"]["queue_remaining"]
-                        print("Queue remaining: " + str(queue_remaining))
-                    elif message["type"] == "execution_start":
-                        executing = True
-                        print("Executing!")
-                    elif message["type"] == "executed":
-                        data = message["data"]
-                        prompt_id = data["prompt_id"]
-                        print("Executed : " + prompt_id)
-                    elif message["type"] == "progress":
-                        data = message["data"]
-                        current_progress_data = data
                 except json.JSONDecodeError:
                     print("Received invalid JSON data, skipping...")
                     continue
             else:
-                continue  # previews are binary data
+                continue  # Skip binary data
 
         except websocket.WebSocketConnectionClosedException:
             print("WebSocket connection closed, stopping progress check")
@@ -726,11 +719,6 @@ def check_vram(progress=gr.Progress()):
         time.sleep(1.0)
 
 
-previous_queue_info = [-1, -1, -1, -1, -1, -1]
-current_queue_info = [-1, -1, -1, -1, -1, -1]
-check_queue_running = False
-
-
 def check_queue(progress=gr.Progress()):
     global check_queue_running, previous_queue_info, current_queue_info
 
@@ -765,54 +753,29 @@ def check_queue(progress=gr.Progress()):
 
 
 check_progress_running = False
-previous_progress_data = {}
 
 
-def check_progress(progress=gr.Progress()):
-    global check_progress_running, current_progress_data, previous_progress_data, ws
-
-    check_progress_running = True
-
-    while check_progress_running:
-        try:
-            if current_progress_data != previous_progress_data:
-                previous_progress_data = current_progress_data
-
-            # debug by showing the data
-            print(f"check_progress sees progress data: {current_progress_data}")
-
-            progress_tuple = (
-                current_progress_data.get("value", 0),
-                current_progress_data.get("max", 0),
-            )
-            prompt_id = current_progress_data.get("prompt_id", "N/A")
-            if prompt_id != "N/A":
-                prompt_id_short = prompt_id[:8]
-                progress(progress=progress_tuple, unit="steps", desc=prompt_id_short)
-            else:
-                progress(progress=0.0)
-            # return gr.update(visible=True)
-        except:
-            progress(progress=0.0)
-            # return gr.update(visible=False)
-
-        if not ws or not ws.connected:
-            break
-
-        time.sleep(1.0)
+def check_progress():
+    try:
+        if current_progress_data:
+            value = current_progress_data.get("value", 0)
+            max_value = current_progress_data.get("max", 0)
+            progress_text = f"Step {value} of {max_value}"
+            print(f"Progress update: {progress_text}")  # Debug
+            return gr.update(value=progress_text)
+        return gr.update(value="")
+    except Exception as e:
+        print(f"Error in check_progress: {e}")
+        return gr.update(value="")
 
 
 def check_gen_progress_visibility():
-    """Check if generation progress should be visible"""
     try:
         [queue_running, queue_pending, queue_failed] = get_queue()
-        print(
-            f"check_gen_progress_visibility sees progress data: {current_progress_data}"
-        )  # Debug
         has_progress = bool(current_progress_data)
         visibility = has_progress and len(queue_running) > 0
         print(
-            f"Progress visibility result: {visibility} (has_progress: {has_progress}, running: {len(queue_running)})"
+            f"Progress visibility check - Has progress: {has_progress}, Queue running: {len(queue_running)}"
         )  # Debug
         return gr.update(visible=visibility)
     except Exception as e:
