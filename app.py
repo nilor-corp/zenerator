@@ -623,17 +623,22 @@ def check_for_new_content():
     global latest_known_image, latest_known_video
 
     try:
-        print("\nChecking for new content...")
-        print(f"Current job tracking: {job_tracking}")
-        print(f"Latest known image: {latest_known_image}")
-        print(f"Latest known video: {latest_known_video}")
+        # Only log job tracking when there are NEW pending jobs
+        pending_jobs_now = {
+            pid for pid, job in job_tracking.items() if job["status"] == "pending"
+        }
+        pending_jobs_now = set(pending_jobs_now)  # Convert to set for comparison
+        if not hasattr(check_for_new_content, "last_pending_jobs"):
+            check_for_new_content.last_pending_jobs = set()
+
+        if pending_jobs_now != check_for_new_content.last_pending_jobs:
+            print(f"\nPending jobs changed: {len(pending_jobs_now)} jobs waiting")
+            print(f"Current job tracking: {job_tracking}")
+            check_for_new_content.last_pending_jobs = pending_jobs_now
 
         for content_type in ContentType:
-            print(f"\nChecking for new {content_type.value} content...")
             current_latest = get_latest_content(OUT_DIR, content_type.value)
-
             if current_latest is None:
-                print(f"No {content_type.value} content found")
                 continue
 
             # Compare with our known latest file
@@ -644,11 +649,9 @@ def check_for_new_content():
             )
 
             if current_latest == known_latest:
-                print(f"No new {content_type.value} content (still at {known_latest})")
                 continue
 
-            print(f"Found new {content_type.value}: {current_latest}")
-            print(f"Previous known {content_type.value}: {known_latest}")
+            print(f"\nFound new {content_type.value}: {current_latest}")
 
             # Find pending jobs of this type
             pending_jobs = {
@@ -660,25 +663,20 @@ def check_for_new_content():
             }
 
             if not pending_jobs:
-                print(
-                    f"No pending jobs found for {content_type.value}, updating known latest"
-                )
                 # Update our known latest even without a job
                 if content_type == ContentType.IMAGE:
                     latest_known_image = current_latest
                 else:
                     latest_known_video = current_latest
+                print(
+                    f"No pending jobs for new {content_type.value}, updated known latest"
+                )
                 continue
-
-            print(f"Found {len(pending_jobs)} pending {content_type.value} jobs:")
-            for pid, data in pending_jobs.items():
-                print(f"  Job {pid}: submitted at {data['timestamp']}")
 
             # Get the oldest pending job
             oldest_job_id = min(
                 pending_jobs.keys(), key=lambda pid: pending_jobs[pid]["timestamp"]
             )
-            print(f"Selected oldest job {oldest_job_id}")
 
             # Assign the file to the job
             job_tracking[oldest_job_id].update(
@@ -692,7 +690,7 @@ def check_for_new_content():
                 latest_known_video = current_latest
 
             print(
-                f"Successfully associated new {content_type.value} {current_latest} with job {oldest_job_id}"
+                f"Successfully associated new {content_type.value} with job {oldest_job_id}"
             )
 
         return gr.update(value=current_latest if current_latest else None)
