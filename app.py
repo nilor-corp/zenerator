@@ -764,15 +764,16 @@ def check_queue(progress=gr.Progress()):
 check_progress_running = False
 
 
-def check_progress():
+def check_progress(progress=gr.Progress()):
     try:
         if current_progress_data:
             value = current_progress_data.get("value", 0)
             max_value = current_progress_data.get("max", 1)  # Prevent div by zero
             if max_value > 0:  # Only calculate progress if we have valid max
-                progress = value / max_value
-                print(f"Progress update: {value}/{max_value} = {progress:.2%}")
-                return gr.update(value=progress)
+                progress_value = value / max_value
+                progress(progress=progress_value)
+                print(f"Progress update: {value}/{max_value} = {progress_value:.2%}")
+                return gr.update(value=progress_value)
         return gr.update(value=0)
     except Exception as e:
         print(f"Error in check_progress: {e}")
@@ -1801,7 +1802,7 @@ with gr.Blocks(
                 )
 
             with gr.Group(visible=False) as gen_progress_group:
-                gen_component = gr.Progress(
+                gen_component = gr.Textbox(
                     label="Generation Progress", interactive=False, visible=True
                 )
 
