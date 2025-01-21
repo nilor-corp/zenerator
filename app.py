@@ -428,17 +428,22 @@ def get_running_prompt_id():
 
 
 def get_status():
+    """Get the current execution status"""
     global prompt, status
 
-    prompt = comfy_GET("prompt")
-    if prompt is None:
-        print("/prompt GET response is empty")
+    try:
+        prompt = comfy_GET("prompt")
+        if prompt is None:
+            print("/prompt GET response is empty")
+            return "N/A"
+
+        status = prompt.get("status", "N/A")
+        print(f"Prompt endpoint data: {prompt}")  # Debug
+        return status
+
+    except Exception as e:
+        print(f"Error getting prompt status: {e}")
         return "N/A"
-
-    status = prompt.get("status", "N/A")
-    print(f"status: {status}")
-
-    return status
 
 
 def get_history():
