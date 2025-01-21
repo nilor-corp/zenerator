@@ -769,20 +769,6 @@ def check_progress():
         return gr.update(value="")
 
 
-# def check_gen_progress_visibility():
-#     try:
-#         [queue_running, queue_pending, queue_failed] = get_queue()
-#         has_progress = bool(current_progress_data)
-#         visibility = has_progress and len(queue_running) > 0
-#         print(
-#             f"Progress visibility check - Has progress: {has_progress}, Queue running: {len(queue_running)}"
-#         )  # Debug
-#         return gr.update(visible=visibility)
-#     except Exception as e:
-#         print(f"Error in check_gen_progress_visibility: {e}")
-#         return gr.update(visible=False)
-
-
 def check_gen_progress_visibility():
     global current_progress_data, current_queue_info
     try:
@@ -1596,7 +1582,7 @@ def load_demo():
                 target=send_heartbeat, args=(ws,), daemon=True
             )
             progress_thread = threading.Thread(
-                target=check_current_progress, daemon=True
+                target=check_current_progress, args=(ws,), daemon=True
             )
 
             threads = [heartbeat_thread, progress_thread]
