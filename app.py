@@ -771,11 +771,14 @@ def check_progress(progress=gr.Progress()):
             max_value = current_progress_data.get("max", 1)
             if max_value > 0:
                 progress(progress=(value, max_value), unit="steps")
-                return gr.update(value=value / max_value)
-        return gr.update(value=0)
+                # return gr.update(value=value / max_value)
+        else:
+            progress(progress=0.0)
+            # return gr.update(value=0)
     except Exception as e:
         print(f"Error in check_progress: {e}")
-        return gr.update(value=0)
+        progress(progress=0.0)
+        # return gr.update(value=0)
 
 
 def check_gen_progress_visibility():
