@@ -815,22 +815,22 @@ def check_interrupt_visibility():
 # endregion
 
 
-def run_workflow(workflow_name, progress, **kwargs):
+def run_workflow(workflow_filename, workflow_name, progress, **kwargs):
     """Run a workflow with the given parameters"""
     try:
-        print(f"\nAttempting to run workflow: {workflow_name}")
+        print(f"\nAttempting to run workflow: {workflow_filename}")
         print("inside run workflow with kwargs: " + str(kwargs))
 
         # Construct the path to the workflow JSON file
-        workflow_json = "./workflows/" + workflow_name
+        workflow_json_filepath = "./workflows/" + workflow_filename
 
         # Open the workflow JSON file
         try:
-            with open(workflow_json, "r", encoding="utf-8") as file:
-                workflow = json.load(file)
+            with open(workflow_json_filepath, "r", encoding="utf-8") as file:
+                workflow_data = json.load(file)
                 print("Successfully loaded workflow JSON")
         except FileNotFoundError:
-            print(f"ERROR: Workflow file not found at {workflow_json}")
+            print(f"ERROR: Workflow file not found at {workflow_json_filepath}")
             return None
         except json.JSONDecodeError as e:
             print(f"ERROR: Invalid JSON in workflow file: {str(e)}")
@@ -851,7 +851,7 @@ def run_workflow(workflow_name, progress, **kwargs):
                 path_keys = [key.strip('"') for key in path_keys]
 
                 # Navigate through the workflow data to the last key
-                current_section = workflow
+                current_section = workflow_data
                 for key in path_keys[:-1]:  # Exclude the last key for now
                     current_section = current_section[key]
 
@@ -865,7 +865,7 @@ def run_workflow(workflow_name, progress, **kwargs):
             return None
 
         print("\nSubmitting workflow to ComfyUI...")
-        prompt_id = post_prompt(workflow)
+        prompt_id = post_prompt(workflow_data)
         print(f"post_prompt returned: {prompt_id}")
 
         if not prompt_id:
@@ -921,6 +921,7 @@ def run_workflow_with_name(
 
         return run_workflow(
             workflow_filename,
+            workflow_name,
             progress,
             **component_info_dict,
         )
