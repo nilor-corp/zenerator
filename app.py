@@ -604,7 +604,6 @@ def track_generation_job(job_id: str, workflow_name: str):
 def check_for_new_content():
     """Check for new content and associate with correct job"""
     try:
-        # Debug print job tracking state
         print("\nChecking for new content...")
         print(f"Current job tracking: {job_tracking}")
 
@@ -617,13 +616,18 @@ def check_for_new_content():
                 continue
             print(f"Found latest {content_type.value}: {latest_content}")
 
-            # Find pending jobs of this type, ordered by timestamp
+            # Get file creation time
+            file_time = os.path.getmtime(latest_content)
+
+            # Find pending jobs of this type that were created before this file
             pending_jobs = {
                 pid: data
                 for pid, data in job_tracking.items()
                 if data["status"] == "pending"
                 and data["type"] == content_type
                 and data["output_file"] is None
+                and data["timestamp"]
+                < file_time  # Only consider jobs created before the file
             }
 
             if not pending_jobs:
