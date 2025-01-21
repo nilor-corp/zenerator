@@ -604,7 +604,10 @@ def track_generation_job(job_id: str, workflow_name: str):
 def check_for_new_content():
     """Check for new content and associate with correct job"""
     try:
-        # Check for both types of content
+        # Debug print job tracking state
+        print("\nChecking for new content...")
+        print(f"Current job tracking: {job_tracking}")
+
         for content_type in ContentType:
             print(f"\nChecking for new {content_type.value} content...")
             latest_content = get_latest_content(OUT_DIR, content_type.value)
@@ -620,19 +623,14 @@ def check_for_new_content():
                 for pid, data in job_tracking.items()
                 if data["status"] == "pending"
                 and data["type"] == content_type
-                and data["output_file"]
-                is None  # Ensure we haven't already assigned an output
+                and data["output_file"] is None
             }
 
             if not pending_jobs:
                 print(f"No pending jobs found for {content_type.value}")
                 continue
 
-            print(f"Found {len(pending_jobs)} pending {content_type.value} jobs:")
-            for pid, data in pending_jobs.items():
-                print(
-                    f"  Job {pid}: {data['workflow_name']} (started at {time.strftime('%H:%M:%S', time.localtime(data['timestamp']))})"
-                )
+            print(f"Found {len(pending_jobs)} pending {content_type.value} jobs")
 
             # Get the oldest pending job of this type
             oldest_job_id = min(
