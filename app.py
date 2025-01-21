@@ -26,6 +26,9 @@ import torch
 import signal
 import sys
 
+from enum import Enum
+import traceback
+
 with open("config.json") as f:
     config = json.load(f)
 
@@ -78,13 +81,17 @@ threads = []
 queue = []
 prompt = {}
 status = {}
-previous_content = ""
+previous_content = None
 tick_timer = None
 download_progress = {"current": 0, "total": 0, "status": ""}
 
-job_tracking = {}  # Maps prompt_ids to job metadata
-result_component = None  # Will hold our result component for API access
+job_tracking = {}
 current_output_type = "image"
+
+
+class ContentType(Enum):
+    IMAGE = "image"
+    VIDEO = "video"
 
 
 def signal_handler(signum, frame):
@@ -553,40 +560,101 @@ def get_latest_content(folder, type):
 
 
 # region Info Checkers
+def get_content_type_from_workflow(workflow_name: str) -> ContentType:
+    """Get content type from workflow definition"""
+    return (
+        ContentType.VIDEO
+        if workflow_definitions[workflow_name]["outputs"]["type"] == "video"
+        else ContentType.IMAGE
+    )
+
+
+def track_generation_job(job_id: str, workflow_name: str):
+    """Track a new generation job"""
+    content_type = get_content_type_from_workflow(workflow_name)
+    job_tracking[job_id] = {
+        "status": "pending",
+        "type": content_type,
+        "workflow_name": workflow_name,
+        "timestamp": time.time(),
+        "output_file": None,  # Track the specific output file
+    }
+
+
 def check_for_new_content():
-    global previous_content, job_tracking, current_output_type
+    """Check for new content and associate with correct job"""
+    try:
+        # Check for both types of content
+        for content_type in ContentType:
+            print(f"\nChecking for new {content_type.value} content...")
+            latest_content = get_latest_content(OUT_DIR, content_type.value)
 
-    # print(f"Checking for new content of type: {current_output_type}")
-    latest_content = get_latest_content(OUT_DIR, current_output_type)
+            if latest_content is None:
+                print(f"No {content_type.value} content found in {OUT_DIR}")
+                continue
+            print(f"Found latest {content_type.value}: {latest_content}")
 
-    if latest_content != previous_content and latest_content is not None:
-        print(f"New content found: {latest_content}")
-        print(f"Current job tracking state: {job_tracking}")  # Debug print
+            # Find pending jobs of this type, ordered by timestamp
+            pending_jobs = {
+                pid: data
+                for pid, data in job_tracking.items()
+                if data["status"] == "pending"
+                and data["type"] == content_type
+                and data["output_file"]
+                is None  # Ensure we haven't already assigned an output
+            }
 
-        # Find the most recent pending job
-        pending_jobs = {
-            pid: data
-            for pid, data in job_tracking.items()
-            if data["status"] == "pending"
-        }
-        print(f"Pending jobs found: {pending_jobs}")  # Debug print
+            if not pending_jobs:
+                print(f"No pending jobs found for {content_type.value}")
+                continue
 
-        if pending_jobs:
-            # Get the oldest pending job (FIFO)
-            prompt_id = min(
+            print(f"Found {len(pending_jobs)} pending {content_type.value} jobs:")
+            for pid, data in pending_jobs.items():
+                print(
+                    f"  Job {pid}: {data['workflow_name']} (started at {time.strftime('%H:%M:%S', time.localtime(data['timestamp']))})"
+                )
+
+            # Get the oldest pending job of this type
+            oldest_job_id = min(
                 pending_jobs.keys(), key=lambda pid: pending_jobs[pid]["timestamp"]
             )
-            # Update job with output file
-            job_tracking[prompt_id].update(
+            print(f"Selected oldest job {oldest_job_id} for output assignment")
+
+            # Check if this file was already assigned
+            already_assigned = any(
+                job["output_file"] == latest_content for job in job_tracking.values()
+            )
+
+            if already_assigned:
+                print(
+                    f"Output file {latest_content} already assigned to a job, skipping"
+                )
+                continue
+
+            print(f"Assigning {latest_content} to job {oldest_job_id}")
+            job_tracking[oldest_job_id].update(
                 {"status": "completed", "output_file": latest_content}
             )
-            print(f"Associated output {latest_content} with job {prompt_id}")
-        else:
-            print("No pending jobs found to associate with new content")  # Debug print
+            print(
+                f"Successfully associated output {latest_content} with job {oldest_job_id}"
+            )
 
-        previous_content = latest_content
-        return gr.update(value=latest_content)
-    return gr.update(value=previous_content)
+            # Debug dump of all job statuses
+            print("\nCurrent job tracking status:")
+            for job_id, job_data in job_tracking.items():
+                print(f"Job {job_id}:")
+                print(f"  Type: {job_data['type'].value}")
+                print(f"  Status: {job_data['status']}")
+                print(f"  Workflow: {job_data['workflow_name']}")
+                print(f"  Output: {job_data['output_file']}")
+
+        # Return updates for Gradio UI
+        return gr.update(value=latest_content if latest_content else None)
+
+    except Exception as e:
+        print(f"Error checking for new content: {str(e)}")
+        print(f"Stack trace: ", traceback.format_exc())
+        return gr.update(value=None)
 
 
 previous_vram_used = -1.0
@@ -728,59 +796,55 @@ def check_interrupt_visibility():
 
 
 def run_workflow(workflow_name, progress, **kwargs):
-    global previous_content, job_tracking
+    try:
+        # Print the input arguments for debugging
+        print("inside run workflow with kwargs: " + str(kwargs))
 
-    # Print the input arguments for debugging
-    print("inside run workflow with kwargs: " + str(kwargs))
+        # Construct the path to the workflow JSON file
+        workflow_json = "./workflows/" + workflow_name
 
-    # Construct the path to the workflow JSON file
-    workflow_json = "./workflows/" + workflow_name
+        # Open the workflow JSON file
+        with open(workflow_json, "r", encoding="utf-8") as file:
+            # Load the JSON data
+            workflow = json.load(file)
 
-    # Open the workflow JSON file
-    with open(workflow_json, "r", encoding="utf-8") as file:
-        # Load the JSON data
-        workflow = json.load(file)
+            # Iterate through changes requested via kwargs
+            for change_request in kwargs.values():
+                # Extract the node path and the new value from the change request
+                node_path = change_request["node-id"]
+                new_value = change_request["value"]
 
-        # Iterate through changes requested via kwargs
-        for change_request in kwargs.values():
-            # Extract the node path and the new value from the change request
-            node_path = change_request["node-id"]
-            new_value = change_request["value"]
+                # Log the intended change for debugging
+                print(f"Intending to change {node_path} to {new_value}")
 
-            # Log the intended change for debugging
-            print(f"Intending to change {node_path} to {new_value}")
+                # Process the node path into a list of keys
+                path_keys = node_path.strip("[]").split("][")
+                path_keys = [key.strip('"') for key in path_keys]
 
-            # Process the node path into a list of keys
-            path_keys = node_path.strip("[]").split("][")
-            path_keys = [key.strip('"') for key in path_keys]
+                # Navigate through the workflow data to the last key
+                current_section = workflow
+                for key in path_keys[:-1]:  # Exclude the last key for now
+                    current_section = current_section[key]
 
-            # Navigate through the workflow data to the last key
-            current_section = workflow
-            for key in path_keys[:-1]:  # Exclude the last key for now
-                current_section = current_section[key]
+                # Update the value at the final key
+                final_key = path_keys[-1]
+                print(f"Updating {current_section[final_key]} to {new_value}")
+                current_section[final_key] = new_value
 
-            # Update the value at the final key
-            final_key = path_keys[-1]
-            print(f"Updating {current_section[final_key]} to {new_value}")
-            current_section[final_key] = new_value
+            # Set content type based on workflow definition
+            content_type = get_content_type_from_workflow(workflow_name)
 
-        try:
+            # Submit workflow
             prompt_id = post_prompt(workflow)
             if prompt_id:
-                # Store job information
-                job_tracking[prompt_id] = {
-                    "timestamp": time.time(),
-                    "workflow_name": workflow_name,
-                    "status": "pending",
-                    "output_file": None,
-                }
-                print(f"Added job to tracking: {prompt_id}")  # Debug print
+                # Track the job using workflow name only
+                track_generation_job(prompt_id, workflow_name)
+                print(f"Job {prompt_id} submitted for {workflow_name}")
                 return prompt_id
-            return None
 
-        except KeyboardInterrupt:
-            print("Interrupted by user. Exiting...")
-            return None
+    except Exception as e:
+        print(f"Error running workflow: {str(e)}")
+        return None
 
 
 def get_job_result(prompt_id):
@@ -1583,7 +1647,6 @@ def update_download_progress():
     if download_progress["total"] > 0:
         progress = download_progress["current"] / download_progress["total"]
         return gr.update(value=download_progress["status"]), progress
-    return gr.update(value=""), 0
 
 
 with gr.Blocks(
