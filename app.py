@@ -283,15 +283,20 @@ def check_current_progress():
                     message = ws.recv()
                     if message is not None:
                         message = json.loads(message)
+                        print(f"WebSocket message type: {message['type']}")  # Debug
 
                         if message["type"] == "status":
                             status = get_status()
+                            print(f"Status response: {status}")  # Debug
                             if status and "exec_info" in status:
                                 current_progress_data = {
                                     "value": status["exec_info"].get("value", 0),
                                     "max": status["exec_info"].get("max", 0),
                                     "prompt_id": status.get("prompt_id", "N/A"),
                                 }
+                                print(
+                                    f"Updated progress data: {current_progress_data}"
+                                )  # Debug
                             queue_remaining = message["data"]["status"]["exec_info"][
                                 "queue_remaining"
                             ]
@@ -308,26 +313,13 @@ def check_current_progress():
                 except websocket.WebSocketConnectionClosedException:
                     print("WebSocket connection closed normally")
                     time.sleep(1)
-                except (
-                    ConnectionResetError,
-                    ConnectionError,
-                    BrokenPipeError,
-                    OSError,
-                ) as e:
-                    if isinstance(e, ConnectionResetError) and e.winerror == 10054:
-                        # This is the expected error when ComfyUI closes the connection
-                        print("ComfyUI closed the connection (normal behavior)")
-                    else:
-                        print(f"Connection error: {str(e)}")
-                    time.sleep(1)
                 except Exception as e:
-                    print(f"Unexpected error: {str(e)}")
+                    print(f"Error in websocket loop: {str(e)}")  # Debug
                     time.sleep(1)
             else:
-                time.sleep(1)  # Wait before checking ws again
-
+                time.sleep(1)
     except Exception as e:
-        print(f"Error in check_current_progress: {str(e)}")
+        print(f"Error in check_current_progress: {str(e)}")  # Debug
 
 
 # endregion
