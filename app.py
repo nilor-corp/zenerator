@@ -1252,7 +1252,8 @@ def process_input(input_context, input_key):
         "path": gr.Textbox,
         "string": gr.Textbox,
         "text": gr.Textbox,
-        "images": None,  # special case for radio selection handled below
+        "image": None,  # special case for image selection handled below
+        "images": None,  # special case for images selection handled below
         "video": None,  # special case for video selection handled below
         "bool": gr.Checkbox,
         "float": gr.Number,
