@@ -340,17 +340,36 @@ def comfy_POST(endpoint, message):
         print(f"Error querying the GET endpoint {endpoint}: ", e)
 
 
-def post_prompt(workflow):
-    prompt_data = {"prompt": workflow, "client_id": "app"}
+def post_prompt(prompt):
+    """Submit a workflow prompt to ComfyUI"""
+    try:
+        print(f"Attempting to post prompt to {selected_port_url}/prompt")
+        print(f"Prompt data: {json.dumps(prompt, indent=2)}")
 
-    response = requests.post(f"{selected_port_url}/prompt", json=prompt_data)
-    if response.ok:
+        p = {"prompt": prompt}
+        response = requests.post(f"{selected_port_url}/prompt", json=p)
+        print(f"Response status: {response.status_code}")
+        print(f"Response content: {response.text}")
+
+        if response.status_code != 200:
+            print(f"Error posting prompt: {response.status_code} - {response.text}")
+            return None
+
         data = response.json()
+        print(f"Parsed response data: {data}")
+
         prompt_id = data.get("prompt_id")
-        if prompt_id:
-            print(f"Successfully submitted job with ID: {prompt_id}")
-            return prompt_id
-    return None
+        if not prompt_id:
+            print("No prompt_id in response data")
+            return None
+
+        print(f"Successfully got prompt_id: {prompt_id}")
+        return prompt_id
+
+    except Exception as e:
+        print(f"Exception in post_prompt: {str(e)}")
+        print(f"Stack trace: ", traceback.format_exc())
+        return None
 
 
 def post_interrupt():
