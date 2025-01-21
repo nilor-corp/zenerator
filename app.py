@@ -340,14 +340,15 @@ def comfy_POST(endpoint, message):
         print(f"Error querying the GET endpoint {endpoint}: ", e)
 
 
-def post_prompt(prompt):
+def post_prompt(workflow):
     """Submit a workflow prompt to ComfyUI"""
+    prompt_data = {"prompt": workflow, "client_id": "app"}
+
     try:
         print(f"Attempting to post prompt to {selected_port_url}/prompt")
-        print(f"Prompt data: {json.dumps(prompt, indent=2)}")
+        print(f"Prompt data: {prompt_data}")
 
-        p = {"prompt": prompt}
-        response = requests.post(f"{selected_port_url}/prompt", json=p)
+        response = requests.post(f"{selected_port_url}/prompt", json=prompt_data)
         print(f"Response status: {response.status_code}")
         print(f"Response content: {response.text}")
 
