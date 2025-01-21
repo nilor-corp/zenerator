@@ -282,9 +282,9 @@ def check_current_progress():
                         "max": status["exec_info"].get("max", 0),
                         "prompt_id": status.get("prompt_id", "N/A"),
                     }
-                    print(f"Updated progress data: {current_progress_data}")  # Debug
-                else:
-                    print(f"No progress data found in status: {status}")
+                    print(
+                        f"check_current_progress updating data: {current_progress_data}"
+                    )  # Debug
 
             # Still use websocket for execution events
             if ws:
@@ -800,12 +800,18 @@ def check_gen_progress_visibility():
     """Check if generation progress should be visible"""
     try:
         [queue_running, queue_pending, queue_failed] = get_queue()
-        current_step = current_progress_data.get("value", None)
-        # Check if there are any running jobs by looking at length of queue_running
-        visibility = (current_step is not None) and len(queue_running) > 0
-    except:
-        visibility = False
-    return gr.update(visible=visibility)
+        print(
+            f"check_gen_progress_visibility sees progress data: {current_progress_data}"
+        )  # Debug
+        has_progress = bool(current_progress_data)
+        visibility = has_progress and len(queue_running) > 0
+        print(
+            f"Progress visibility result: {visibility} (has_progress: {has_progress}, running: {len(queue_running)})"
+        )  # Debug
+        return gr.update(visible=visibility)
+    except Exception as e:
+        print(f"Error in check_gen_progress_visibility: {e}")
+        return gr.update(visible=False)
 
 
 def check_interrupt_visibility():
