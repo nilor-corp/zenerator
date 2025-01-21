@@ -88,6 +88,9 @@ download_progress = {"current": 0, "total": 0, "status": ""}
 job_tracking = {}
 current_output_type = "image"
 
+# Add this global variable at the top with other globals
+initial_files = set()
+
 
 class ContentType(Enum):
     IMAGE = "image"
@@ -601,6 +604,23 @@ def track_generation_job(job_id: str, workflow_name: str):
     }
 
 
+def initialize_content_tracking():
+    """Capture the state of output directory at startup"""
+    global initial_files
+    print("\nInitializing content tracking...")
+    for content_type in ContentType:
+        content_files = (
+            get_all_images(OUT_DIR)
+            if content_type == ContentType.IMAGE
+            else get_all_videos(OUT_DIR)
+        )
+        for file in content_files:
+            full_path = os.path.join(OUT_DIR, file)
+            initial_files.add(full_path)
+            print(f"Tracked existing {content_type.value}: {full_path}")
+    print(f"Initial file count: {len(initial_files)}")
+
+
 def check_for_new_content():
     """Check for new content and associate with correct job"""
     try:
@@ -616,31 +636,10 @@ def check_for_new_content():
                 continue
             print(f"Found latest {content_type.value}: {latest_content}")
 
-            # Get file creation time
-            file_time = os.path.getmtime(latest_content)
-
-            # Find pending jobs of this type that were created before this file
-            pending_jobs = {
-                pid: data
-                for pid, data in job_tracking.items()
-                if data["status"] == "pending"
-                and data["type"] == content_type
-                and data["output_file"] is None
-                and data["timestamp"]
-                < file_time  # Only consider jobs created before the file
-            }
-
-            if not pending_jobs:
-                print(f"No pending jobs found for {content_type.value}")
+            # Skip files that existed at startup
+            if latest_content in initial_files:
+                print(f"Skipping pre-existing file: {latest_content}")
                 continue
-
-            print(f"Found {len(pending_jobs)} pending {content_type.value} jobs")
-
-            # Get the oldest pending job of this type
-            oldest_job_id = min(
-                pending_jobs.keys(), key=lambda pid: pending_jobs[pid]["timestamp"]
-            )
-            print(f"Selected oldest job {oldest_job_id} for output assignment")
 
             # Check if this file was already assigned
             already_assigned = any(
@@ -652,6 +651,27 @@ def check_for_new_content():
                     f"Output file {latest_content} already assigned to a job, skipping"
                 )
                 continue
+
+            # Find pending jobs of this type
+            pending_jobs = {
+                pid: data
+                for pid, data in job_tracking.items()
+                if data["status"] == "pending"
+                and data["type"] == content_type
+                and data["output_file"] is None
+            }
+
+            if not pending_jobs:
+                print(f"No pending jobs found for {content_type.value}")
+                continue
+
+            print(f"Found {len(pending_jobs)} pending {content_type.value} jobs")
+
+            # Get the oldest pending job
+            oldest_job_id = min(
+                pending_jobs.keys(), key=lambda pid: pending_jobs[pid]["timestamp"]
+            )
+            print(f"Selected oldest job {oldest_job_id} for output assignment")
 
             print(f"Assigning {latest_content} to job {oldest_job_id}")
             job_tracking[oldest_job_id].update(
@@ -670,7 +690,6 @@ def check_for_new_content():
                 print(f"  Workflow: {job_data['workflow_name']}")
                 print(f"  Output: {job_data['output_file']}")
 
-        # Return updates for Gradio UI
         return gr.update(value=latest_content if latest_content else None)
 
     except Exception as e:
@@ -1858,6 +1877,7 @@ with gr.Blocks(
 
     if __name__ == "__main__":
         setup_signal_handlers()
+        initialize_content_tracking()
         demo.queue()
 
         # Create hidden components for the result endpoint
