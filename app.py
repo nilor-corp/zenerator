@@ -436,7 +436,7 @@ def get_status():
         return "N/A"
 
     status = prompt.get("status", "N/A")
-    # print(f"status: {status}")
+    print(f"status: {status}")
 
     return status
 
@@ -1584,7 +1584,7 @@ def load_demo():
         try:
             ws.close()
         except websocket.WebSocketException as e:
-            print(f"Error closing existing websocket: {e}")
+            print(f"Error closing websocket: {e}")
         except ConnectionError as e:
             print(f"Connection error while closing: {e}")
         ws = None
@@ -1606,6 +1606,7 @@ def load_demo():
             threads = [heartbeat_thread, progress_thread]
             for thread in threads:
                 thread.start()
+                print(f"Started thread: {thread.name}")  # Debug log
 
         except websocket.WebSocketConnectionClosedException as e:
             print(f"WebSocket connection closed: {e}")
