@@ -843,7 +843,7 @@ def run_workflow(workflow_filename, workflow_name, progress, **kwargs):
     """Run a workflow with the given parameters"""
     try:
         print(f"\nAttempting to run workflow: {workflow_filename}")
-        print("inside run workflow with kwargs: " + str(kwargs))
+        # print("inside run workflow with kwargs: " + str(kwargs))
 
         # Construct the path to the workflow JSON file
         workflow_json_filepath = "./workflows/" + workflow_filename
