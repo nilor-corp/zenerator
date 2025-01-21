@@ -764,14 +764,13 @@ def check_queue(progress=gr.Progress()):
 check_progress_running = False
 
 
-def check_progress(progress=gr.Progress(track_tqdm=True)):
+def check_progress(progress=gr.Progress()):
     try:
         if current_progress_data:
             value = current_progress_data.get("value", 0)
-            max_value = current_progress_data.get("max", 1)  # Prevent div by zero
-            if max_value > 0:  # Only calculate progress if we have valid max
+            max_value = current_progress_data.get("max", 1)
+            if max_value > 0:
                 progress(progress=(value, max_value), unit="steps")
-                print(f"Progress update: {value}/{max_value}")
                 return gr.update(value=value / max_value)
         return gr.update(value=0)
     except Exception as e:
