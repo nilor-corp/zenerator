@@ -1048,11 +1048,8 @@ def create_dynamic_input(
                 gr.Textbox(
                     label=choices[0], show_label=False, visible=True, info=tooltips[0]
                 ),
-                gr.Textbox(
-                    label=choices[1], show_label=False, visible=False, info=tooltips[1]
-                ),
                 gr.Image(
-                    label=choices[2], show_label=False, visible=False, type="filepath"
+                    label=choices[1], show_label=False, visible=False, type="filepath"
                 ),
             ]
         elif input_type == "video":
@@ -1347,10 +1344,9 @@ def process_input(input_context, input_key):
             elif input_type == "image":  # New single image type
                 selected_option, inputs, component = create_dynamic_input(
                     input_type,
-                    choices=["filepath", "nilor collection", "upload"],
+                    choices=["filepath", "upload"],
                     tooltips=[
                         "Enter the path to an image file and press Enter to submit",
-                        "Enter the name of the Nilor Collection and press Enter to resolve",
                     ],
                     text_label="Select Input Type",
                     identifier=input_key,
