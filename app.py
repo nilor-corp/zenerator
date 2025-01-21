@@ -88,8 +88,7 @@ download_progress = {"current": 0, "total": 0, "status": ""}
 job_tracking = {}
 current_output_type = "image"
 
-# Add this global variable at the top with other globals
-initial_files = set()
+initial_timestamp = 0  # Time when the system started
 
 
 class ContentType(Enum):
@@ -605,20 +604,18 @@ def track_generation_job(job_id: str, workflow_name: str):
 
 
 def initialize_content_tracking():
-    """Capture the state of output directory at startup"""
-    global initial_files
+    """Capture the timestamp of the latest file at startup"""
+    global initial_timestamp
     print("\nInitializing content tracking...")
+
+    latest_time = 0
     for content_type in ContentType:
-        content_files = (
-            get_all_images(OUT_DIR)
-            if content_type == ContentType.IMAGE
-            else get_all_videos(OUT_DIR)
-        )
-        for file in content_files:
-            full_path = os.path.join(OUT_DIR, file)
-            initial_files.add(full_path)
-            print(f"Tracked existing {content_type.value}: {full_path}")
-    print(f"Initial file count: {len(initial_files)}")
+        content = get_latest_content(OUT_DIR, content_type.value)
+        if content and os.path.getmtime(content) > latest_time:
+            latest_time = os.path.getmtime(content)
+
+    initial_timestamp = latest_time
+    print(f"Initialized with timestamp cutoff: {initial_timestamp}")
 
 
 def check_for_new_content():
@@ -634,10 +631,9 @@ def check_for_new_content():
             if latest_content is None:
                 print(f"No {content_type.value} content found in {OUT_DIR}")
                 continue
-            print(f"Found latest {content_type.value}: {latest_content}")
 
             # Skip files that existed at startup
-            if latest_content in initial_files:
+            if os.path.getmtime(latest_content) <= initial_timestamp:
                 print(f"Skipping pre-existing file: {latest_content}")
                 continue
 
