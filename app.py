@@ -1016,7 +1016,7 @@ def create_dynamic_input(
         selected_option = gr.Radio(choices, label=text_label, value=choices[0])
         print(f"Choices: {choices}")
 
-        # Add optional limit controls only for image inputs
+        # Add optional limit controls only for multiple images input type
         if input_type == "images":
             with gr.Accordion("Advanced Options", open=False):
                 limit_enabled = gr.Checkbox(label="Limit number of images", value=False)
@@ -1042,6 +1042,18 @@ def create_dynamic_input(
                     label=choices[1], show_label=False, visible=False, info=tooltips[1]
                 ),
                 gr.Gallery(label=choices[2], show_label=False, visible=False),
+            ]
+        elif input_type == "image":  # New single image type
+            possible_inputs = [
+                gr.Textbox(
+                    label=choices[0], show_label=False, visible=True, info=tooltips[0]
+                ),
+                gr.Textbox(
+                    label=choices[1], show_label=False, visible=False, info=tooltips[1]
+                ),
+                gr.Image(
+                    label=choices[2], show_label=False, visible=False, type="filepath"
+                ),
             ]
         elif input_type == "video":
             possible_inputs = [
@@ -1123,7 +1135,9 @@ def create_dynamic_input(
                 progress(0, desc="Requesting collection...")
                 try:
                     result = resolve_online_collection(
-                        selected_value, max_images=max_images, progress=progress
+                        selected_value,
+                        max_images=max_images if input_type_state == "images" else 1,
+                        progress=progress,
                     )
                 except Exception as e:
                     result = None
@@ -1133,14 +1147,14 @@ def create_dynamic_input(
                 result = organise_local_files(
                     selected_value,
                     input_type_state,
-                    max_images=max_images,
+                    max_images=max_images if input_type_state == "images" else 1,
                     shuffle=False,
                 )
             elif selected_opt == "upload":
                 result = copy_uploaded_files_to_local_dir(
                     selected_value,
                     input_type_state,
-                    max_files=max_images,
+                    max_files=max_images if input_type_state == "images" else 1,
                     shuffle=False,
                 )
             else:
@@ -1152,7 +1166,6 @@ def create_dynamic_input(
             return input_values + [result]
 
         # Prepare the inputs list for the submit/upload events
-        # Only include limit controls if they are not None
         optional_inputs = []
         if limit_enabled and limit_value:
             optional_inputs.extend([limit_enabled, limit_value])
@@ -1171,7 +1184,7 @@ def create_dynamic_input(
                     inputs=event_inputs,
                     outputs=possible_inputs + [output],
                 )
-            elif isinstance(input_box, (gr.File, gr.Gallery)):
+            elif isinstance(input_box, (gr.File, gr.Gallery, gr.Image)):
                 input_box.upload(
                     fn=process_with_progress,
                     inputs=event_inputs,
@@ -1324,6 +1337,18 @@ def process_input(input_context, input_key):
                     choices=["filepath", "nilor collection", "upload"],
                     tooltips=[
                         "Enter the path of the directory of images and press Enter to submit",
+                        "Enter the name of the Nilor Collection and press Enter to resolve",
+                    ],
+                    text_label="Select Input Type",
+                    identifier=input_key,
+                    additional_information=input_info,
+                )
+            elif input_type == "image":  # New single image type
+                selected_option, inputs, component = create_dynamic_input(
+                    input_type,
+                    choices=["filepath", "nilor collection", "upload"],
+                    tooltips=[
+                        "Enter the path to an image file and press Enter to submit",
                         "Enter the name of the Nilor Collection and press Enter to resolve",
                     ],
                     text_label="Select Input Type",
