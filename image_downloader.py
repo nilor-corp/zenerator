@@ -305,12 +305,12 @@ def copy_uploaded_files_to_local_dir(files, input_type, max_files=None, shuffle=
     """
     Args:
         files: list of uploaded files (could be list of tuples from Gradio upload component)
+        For single image, 'files' will be a single filepath string
     """
     try:
         print("\nCopying uploaded files to local directory")
-
-        # Extract file paths from the tuples
-        file_paths = [file[0] if isinstance(file, tuple) else file for file in files]
+        print(f"Received files: {files}")
+        print(f"Input type: {input_type}")
 
         # Create a new directory in the ComfyUI input folder
         current_datetime = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
@@ -319,17 +319,26 @@ def copy_uploaded_files_to_local_dir(files, input_type, max_files=None, shuffle=
         print(f"Created directory for {input_type}: {directory}")
 
         if input_type == "images":
+            # Handle multiple images
+            file_paths = [
+                file[0] if isinstance(file, tuple) else file for file in files
+            ]
             process_files(
                 file_paths, directory, input_type, singular=False, reorganising=False
             )
             return organise_local_files(
                 directory, input_type, max_files, shuffle, reorganising=True
             )
-        else:  # For singular file inputs
+        else:  # For singular file inputs (image or video)
+            # Handle single file
+            file_path = files[0] if isinstance(files, list) else files
+            if isinstance(file_path, tuple):
+                file_path = file_path[0]
+            print(f"Processing single file: {file_path}")
             return process_files(
-                file_paths, directory, input_type, singular=True, reorganising=False
+                [file_path], directory, input_type, singular=True, reorganising=False
             )
 
     except Exception as e:
-        print(f"Failed to copy local files: {e}")
+        print(f"Failed to copy local files: {str(e)}")
         return None
