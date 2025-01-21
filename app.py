@@ -835,12 +835,23 @@ def run_workflow(workflow_name, progress, **kwargs):
             content_type = get_content_type_from_workflow(workflow_name)
 
             # Submit workflow
+            print(f"Submitting workflow to ComfyUI...")
             prompt_id = post_prompt(workflow)
-            if prompt_id:
-                # Track the job using workflow name only
-                track_generation_job(prompt_id, workflow_name)
-                print(f"Job {prompt_id} submitted for {workflow_name}")
-                return prompt_id
+            print(f"post_prompt returned: {prompt_id}")
+
+            if not prompt_id:
+                print("Warning: No prompt ID returned from post_prompt")
+                return None
+
+            # Store job information
+            job_tracking[prompt_id] = {
+                "timestamp": time.time(),
+                "workflow_name": workflow_name,
+                "status": "pending",
+                "output_file": None,
+            }
+            print(f"Added job to tracking: {prompt_id}")  # Debug print
+            return prompt_id
 
     except Exception as e:
         print(f"Error running workflow: {str(e)}")
