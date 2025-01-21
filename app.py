@@ -821,7 +821,7 @@ def run_workflow(workflow_name, progress, **kwargs):
         print("inside run workflow with kwargs: " + str(kwargs))
 
         # Load workflow
-        workflow_path = f"workflows/{workflow_name}.json"
+        workflow_path = f"workflows/{workflow_name}"
         print(f"Loading workflow from: {workflow_path}")
 
         try:
