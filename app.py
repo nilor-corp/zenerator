@@ -286,22 +286,22 @@ def check_current_progress(ws):
             if isinstance(out, str):
                 try:
                     message = json.loads(out)
-                    print(f"WebSocket message: {message}")  # Debug
+                    # print(f"WebSocket message: {message}")  # Debug
 
                     if message["type"] == "progress":
                         data = message["data"]
                         current_progress_data = data
-                        print(f"Progress data updated: {data}")  # Debug
+                        # print(f"Progress data updated: {data}")  # Debug
                     elif message["type"] == "executing":
                         data = message["data"]
                         current_progress_data = data
-                        print(f"Execution data updated: {data}")  # Debug
+                        # print(f"Execution data updated: {data}")  # Debug
                     elif message["type"] == "status":
                         if "status" in message["data"]:
                             status_data = message["data"]["status"]
                             if "exec_info" in status_data:
                                 current_progress_data = status_data["exec_info"]
-                                print(f"Status data updated: {status_data}")  # Debug
+                                # print(f"Status data updated: {status_data}")  # Debug
                 except json.JSONDecodeError:
                     print("Received invalid JSON data, skipping...")
                     continue
@@ -784,7 +784,7 @@ def check_progress(progress=gr.Progress()):
 def check_gen_progress_visibility():
     global current_progress_data, current_queue_info
     try:
-        print(f"current_progress_data: {current_progress_data}")
+        # print(f"current_progress_data: {current_progress_data}") # debug
         prompt_id = current_progress_data.get("prompt_id", None)
         current_step = current_progress_data.get("value", None)
 
