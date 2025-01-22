@@ -1033,7 +1033,11 @@ def create_dynamic_input(
                     label=choices[0], show_label=False, visible=True, info=tooltips[0]
                 ),
                 gr.Image(
-                    label=choices[1], show_label=False, visible=False, type="filepath"
+                    label=choices[1],
+                    show_label=False,
+                    visible=False,
+                    type="filepath",
+                    sources=["upload"],
                 ),
             ]
         elif input_type == "video":
@@ -1085,14 +1089,14 @@ def process_with_progress(selected_option, choices, input_type, *args):
             if selected_option == "filepath":
                 return organise_local_files(selected_value, input_type)
             elif selected_option == "upload":
+                # For single image upload, the value is already a filepath
                 return copy_uploaded_files_to_local_dir(selected_value, input_type)
         elif input_type == "images":
-            # Handle limit controls for multiple images
+            # Keep existing multiple images handling
             limit_enabled = args[0]
             limit_value = args[1]
             max_images = int(limit_value) if limit_enabled else None
 
-            # Get the actual input values after the limit controls
             option_values = args[2 : 2 + len(choices)]
             selected_value = option_values[opt_index]
 
@@ -1106,11 +1110,6 @@ def process_with_progress(selected_option, choices, input_type, *args):
                 return copy_uploaded_files_to_local_dir(
                     selected_value, input_type, max_files=max_images
                 )
-        elif input_type == "video":
-            if selected_option == "filepath":
-                return process_video_file(selected_value)
-            elif selected_option == "upload":
-                return copy_uploaded_files_to_local_dir(selected_value, input_type)
 
         # Return all input values
         return list(args)
