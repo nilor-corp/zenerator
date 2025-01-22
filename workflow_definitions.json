@@ -801,6 +801,44 @@
       "type": "video"
     }
   },
+  "frame-interpolation": {
+    "name": "Frame Interpolation",
+    "filename": "frame-interpolation.json",
+    "description": "Frame Interpolation",
+    "inputs": {
+      "video-to-interpolate": {
+        "type": "video",
+        "label": "Video to Interpolate",
+        "node-id": "[\"1\"][\"inputs\"][\"video\"]",
+        "value": ""
+      },
+      "interpolator": {
+        "type": "enum",
+        "label": "Interpolator",
+        "node-id": "[\"70\"][\"inputs\"][\"string\"]",
+        "value": "rife",
+        "choices": [
+          "gmfss",
+          "ifrnet",
+          "ifunet",
+          "m2m",
+          "rife",
+          "amt",
+          "film",
+          "cain"
+        ]
+      },
+      "multiplier": {
+        "type": "int",
+        "label": "Multiplier",
+        "node-id": "[\"156\"][\"inputs\"][\"value\"]",
+        "value": 2,
+        "minimum": 1,
+        "maximum": 10,
+        "info": "Input video fps multiplier (e.g. if input video = 8fps, and multiplier = 3, output = 24fps)"
+      }
+    }
+  },
   "upscale-video": {
     "name": "Upscale Video",
     "filename": "upscale-video.json",
