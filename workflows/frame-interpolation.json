@@ -19,7 +19,10 @@
     "inputs": {
       "ckpt_name": "GMFSS_fortuna_union",
       "clear_cache_after_n_frames": 10,
-      "multiplier": 2,
+      "multiplier": [
+        "156",
+        0
+      ],
       "frames": [
         "124",
         0
@@ -34,7 +37,10 @@
     "inputs": {
       "ckpt_name": "IFRNet_S_Vimeo90K.pth",
       "clear_cache_after_n_frames": 10,
-      "multiplier": 2,
+      "multiplier": [
+        "156",
+        0
+      ],
       "scale_factor": 1,
       "frames": [
         "128",
@@ -50,7 +56,10 @@
     "inputs": {
       "ckpt_name": "IFUNet.pth",
       "clear_cache_after_n_frames": 10,
-      "multiplier": 2,
+      "multiplier": [
+        "156",
+        0
+      ],
       "scale_factor": 1,
       "ensemble": true,
       "frames": [
@@ -67,7 +76,10 @@
     "inputs": {
       "ckpt_name": "M2M.pth",
       "clear_cache_after_n_frames": 10,
-      "multiplier": 2,
+      "multiplier": [
+        "156",
+        0
+      ],
       "frames": [
         "132",
         0
@@ -82,7 +94,10 @@
     "inputs": {
       "ckpt_name": "rife49.pth",
       "clear_cache_after_n_frames": 10,
-      "multiplier": 2,
+      "multiplier": [
+        "156",
+        0
+      ],
       "fast_mode": true,
       "ensemble": true,
       "scale_factor": 1,
@@ -100,7 +115,10 @@
     "inputs": {
       "ckpt_name": "amt-l.pth",
       "clear_cache_after_n_frames": 10,
-      "multiplier": 2,
+      "multiplier": [
+        "156",
+        0
+      ],
       "frames": [
         "136",
         0
@@ -115,7 +133,10 @@
     "inputs": {
       "ckpt_name": "film_net_fp32.pt",
       "clear_cache_after_n_frames": 10,
-      "multiplier": 2,
+      "multiplier": [
+        "156",
+        0
+      ],
       "frames": [
         "138",
         0
@@ -130,7 +151,10 @@
     "inputs": {
       "ckpt_name": "pretrained_cain.pth",
       "clear_cache_after_n_frames": 10,
-      "multiplier": 2,
+      "multiplier": [
+        "156",
+        0
+      ],
       "frames": [
         "144",
         0
@@ -184,7 +208,10 @@
         "29",
         0
       ],
-      "b": 2
+      "b": [
+        "156",
+        0
+      ]
     },
     "class_type": "CM_IntBinaryOperation",
     "_meta": {
@@ -787,6 +814,15 @@
     "class_type": "JWStringConcat",
     "_meta": {
       "title": "String Concatenate"
+    }
+  },
+  "156": {
+    "inputs": {
+      "value": 2
+    },
+    "class_type": "INTConstant",
+    "_meta": {
+      "title": "Multiplier"
     }
   }
 }
