@@ -804,7 +804,7 @@
   "frame-interpolation": {
     "name": "Frame Interpolation",
     "filename": "frame-interpolation.json",
-    "description": "Frame Interpolation",
+    "description": "Multiply the frame rate of a video by a given multiplier.",
     "inputs": {
       "video-to-interpolate": {
         "type": "video",
@@ -837,6 +837,9 @@
         "maximum": 10,
         "info": "Input video fps multiplier (e.g. if input video = 8fps, and multiplier = 3, output = 24fps)"
       }
+    },
+    "outputs": {
+      "type": "video"
     }
   },
   "upscale-video": {
