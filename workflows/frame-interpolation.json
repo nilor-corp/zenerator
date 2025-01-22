@@ -1,0 +1,792 @@
+{
+  "1": {
+    "inputs": {
+      "video": "G:\\Shared drives\\nilor\\R&D\\IPA Weights Revisit\\image-travel_00043.mp4",
+      "force_rate": 0,
+      "force_size": "Disabled",
+      "custom_width": 512,
+      "custom_height": 512,
+      "frame_load_cap": 0,
+      "skip_first_frames": 0,
+      "select_every_nth": 1
+    },
+    "class_type": "VHS_LoadVideoPath",
+    "_meta": {
+      "title": "Load Video (Path) 🎥🅥🅗🅢"
+    }
+  },
+  "2": {
+    "inputs": {
+      "ckpt_name": "GMFSS_fortuna_union",
+      "clear_cache_after_n_frames": 10,
+      "multiplier": 2,
+      "frames": [
+        "124",
+        0
+      ]
+    },
+    "class_type": "GMFSS Fortuna VFI",
+    "_meta": {
+      "title": "GMFSS Fortuna VFI"
+    }
+  },
+  "3": {
+    "inputs": {
+      "ckpt_name": "IFRNet_S_Vimeo90K.pth",
+      "clear_cache_after_n_frames": 10,
+      "multiplier": 2,
+      "scale_factor": 1,
+      "frames": [
+        "128",
+        0
+      ]
+    },
+    "class_type": "IFRNet VFI",
+    "_meta": {
+      "title": "IFRNet VFI"
+    }
+  },
+  "4": {
+    "inputs": {
+      "ckpt_name": "IFUNet.pth",
+      "clear_cache_after_n_frames": 10,
+      "multiplier": 2,
+      "scale_factor": 1,
+      "ensemble": true,
+      "frames": [
+        "130",
+        0
+      ]
+    },
+    "class_type": "IFUnet VFI",
+    "_meta": {
+      "title": "IFUnet VFI"
+    }
+  },
+  "5": {
+    "inputs": {
+      "ckpt_name": "M2M.pth",
+      "clear_cache_after_n_frames": 10,
+      "multiplier": 2,
+      "frames": [
+        "132",
+        0
+      ]
+    },
+    "class_type": "M2M VFI",
+    "_meta": {
+      "title": "M2M VFI"
+    }
+  },
+  "6": {
+    "inputs": {
+      "ckpt_name": "rife49.pth",
+      "clear_cache_after_n_frames": 10,
+      "multiplier": 2,
+      "fast_mode": true,
+      "ensemble": true,
+      "scale_factor": 1,
+      "frames": [
+        "126",
+        0
+      ]
+    },
+    "class_type": "RIFE VFI",
+    "_meta": {
+      "title": "RIFE VFI (recommend rife47 and rife49)"
+    }
+  },
+  "8": {
+    "inputs": {
+      "ckpt_name": "amt-l.pth",
+      "clear_cache_after_n_frames": 10,
+      "multiplier": 2,
+      "frames": [
+        "136",
+        0
+      ]
+    },
+    "class_type": "AMT VFI",
+    "_meta": {
+      "title": "AMT VFI"
+    }
+  },
+  "9": {
+    "inputs": {
+      "ckpt_name": "film_net_fp32.pt",
+      "clear_cache_after_n_frames": 10,
+      "multiplier": 2,
+      "frames": [
+        "138",
+        0
+      ]
+    },
+    "class_type": "FILM VFI",
+    "_meta": {
+      "title": "FILM VFI"
+    }
+  },
+  "13": {
+    "inputs": {
+      "ckpt_name": "pretrained_cain.pth",
+      "clear_cache_after_n_frames": 10,
+      "multiplier": 2,
+      "frames": [
+        "144",
+        0
+      ]
+    },
+    "class_type": "CAIN VFI",
+    "_meta": {
+      "title": "CAIN VFI"
+    }
+  },
+  "26": {
+    "inputs": {
+      "video_info": [
+        "1",
+        3
+      ]
+    },
+    "class_type": "VHS_VideoInfoLoaded",
+    "_meta": {
+      "title": "Video Info (Loaded) 🎥🅥🅗🅢"
+    }
+  },
+  "29": {
+    "inputs": {
+      "_float": [
+        "26",
+        0
+      ]
+    },
+    "class_type": "CR Float To Integer",
+    "_meta": {
+      "title": "🔧 CR Float To Integer"
+    }
+  },
+  "36": {
+    "inputs": {
+      "a": [
+        "40",
+        0
+      ]
+    },
+    "class_type": "CM_IntToFloat",
+    "_meta": {
+      "title": "IntToFloat"
+    }
+  },
+  "40": {
+    "inputs": {
+      "op": "Mul",
+      "a": [
+        "29",
+        0
+      ],
+      "b": 2
+    },
+    "class_type": "CM_IntBinaryOperation",
+    "_meta": {
+      "title": "IntBinaryOperation"
+    }
+  },
+  "70": {
+    "inputs": {
+      "string": "cain"
+    },
+    "class_type": "Simple String",
+    "_meta": {
+      "title": "selected interpolator"
+    }
+  },
+  "73": {
+    "inputs": {
+      "frame_rate": [
+        "36",
+        0
+      ],
+      "loop_count": 0,
+      "filename_prefix": [
+        "154",
+        0
+      ],
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": true,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "2",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "74": {
+    "inputs": {
+      "frame_rate": [
+        "36",
+        0
+      ],
+      "loop_count": 0,
+      "filename_prefix": [
+        "154",
+        0
+      ],
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": true,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "3",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "75": {
+    "inputs": {
+      "frame_rate": [
+        "36",
+        0
+      ],
+      "loop_count": 0,
+      "filename_prefix": [
+        "154",
+        0
+      ],
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": true,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "4",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "76": {
+    "inputs": {
+      "frame_rate": [
+        "36",
+        0
+      ],
+      "loop_count": 0,
+      "filename_prefix": [
+        "154",
+        0
+      ],
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": true,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "5",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "77": {
+    "inputs": {
+      "frame_rate": [
+        "36",
+        0
+      ],
+      "loop_count": 0,
+      "filename_prefix": [
+        "154",
+        0
+      ],
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": true,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "6",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "79": {
+    "inputs": {
+      "frame_rate": [
+        "36",
+        0
+      ],
+      "loop_count": 0,
+      "filename_prefix": [
+        "154",
+        0
+      ],
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": true,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "80": {
+    "inputs": {
+      "frame_rate": [
+        "36",
+        0
+      ],
+      "loop_count": 0,
+      "filename_prefix": [
+        "154",
+        0
+      ],
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": true,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "9",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "83": {
+    "inputs": {
+      "frame_rate": [
+        "36",
+        0
+      ],
+      "loop_count": 0,
+      "filename_prefix": [
+        "154",
+        0
+      ],
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": true,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "13",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "110": {
+    "inputs": {
+      "a": [
+        "70",
+        0
+      ],
+      "b": "gmfss",
+      "operation": "a == b",
+      "case_sensitive": false
+    },
+    "class_type": "StringConditions",
+    "_meta": {
+      "title": "String Condition"
+    }
+  },
+  "111": {
+    "inputs": {
+      "a": [
+        "70",
+        0
+      ],
+      "b": "ifrnet",
+      "operation": "a == b",
+      "case_sensitive": false
+    },
+    "class_type": "StringConditions",
+    "_meta": {
+      "title": "String Condition"
+    }
+  },
+  "112": {
+    "inputs": {
+      "a": [
+        "70",
+        0
+      ],
+      "b": "ifunet",
+      "operation": "a == b",
+      "case_sensitive": false
+    },
+    "class_type": "StringConditions",
+    "_meta": {
+      "title": "String Condition"
+    }
+  },
+  "113": {
+    "inputs": {
+      "a": [
+        "70",
+        0
+      ],
+      "b": "m2m",
+      "operation": "a == b",
+      "case_sensitive": false
+    },
+    "class_type": "StringConditions",
+    "_meta": {
+      "title": "String Condition"
+    }
+  },
+  "114": {
+    "inputs": {
+      "a": [
+        "70",
+        0
+      ],
+      "b": "rife",
+      "operation": "a == b",
+      "case_sensitive": false
+    },
+    "class_type": "StringConditions",
+    "_meta": {
+      "title": "String Condition"
+    }
+  },
+  "116": {
+    "inputs": {
+      "a": [
+        "70",
+        0
+      ],
+      "b": "amt",
+      "operation": "a == b",
+      "case_sensitive": false
+    },
+    "class_type": "StringConditions",
+    "_meta": {
+      "title": "String Condition"
+    }
+  },
+  "117": {
+    "inputs": {
+      "a": [
+        "70",
+        0
+      ],
+      "b": "film",
+      "operation": "a == b",
+      "case_sensitive": false
+    },
+    "class_type": "StringConditions",
+    "_meta": {
+      "title": "String Condition"
+    }
+  },
+  "120": {
+    "inputs": {
+      "a": [
+        "70",
+        0
+      ],
+      "b": "cain",
+      "operation": "a == b",
+      "case_sensitive": false
+    },
+    "class_type": "StringConditions",
+    "_meta": {
+      "title": "String Condition"
+    }
+  },
+  "124": {
+    "inputs": {
+      "block": [
+        "125",
+        0
+      ],
+      "verbose": false,
+      "input": [
+        "1",
+        0
+      ]
+    },
+    "class_type": "ExecutionBlocker",
+    "_meta": {
+      "title": "Execution Blocker"
+    }
+  },
+  "125": {
+    "inputs": {
+      "boolean": [
+        "110",
+        0
+      ]
+    },
+    "class_type": "Logic NOT",
+    "_meta": {
+      "title": "Logic NOT"
+    }
+  },
+  "126": {
+    "inputs": {
+      "block": [
+        "127",
+        0
+      ],
+      "verbose": false,
+      "input": [
+        "1",
+        0
+      ]
+    },
+    "class_type": "ExecutionBlocker",
+    "_meta": {
+      "title": "Execution Blocker"
+    }
+  },
+  "127": {
+    "inputs": {
+      "boolean": [
+        "114",
+        0
+      ]
+    },
+    "class_type": "Logic NOT",
+    "_meta": {
+      "title": "Logic NOT"
+    }
+  },
+  "128": {
+    "inputs": {
+      "block": [
+        "129",
+        0
+      ],
+      "verbose": false,
+      "input": [
+        "1",
+        0
+      ]
+    },
+    "class_type": "ExecutionBlocker",
+    "_meta": {
+      "title": "Execution Blocker"
+    }
+  },
+  "129": {
+    "inputs": {
+      "boolean": [
+        "111",
+        0
+      ]
+    },
+    "class_type": "Logic NOT",
+    "_meta": {
+      "title": "Logic NOT"
+    }
+  },
+  "130": {
+    "inputs": {
+      "block": [
+        "131",
+        0
+      ],
+      "verbose": false,
+      "input": [
+        "1",
+        0
+      ]
+    },
+    "class_type": "ExecutionBlocker",
+    "_meta": {
+      "title": "Execution Blocker"
+    }
+  },
+  "131": {
+    "inputs": {
+      "boolean": [
+        "112",
+        0
+      ]
+    },
+    "class_type": "Logic NOT",
+    "_meta": {
+      "title": "Logic NOT"
+    }
+  },
+  "132": {
+    "inputs": {
+      "block": [
+        "133",
+        0
+      ],
+      "verbose": false,
+      "input": [
+        "1",
+        0
+      ]
+    },
+    "class_type": "ExecutionBlocker",
+    "_meta": {
+      "title": "Execution Blocker"
+    }
+  },
+  "133": {
+    "inputs": {
+      "boolean": [
+        "113",
+        0
+      ]
+    },
+    "class_type": "Logic NOT",
+    "_meta": {
+      "title": "Logic NOT"
+    }
+  },
+  "136": {
+    "inputs": {
+      "block": [
+        "137",
+        0
+      ],
+      "verbose": false,
+      "input": [
+        "1",
+        0
+      ]
+    },
+    "class_type": "ExecutionBlocker",
+    "_meta": {
+      "title": "Execution Blocker"
+    }
+  },
+  "137": {
+    "inputs": {
+      "boolean": [
+        "116",
+        0
+      ]
+    },
+    "class_type": "Logic NOT",
+    "_meta": {
+      "title": "Logic NOT"
+    }
+  },
+  "138": {
+    "inputs": {
+      "block": [
+        "139",
+        0
+      ],
+      "verbose": false,
+      "input": [
+        "1",
+        0
+      ]
+    },
+    "class_type": "ExecutionBlocker",
+    "_meta": {
+      "title": "Execution Blocker"
+    }
+  },
+  "139": {
+    "inputs": {
+      "boolean": [
+        "117",
+        0
+      ]
+    },
+    "class_type": "Logic NOT",
+    "_meta": {
+      "title": "Logic NOT"
+    }
+  },
+  "144": {
+    "inputs": {
+      "block": [
+        "145",
+        0
+      ],
+      "verbose": false,
+      "input": [
+        "1",
+        0
+      ]
+    },
+    "class_type": "ExecutionBlocker",
+    "_meta": {
+      "title": "Execution Blocker"
+    }
+  },
+  "145": {
+    "inputs": {
+      "boolean": [
+        "120",
+        0
+      ]
+    },
+    "class_type": "Logic NOT",
+    "_meta": {
+      "title": "Logic NOT"
+    }
+  },
+  "154": {
+    "inputs": {
+      "a": "Zenerator/interpolated-",
+      "b": [
+        "70",
+        0
+      ]
+    },
+    "class_type": "JWStringConcat",
+    "_meta": {
+      "title": "String Concatenate"
+    }
+  }
+}
