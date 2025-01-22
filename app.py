@@ -1016,6 +1016,22 @@ def create_dynamic_input(
         selected_option = gr.Radio(choices, label=text_label, value=choices[0])
         print(f"Choices: {choices}")
 
+        # Add optional limit controls only for image inputs
+        if input_type == "images":
+            with gr.Accordion("Advanced Options", open=False):
+                limit_enabled = gr.Checkbox(label="Limit number of images", value=False)
+                limit_value = gr.Number(
+                    label="Max images",
+                    value=4,
+                    minimum=1,
+                    step=1,
+                    interactive=True,
+                    visible=True,
+                )
+        else:
+            limit_enabled = None
+            limit_value = None
+
         # Initialize possible_inputs based on input_type
         if input_type == "images":
             possible_inputs = [
@@ -1069,57 +1085,115 @@ def create_dynamic_input(
             outputs=possible_inputs,
         )
 
-        # Make sure we return all three values
-        return selected_option, possible_inputs, output
-
         # Handle input submission with progress tracking
+        def process_with_progress(*args, progress=gr.Progress()):
+            print(f"Args: {args}")
 
+            selected_opt = args[0]  # First arg is selected option
+            choices_state = args[1]  # Second arg is choices State
+            input_type_state = args[2]  # Third arg is input_type State
 
-def process_with_progress(selected_option, choices, input_type, *args):
-    print(f"Args: {(selected_option, choices, input_type, *args)}")
-    print(f"Selected Option: {selected_option}")
+            # Initialize variables
+            max_images = None
+            input_values = []
 
-    try:
-        # Get the selected input value based on the selected option
-        opt_index = choices.index(selected_option)
-        selected_value = args[opt_index] if opt_index < len(args) else None
-        print(f"Selected value: {selected_value}")
+            arg_index = 3  # Starting index for additional arguments
 
-        if input_type == "image":
-            if selected_option == "filepath":
-                return organise_local_files(selected_value, input_type)
-            elif selected_option == "upload":
-                # For single image upload, the value is already a filepath
-                return copy_uploaded_files_to_local_dir(selected_value, input_type)
-        elif input_type == "images":
-            # Keep existing multiple images handling
-            limit_enabled = args[0]
-            limit_value = args[1]
-            max_images = int(limit_value) if limit_enabled else None
+            # If limit controls exist, they come next
+            if limit_enabled and limit_value:
+                limit_enabled_value = args[arg_index]
+                limit_value_value = args[arg_index + 1]
+                arg_index += 2  # Increment index since we have consumed two arguments
 
-            option_values = args[2 : 2 + len(choices)]
-            selected_value = option_values[opt_index]
+                print(f"Extracted limit_enabled_value: {limit_enabled_value}")
+                print(f"Extracted limit_value_value: {limit_value_value}")
 
-            if selected_option == "filepath":
-                return organise_local_files(
-                    selected_value, input_type, max_images=max_images
+                max_images = int(limit_value_value) if limit_enabled_value else None
+            else:
+                limit_enabled_value = None
+                limit_value_value = None
+
+            # The rest of the args are input values
+            input_values = list(args[arg_index:])
+
+            # Debugging output
+            print(f"Selected Option: {selected_opt}")
+            print(f"Limit Enabled: {limit_enabled_value}")
+            print(f"Limit Value: {limit_value_value}")
+            print(f"Input Values: {input_values}")
+
+            # Get the selected input value based on the selected option
+            opt_index = choices.index(selected_opt)
+            if opt_index < len(input_values):
+                selected_value = input_values[opt_index]
+            else:
+                print(
+                    f"Error: Index {opt_index} out of range for input_values with length {len(input_values)}"
                 )
-            elif selected_option == "nilor collection":
-                return resolve_online_collection(selected_value, max_images=max_images)
-            elif selected_option == "upload":
-                return copy_uploaded_files_to_local_dir(
-                    selected_value, input_type, max_files=max_images
+                selected_value = None  # Handle this case appropriately
+
+            if selected_opt == "nilor collection":
+                progress(0, desc="Requesting collection...")
+                try:
+                    result = resolve_online_collection(
+                        selected_value, max_images=max_images, progress=progress
+                    )
+                except Exception as e:
+                    result = None
+                    print(f"Failed to resolve online collection: {e}")
+                    gr.Warning(f"Error resolving collection: {e}")
+            elif selected_opt == "filepath":
+                result = organise_local_files(
+                    selected_value,
+                    input_type_state,
+                    max_images=max_images,
+                    shuffle=False,
+                )
+            elif selected_opt == "upload":
+                result = copy_uploaded_files_to_local_dir(
+                    selected_value,
+                    input_type_state,
+                    max_files=max_images,
+                    shuffle=False,
+                )
+            else:
+                result = process_dynamic_input(
+                    selected_opt, choices_state, input_type_state, *input_values
                 )
 
-        # Return all input values
-        return list(args)
+            # Return all input values plus result
+            return input_values + [result]
 
-    except Exception as e:
-        print(f"Error in process_with_progress: {str(e)}")
-        import traceback
+        # Prepare the inputs list for the submit/upload events
+        # Only include limit controls if they are not None
+        optional_inputs = []
+        if limit_enabled and limit_value:
+            optional_inputs.extend([limit_enabled, limit_value])
 
-        traceback.print_exc()
-        return None
+        event_inputs = (
+            [selected_option, gr.State(choices), gr.State(input_type)]
+            + optional_inputs
+            + possible_inputs
+        )
+
+        # Handle input submission
+        for input_box in possible_inputs:
+            if isinstance(input_box, gr.Textbox):
+                input_box.submit(
+                    fn=process_with_progress,
+                    inputs=event_inputs,
+                    outputs=possible_inputs + [output],
+                )
+            elif isinstance(
+                input_box, (gr.File, gr.Gallery, gr.Image)
+            ):  # Added gr.Image here
+                input_box.upload(
+                    fn=process_with_progress,
+                    inputs=event_inputs,
+                    outputs=possible_inputs + [output],
+                )
+
+        return selected_option, possible_inputs, output
 
 
 # Ensure all elements in self.inputs are valid Gradio components
