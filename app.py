@@ -1495,31 +1495,36 @@ def create_tab_interface(workflow_name):
 
 
 def load_demo():
-    global ws, tick_timer, threads
+    """Initialize demo with proper resource management"""
+    global tick_timer, threads
     print("Loading the demo!!!")
 
-    # Close any existing connection
-    if ws:
+    # Clean up any existing connection
+    if app_state.websocket_manager.ws:
         try:
-            ws.close()
+            app_state.websocket_manager.ws.close()
         except websocket.WebSocketException as e:
             print(f"Error closing websocket: {e}")
         except ConnectionError as e:
             print(f"Connection error while closing: {e}")
-        ws = None
+        app_state.websocket_manager.ws = None
 
     tick_timer = gr.Timer(value=1.0)
-    ws = connect_to_websocket(client_id)
+    app_state.websocket_manager.connect()
 
-    if ws:
+    if app_state.websocket_manager.ws:
         try:
             # Start threading after connecting
             print(f"WebSocket connection attempt")
             heartbeat_thread = threading.Thread(
-                target=send_heartbeat, args=(ws,), daemon=True
+                target=send_heartbeat,
+                args=(app_state.websocket_manager.ws,),
+                daemon=True,
             )
             progress_thread = threading.Thread(
-                target=check_current_progress, args=(ws,), daemon=True
+                target=check_current_progress,
+                args=(app_state.websocket_manager.ws,),
+                daemon=True,
             )
 
             # Add threads to resource manager for cleanup
