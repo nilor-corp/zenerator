@@ -376,10 +376,9 @@ def comfy_POST(endpoint, message):
 
 def post_prompt(workflow):
     """Submit a workflow prompt to ComfyUI"""
-    global client_id
     prompt_data = {
         "prompt": workflow,
-        "client_id": client_id,
+        "client_id": app_state.websocket_manager.client_id,
     }
 
     try:
