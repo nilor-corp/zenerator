@@ -1,8 +1,6 @@
 import json
 import requests
 import os
-
-# import glob
 import time
 from datetime import datetime
 import gradio as gr
@@ -14,21 +12,86 @@ from image_downloader import (
     process_video_file,
 )
 from lora_maker import generate_lora
-from tqdm import tqdm
-import asyncio
 import threading
-
 import websocket
 import uuid
-
 import torch
-
 import signal
 import sys
-
 from enum import Enum
 import traceback
+import weakref
+from typing import Dict, Set, Optional
+from concurrent.futures import ThreadPoolExecutor
+import gc
 
+
+# Resource management for better memory handling
+class ResourceManager:
+    def __init__(self):
+        self._websockets: Set[websocket.WebSocket] = weakref.WeakSet()
+        self._threads: Set[threading.Thread] = set()
+        self._executor: Optional[ThreadPoolExecutor] = None
+        self._running = True
+
+    def add_websocket(self, ws: websocket.WebSocket):
+        self._websockets.add(ws)
+
+    def add_thread(self, thread: threading.Thread):
+        self._threads.add(thread)
+
+    def cleanup(self):
+        self._running = False
+
+        # Clean up websockets
+        for ws in list(self._websockets):
+            try:
+                ws.close()
+            except Exception as e:
+                print(f"Error closing websocket: {e}")
+
+        # Clean up threads
+        for thread in list(self._threads):
+            if thread.is_alive():
+                thread.join(timeout=2.0)
+
+        # Clean up executor
+        if self._executor:
+            self._executor.shutdown(wait=False)
+
+        # Force garbage collection
+        gc.collect()
+
+        # Clear CUDA cache if available
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+
+
+class AppState:
+    def __init__(self):
+        self.output_type: str = ""
+        self.current_output_type: str = "image"
+        self.download_progress: Dict = {"current": 0, "total": 0, "status": ""}
+        self.job_tracking: Dict = {}
+        self.current_progress_data: Dict = {}
+        self.previous_progress_data: Dict = {}
+        self.current_queue_info: list = [-1] * 6
+        self.previous_queue_info: list = [-1] * 6
+        self.check_current_progress_running: bool = False
+        self.latest_known_image: Optional[str] = None
+        self.latest_known_video: Optional[str] = None
+        self.check_vram_running: bool = False
+        self.check_queue_running: bool = False
+        self.check_progress_running: bool = False
+        self.previous_vram_used: float = -1.0
+        self.websocket_manager = None
+
+
+# Global instances
+resource_manager = ResourceManager()
+app_state = AppState()
+
+# Load config
 with open("config.json") as f:
     config = json.load(f)
 
@@ -38,11 +101,15 @@ QUEUE_URLS = []
 
 ROOT_DIR = str(Path(__file__).parent.resolve())
 COMFY_ROOT = str(Path(config["COMFY_ROOT"]).resolve())
-
 OUT_DIR = str((Path(COMFY_ROOT) / "output" / "Zenerator").resolve())
 MODELS_DIR = str((Path(COMFY_ROOT) / "models").resolve())
 LORA_DIR = str((Path(MODELS_DIR) / "loras").resolve())
 INPUTS_DIR = str((Path(ROOT_DIR) / "inputs").resolve())
+
+for port in COMFY_PORTS:
+    QUEUE_URLS.append(f"http://{COMFY_IP}:{port}")
+
+selected_port_url = QUEUE_URLS[0]
 
 allowed_paths = []
 base_paths = [
@@ -69,11 +136,6 @@ ONNX_PATH = str((Path(ROOT_DIR) / "models" / "realistic.onnx").resolve())
 # Ensure required directories exist
 for directory in [OUT_DIR, INPUTS_DIR, TENSORRT_DIR, UPSCALER_DIR]:
     os.makedirs(directory, exist_ok=True)
-
-for port in COMFY_PORTS:
-    QUEUE_URLS.append(f"http://{COMFY_IP}:{port}")
-
-selected_port_url = QUEUE_URLS[0]
 
 running = True
 output_type = ""
@@ -111,28 +173,17 @@ def signal_handler(signum, frame):
     running = False
 
     # Stop all monitoring loops
-    check_vram_running = False
-    check_queue_running = False
-    check_progress_running = False
+    app_state.check_vram_running = False
+    app_state.check_queue_running = False
+    app_state.check_progress_running = False
 
     # Deactivate timer
     if tick_timer:
         tick_timer.active = False
     tick_timer = None
 
-    # Close WebSocket
-    if ws:
-        try:
-            ws.close()
-        except websocket.WebSocketException as e:
-            print(f"Error closing websocket: {e}")
-        except ConnectionError as e:
-            print(f"Connection error while closing: {e}")
-
-    # Wait for threads to finish
-    for thread in threads:
-        if thread.is_alive():
-            thread.join(timeout=2.0)
+    # Clean up resources
+    resource_manager.cleanup()
 
     sys.exit(0)
 
@@ -161,7 +212,6 @@ def check_tensorrt_installation():
 
     if not installed:
         print("TensorRT is not installed!")
-        # exec(open(TENSORRT_NODES_DIR + "export_trt.py").read())
 
     return installed
 
@@ -206,55 +256,46 @@ try:
         install_tensorrt()
 except Exception as e:
     print(f"Error installing TensorRT: {e}")
+
+
 # endregion
-
 # region Websocket
-ws = None
-client_id = str(uuid.uuid4())
+class WebSocketManager:
+    def __init__(self):
+        self.ws = None
+        self.client_id = str(uuid.uuid4())
 
+    def connect(self):
+        self.ws = websocket.WebSocket()
+        try:
+            self.ws.connect(
+                f"ws://{config['COMFY_IP']}:{config['COMFY_PORTS'][0]}/ws?clientId={self.client_id}"
+            )
+            resource_manager.add_websocket(self.ws)
+        except ConnectionResetError as e:
+            print(f"Connection was reset: {e}")
+            return None
+        except Exception as e:
+            print(f"Exception while connecting: {e}")
+            return None
 
-def connect_to_websocket(client_id):
-    ws = websocket.WebSocket()
-    try:
-        # TODO: make this work for multiple ports
-        ws.connect(
-            f"ws://{config['COMFY_IP']}:{config['COMFY_PORTS'][0]}/ws?clientId={client_id}"
-        )
-    except ConnectionResetError as e:
-        print(f"Connection was reset: {e}")
-        # reconnect(client_id, 20)
+        print("Connected to WebSocket successfully!")
+        return self.ws
+
+    def reconnect(self, max_retries=5):
+        retries = 0
+        while retries < max_retries:
+            print(f"Attempting to reconnect ({retries + 1}/{max_retries})...")
+            if self.connect():
+                return self.ws
+            retries += 1
+            time.sleep(1)
+        print("Max retries reached. Could not reconnect.")
         return None
-    except Exception as e:
-        print(f"Exception while connecting: {e}")
-        # reconnect(client_id, 20)
-        return None
-
-    print("Connected to WebSocket successfully!")
-    return ws
-
-
-def reconnect(client_id, max_retries=5):
-    retries = 0
-    while retries < max_retries:
-        print(f"Attempting to reconnect ({retries + 1}/{max_retries})...")
-        ws = connect_to_websocket(client_id)
-        if ws:
-            return ws
-        retries += 1
-        time.sleep(1)  # Wait before retrying
-    print("Max retries reached. Could not reconnect.")
-    return None
-
-
-# def queue_prompt(prompt):
-#     p = {"prompt": prompt, "client_id": client_id}
-#     data = json.dumps(p).encode('utf-8')
-#     req = urllib.request.Request(f"{selected_port_url}/prompt", data=data)
-#     return json.loads(urllib.request.urlopen(req).read())
 
 
 def send_heartbeat(ws):
-    while ws and ws.connected and running:  # Add running check
+    while ws and ws.connected and resource_manager._running:
         try:
             ws.ping()
             time_as_string = datetime.now().strftime("%H:%M:%S")
@@ -272,41 +313,34 @@ def send_heartbeat(ws):
 
 
 def check_current_progress(ws):
-    global check_current_progress_running, current_progress_data
+    """Monitor workflow progress with proper state management"""
+    app_state.check_current_progress_running = True
+    print("Starting progress check thread")
 
-    check_current_progress_running = True
-    print("Starting progress check thread")  # Debug
-
-    while check_current_progress_running and ws and ws.connected:
+    while app_state.check_current_progress_running and ws and ws.connected:
         try:
             out = ws.recv()
-            if not out:  # Check if we received empty data
+            if not out:
                 continue
 
             if isinstance(out, str):
                 try:
                     message = json.loads(out)
-                    # print(f"WebSocket message: {message}")  # Debug
 
-                    if message["type"] == "progress":
-                        data = message["data"]
-                        current_progress_data = data
-                        # print(f"Progress data updated: {data}")  # Debug
-                    elif message["type"] == "executing":
-                        data = message["data"]
-                        current_progress_data = data
-                        # print(f"Execution data updated: {data}")  # Debug
+                    if message["type"] in ["progress", "executing"]:
+                        app_state.current_progress_data = message["data"]
                     elif message["type"] == "status":
                         if "status" in message["data"]:
                             status_data = message["data"]["status"]
                             if "exec_info" in status_data:
-                                current_progress_data = status_data["exec_info"]
-                                # print(f"Status data updated: {status_data}")  # Debug
+                                app_state.current_progress_data = status_data[
+                                    "exec_info"
+                                ]
                 except json.JSONDecodeError:
                     print("Received invalid JSON data, skipping...")
                     continue
             else:
-                continue  # Skip binary data
+                continue
 
         except websocket.WebSocketConnectionClosedException:
             print("WebSocket connection closed, stopping progress check")
@@ -315,9 +349,13 @@ def check_current_progress(ws):
             print(f"Error in progress check: {type(e).__name__}: {e}")
             break
 
-    check_current_progress_running = False
-    current_progress_data = {}
+    app_state.check_current_progress_running = False
+    app_state.current_progress_data = {}
 
+
+# Create websocket manager instance
+websocket_manager = WebSocketManager()
+app_state.websocket_manager = websocket_manager
 
 # endregion
 
@@ -329,8 +367,6 @@ def comfy_POST(endpoint, message):
     print(f"POST {endpoint} on: {post_url}")
     try:
         post_response = requests.post(post_url, data=data)
-        # post_response.raise_for_status()
-        # print(f"status {post_response}")
         return post_response
     except ConnectionResetError:
         print("Connection was reset while trying to start the workflow. Retrying...")
@@ -340,11 +376,11 @@ def comfy_POST(endpoint, message):
 
 def post_prompt(workflow):
     """Submit a workflow prompt to ComfyUI"""
-    global client_id  # Add this to access the UUID we created
+    global client_id
     prompt_data = {
         "prompt": workflow,
         "client_id": client_id,
-    }  # Use the UUID instead of "app"
+    }
 
     try:
         print(f"Attempting to post prompt to {selected_port_url}/prompt")
@@ -376,9 +412,8 @@ def post_prompt(workflow):
 
 
 def post_interrupt():
-    global current_progress_data, check_current_progress_running
-    current_progress_data = {}
-
+    """Interrupt current processing with proper state management"""
+    app_state.current_progress_data = {}
     message = ""
     return comfy_POST("interrupt", message)
 
@@ -399,7 +434,6 @@ def post_history_delete(prompt_id):
 # region GET Requests
 def comfy_GET(endpoint):
     get_url = selected_port_url + "/" + endpoint
-    # print(f"GET {endpoint} on: {get_url}\n")
     try:
         return requests.get(get_url).json()
     except ConnectionResetError:
@@ -434,8 +468,6 @@ def get_running_prompt_id():
 
 def get_status():
     """Get the current execution status"""
-    global prompt, status
-
     try:
         prompt = comfy_GET("prompt")
         if prompt is None:
@@ -443,47 +475,38 @@ def get_status():
             return "N/A"
 
         status = prompt.get("status", "N/A")
-        print(f"Prompt endpoint data: {prompt}")  # Debug
+        print(f"Prompt endpoint data: {prompt}")
         return status
-
     except Exception as e:
         print(f"Error getting prompt status: {e}")
         return "N/A"
 
 
 def get_history():
-    global history
-
+    """Get processing history"""
     history = comfy_GET("history")
     if history is None:
         print("/history GET response is empty")
         return {}
-
-    # print(f"history: {len(history)}")
-
     return history
 
 
 def get_system_stats():
-    global system_stats, devices
+    """Get system statistics with proper error handling"""
+    try:
+        system_stats = comfy_GET("system_stats")
+        if system_stats is None:
+            print("/system_stats GET response is empty")
+            return [[], []]
 
-    system_stats = comfy_GET("system_stats")
-    if system_stats is None:
-        print("/system_stats GET response is empty")
+        devices = system_stats.get("devices")
+        if devices is None:
+            return [system_stats, []]
+
+        return [system_stats, devices]
+    except Exception as e:
+        print(f"Error getting system stats: {e}")
         return [[], []]
-
-    devices = system_stats.get("devices")
-    if devices is None:
-        return [system_stats, []]
-
-    # print(f"devices: {devices}")
-
-    # for device in devices:
-    # print(f"device['name']: {device.get("name")}")
-    # print(f"device['torch_vram_free']: {device.get("torch_vram_free")}")
-    # print(f"device['torch_vram_total']: {device.get("torch_vram_total")}")
-
-    return [system_stats, devices]
 
 
 # endregion
@@ -493,14 +516,10 @@ with open("workflow_definitions.json") as f:
 
 
 def get_lora_filenames(directory):
-    # Get all files in the directory
     files = os.listdir(directory)
-
-    # Filter out any directories, leaving only files
     filenames = [
         file for file in files if os.path.isfile(os.path.join(directory, file))
     ]
-
     return filenames
 
 
@@ -523,7 +542,7 @@ def get_all_images(folder):
 
 
 def get_latest_image(folder):
-    image_files = get_all_images(folder)  # Already sorted in get_all_images
+    image_files = get_all_images(folder)
     latest_image = os.path.join(folder, image_files[-1]) if image_files else None
     return latest_image
 
@@ -534,14 +553,6 @@ def get_latest_image_with_prefix(folder, prefix):
     image_files.sort(key=lambda x: os.path.getmtime(os.path.join(folder, x)))
     latest_image = os.path.join(folder, image_files[-1]) if image_files else None
     return latest_image
-
-
-# def count_images(directory):
-#     extensions = ["*.png", "*.jpg", "*.jpeg", "*.gif", "*.bmp", "*.tiff"]
-#     image_count = sum(
-#         len(glob.glob(os.path.join(directory, ext))) for ext in extensions
-#     )
-#     return image_count
 
 
 def get_all_videos(folder):
@@ -592,55 +603,51 @@ def get_content_type_from_workflow(workflow_name: str) -> ContentType:
 def track_generation_job(job_id: str, workflow_name: str):
     """Track a new generation job"""
     content_type = get_content_type_from_workflow(workflow_name)
-    job_tracking[job_id] = {
+    app_state.job_tracking[job_id] = {
         "status": "pending",
         "type": content_type,
         "workflow_name": workflow_name,
         "timestamp": time.time(),
-        "output_file": None,  # Track the specific output file
+        "output_file": None,
     }
 
 
 def initialize_content_tracking():
     """Record the latest content files at startup"""
-    global latest_known_image, latest_known_video
     print("\nInitializing content tracking...")
-
-    latest_known_image = get_latest_content(OUT_DIR, ContentType.IMAGE.value)
-    latest_known_video = get_latest_content(OUT_DIR, ContentType.VIDEO.value)
-
-    print(f"Initial image: {latest_known_image}")
-    print(f"Initial video: {latest_known_video}")
+    app_state.latest_known_image = get_latest_content(OUT_DIR, ContentType.IMAGE.value)
+    app_state.latest_known_video = get_latest_content(OUT_DIR, ContentType.VIDEO.value)
+    print(f"Initial image: {app_state.latest_known_image}")
+    print(f"Initial video: {app_state.latest_known_video}")
 
 
 def check_for_new_content():
     """Check for new content and associate with correct job"""
-    global latest_known_image, latest_known_video
-
     try:
         # Only log job tracking when there are NEW pending jobs
         pending_jobs_now = {
-            pid for pid, job in job_tracking.items() if job["status"] == "pending"
+            pid
+            for pid, job in app_state.job_tracking.items()
+            if job["status"] == "pending"
         }
-        pending_jobs_now = set(pending_jobs_now)  # Convert to set for comparison
+
         if not hasattr(check_for_new_content, "last_pending_jobs"):
             check_for_new_content.last_pending_jobs = set()
 
         if pending_jobs_now != check_for_new_content.last_pending_jobs:
             print(f"\nPending jobs changed: {len(pending_jobs_now)} jobs waiting")
-            print(f"Current job tracking: {job_tracking}")
+            print(f"Current job tracking: {app_state.job_tracking}")
             check_for_new_content.last_pending_jobs = pending_jobs_now
 
         for content_type in ContentType:
             current_latest = get_latest_content(OUT_DIR, content_type.value)
-            if current_latest is None:
+            if not current_latest:
                 continue
 
-            # Compare with our known latest file
             known_latest = (
-                latest_known_image
+                app_state.latest_known_image
                 if content_type == ContentType.IMAGE
-                else latest_known_video
+                else app_state.latest_known_video
             )
 
             if current_latest == known_latest:
@@ -648,41 +655,36 @@ def check_for_new_content():
 
             print(f"\nFound new {content_type.value}: {current_latest}")
 
-            # Find pending jobs of this type
             pending_jobs = {
                 pid: data
-                for pid, data in job_tracking.items()
+                for pid, data in app_state.job_tracking.items()
                 if data["status"] == "pending"
                 and data["type"] == content_type
                 and data["output_file"] is None
             }
 
             if not pending_jobs:
-                # Update our known latest even without a job
                 if content_type == ContentType.IMAGE:
-                    latest_known_image = current_latest
+                    app_state.latest_known_image = current_latest
                 else:
-                    latest_known_video = current_latest
+                    app_state.latest_known_video = current_latest
                 print(
                     f"No pending jobs for new {content_type.value}, updated known latest"
                 )
                 continue
 
-            # Get the oldest pending job
             oldest_job_id = min(
                 pending_jobs.keys(), key=lambda pid: pending_jobs[pid]["timestamp"]
             )
 
-            # Assign the file to the job
-            job_tracking[oldest_job_id].update(
+            app_state.job_tracking[oldest_job_id].update(
                 {"status": "completed", "output_file": current_latest}
             )
 
-            # Update our known latest
             if content_type == ContentType.IMAGE:
-                latest_known_image = current_latest
+                app_state.latest_known_image = current_latest
             else:
-                latest_known_video = current_latest
+                app_state.latest_known_video = current_latest
 
             print(
                 f"Successfully associated new {content_type.value} with job {oldest_job_id}"
@@ -696,103 +698,83 @@ def check_for_new_content():
         return gr.update(value=None)
 
 
-previous_vram_used = -1.0
-check_vram_running = False
-
-
 def check_vram(progress=gr.Progress()):
-    global check_vram_running, previous_vram_used
+    app_state.check_vram_running = True
 
-    check_vram_running = True
+    while app_state.check_vram_running:
+        try:
+            [system_stats, devices] = get_system_stats()
 
-    while check_vram_running:
-        [system_stats, devices] = get_system_stats()
+            vram_used = 0.0
+            if len(devices) > 0:
+                vram_free = devices[0].get("vram_free")
+                vram_total = devices[0].get("vram_total")
+                if vram_total > 0:
+                    vram_used = (vram_total - vram_free) / vram_total
 
-        # if system_stats is None or len(devices) == 0:
-        #     progress(progress=0.0)
-        # vram_used = 0.0
+            if vram_used != app_state.previous_vram_used:
+                progress(progress=vram_used)
+                app_state.previous_vram_used = vram_used
 
-        vram_used = 0.0
-        if len(devices) > 0:
-            vram_free = devices[0].get("vram_free")
-            vram_total = devices[0].get("vram_total")
-            if vram_total > 0:
-                vram_used = (vram_total - vram_free) / vram_total
-
-        # print(f"vram_used: {vram_used}")
-
-        if vram_used != previous_vram_used:
-            progress(progress=vram_used)
-            previous_vram_used = vram_used
-
-        time.sleep(1.0)
+            time.sleep(1.0)
+        except Exception as e:
+            print(f"Error checking VRAM: {e}")
+            time.sleep(1.0)
 
 
 def check_queue(progress=gr.Progress()):
-    global check_queue_running, previous_queue_info, current_queue_info
+    app_state.check_queue_running = True
 
-    check_queue_running = True
+    while app_state.check_queue_running:
+        try:
+            [queue_running, queue_pending, queue_failed] = get_queue()
+            queue_history = get_history()
 
-    while check_queue_running:
-        [queue_running, queue_pending, queue_failed] = get_queue()
-        queue_history = get_history()
+            queue_finished = len(queue_history)
+            queue_total = queue_finished + len(queue_running) + len(queue_pending)
 
-        queue_finished = len(queue_history)
-        queue_total = queue_finished + len(queue_running) + len(queue_pending)
+            current_info = [
+                queue_finished,
+                queue_total,
+                queue_failed,
+                queue_history,
+                len(queue_pending),
+                len(queue_running),
+            ]
 
-        # print(f"queue_progress: {queue_finished} out of {queue_total}")
+            if queue_total < 1:
+                progress(progress=0.0)
+            elif current_info != app_state.current_queue_info:
+                app_state.current_queue_info = current_info
+                progress(progress=(queue_finished, queue_total), unit="generations")
 
-        current_queue_info = [
-            queue_finished,
-            queue_total,
-            queue_failed,
-            queue_history,
-            len(queue_pending),
-            len(queue_running),
-        ]
-        if queue_total < 1:
-            progress(progress=0.0)
-            # return gr.update(visible=False)
-        elif current_queue_info != previous_queue_info:
-            previous_queue_info = current_queue_info
-            progress(progress=(queue_finished, queue_total), unit="generations")
-            # return gr.update(visible=True)
-
-        time.sleep(1.0)
-
-
-check_progress_running = False
+            time.sleep(1.0)
+        except Exception as e:
+            print(f"Error checking queue: {e}")
+            time.sleep(1.0)
 
 
 def check_progress(progress=gr.Progress()):
     try:
-        if current_progress_data:
-            value = current_progress_data.get("value", 0)
-            max_value = current_progress_data.get("max", 1)
+        if app_state.current_progress_data:
+            value = app_state.current_progress_data.get("value", 0)
+            max_value = app_state.current_progress_data.get("max", 1)
             if max_value > 0:
                 progress(progress=(value, max_value), unit="steps")
-                # return gr.update(value=value / max_value)
         else:
             progress(progress=0.0)
-            # return gr.update(value=0)
     except Exception as e:
         print(f"Error in check_progress: {e}")
         progress(progress=0.0)
-        # return gr.update(value=0)
 
 
 def check_gen_progress_visibility():
-    global current_progress_data, current_queue_info
     try:
-        # print(f"current_progress_data: {current_progress_data}") # debug
-        prompt_id = current_progress_data.get("prompt_id", None)
-        current_step = current_progress_data.get("value", None)
-
-        queue_running = current_queue_info[5]
-
-        # print(f"Prompt ID: {prompt_id}, Current Step: {current_step}")
-        visibility = (current_step != None) and (queue_running > 0)
-    except:
+        prompt_id = app_state.current_progress_data.get("prompt_id", None)
+        current_step = app_state.current_progress_data.get("value", None)
+        queue_running = app_state.current_queue_info[5]
+        visibility = (current_step is not None) and (queue_running > 0)
+    except Exception:
         visibility = False
     return gr.update(visible=visibility)
 
@@ -801,9 +783,8 @@ def check_interrupt_visibility():
     """Check if queue info should be visible"""
     try:
         [queue_running, queue_pending, queue_failed] = get_queue()
-        # Check lengths of running and pending queues
         visibility = len(queue_running) > 0 or len(queue_pending) > 0
-    except:
+    except Exception:
         visibility = False
     return gr.update(visible=visibility)
 
@@ -815,7 +796,6 @@ def run_workflow(workflow_filename, workflow_name, progress, **kwargs):
     """Run a workflow with the given parameters"""
     try:
         print(f"\nAttempting to run workflow: {workflow_filename}")
-        # print("inside run workflow with kwargs: " + str(kwargs))
 
         # Construct the path to the workflow JSON file
         workflow_json_filepath = "./workflows/" + workflow_filename
@@ -881,8 +861,8 @@ def run_workflow(workflow_filename, workflow_name, progress, **kwargs):
 
 def get_job_result(prompt_id):
     """Get the current status and result for a job"""
-    if prompt_id in job_tracking:
-        job = job_tracking[prompt_id]
+    if prompt_id in app_state.job_tracking:
+        job = app_state.job_tracking[prompt_id]
         return {
             "status": job["status"],
             "output_file": job["output_file"],
@@ -902,17 +882,12 @@ def run_workflow_with_name(
     output_type = workflow_definitions[workflow_name]["outputs"].get("type", "")
 
     def wrapper(*args):
-        global current_output_type
-        current_output_type = output_type  # Set the type when workflow runs
-        print(f"I just got told to make a(n) {current_output_type}")
+        app_state.current_output_type = output_type
+        print(f"I just got told to make a(n) {app_state.current_output_type}")
 
-        # match the component to the arg
         for component, arg in zip(raw_components, args):
-            # check if component is path type and convert to absolute path if needed
             if component_info_dict[component.elem_id].get("type") == "path" and arg:
                 arg = os.path.abspath(arg)
-
-            # access the component_info_dict using component.elem_id and add a value field = arg
             component_info_dict[component.elem_id]["value"] = arg
 
         return run_workflow(
@@ -922,7 +897,6 @@ def run_workflow_with_name(
             **component_info_dict,
         )
 
-    # Set descriptive name and docstring
     wrapper.__name__ = workflow_name
     wrapper.__doc__ = workflow_definitions[workflow_name].get("description", "")
 
@@ -940,12 +914,9 @@ def update_gif(workflow_name):
 
 def select_dynamic_input_option(selected_option, choices):
     print(f"Selected option: {selected_option}")
-    # print(f"Choices: {choices}")
     updaters = [gr.update(visible=False) for _ in choices]
 
-    # Make the corresponding input visible based on the selected option
     if selected_option in choices:
-        # print(f"Reveal option input: {selected_option}")
         selected_index = choices.index(selected_option)
         updaters[selected_index] = gr.update(visible=True)
 
@@ -1085,98 +1056,72 @@ def create_dynamic_input(
             outputs=possible_inputs,
         )
 
-        # Handle input submission with progress tracking
+        # Handle input submission
         def process_with_progress(*args, progress=gr.Progress()):
-            print(f"Args: {args}")
+            print(f"Processing inputs with args: {args}")
 
-            selected_opt = args[0]  # First arg is selected option
-            choices_state = args[1]  # Second arg is choices State
-            input_type_state = args[2]  # Third arg is input_type State
+            selected_opt = args[0]
+            choices_state = args[1]
+            input_type_state = args[2]
+            arg_index = 3
 
-            # Initialize variables
-            max_images = None
-            input_values = []
-
-            arg_index = 3  # Starting index for additional arguments
-
-            # If limit controls exist, they come next
             if limit_enabled and limit_value:
                 limit_enabled_value = args[arg_index]
                 limit_value_value = args[arg_index + 1]
-                arg_index += 2  # Increment index since we have consumed two arguments
-
-                print(f"Extracted limit_enabled_value: {limit_enabled_value}")
-                print(f"Extracted limit_value_value: {limit_value_value}")
-
-                max_images = int(limit_value_value) if limit_enabled_value else None
+                arg_index += 2
+                print(
+                    f"Limit settings - Enabled: {limit_enabled_value}, Value: {limit_value_value}"
+                )
             else:
                 limit_enabled_value = None
                 limit_value_value = None
 
-            # The rest of the args are input values
             input_values = list(args[arg_index:])
+            print(f"Input values: {input_values}")
 
-            # Debugging output
-            print(f"Selected Option: {selected_opt}")
-            print(f"Limit Enabled: {limit_enabled_value}")
-            print(f"Limit Value: {limit_value_value}")
-            print(f"Input Values: {input_values}")
-
-            # Get the selected input value based on the selected option
-            opt_index = choices.index(selected_opt)
-            if opt_index < len(input_values):
-                selected_value = input_values[opt_index]
-            else:
-                print(
-                    f"Error: Index {opt_index} out of range for input_values with length {len(input_values)}"
-                )
-                selected_value = None  # Handle this case appropriately
-
-            if selected_opt == "nilor collection":
-                progress(0, desc="Requesting collection...")
-                try:
+            try:
+                if selected_opt == "nilor collection":
+                    progress(0, desc="Requesting collection...")
                     result = resolve_online_collection(
-                        selected_value, max_images=max_images, progress=progress
+                        input_values[1],  # Use the nilor collection input
+                        max_images=(
+                            int(limit_value_value) if limit_enabled_value else None
+                        ),
+                        progress=progress,
                     )
-                except Exception as e:
+                elif selected_opt == "filepath":
+                    result = organise_local_files(
+                        input_values[0],  # Use the filepath input
+                        input_type_state,
+                        max_images=(
+                            int(limit_value_value) if limit_enabled_value else None
+                        ),
+                    )
+                elif selected_opt == "upload":
+                    result = copy_uploaded_files_to_local_dir(
+                        input_values[-1],  # Use the upload input
+                        input_type_state,
+                        max_files=(
+                            int(limit_value_value) if limit_enabled_value else None
+                        ),
+                    )
+                else:
                     result = None
-                    print(f"Failed to resolve online collection: {e}")
-                    gr.Warning(f"Error resolving collection: {e}")
-            elif selected_opt == "filepath":
-                result = organise_local_files(
-                    selected_value,
-                    input_type_state,
-                    max_images=max_images,
-                    shuffle=False,
-                )
-            elif selected_opt == "upload":
-                result = copy_uploaded_files_to_local_dir(
-                    selected_value,
-                    input_type_state,
-                    max_files=max_images,
-                    shuffle=False,
-                )
-            else:
-                result = process_dynamic_input(
-                    selected_opt, choices_state, input_type_state, *input_values
-                )
+                    print(f"Unknown option selected: {selected_opt}")
 
-            # Return all input values plus result
-            return input_values + [result]
+                return input_values + [result]
 
-        # Prepare the inputs list for the submit/upload events
-        # Only include limit controls if they are not None
-        optional_inputs = []
+            except Exception as e:
+                print(f"Error processing input: {e}")
+                return input_values + [None]
+
+        # Prepare inputs for the events
+        event_inputs = [selected_option, gr.State(choices), gr.State(input_type)]
         if limit_enabled and limit_value:
-            optional_inputs.extend([limit_enabled, limit_value])
+            event_inputs.extend([limit_enabled, limit_value])
+        event_inputs.extend(possible_inputs)
 
-        event_inputs = (
-            [selected_option, gr.State(choices), gr.State(input_type)]
-            + optional_inputs
-            + possible_inputs
-        )
-
-        # Handle input submission
+        # Add events for each input type
         for input_box in possible_inputs:
             if isinstance(input_box, gr.Textbox):
                 input_box.submit(
@@ -1184,9 +1129,7 @@ def create_dynamic_input(
                     inputs=event_inputs,
                     outputs=possible_inputs + [output],
                 )
-            elif isinstance(
-                input_box, (gr.File, gr.Gallery, gr.Image)
-            ):  # Added gr.Image here
+            elif isinstance(input_box, (gr.File, gr.Gallery, gr.Image)):
                 input_box.upload(
                     fn=process_with_progress,
                     inputs=event_inputs,
@@ -1196,7 +1139,7 @@ def create_dynamic_input(
         return selected_option, possible_inputs, output
 
 
-# Ensure all elements in self.inputs are valid Gradio components
+# Ensure all elements are valid Gradio components
 def filter_valid_components(components):
     valid_components = []
     for component in components:
@@ -1261,7 +1204,7 @@ def process_input(input_context, input_key):
         "float": gr.Number,
         "int": gr.Number,
         "slider": gr.Slider,
-        "radio": gr.Radio,  # True radios collect their options from the workflow_definitions.json
+        "radio": gr.Radio,
         "enum": gr.Dropdown,
         "group": None,
         "toggle-group": gr.Checkbox,
@@ -1274,27 +1217,23 @@ def process_input(input_context, input_key):
 
     with gr.Group():
         if input_type in component_map:
-            # Use the mapping to find Gradio component based on input_type
             component_constructor = component_map.get(input_type)
 
             if input_type == "group":
                 gr.Markdown(f"##### {input_label}", elem_classes="group-label")
-
                 with gr.Group():
-                    # Group of inputs
                     with gr.Group():
                         sub_context = input_context[input_key]["inputs"]
                         for group_input_key in sub_context:
                             [sub_components, sub_dict_values] = process_input(
                                 sub_context, group_input_key
                             )
-
                             components.extend(sub_components)
                             components_dict.update(sub_dict_values)
+
             elif input_type == "toggle-group":
                 with gr.Group():
                     with gr.Row(equal_height=True):
-                        # Checkbox component which enables Group
                         component = component_constructor(
                             label=input_label,
                             elem_id=input_key,
@@ -1303,8 +1242,6 @@ def process_input(input_context, input_key):
                             scale=100,
                             info=input_info,
                         )
-
-                        # Compact Reset button with reduced width, initially hidden
                         reset_button = gr.Button(
                             "↺",
                             visible=False,
@@ -1314,18 +1251,15 @@ def process_input(input_context, input_key):
                             min_width=5,
                         )
 
-                    # Group of inputs (initially hidden)
                     with gr.Group(visible=component.value) as input_group:
                         sub_context = input_context[input_key]["inputs"]
                         for group_input_key in sub_context:
                             [sub_components, sub_dict_values] = process_input(
                                 sub_context, group_input_key
                             )
-
                             components.extend(sub_components)
                             components_dict.update(sub_dict_values)
 
-                # Update the group visibility based on the checkbox
                 component.change(
                     fn=toggle_group,
                     inputs=component,
@@ -1333,8 +1267,8 @@ def process_input(input_context, input_key):
                     queue=False,
                     show_progress="hidden",
                 )
+
             elif input_type == "images":
-                # print("!!!!!!!!!!!!!!!!!!!!!!!\nMaking Radio")
                 selected_option, inputs, component = create_dynamic_input(
                     input_type,
                     choices=["filepath", "nilor collection", "upload"],
@@ -1346,7 +1280,7 @@ def process_input(input_context, input_key):
                     identifier=input_key,
                     additional_information=input_info,
                 )
-            elif input_type == "image":  # New single image type
+            elif input_type == "image":
                 selected_option, inputs, component = create_dynamic_input(
                     input_type,
                     choices=["filepath", "upload"],
@@ -1368,9 +1302,8 @@ def process_input(input_context, input_key):
                     identifier=input_key,
                     additional_information=input_info,
                 )
-            elif input_type == "float" or input_type == "int" or input_type == "slider":
+            elif input_type in ["float", "int", "slider"]:
                 with gr.Row(equal_height=True):
-                    # Use the mapping to create components based on input_type
                     component = component_constructor(
                         label=input_label,
                         elem_id=input_key,
@@ -1383,8 +1316,7 @@ def process_input(input_context, input_key):
                         info=input_info,
                     )
 
-                    if input_type != "slider":  # not required for slider
-                        # Compact Reset button with reduced width, initially hidden
+                    if input_type != "slider":
                         reset_button = gr.Button(
                             "↺",
                             visible=False,
@@ -1395,7 +1327,6 @@ def process_input(input_context, input_key):
                         )
             elif input_type == "radio":
                 with gr.Row(equal_height=True):
-                    # Use the mapping to create components based on input_type
                     component = component_constructor(
                         label=input_label,
                         elem_id=input_key,
@@ -1404,8 +1335,6 @@ def process_input(input_context, input_key):
                         scale=100,
                         info=input_info,
                     )
-
-                    # Compact Reset button with reduced width, initially hidden
                     reset_button = gr.Button(
                         "↺",
                         visible=False,
@@ -1435,7 +1364,6 @@ def process_input(input_context, input_key):
                     )
             else:
                 with gr.Row(equal_height=True):
-                    # Use the mapping to create components based on input_type
                     component = component_constructor(
                         label=input_label,
                         elem_id=input_key,
@@ -1444,8 +1372,6 @@ def process_input(input_context, input_key):
                         scale=100,
                         info=input_info,
                     )
-
-                    # Compact Reset button with reduced width, initially hidden
                     reset_button = gr.Button(
                         "↺",
                         visible=False,
@@ -1460,7 +1386,6 @@ def process_input(input_context, input_key):
                 components_dict[input_key] = input_details
 
                 if reset_button is not None:
-                    # Trigger the reset check when the value of the input changes
                     html_output = gr.HTML(visible=False)
                     component.change(
                         fn=watch_input,
@@ -1470,7 +1395,6 @@ def process_input(input_context, input_key):
                         show_progress="hidden",
                     )
 
-                    # Trigger the reset function when the button is clicked
                     reset_button.click(
                         fn=reset_input,
                         inputs=[gr.State(input_value)],
@@ -1478,36 +1402,8 @@ def process_input(input_context, input_key):
                         queue=False,
                         show_progress="hidden",
                     )
-        else:
-            print(f"Whoa! Unsupported input type: {input_type}")
 
     return [components, components_dict]
-    # return components
-
-
-def apply_preset(workflow_name, preset_name):
-    if preset_name == "Default":
-        # Return default values from workflow definition
-        defaults = {
-            key: details["value"]
-            for key, details in workflow_definitions[workflow_name]["inputs"].items()
-        }
-        return [defaults[comp.elem_id] for comp in components]
-
-    # Get preset values
-    preset = workflow_definitions[workflow_name]["presets"][preset_name]
-    preset_values = preset["values"]
-
-    # Update component values
-    updates = []
-    for component in components:
-        if component.elem_id in preset_values:
-            updates.append(preset_values[component.elem_id])
-        else:
-            # Keep existing value if not in preset
-            updates.append(component.value)
-
-    return updates
 
 
 def create_tab_interface(workflow_name):
@@ -1590,7 +1486,9 @@ def create_tab_interface(workflow_name):
             return updates
 
         preset_dropdown.change(
-            fn=apply_preset, inputs=[preset_dropdown], outputs=components
+            fn=apply_preset,
+            inputs=[preset_dropdown],
+            outputs=components,
         )
 
     return components, component_data_dict
@@ -1624,42 +1522,34 @@ def load_demo():
                 target=check_current_progress, args=(ws,), daemon=True
             )
 
+            # Add threads to resource manager for cleanup
+            resource_manager.add_thread(heartbeat_thread)
+            resource_manager.add_thread(progress_thread)
+
             threads = [heartbeat_thread, progress_thread]
             for thread in threads:
                 thread.start()
-                print(f"Started thread: {thread.name}")  # Debug log
+                print(f"Started thread: {thread.name}")
 
-        except websocket.WebSocketConnectionClosedException as e:
-            print(f"WebSocket connection closed: {e}")
-            ws = reconnect(ws, client_id)
         except Exception as e:
             print(f"An error occurred: {type(e).__name__}: {e}")
 
-    # Reset state variables...
-
 
 def unload_demo():
-    global ws, tick_timer, check_vram_running, check_queue_running, check_progress_running
+    global ws, tick_timer
     print("Unloading the demo...")
 
     # Stop all monitoring loops
-    check_vram_running = False
-    check_queue_running = False
-    check_progress_running = False
+    app_state.check_vram_running = False
+    app_state.check_queue_running = False
+    app_state.check_progress_running = False
 
     # Deactivate timer
     if tick_timer:
         tick_timer.active = False
 
-    # Close WebSocket connection
-    if ws:
-        try:
-            ws.close()
-        except websocket.WebSocketException as e:
-            print(f"Error closing websocket: {e}")
-        except ConnectionError as e:
-            print(f"Connection error while closing: {e}")
-        ws = None
+    # Clean up resources
+    resource_manager.cleanup()
 
     time.sleep(2.0)
 
@@ -1667,8 +1557,8 @@ def unload_demo():
 def setup_signal_handlers():
     if threading.current_thread() is threading.main_thread():
         try:
-            signal.signal(signal.SIGINT, signal_handler)  # Ctrl+C
-            signal.signal(signal.SIGTERM, signal_handler)  # Termination request
+            signal.signal(signal.SIGINT, signal_handler)
+            signal.signal(signal.SIGTERM, signal_handler)
             print("Signal handlers set up successfully")
         except ValueError as e:
             print(f"Could not set up signal handlers: {e}")
@@ -1684,7 +1574,7 @@ custom_css = """
 }
 
 html {
-    overflow-y: scroll; /* Always show vertical scrollbar */
+    overflow-y: scroll;
 }
 
 .logs textarea {
@@ -1702,13 +1592,6 @@ html {
     font-family: monospace;
 }
 """
-
-
-def update_download_progress():
-    if download_progress["total"] > 0:
-        progress = download_progress["current"] / download_progress["total"]
-        return gr.update(value=download_progress["status"]), progress
-
 
 with gr.Blocks(
     title="Zenerator",
@@ -1734,10 +1617,8 @@ with gr.Blocks(
                 for workflow_name in workflow_definitions.keys():
                     workflow_filename = workflow_definitions[workflow_name]["filename"]
 
-                    # make a tab for each workflow
                     with gr.TabItem(label=workflow_definitions[workflow_name]["name"]):
                         with gr.Row():
-                            # main input construction
                             with gr.Column():
                                 with gr.Group():
                                     with gr.Row(equal_height=True):
@@ -1747,13 +1628,6 @@ with gr.Blocks(
                                             value=COMFY_PORTS[0],
                                             interactive=True,
                                             scale=1,
-                                        )
-                                        print(
-                                            f"Default ComfyUI Port: {comfy_url_and_port_selector.value}"
-                                        )
-                                        comfy_url_and_port_selector.change(
-                                            select_correct_port,
-                                            inputs=[comfy_url_and_port_selector],
                                         )
                                         run_button = gr.Button(
                                             "Run Workflow",
@@ -1772,7 +1646,6 @@ with gr.Blocks(
                                             )
                                         )
 
-                                # also make a dictionary with the components' data
                                 components, component_dict = create_tab_interface(
                                     workflow_name
                                 )
@@ -1781,15 +1654,18 @@ with gr.Blocks(
                                 "outputs"
                             ].get("type", "")
 
+                    comfy_url_and_port_selector.change(
+                        select_correct_port,
+                        inputs=[comfy_url_and_port_selector],
+                    )
+
                     run_button.click(
                         fn=run_workflow_with_name(
                             workflow_filename, workflow_name, components, component_dict
                         ),
                         inputs=components,
                         outputs=gr.Text(visible=False),
-                        # outputs=[gen_component],
                         trigger_mode="multiple",
-                        # show_progress="full"
                         api_name=f"workflow/{workflow_name}",
                     )
 
@@ -1804,7 +1680,6 @@ with gr.Blocks(
                             show_label=False, interactive=False, value=latest_content
                         )
                 else:
-                    # populate the Output Preview with the latest video in the output directory
                     latest_content = get_latest_video(OUT_DIR)
                     if latest_content is not None:
                         output_player = gr.Video(
@@ -1821,7 +1696,6 @@ with gr.Blocks(
                             loop=True,
                             interactive=False,
                         )
-                # output_filepath_component = gr.Markdown("N/A")
 
                 tick_timer.tick(
                     fn=check_for_new_content,
@@ -1878,19 +1752,19 @@ with gr.Blocks(
                 show_progress="hidden",
             )
 
-    if __name__ == "__main__":
-        setup_signal_handlers()
-        initialize_content_tracking()
-        demo.queue()
+if __name__ == "__main__":
+    setup_signal_handlers()
+    initialize_content_tracking()
+    demo.queue()
 
-        # Create hidden components for the result endpoint
-        result_input = gr.Text(visible=False)
-        result_output = gr.JSON(visible=False)
-        demo.load(
-            fn=get_job_result,
-            inputs=result_input,
-            outputs=result_output,
-            api_name="workflow_result",
-        )
+    # Create hidden components for the result endpoint
+    result_input = gr.Text(visible=False)
+    result_output = gr.JSON(visible=False)
+    demo.load(
+        fn=get_job_result,
+        inputs=result_input,
+        outputs=result_output,
+        api_name="workflow_result",
+    )
 
-        demo.launch(allowed_paths=allowed_paths, favicon_path="favicon.png")
+    demo.launch(allowed_paths=allowed_paths, favicon_path="favicon.png")
