@@ -1752,19 +1752,19 @@ with gr.Blocks(
                 show_progress="hidden",
             )
 
-if __name__ == "__main__":
-    setup_signal_handlers()
-    initialize_content_tracking()
-    demo.queue()
+    if __name__ == "__main__":
+        setup_signal_handlers()
+        initialize_content_tracking()
+        demo.queue()
 
-    # Create hidden components for the result endpoint
-    result_input = gr.Text(visible=False)
-    result_output = gr.JSON(visible=False)
-    demo.load(
-        fn=get_job_result,
-        inputs=result_input,
-        outputs=result_output,
-        api_name="workflow_result",
-    )
+        # Create hidden components for the result endpoint
+        result_input = gr.Text(visible=False)
+        result_output = gr.JSON(visible=False)
+        demo.load(
+            fn=get_job_result,
+            inputs=result_input,
+            outputs=result_output,
+            api_name="workflow_result",
+        )
 
-    demo.launch(allowed_paths=allowed_paths, favicon_path="favicon.png")
+        demo.launch(allowed_paths=allowed_paths, favicon_path="favicon.png")
