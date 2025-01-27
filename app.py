@@ -24,6 +24,7 @@ import weakref
 from typing import Dict, Set, Optional
 from concurrent.futures import ThreadPoolExecutor
 import gc
+import asyncio
 
 
 # Resource management for better memory handling
@@ -858,16 +859,33 @@ def run_workflow(workflow_filename, workflow_name, progress, **kwargs):
         return None
 
 
+async def delayed_cleanup(prompt_id: str):
+    await asyncio.sleep(30)  # Non-blocking 30 second buffer
+    if prompt_id in app_state.job_tracking:
+        del app_state.job_tracking[prompt_id]
+        print(f"Cleaned up completed job {prompt_id} from tracking")
+
+
 def get_job_result(prompt_id):
     """Get the current status and result for a job"""
     if prompt_id in app_state.job_tracking:
         job = app_state.job_tracking[prompt_id]
-        return {
+
+        response = {
             "status": job["status"],
             "output_file": job["output_file"],
             "workflow_name": job["workflow_name"],
             "timestamp": job["timestamp"],
         }
+
+        # Schedule cleanup if job is done and we have the output file (or it failed)
+        if (job["status"] == "completed" and job["output_file"]) or job[
+            "status"
+        ] == "failed":
+            asyncio.create_task(delayed_cleanup(prompt_id))
+
+        return response
+
     return {"status": "not_found"}
 
 
