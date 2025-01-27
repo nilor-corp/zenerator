@@ -25,6 +25,7 @@ from typing import Dict, Set, Optional
 from concurrent.futures import ThreadPoolExecutor
 import gc
 import asyncio
+from threading import Timer
 
 
 # Resource management for better memory handling
@@ -882,20 +883,7 @@ def get_job_result(prompt_id):
         if (job["status"] == "completed" and job["output_file"]) or job[
             "status"
         ] == "failed":
-
-            def delayed_cleanup():
-                try:
-                    loop = asyncio.get_event_loop()
-                    if not loop.is_running():
-                        loop = asyncio.new_event_loop()
-                        asyncio.set_event_loop(loop)
-                    loop.call_later(
-                        30, lambda: app_state.job_tracking.pop(prompt_id, None)
-                    )
-                except Exception as e:
-                    print(f"Error scheduling cleanup for {prompt_id}: {e}")
-
-            threading.Thread(target=delayed_cleanup, daemon=True).start()
+            Timer(30.0, lambda: app_state.job_tracking.pop(prompt_id, None)).start()
 
         return response
 
