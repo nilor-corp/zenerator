@@ -1782,7 +1782,7 @@ with gr.Blocks(
         fn=get_job_result,
         inputs=result_input,
         outputs=result_output,
-        api_name="/workflow_result",
+        api_name="workflow_result",
     )
 
     if __name__ == "__main__":
