@@ -1775,20 +1775,20 @@ with gr.Blocks(
                 show_progress="hidden",
             )
 
+    # Create hidden components for the result endpoint
+    result_input = gr.Text(visible=False)
+    result_output = gr.JSON(visible=False)
+    result_input.submit(
+        fn=get_job_result,
+        inputs=result_input,
+        outputs=result_output,
+        api_name="/workflow_result",
+    )
+
     if __name__ == "__main__":
         setup_signal_handlers()
         initialize_content_tracking()
         demo.queue()
-
-        # Create hidden components for the result endpoint
-        result_input = gr.Text(visible=False)
-        result_output = gr.JSON(visible=False)
-        demo.add_api_route(
-            "/workflow_result",
-            fn=get_job_result,
-            inputs=result_input,
-            outputs=result_output,
-        )
 
         demo.load(fn=load_demo)
 
