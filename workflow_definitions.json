@@ -863,56 +863,56 @@
             "node-id": "[\"1902\"][\"inputs\"][\"text\"]",
             "value": "extremely detailed"
           }
-        },
-        "camera-controls": {
-          "type": "group",
-          "label": "Camera Controls",
-          "inputs": {
-            "zoom": {
-              "type": "enum",
-              "label": "Zoom",
-              "node-id": "[\"1877\"][\"inputs\"][\"string\"]",
-              "value": "No Zoom",
-              "choices": ["No Zoom", "Zoom In", "Zoom Out"]
-            },
-            "zoom-strength": {
-              "type": "float",
-              "label": "Zoom Strength",
-              "node-id": "[\"1904\"][\"inputs\"][\"value\"]",
-              "value": 0.5,
-              "minimum": 0.0,
-              "maximum": 2.0
-            },
-            "pan-x": {
-              "type": "enum",
-              "label": "Pan X",
-              "node-id": "[\"1878\"][\"inputs\"][\"string\"]",
-              "value": "No Pan X",
-              "choices": ["No Pan X", "Pan Left", "Pan Right"]
-            },
-            "pan-x-strength": {
-              "type": "float",
-              "label": "Pan X Strength",
-              "node-id": "[\"1914\"][\"inputs\"][\"value\"]",
-              "value": 0.5,
-              "minimum": 0.0,
-              "maximum": 2.0
-            },
-            "pan-y": {
-              "type": "enum",
-              "label": "Pan Y",
-              "node-id": "[\"1880\"][\"inputs\"][\"string\"]",
-              "value": "No Pan Y",
-              "choices": ["No Pan Y", "Pan Up", "Pan Down"]
-            },
-            "pan-y-strength": {
-              "type": "float",
-              "label": "Pan Y Strength",
-              "node-id": "[\"1919\"][\"inputs\"][\"value\"]",
-              "value": 0.5,
-              "minimum": 0.0,
-              "maximum": 2.0
-            }
+        }
+      },
+      "camera-controls": {
+        "type": "group",
+        "label": "Camera Controls",
+        "inputs": {
+          "zoom": {
+            "type": "enum",
+            "label": "Zoom",
+            "node-id": "[\"1877\"][\"inputs\"][\"string\"]",
+            "value": "No Zoom",
+            "choices": ["No Zoom", "Zoom In", "Zoom Out"]
+          },
+          "zoom-strength": {
+            "type": "float",
+            "label": "Zoom Strength",
+            "node-id": "[\"1904\"][\"inputs\"][\"value\"]",
+            "value": 0.5,
+            "minimum": 0.0,
+            "maximum": 2.0
+          },
+          "pan-x": {
+            "type": "enum",
+            "label": "Pan X",
+            "node-id": "[\"1878\"][\"inputs\"][\"string\"]",
+            "value": "No Pan X",
+            "choices": ["No Pan X", "Pan Left", "Pan Right"]
+          },
+          "pan-x-strength": {
+            "type": "float",
+            "label": "Pan X Strength",
+            "node-id": "[\"1914\"][\"inputs\"][\"value\"]",
+            "value": 0.5,
+            "minimum": 0.0,
+            "maximum": 2.0
+          },
+          "pan-y": {
+            "type": "enum",
+            "label": "Pan Y",
+            "node-id": "[\"1880\"][\"inputs\"][\"string\"]",
+            "value": "No Pan Y",
+            "choices": ["No Pan Y", "Pan Up", "Pan Down"]
+          },
+          "pan-y-strength": {
+            "type": "float",
+            "label": "Pan Y Strength",
+            "node-id": "[\"1919\"][\"inputs\"][\"value\"]",
+            "value": 0.5,
+            "minimum": 0.0,
+            "maximum": 2.0
           }
         }
       }
