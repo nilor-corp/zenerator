@@ -1,0 +1,1532 @@
+{
+  "61": {
+    "inputs": {
+      "text": [
+        "1718",
+        0
+      ],
+      "clip": [
+        "77",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Negative Prompt)"
+    }
+  },
+  "67": {
+    "inputs": {
+      "text": [
+        "104",
+        0
+      ],
+      "clip": [
+        "77",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Positive Prompt)"
+    }
+  },
+  "70": {
+    "inputs": {
+      "frame_rate": 24,
+      "positive": [
+        "67",
+        0
+      ],
+      "negative": [
+        "61",
+        0
+      ]
+    },
+    "class_type": "LTXVConditioning",
+    "_meta": {
+      "title": "LTXVConditioning"
+    }
+  },
+  "73": {
+    "inputs": {
+      "frame_rate": 20,
+      "loop_count": 0,
+      "filename_prefix": "test",
+      "format": "video/h265-mp4",
+      "pix_fmt": "yuv420p10le",
+      "crf": 28,
+      "save_metadata": true,
+      "pingpong": false,
+      "save_output": false,
+      "images": [
+        "1837",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "74": {
+    "inputs": {
+      "video": [
+        "76",
+        0
+      ],
+      "force_rate": 0,
+      "force_size": "Disabled",
+      "custom_width": 512,
+      "custom_height": 512,
+      "frame_load_cap": 0,
+      "skip_first_frames": 0,
+      "select_every_nth": 1
+    },
+    "class_type": "VHS_LoadVideoPath",
+    "_meta": {
+      "title": "Load Video (Path) 🎥🅥🅗🅢"
+    }
+  },
+  "76": {
+    "inputs": {
+      "index": -1,
+      "filenames": [
+        "73",
+        0
+      ]
+    },
+    "class_type": "VHS_SelectFilename",
+    "_meta": {
+      "title": "Select Filename 🎥🅥🅗🅢"
+    }
+  },
+  "77": {
+    "inputs": {
+      "clip_name": "t5\\google_t5-v1_1-xxl_encoderonly-fp8_e4m3fn.safetensors",
+      "type": "ltxv",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader",
+    "_meta": {
+      "title": "Load CLIP"
+    }
+  },
+  "79": {
+    "inputs": {
+      "model": [
+        "89",
+        0
+      ]
+    },
+    "class_type": "ModifyLTXModel",
+    "_meta": {
+      "title": "Modify LTX Model"
+    }
+  },
+  "88": {
+    "inputs": {
+      "width": 512,
+      "height": 320,
+      "upscale_method": "lanczos",
+      "keep_proportion": true,
+      "divisible_by": 32,
+      "width_input": [
+        "1763",
+        0
+      ],
+      "height_input": [
+        "1764",
+        0
+      ],
+      "crop": "center",
+      "image": [
+        "74",
+        0
+      ]
+    },
+    "class_type": "ImageResizeKJ",
+    "_meta": {
+      "title": "Resize Image"
+    }
+  },
+  "89": {
+    "inputs": {
+      "ckpt_name": "LTXV\\ltx-video-2b-v0.9.1.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "Load Checkpoint"
+    }
+  },
+  "104": {
+    "inputs": {
+      "model": "llama-3.3-70b-versatile",
+      "preset": "Use [system_message] and [user_input]",
+      "system_message": "You are an expert cinematic director with many award winning movies, When writing prompts based on the user input, focus on detailed, chronological descriptions of actions and scenes. Include specific movements, appearances, camera angles, and environmental details - all in a single flowing paragraph. Start directly with the action, and keep descriptions literal and precise. Think like a cinematographer describing a shot list. Keep within 200 words. For best results, build your prompts using this structure:\n\nStart with main action in a single sentence\nAdd specific details about movements and gestures\nDescribe character/object appearances precisely\nInclude background and environment details\nSpecify camera angles and movements\nDescribe lighting and colors\nNote any changes or sudden events\n\nDo not exceed the 150 word limit!",
+      "user_input": [
+        "1890",
+        0
+      ],
+      "temperature": 0.5,
+      "max_tokens": 1024,
+      "top_p": 1,
+      "seed": 2392400692,
+      "max_retries": 2,
+      "stop": "",
+      "json_mode": true
+    },
+    "class_type": "✨💬 Groq LLM API",
+    "_meta": {
+      "title": "✨💬 Groq LLM API"
+    }
+  },
+  "105": {
+    "inputs": {
+      "text_input": "",
+      "task": "detailed_caption",
+      "fill_mask": true,
+      "keep_model_loaded": false,
+      "max_new_tokens": 512,
+      "num_beams": 3,
+      "do_sample": true,
+      "output_mask_select": "",
+      "seed": 623939784917076,
+      "image": [
+        "1837",
+        0
+      ],
+      "florence2_model": [
+        "106",
+        0
+      ]
+    },
+    "class_type": "Florence2Run",
+    "_meta": {
+      "title": "Florence2Run"
+    }
+  },
+  "106": {
+    "inputs": {
+      "model": "MiaoshouAI/Florence-2-base-PromptGen-v2.0",
+      "precision": "fp16",
+      "attention": "sdpa"
+    },
+    "class_type": "DownloadAndLoadFlorence2Model",
+    "_meta": {
+      "title": "DownloadAndLoadFlorence2Model"
+    }
+  },
+  "107": {
+    "inputs": {
+      "text": [
+        "104",
+        0
+      ],
+      "text2": "The woman's eyes slowly open, her blue irises locking onto the camera as her gaze lowers, her eyelids casting a subtle shadow on her cheeks. Her short, yellow hair frames her face, with the pink, spiked headpiece glinting in the light. The camera zooms in on her face, capturing the serene yet melancholic expression, as the colorful, abstract swirl pattern in the background blurs slightly. The shot is static, with no pan or tilt, focusing on the woman's face, illuminated by soft, vibrant light, with shades of green, blue, and pink reflecting off her fair skin."
+    },
+    "class_type": "ShowText|pysssss",
+    "_meta": {
+      "title": "Show Text 🐍"
+    }
+  },
+  "112": {
+    "inputs": {
+      "sampler_name": "euler_ancestral"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "KSamplerSelect"
+    }
+  },
+  "114": {
+    "inputs": {
+      "layers": "14"
+    },
+    "class_type": "LTXAttnOverride",
+    "_meta": {
+      "title": "LTX Attention Override"
+    }
+  },
+  "115": {
+    "inputs": {
+      "index": 0,
+      "insert": false,
+      "model": [
+        "116",
+        0
+      ],
+      "latent": [
+        "1702",
+        0
+      ],
+      "image_latent": [
+        "356",
+        0
+      ]
+    },
+    "class_type": "AddLatentGuide",
+    "_meta": {
+      "title": "Add LTX Latent Guide"
+    }
+  },
+  "116": {
+    "inputs": {
+      "scale": 1.5,
+      "rescale": 0.5,
+      "cfg": 5,
+      "model": [
+        "79",
+        0
+      ],
+      "attn_override": [
+        "114",
+        0
+      ]
+    },
+    "class_type": "LTXPerturbedAttention",
+    "_meta": {
+      "title": "LTX Apply Perturbed Attention"
+    }
+  },
+  "118": {
+    "inputs": {
+      "width": [
+        "1763",
+        0
+      ],
+      "height": [
+        "1764",
+        0
+      ],
+      "length": [
+        "123",
+        0
+      ],
+      "batch_size": 1
+    },
+    "class_type": "EmptyLTXVLatentVideo",
+    "_meta": {
+      "title": "EmptyLTXVLatentVideo"
+    }
+  },
+  "123": {
+    "inputs": {
+      "int": 89
+    },
+    "class_type": "Primitive integer [Crystools]",
+    "_meta": {
+      "title": "🪛 Primitive integer"
+    }
+  },
+  "356": {
+    "inputs": {
+      "pixels": [
+        "88",
+        0
+      ],
+      "vae": [
+        "89",
+        2
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE Encode"
+    }
+  },
+  "573": {
+    "inputs": {
+      "text": [
+        "1718",
+        0
+      ],
+      "text2": "The woman's eyes jarringly flicker open, her blue irises spasmodically twitching as her gaze wildly darts around, her eyelids convulsively fluttering and casting erratic, distorted shadows on her cheeks. Her short, yellow hair appears to writhe and twist around her face, with the pink, spiked headpiece flashing in a dizzying, staccato rhythm, as if reflecting the chaotic, discordant lighting. The camera shudders and lurches in, its zoom jerky and unsteady, capturing the woman's face in a grotesque, exaggerated close-up, as the colorful, abstract swirl pattern in the background distorts and blurs in a maddening, kaleidoscopic whirl. The shot is frenetic, with the camera wildly panning and tilting, as if struggling to focus on the woman's face, which is bathed in harsh, clashing light, with shades of green, blue, and pink clashing and pulsating in a nauseating, disorienting display."
+    },
+    "class_type": "ShowText|pysssss",
+    "_meta": {
+      "title": "Show Text 🐍"
+    }
+  },
+  "1702": {
+    "inputs": {
+      "pixels": [
+        "1865",
+        0
+      ],
+      "vae": [
+        "89",
+        2
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE Encode"
+    }
+  },
+  "1703": {
+    "inputs": {
+      "radius_x": 2,
+      "radius_y": 2,
+      "images": [
+        "88",
+        0
+      ]
+    },
+    "class_type": "BlurImageFast",
+    "_meta": {
+      "title": "Blur Image (Fast)"
+    }
+  },
+  "1718": {
+    "inputs": {
+      "model": "llama-3.3-70b-versatile",
+      "preset": "Use [system_message] and [user_input]",
+      "system_message": "Create a Negative Prompt (200 words max) from a Positive Prompt:\n\nIn general, the idea is to take the input and describe the opposite. Sometimes this might mean your output negative prompt is actually describing smooth motion, but often not. Below are some examples and guidelines.\n\nMotion Corruption:\n\n\nConvert each movement into an opposite; smooth motions become jerky and vice versa\nMake body parts move undesirably (i.e. opposite) e.g. independently and unnaturally\nAdd glitch-like interruptions to every gesture if the input text is smooth, or vice versa as required\nModify the desired speed to its opposite e.g. Insert random speed changes and reverse motions \nTry to ascertain how things should move from the input description and generally describe the opposite e.g. Make limbs stretch and distort during movement\n\n\nCamera Destruction:\n\n\nAdd aggressive shaking and spinning\nInclude random Dutch angles\nMake camera clip through subjects\nCreate nauseating perspective shifts\nTake note of anything stylistic and describe the opposite (e.g. sometimes we may be dealing with photorealism and want to thus describe animation, or vice versa)\n\n\nWriting Process:\n\n\nTake each positive action and immediately corrupt it\nExample: \"graceful spin\" → \"spasmodic twisting with body parts rotating at different speeds\"\nLayer multiple motion problems simultaneously\nConnect corrupted movements with chaotic camera work\nEnsure every action breaks physics or human anatomy\n\n\nFormatting:\n\n\nWrite as one flowing paragraph\nFocus on active, real-time destruction of movement\nBuild intensity by layering multiple distortions\nMake every motion as uncomfortable as possible\nKeep camera work fighting against the main action\n\nRemember: Take what's meant to look good and make it look broken, glitchy, and physically impossible. Focus on corrupting the specific movements mentioned in the positive prompt rather than adding unrelated chaos.",
+      "user_input": [
+        "104",
+        0
+      ],
+      "temperature": 0.5,
+      "max_tokens": 1024,
+      "top_p": 1,
+      "seed": 2392400477,
+      "max_retries": 2,
+      "stop": "",
+      "json_mode": true
+    },
+    "class_type": "✨💬 Groq LLM API",
+    "_meta": {
+      "title": "✨💬 Groq LLM API"
+    }
+  },
+  "1730": {
+    "inputs": {
+      "samples": [
+        "1731",
+        1
+      ],
+      "vae": [
+        "89",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "1731": {
+    "inputs": {
+      "add_noise": true,
+      "noise_seed": [
+        "1889",
+        0
+      ],
+      "cfg": 5,
+      "model": [
+        "115",
+        0
+      ],
+      "positive": [
+        "70",
+        0
+      ],
+      "negative": [
+        "70",
+        1
+      ],
+      "sampler": [
+        "112",
+        0
+      ],
+      "sigmas": [
+        "1833",
+        1
+      ],
+      "latent_image": [
+        "115",
+        1
+      ]
+    },
+    "class_type": "SamplerCustom",
+    "_meta": {
+      "title": "SamplerCustom"
+    }
+  },
+  "1732": {
+    "inputs": {
+      "frame_rate": 20,
+      "loop_count": 0,
+      "filename_prefix": "ltxv-basic-gen",
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": false,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": false,
+      "images": [
+        "1730",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "1736": {
+    "inputs": {
+      "upscale_model": [
+        "1737",
+        0
+      ]
+    },
+    "class_type": "ImageUpscaleWithModel",
+    "_meta": {
+      "title": "Upscale Image (using Model)"
+    }
+  },
+  "1737": {
+    "inputs": {
+      "model_name": "2x_Ani4K_Compact_35000.pth"
+    },
+    "class_type": "UpscaleModelLoader",
+    "_meta": {
+      "title": "Load Upscale Model"
+    }
+  },
+  "1738": {
+    "inputs": {
+      "width": 1056,
+      "height": 1056,
+      "upscale_method": "lanczos",
+      "keep_proportion": true,
+      "divisible_by": 32,
+      "width_input": [
+        "1741",
+        0
+      ],
+      "height_input": [
+        "1741",
+        0
+      ],
+      "crop": "disabled",
+      "image": [
+        "1730",
+        0
+      ]
+    },
+    "class_type": "ImageResizeKJ",
+    "_meta": {
+      "title": "Resize Image"
+    }
+  },
+  "1739": {
+    "inputs": {
+      "value": 1056
+    },
+    "class_type": "INTConstant",
+    "_meta": {
+      "title": "INT Constant"
+    }
+  },
+  "1740": {
+    "inputs": {
+      "value": 1280
+    },
+    "class_type": "INTConstant",
+    "_meta": {
+      "title": "INT Constant"
+    }
+  },
+  "1741": {
+    "inputs": {
+      "value": 1536
+    },
+    "class_type": "INTConstant",
+    "_meta": {
+      "title": "INT Constant"
+    }
+  },
+  "1742": {
+    "inputs": {
+      "value": 1344
+    },
+    "class_type": "INTConstant",
+    "_meta": {
+      "title": "INT Constant"
+    }
+  },
+  "1743": {
+    "inputs": {
+      "value": 1760
+    },
+    "class_type": "INTConstant",
+    "_meta": {
+      "title": "INT Constant"
+    }
+  },
+  "1744": {
+    "inputs": {
+      "sampler_name": "euler"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "KSamplerSelect"
+    }
+  },
+  "1745": {
+    "inputs": {
+      "layers": "14"
+    },
+    "class_type": "LTXAttnOverride",
+    "_meta": {
+      "title": "LTX Attention Override"
+    }
+  },
+  "1749": {
+    "inputs": {
+      "scale": 1.5,
+      "rescale": 0.5,
+      "cfg": 1,
+      "model": [
+        "79",
+        0
+      ],
+      "attn_override": [
+        "1745",
+        0
+      ]
+    },
+    "class_type": "LTXPerturbedAttention",
+    "_meta": {
+      "title": "LTX Apply Perturbed Attention"
+    }
+  },
+  "1750": {
+    "inputs": {
+      "index": 0,
+      "insert": false,
+      "model": [
+        "1749",
+        0
+      ],
+      "latent": [
+        "1760",
+        0
+      ],
+      "image_latent": [
+        "1762",
+        0
+      ]
+    },
+    "class_type": "AddLatentGuide",
+    "_meta": {
+      "title": "Add LTX Latent Guide"
+    }
+  },
+  "1751": {
+    "inputs": {
+      "steps": 30,
+      "max_shift": 2.05,
+      "base_shift": 0.95,
+      "stretch": true,
+      "terminal": 0.1,
+      "latent": [
+        "1750",
+        1
+      ]
+    },
+    "class_type": "LTXVScheduler",
+    "_meta": {
+      "title": "LTXVScheduler"
+    }
+  },
+  "1752": {
+    "inputs": {
+      "step": 15,
+      "sigmas": [
+        "1751",
+        0
+      ]
+    },
+    "class_type": "SplitSigmas",
+    "_meta": {
+      "title": "SplitSigmas"
+    }
+  },
+  "1754": {
+    "inputs": {
+      "add_noise": true,
+      "noise_seed": [
+        "1893",
+        0
+      ],
+      "cfg": 1,
+      "model": [
+        "1750",
+        0
+      ],
+      "positive": [
+        "70",
+        0
+      ],
+      "negative": [
+        "70",
+        1
+      ],
+      "sampler": [
+        "1744",
+        0
+      ],
+      "sigmas": [
+        "1755",
+        1
+      ],
+      "latent_image": [
+        "1750",
+        1
+      ]
+    },
+    "class_type": "SamplerCustom",
+    "_meta": {
+      "title": "SamplerCustom"
+    }
+  },
+  "1755": {
+    "inputs": {
+      "step": 10,
+      "sigmas": [
+        "1838",
+        0
+      ]
+    },
+    "class_type": "SplitSigmas",
+    "_meta": {
+      "title": "SplitSigmas"
+    }
+  },
+  "1756": {
+    "inputs": {
+      "samples": [
+        "1754",
+        1
+      ],
+      "vae": [
+        "89",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "1757": {
+    "inputs": {
+      "frame_rate": 20,
+      "loop_count": 0,
+      "filename_prefix": "zenerator/taxi/ltxv_fe_ups",
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": false,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "1756",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "1759": {
+    "inputs": {
+      "width": 512,
+      "height": 512,
+      "upscale_method": "bicubic",
+      "keep_proportion": true,
+      "divisible_by": 2,
+      "crop": "center",
+      "image": [
+        "1837",
+        0
+      ],
+      "get_image_size": [
+        "1738",
+        0
+      ]
+    },
+    "class_type": "ImageResizeKJ",
+    "_meta": {
+      "title": "Resize Image"
+    }
+  },
+  "1760": {
+    "inputs": {
+      "pixels": [
+        "1738",
+        0
+      ],
+      "vae": [
+        "89",
+        2
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE Encode"
+    }
+  },
+  "1762": {
+    "inputs": {
+      "pixels": [
+        "1759",
+        0
+      ],
+      "vae": [
+        "89",
+        2
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE Encode"
+    }
+  },
+  "1763": {
+    "inputs": {
+      "int": 768
+    },
+    "class_type": "Primitive integer [Crystools]",
+    "_meta": {
+      "title": "🪛 Primitive integer"
+    }
+  },
+  "1764": {
+    "inputs": {
+      "int": 768
+    },
+    "class_type": "Primitive integer [Crystools]",
+    "_meta": {
+      "title": "🪛 Primitive integer"
+    }
+  },
+  "1809": {
+    "inputs": {
+      "mode": "Steps",
+      "count": [
+        "123",
+        0
+      ],
+      "min": [
+        "1917",
+        0
+      ],
+      "max": [
+        "1916",
+        1
+      ],
+      "easing": "Linear"
+    },
+    "class_type": "Batch Float (mtb)",
+    "_meta": {
+      "title": "Batch Float (mtb)"
+    }
+  },
+  "1822": {
+    "inputs": {
+      "multiply_by": [
+        "123",
+        0
+      ],
+      "images": [
+        "1703",
+        0
+      ]
+    },
+    "class_type": "VHS_DuplicateImages",
+    "_meta": {
+      "title": "Repeat Images 🎥🅥🅗🅢"
+    }
+  },
+  "1824": {
+    "inputs": {
+      "mode": "Steps",
+      "count": [
+        "123",
+        0
+      ],
+      "min": [
+        "1917",
+        0
+      ],
+      "max": [
+        "1915",
+        1
+      ],
+      "easing": "Linear"
+    },
+    "class_type": "Batch Float (mtb)",
+    "_meta": {
+      "title": "Batch Float (mtb)"
+    }
+  },
+  "1827": {
+    "inputs": {
+      "mode": "Steps",
+      "count": [
+        "123",
+        0
+      ],
+      "min": 1,
+      "max": [
+        "1909",
+        1
+      ],
+      "easing": "Linear"
+    },
+    "class_type": "Batch Float (mtb)",
+    "_meta": {
+      "title": "Batch Float (mtb)"
+    }
+  },
+  "1831": {
+    "inputs": {
+      "images": [
+        "1865",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "1833": {
+    "inputs": {
+      "step": 2,
+      "sigmas": [
+        "1839",
+        0
+      ]
+    },
+    "class_type": "SplitSigmas",
+    "_meta": {
+      "title": "SplitSigmas"
+    }
+  },
+  "1837": {
+    "inputs": {
+      "image": "\"G:\\Shared drives\\nilor\\R&D\\IPA Weights Revisit\\fashion 02\\82cd5a8e-255b-4b8f-9d18-0ac90e6d9169.png\"",
+      "force_size": "Disabled",
+      "custom_width": 512,
+      "custom_height": 512
+    },
+    "class_type": "VHS_LoadImagePath",
+    "_meta": {
+      "title": "Load Image (Path) 🎥🅥🅗🅢"
+    }
+  },
+  "1838": {
+    "inputs": {
+      "scheduler": "linear_quadratic",
+      "steps": 20,
+      "denoise": 1,
+      "model": [
+        "79",
+        0
+      ]
+    },
+    "class_type": "BasicScheduler",
+    "_meta": {
+      "title": "BasicScheduler"
+    }
+  },
+  "1839": {
+    "inputs": {
+      "scheduler": "linear_quadratic",
+      "steps": 20,
+      "denoise": 1,
+      "model": [
+        "79",
+        0
+      ]
+    },
+    "class_type": "BasicScheduler",
+    "_meta": {
+      "title": "BasicScheduler"
+    }
+  },
+  "1850": {
+    "inputs": {
+      "mode": "Steps",
+      "count": [
+        "123",
+        0
+      ],
+      "min": 1,
+      "max": [
+        "1911",
+        1
+      ],
+      "easing": "Linear"
+    },
+    "class_type": "Batch Float (mtb)",
+    "_meta": {
+      "title": "Batch Float (mtb)"
+    }
+  },
+  "1854": {
+    "inputs": {
+      "value": 0
+    },
+    "class_type": "FloatConstant",
+    "_meta": {
+      "title": "Float Constant"
+    }
+  },
+  "1855": {
+    "inputs": {
+      "value": 200
+    },
+    "class_type": "FloatConstant",
+    "_meta": {
+      "title": "Float Constant"
+    }
+  },
+  "1856": {
+    "inputs": {
+      "mode": "Steps",
+      "count": [
+        "123",
+        0
+      ],
+      "min": [
+        "1854",
+        0
+      ],
+      "max": [
+        "1912",
+        1
+      ],
+      "easing": "Linear"
+    },
+    "class_type": "Batch Float (mtb)",
+    "_meta": {
+      "title": "Batch Float (mtb)"
+    }
+  },
+  "1857": {
+    "inputs": {
+      "mode": "Steps",
+      "count": [
+        "123",
+        0
+      ],
+      "min": [
+        "1854",
+        0
+      ],
+      "max": [
+        "1913",
+        1
+      ],
+      "easing": "Linear"
+    },
+    "class_type": "Batch Float (mtb)",
+    "_meta": {
+      "title": "Batch Float (mtb)"
+    }
+  },
+  "1861": {
+    "inputs": {
+      "index": [
+        "1876",
+        0
+      ],
+      "value0": [
+        "1827",
+        0
+      ],
+      "value1": [
+        "1882",
+        0
+      ],
+      "value2": [
+        "1850",
+        0
+      ]
+    },
+    "class_type": "easy anythingIndexSwitch",
+    "_meta": {
+      "title": "Any Index Switch"
+    }
+  },
+  "1864": {
+    "inputs": {
+      "mode": "Steps",
+      "count": [
+        "123",
+        0
+      ],
+      "min": 0,
+      "max": 0,
+      "easing": "Linear"
+    },
+    "class_type": "Batch Float (mtb)",
+    "_meta": {
+      "title": "Batch Float (mtb)"
+    }
+  },
+  "1865": {
+    "inputs": {
+      "border_handling": "edge",
+      "constant_color": "#000000",
+      "image": [
+        "1822",
+        0
+      ],
+      "x": [
+        "1868",
+        0
+      ],
+      "y": [
+        "1867",
+        0
+      ],
+      "zoom": [
+        "1861",
+        0
+      ]
+    },
+    "class_type": "Batch2d Transform (mtb)",
+    "_meta": {
+      "title": "Batch2d Transform (mtb)"
+    }
+  },
+  "1867": {
+    "inputs": {
+      "index": [
+        "1881",
+        0
+      ],
+      "value0": [
+        "1809",
+        0
+      ],
+      "value1": [
+        "1864",
+        0
+      ],
+      "value2": [
+        "1824",
+        0
+      ]
+    },
+    "class_type": "easy anythingIndexSwitch",
+    "_meta": {
+      "title": "Any Index Switch"
+    }
+  },
+  "1868": {
+    "inputs": {
+      "index": [
+        "1879",
+        0
+      ],
+      "value0": [
+        "1857",
+        0
+      ],
+      "value1": [
+        "1864",
+        0
+      ],
+      "value2": [
+        "1856",
+        0
+      ]
+    },
+    "class_type": "easy anythingIndexSwitch",
+    "_meta": {
+      "title": "Any Index Switch"
+    }
+  },
+  "1876": {
+    "inputs": {
+      "input_string": [
+        "1877",
+        0
+      ],
+      "number_of_categories": 3,
+      "category_0": "in",
+      "category_1": "no",
+      "category_2": "out",
+      "category_3": "",
+      "category_4": "",
+      "category_5": "",
+      "category_6": "",
+      "category_7": "",
+      "category_8": "",
+      "category_9": ""
+    },
+    "class_type": "Nilor Categorize String",
+    "_meta": {
+      "title": "👺 Categorize String"
+    }
+  },
+  "1877": {
+    "inputs": {
+      "string": "zoom-in"
+    },
+    "class_type": "Primitive string [Crystools]",
+    "_meta": {
+      "title": "Camera Control 🎥 Zoom"
+    }
+  },
+  "1878": {
+    "inputs": {
+      "string": "no-pan-x"
+    },
+    "class_type": "Primitive string [Crystools]",
+    "_meta": {
+      "title": "Camera Control 🎥 PanX"
+    }
+  },
+  "1879": {
+    "inputs": {
+      "input_string": [
+        "1878",
+        0
+      ],
+      "number_of_categories": 3,
+      "category_0": "left",
+      "category_1": "no",
+      "category_2": "right",
+      "category_3": "",
+      "category_4": "",
+      "category_5": "",
+      "category_6": "",
+      "category_7": "",
+      "category_8": "",
+      "category_9": ""
+    },
+    "class_type": "Nilor Categorize String",
+    "_meta": {
+      "title": "👺 Categorize String"
+    }
+  },
+  "1880": {
+    "inputs": {
+      "string": "no-pan-y"
+    },
+    "class_type": "Primitive string [Crystools]",
+    "_meta": {
+      "title": "Camera Control 🎥 PanY"
+    }
+  },
+  "1881": {
+    "inputs": {
+      "input_string": [
+        "1880",
+        0
+      ],
+      "number_of_categories": 3,
+      "category_0": "up",
+      "category_1": "no",
+      "category_2": "down",
+      "category_3": "",
+      "category_4": "",
+      "category_5": "",
+      "category_6": "",
+      "category_7": "",
+      "category_8": "",
+      "category_9": ""
+    },
+    "class_type": "Nilor Categorize String",
+    "_meta": {
+      "title": "👺 Categorize String"
+    }
+  },
+  "1882": {
+    "inputs": {
+      "mode": "Steps",
+      "count": [
+        "123",
+        0
+      ],
+      "min": 1,
+      "max": 1,
+      "easing": "Linear"
+    },
+    "class_type": "Batch Float (mtb)",
+    "_meta": {
+      "title": "Batch Float (mtb)"
+    }
+  },
+  "1884": {
+    "inputs": {
+      "text": [
+        "1890",
+        0
+      ],
+      "text2": "A digital painting of a woman with short, yellow hair and a pink, spiked headpiece. She has fair skin, blue eyes, and is lying on her back with her head tilted upwards. Her expression is serene and slightly melancholic. The background is a colorful, abstract swirl pattern in shades of green, blue, and pink. The style is hyper-realistic with a focus on vibrant colors and intricate details. The woman is positioned in the center of the image, facing the viewer., bizarre editorial fashion model opening her eyes and lowering her gaze to the camera, zoom-in, no-pan-x, no-pan-y"
+    },
+    "class_type": "ShowText|pysssss",
+    "_meta": {
+      "title": "Show Text 🐍"
+    }
+  },
+  "1889": {
+    "inputs": {
+      "seed": -1
+    },
+    "class_type": "Seed (rgthree)",
+    "_meta": {
+      "title": "Seed (rgthree)"
+    }
+  },
+  "1890": {
+    "inputs": {
+      "delimiter": ", ",
+      "text1": [
+        "105",
+        2
+      ],
+      "text2": [
+        "1902",
+        0
+      ],
+      "text3": [
+        "1877",
+        0
+      ],
+      "text4": [
+        "1878",
+        0
+      ],
+      "text5": [
+        "1880",
+        0
+      ]
+    },
+    "class_type": "TextConcat",
+    "_meta": {
+      "title": "Text Concat (Mikey)"
+    }
+  },
+  "1893": {
+    "inputs": {
+      "seed": 247
+    },
+    "class_type": "Seed (rgthree)",
+    "_meta": {
+      "title": "Seed (rgthree)"
+    }
+  },
+  "1902": {
+    "inputs": {
+      "text": "bizarre editorial fashion model opening her eyes and lowering her gaze to the camera"
+    },
+    "class_type": "JjkText",
+    "_meta": {
+      "title": "Text Guidance"
+    }
+  },
+  "1903": {
+    "inputs": {
+      "value": 0.5
+    },
+    "class_type": "FloatConstant",
+    "_meta": {
+      "title": "Max Zoom"
+    }
+  },
+  "1904": {
+    "inputs": {
+      "value": 0.5
+    },
+    "class_type": "FloatConstant",
+    "_meta": {
+      "title": "Zoom Strength"
+    }
+  },
+  "1909": {
+    "inputs": {
+      "value": "a+(b*c)",
+      "a": [
+        "1910",
+        0
+      ],
+      "b": [
+        "1903",
+        0
+      ],
+      "c": [
+        "1904",
+        0
+      ]
+    },
+    "class_type": "SimpleMath+",
+    "_meta": {
+      "title": "🔧 Simple Math"
+    }
+  },
+  "1910": {
+    "inputs": {
+      "value": 1
+    },
+    "class_type": "FloatConstant",
+    "_meta": {
+      "title": "Base Zoom"
+    }
+  },
+  "1911": {
+    "inputs": {
+      "value": "a-(b*c)",
+      "a": [
+        "1910",
+        0
+      ],
+      "b": [
+        "1903",
+        0
+      ],
+      "c": [
+        "1904",
+        0
+      ]
+    },
+    "class_type": "SimpleMath+",
+    "_meta": {
+      "title": "🔧 Simple Math"
+    }
+  },
+  "1912": {
+    "inputs": {
+      "value": "a-(b*c)",
+      "a": [
+        "1854",
+        0
+      ],
+      "b": [
+        "1855",
+        0
+      ],
+      "c": [
+        "1914",
+        0
+      ]
+    },
+    "class_type": "SimpleMath+",
+    "_meta": {
+      "title": "🔧 Simple Math"
+    }
+  },
+  "1913": {
+    "inputs": {
+      "value": "a+(b*c)",
+      "a": [
+        "1854",
+        0
+      ],
+      "b": [
+        "1855",
+        0
+      ],
+      "c": [
+        "1914",
+        0
+      ]
+    },
+    "class_type": "SimpleMath+",
+    "_meta": {
+      "title": "🔧 Simple Math"
+    }
+  },
+  "1914": {
+    "inputs": {
+      "value": 0.5
+    },
+    "class_type": "FloatConstant",
+    "_meta": {
+      "title": "PanX Strength"
+    }
+  },
+  "1915": {
+    "inputs": {
+      "value": "a-(b*c)",
+      "a": [
+        "1917",
+        0
+      ],
+      "b": [
+        "1918",
+        0
+      ],
+      "c": [
+        "1919",
+        0
+      ]
+    },
+    "class_type": "SimpleMath+",
+    "_meta": {
+      "title": "🔧 Simple Math"
+    }
+  },
+  "1916": {
+    "inputs": {
+      "value": "a+(b*c)",
+      "a": [
+        "1917",
+        0
+      ],
+      "b": [
+        "1918",
+        0
+      ],
+      "c": [
+        "1919",
+        0
+      ]
+    },
+    "class_type": "SimpleMath+",
+    "_meta": {
+      "title": "🔧 Simple Math"
+    }
+  },
+  "1917": {
+    "inputs": {
+      "value": 0
+    },
+    "class_type": "FloatConstant",
+    "_meta": {
+      "title": "Float Constant"
+    }
+  },
+  "1918": {
+    "inputs": {
+      "value": 200
+    },
+    "class_type": "FloatConstant",
+    "_meta": {
+      "title": "Float Constant"
+    }
+  },
+  "1919": {
+    "inputs": {
+      "value": 0.30000000000000004
+    },
+    "class_type": "FloatConstant",
+    "_meta": {
+      "title": "PanY Strength"
+    }
+  }
+}
