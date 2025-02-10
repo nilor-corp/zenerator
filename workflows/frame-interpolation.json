@@ -1,14 +1,14 @@
 {
   "1": {
     "inputs": {
-      "video": "G:\\Shared drives\\nilor\\R&D\\IPA Weights Revisit\\image-travel_00043.mp4",
+      "video": "\"G:\\Shared drives\\nilor\\R&D\\dnb\\stitched_output (1).mp4\"",
       "force_rate": 0,
-      "force_size": "Disabled",
-      "custom_width": 512,
-      "custom_height": 512,
+      "custom_width": 0,
+      "custom_height": 0,
       "frame_load_cap": 0,
       "skip_first_frames": 0,
-      "select_every_nth": 1
+      "select_every_nth": 1,
+      "format": "None"
     },
     "class_type": "VHS_LoadVideoPath",
     "_meta": {
