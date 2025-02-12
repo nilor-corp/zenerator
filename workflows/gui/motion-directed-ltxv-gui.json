@@ -68,84 +68,6 @@
       "bgcolor": "#653"
     },
     {
-      "id": 74,
-      "type": "VHS_LoadVideoPath",
-      "pos": [2350, 730],
-      "size": [231.8896484375, 238],
-      "flags": {},
-      "order": 94,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "meta_batch",
-          "type": "VHS_BatchManager",
-          "link": null,
-          "shape": 7
-        },
-        {
-          "name": "vae",
-          "type": "VAE",
-          "link": null,
-          "shape": 7
-        },
-        {
-          "name": "video",
-          "type": "STRING",
-          "link": 109,
-          "widget": {
-            "name": "video"
-          }
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [122],
-          "slot_index": 0
-        },
-        {
-          "name": "frame_count",
-          "type": "INT",
-          "links": null
-        },
-        {
-          "name": "audio",
-          "type": "AUDIO",
-          "links": null
-        },
-        {
-          "name": "video_info",
-          "type": "VHS_VIDEOINFO",
-          "links": null
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "VHS_LoadVideoPath"
-      },
-      "widgets_values": {
-        "video": "",
-        "force_rate": 0,
-        "force_size": "Disabled",
-        "custom_width": 512,
-        "custom_height": 512,
-        "frame_load_cap": 0,
-        "skip_first_frames": 0,
-        "select_every_nth": 1,
-        "videopreview": {
-          "hidden": false,
-          "paused": false,
-          "params": {
-            "force_rate": 0,
-            "frame_load_cap": 0,
-            "skip_first_frames": 0,
-            "select_every_nth": 1
-          },
-          "muted": false
-        }
-      }
-    },
-    {
       "id": 90,
       "type": "GetNode",
       "pos": [3710, 1130],
@@ -935,7 +857,7 @@
       "id": 1799,
       "type": "VHS_VideoCombine",
       "pos": [8712.841796875, 2643.4228515625],
-      "size": [521.0712890625, 680.74267578125],
+      "size": [521.0712890625, 334],
       "flags": {},
       "order": 148,
       "mode": 4,
@@ -1412,36 +1334,6 @@
         "Node name for S&R": "LTXPerturbedAttention"
       },
       "widgets_values": [1.5, 0.5, 5]
-    },
-    {
-      "id": 76,
-      "type": "VHS_SelectFilename",
-      "pos": [2370, 1020],
-      "size": [219.6669921875, 58],
-      "flags": {},
-      "order": 84,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "filenames",
-          "type": "VHS_FILENAMES",
-          "link": 110
-        }
-      ],
-      "outputs": [
-        {
-          "name": "Filename",
-          "type": "STRING",
-          "links": [109],
-          "slot_index": 0
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "VHS_SelectFilename"
-      },
-      "widgets_values": {
-        "index": -1
-      }
     },
     {
       "id": 80,
@@ -2166,7 +2058,7 @@
       "id": 1732,
       "type": "VHS_VideoCombine",
       "pos": [4969.71240234375, 844.8566284179688],
-      "size": [521.0712890625, 1273.0546875],
+      "size": [521.0712890625, 334],
       "flags": {},
       "order": 129,
       "mode": 0,
@@ -2290,46 +2182,6 @@
         "Node name for S&R": "SamplerCustom"
       },
       "widgets_values": [false, 4, "fixed", 8]
-    },
-    {
-      "id": 1827,
-      "type": "Batch Float (mtb)",
-      "pos": [3400, 1730],
-      "size": [315, 154],
-      "flags": {},
-      "order": 89,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "count",
-          "type": "INT",
-          "link": 4181,
-          "widget": {
-            "name": "count"
-          }
-        },
-        {
-          "name": "max",
-          "type": "FLOAT",
-          "link": 4354,
-          "widget": {
-            "name": "max"
-          }
-        }
-      ],
-      "outputs": [
-        {
-          "name": "FLOATS",
-          "type": "FLOATS",
-          "links": [4272],
-          "slot_index": 0,
-          "shape": 3
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "Batch Float (mtb)"
-      },
-      "widgets_values": ["Steps", 25, 1, 1.5, "Linear"]
     },
     {
       "id": 1857,
@@ -3519,7 +3371,7 @@
       "pos": [1720, 1450],
       "size": [400, 352],
       "flags": {},
-      "order": 79,
+      "order": 78,
       "mode": 0,
       "inputs": [
         {
@@ -4820,7 +4672,7 @@
       "id": 1757,
       "type": "VHS_VideoCombine",
       "pos": [7827.89501953125, 491.6881408691406],
-      "size": [521.0712890625, 1273.0546875],
+      "size": [521.0712890625, 334],
       "flags": {},
       "order": 144,
       "mode": 0,
@@ -4963,61 +4815,12 @@
       "bgcolor": "#355"
     },
     {
-      "id": 1837,
-      "type": "VHS_LoadImagePath",
-      "pos": [804.516357421875, 2705.767333984375],
-      "size": [235.24609375, 492.4303894042969],
-      "flags": {},
-      "order": 49,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "vae",
-          "type": "VAE",
-          "link": null,
-          "shape": 7
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [4209],
-          "slot_index": 0
-        },
-        {
-          "name": "mask",
-          "type": "MASK",
-          "links": null
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "VHS_LoadImagePath"
-      },
-      "widgets_values": {
-        "image": "\"G:\\Shared drives\\nilor\\R&D\\IPA Weights Revisit\\fashion 02\\82cd5a8e-255b-4b8f-9d18-0ac90e6d9169.png\"",
-        "force_size": "Disabled",
-        "custom_width": 512,
-        "custom_height": 512,
-        "videopreview": {
-          "hidden": false,
-          "paused": false,
-          "params": {
-            "filename": "\"G:\\Shared drives\\nilor\\R&D\\IPA Weights Revisit\\fashion 02\\82cd5a8e-255b-4b8f-9d18-0ac90e6d9169.png\"",
-            "type": "path",
-            "format": "video/png\""
-          },
-          "muted": false
-        }
-      }
-    },
-    {
       "id": 1897,
       "type": "Note",
       "pos": [868.3681030273438, 3247.6357421875],
       "size": [210, 102.72725677490234],
       "flags": {},
-      "order": 50,
+      "order": 49,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -5036,7 +4839,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 78,
+      "order": 79,
       "mode": 0,
       "inputs": [
         {
@@ -5066,7 +4869,7 @@
       "pos": [1330, 2700],
       "size": [210, 126.36361694335938],
       "flags": {},
-      "order": 51,
+      "order": 50,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -5083,7 +4886,7 @@
       "pos": [1224, 2882],
       "size": [321.1449279785156, 113.3460693359375],
       "flags": {},
-      "order": 52,
+      "order": 51,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -5110,7 +4913,7 @@
       "pos": [1696.76025390625, 1280],
       "size": [365.4000244140625, 106],
       "flags": {},
-      "order": 53,
+      "order": 52,
       "mode": 0,
       "inputs": [
         {
@@ -5141,7 +4944,7 @@
       "id": 73,
       "type": "VHS_VideoCombine",
       "pos": [2120, 730],
-      "size": [214.7587890625, 664.452392578125],
+      "size": [214.7587890625, 310],
       "flags": {},
       "order": 65,
       "mode": 0,
@@ -5206,6 +5009,202 @@
           "muted": false
         }
       }
+    },
+    {
+      "id": 76,
+      "type": "VHS_SelectFilename",
+      "pos": [2118.822265625, 1090.03369140625],
+      "size": [219.6669921875, 58],
+      "flags": {},
+      "order": 84,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "filenames",
+          "type": "VHS_FILENAMES",
+          "link": 110
+        }
+      ],
+      "outputs": [
+        {
+          "name": "Filename",
+          "type": "STRING",
+          "links": [109],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VHS_SelectFilename"
+      },
+      "widgets_values": {
+        "index": -1
+      }
+    },
+    {
+      "id": 74,
+      "type": "VHS_LoadVideoPath",
+      "pos": [2350, 730],
+      "size": [231.8896484375, 262],
+      "flags": {},
+      "order": 94,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "meta_batch",
+          "type": "VHS_BatchManager",
+          "link": null,
+          "shape": 7
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": null,
+          "shape": 7
+        },
+        {
+          "name": "video",
+          "type": "STRING",
+          "link": 109,
+          "widget": {
+            "name": "video"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [122],
+          "slot_index": 0
+        },
+        {
+          "name": "frame_count",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": null
+        },
+        {
+          "name": "video_info",
+          "type": "VHS_VIDEOINFO",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VHS_LoadVideoPath"
+      },
+      "widgets_values": {
+        "video": "",
+        "force_rate": 0,
+        "custom_width": 0,
+        "custom_height": 0,
+        "frame_load_cap": 0,
+        "skip_first_frames": 0,
+        "select_every_nth": 1,
+        "format": "None",
+        "videopreview": {
+          "hidden": false,
+          "paused": false,
+          "params": {
+            "force_rate": 0,
+            "frame_load_cap": 0,
+            "skip_first_frames": 0,
+            "select_every_nth": 1
+          },
+          "muted": false
+        }
+      }
+    },
+    {
+      "id": 1837,
+      "type": "VHS_LoadImagePath",
+      "pos": [804.516357421875, 2705.767333984375],
+      "size": [235.24609375, 126],
+      "flags": {},
+      "order": 53,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": null,
+          "shape": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [4209],
+          "slot_index": 0
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VHS_LoadImagePath"
+      },
+      "widgets_values": {
+        "image": "\"G:\\Shared drives\\nilor\\R&D\\IPA Weights Revisit\\fashion 02\\82cd5a8e-255b-4b8f-9d18-0ac90e6d9169.png\"",
+        "custom_width": 0,
+        "custom_height": 0,
+        "videopreview": {
+          "hidden": false,
+          "paused": false,
+          "params": {
+            "filename": "\"G:\\Shared drives\\nilor\\R&D\\IPA Weights Revisit\\fashion 02\\82cd5a8e-255b-4b8f-9d18-0ac90e6d9169.png\"",
+            "type": "path",
+            "format": "video/png\""
+          },
+          "muted": false
+        }
+      }
+    },
+    {
+      "id": 1827,
+      "type": "Batch Float (mtb)",
+      "pos": [3400, 1730],
+      "size": [315, 154],
+      "flags": {},
+      "order": 89,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "count",
+          "type": "INT",
+          "link": 4181,
+          "widget": {
+            "name": "count"
+          }
+        },
+        {
+          "name": "max",
+          "type": "FLOAT",
+          "link": 4354,
+          "widget": {
+            "name": "max"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "FLOATS",
+          "type": "FLOATS",
+          "links": [4272],
+          "slot_index": 0,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Batch Float (mtb)"
+      },
+      "widgets_values": ["Steps", 25, 1, 1.5, "Linear"]
     }
   ],
   "links": [
@@ -5444,8 +5443,11 @@
   "config": {},
   "extra": {
     "ds": {
-      "scale": 0.6761833208114206,
-      "offset": [-914.7363637239962, -637.2137274229931]
+      "scale": 0.6209213230591556,
+      "offset": {
+        "0": -705.4818725585938,
+        "1": 154.5725555419922
+      }
     },
     "prompt": {
       "1": {
@@ -5590,24 +5592,26 @@
     "VHS_latentpreview": false,
     "VHS_latentpreviewrate": 0,
     "node_versions": {
-      "ComfyUI-VideoHelperSuite": "565208bfe0a8050193ae3c8e61c96b6200dd9506",
       "ComfyUI-LTXTricks": "06fed1c7974de7198840209b3b7eb7a84742d460",
-      "comfy-core": "0.3.12",
-      "ComfyUI-KJNodes": "2abf557e3d6ae6618456a190044a85a52f2a585a",
-      "comfy_mtb": "b7ca8ed1c6e117b71afd7696f55dcc3dbd5bad08",
+      "comfy-core": "0.3.14",
+      "ComfyUI-KJNodes": "80977db1ea8472a7934de50f3c878aed405e8d73",
+      "comfy_mtb": "7f7a62f832c865a13b9181daee79d3cfc21581e2",
+      "ComfyUI-VideoHelperSuite": "8629188458dc6cb832f871ece3bd273507e8a766",
       "ComfyUI-Image-Filters": "0ff33fe29f7be072ad5d2cd89efa18fed82957fe",
-      "ComfyUI-Custom-Scripts": "bc8922deff73f59311c05cef27b9d4caaf43e87b",
-      "comfyui-mnemic-nodes": "1.2.4",
-      "ComfyUI-Easy-Use": "a80845f641ac81a8ba190d499c785d9eb9d80ef7",
-      "ComfyUI-Florence2": "dffd12506d50f0540b8a7f4b36a05d4fb5fed2de",
-      "nilor-nodes": "761fa26f0a17c5eabe8aa7037cad5acd7a5ef2db",
+      "ComfyUI-Custom-Scripts": "a53ef9b617ed1331640d7a2cd97644995908dc00",
+      "comfyui-mnemic-nodes": "1.2.5",
+      "ComfyUI-Easy-Use": "e842c3bd06bd3745dfbd47b3595f6f0d714546f7",
+      "ComfyUI-Florence2": "90b012e922f8bb0482bcd2ae24cdc191ec12a11f",
+      "nilor-nodes": "7af35295c66021e4ac0cd5abe2ac2254f2c3925f",
       "rgthree-comfy": "5d771b8b56a343c24a26e8cea1f0c87c3d58102f",
-      "mikey_nodes": "637bc18f8e18cc662a8411efbc7013adc7845ae7",
-      "ComfyUI-Crystools": "03a61d690379f22c6bffc42ea4845f797deb316c",
+      "mikey_nodes": "185d2d16d0fc9de70e82ad024be85d6d20a36e56",
+      "ComfyUI-Crystools": "72e2e9af4a6b9a58ca5d753cacff37ba1ff9bfa8",
       "ComfyUI_essentials": "33ff89fd354d8ec3ab6affb605a79a931b445d99",
       "ComfyUI-Jjk-Nodes": "b3c99bb78a99551776b5eab1a820e1cd58f84f31"
     },
-    "ue_links": []
+    "ue_links": [],
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
   },
   "version": 0.4
 }
