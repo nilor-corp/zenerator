@@ -103,7 +103,7 @@
     ```console
     pip install ultralytics     # should prevent an error when installing ComfyUI-Impact-Pack via the Snapshot
     cd zenerator
-    cp .\ComfyUI-Manager-Snapshots\zenerator-snapshot.json ..\ComfyUI\custom_nodes\ComfyUI-Manager\snapshots\
+    cp .\ComfyUI-Manager-Snapshots\zenerator-snapshot.json ..\ComfyUI\user\default\ComfyUI-Manager\snapshots\
     cd ..           # should put you in .\nilor-corp\ directory
     comfy launch
     ```
