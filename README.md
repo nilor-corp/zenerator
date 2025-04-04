@@ -103,7 +103,9 @@
     ```console
     cd zenerator
     cp .\ComfyUI-Manager-Snapshots\zenerator-snapshot.json ..\ComfyUI\user\default\ComfyUI-Manager\snapshots\
-    cd ..           # should put you in .\nilor-corp\ directory
+    cd ..\ComfyUI\custom_nodes\  # should put you in .\nilor-corp\ComfyUI\custom_nodes directory
+    git clone https://github.com/BadCafeCode/execution-inversion-demo-comfyui.git
+    cd ..\..           # should put you in .\nilor-corp\ directory
     comfy launch
     ```
 2. Once launched, navigate to ComfyUI in your browser: http://127.0.0.1:8188
