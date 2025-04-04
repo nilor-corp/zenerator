@@ -1700,7 +1700,14 @@ with gr.Blocks(
                     latest_content = get_latest_image(OUT_DIR)
                     if latest_content is not None:
                         output_player = gr.Image(
-                            show_label=False, interactive=False, value=latest_content
+                            value=latest_content,
+                            show_label=False,
+                            interactive=False,
+                        )
+                    else:
+                        output_player = gr.Image(
+                            show_label=False,
+                            interactive=False,
                         )
                 else:
                     latest_content = get_latest_video(OUT_DIR)
