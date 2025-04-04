@@ -1,6 +1,8 @@
 {
-  "last_node_id": 561,
-  "last_link_id": 895,
+  "id": "87a95711-dc35-461a-ac26-51ec08a3c6e7",
+  "revision": 0,
+  "last_node_id": 562,
+  "last_link_id": 896,
   "nodes": [
     {
       "id": 320,
@@ -68,7 +70,7 @@
         286
       ],
       "flags": {},
-      "order": 29,
+      "order": 30,
       "mode": 0,
       "inputs": [
         {
@@ -84,8 +86,7 @@
         {
           "name": "control_net",
           "type": "CONTROL_NET",
-          "link": 373,
-          "slot_index": 2
+          "link": 373
         },
         {
           "name": "image",
@@ -94,76 +95,77 @@
         },
         {
           "name": "mask_optional",
+          "shape": 7,
           "type": "MASK",
-          "link": null,
-          "shape": 7
+          "link": null
         },
         {
           "name": "timestep_kf",
+          "shape": 7,
           "type": "TIMESTEP_KEYFRAME",
-          "link": null,
-          "shape": 7
+          "link": null
         },
         {
           "name": "latent_kf_override",
+          "shape": 7,
           "type": "LATENT_KEYFRAME",
-          "link": null,
-          "shape": 7
+          "link": null
         },
         {
           "name": "weights_override",
+          "shape": 7,
           "type": "CONTROL_NET_WEIGHTS",
-          "link": null,
-          "shape": 7
+          "link": null
         },
         {
           "name": "model_optional",
+          "shape": 7,
           "type": "MODEL",
-          "link": null,
-          "shape": 7
+          "link": null
         },
         {
           "name": "vae_optional",
+          "shape": 7,
           "type": "VAE",
-          "link": null,
-          "shape": 7
+          "link": null
         }
       ],
       "outputs": [
         {
           "name": "positive",
+          "shape": 3,
           "type": "CONDITIONING",
+          "slot_index": 0,
           "links": [
             864
-          ],
-          "slot_index": 0,
-          "shape": 3
+          ]
         },
         {
           "name": "negative",
+          "shape": 3,
           "type": "CONDITIONING",
+          "slot_index": 1,
           "links": [
             865
-          ],
-          "slot_index": 1,
-          "shape": 3
+          ]
         },
         {
           "name": "model_opt",
+          "shape": 3,
           "type": "MODEL",
-          "links": null,
           "slot_index": 2,
-          "shape": 3
+          "links": null
         }
       ],
       "properties": {
+        "cnr_id": "comfyui-advanced-controlnet",
+        "ver": "da254b700db562a22e03358b933c85a9a3392540",
         "Node name for S&R": "ACN_AdvancedControlNetApply"
       },
       "widgets_values": [
         0.8,
         0,
-        0.75,
-        ""
+        0.75
       ],
       "color": "#332922",
       "bgcolor": "#593930"
@@ -177,56 +179,56 @@
       ],
       "size": [
         394.71258544921875,
-        306
+        334
       ],
       "flags": {},
-      "order": 40,
+      "order": 41,
       "mode": 4,
       "inputs": [
         {
           "name": "images",
           "type": "IMAGE",
-          "link": null,
-          "slot_index": 0
+          "link": null
         },
         {
           "name": "audio",
+          "shape": 7,
           "type": "AUDIO",
-          "link": null,
-          "shape": 7
+          "link": null
         },
         {
           "name": "meta_batch",
+          "shape": 7,
           "type": "VHS_BatchManager",
-          "link": null,
-          "slot_index": 2,
-          "shape": 7
+          "link": null
         },
         {
           "name": "vae",
+          "shape": 7,
           "type": "VAE",
-          "link": null,
-          "shape": 7
+          "link": null
         },
         {
           "name": "filename_prefix",
           "type": "STRING",
-          "link": 890,
           "widget": {
             "name": "filename_prefix"
-          }
+          },
+          "link": 890
         }
       ],
       "outputs": [
         {
           "name": "Filenames",
+          "shape": 3,
           "type": "VHS_FILENAMES",
-          "links": [],
           "slot_index": 0,
-          "shape": 3
+          "links": []
         }
       ],
       "properties": {
+        "cnr_id": "comfyui-videohelpersuite",
+        "ver": "7236c5dff09e64dcf8d5946f93d4d7fc4f1a6147",
         "Node name for S&R": "VHS_VideoCombine"
       },
       "widgets_values": {
@@ -237,6 +239,7 @@
         "pix_fmt": "yuv420p",
         "crf": 19,
         "save_metadata": true,
+        "trim_to_audio": false,
         "pingpong": false,
         "save_output": true,
         "videopreview": {
@@ -266,32 +269,30 @@
         30
       ],
       "flags": {},
-      "order": 19,
+      "order": 21,
       "mode": 0,
       "inputs": [
         {
+          "dir": 3,
+          "label": " ",
           "name": "",
           "type": "*",
-          "link": 682,
-          "dir": 3,
-          "has_old_label": true,
-          "label": " ",
           "widget": {
             "name": "value"
-          }
+          },
+          "link": 682
         }
       ],
       "outputs": [
         {
+          "dir": 4,
+          "label": " ",
           "name": "string",
           "type": "STRING",
+          "slot_index": 0,
           "links": [
             770
-          ],
-          "slot_index": 0,
-          "dir": 4,
-          "has_old_label": true,
-          "label": " "
+          ]
         }
       ],
       "properties": {
@@ -321,28 +322,30 @@
       "inputs": [
         {
           "name": "prev_context",
+          "shape": 7,
           "type": "CONTEXT_OPTIONS",
-          "link": null,
-          "shape": 7
+          "link": null
         },
         {
           "name": "view_opts",
+          "shape": 7,
           "type": "VIEW_OPTS",
-          "link": null,
-          "shape": 7
+          "link": null
         }
       ],
       "outputs": [
         {
           "name": "CONTEXT_OPTS",
+          "shape": 3,
           "type": "CONTEXT_OPTIONS",
           "links": [
             364
-          ],
-          "shape": 3
+          ]
         }
       ],
       "properties": {
+        "cnr_id": "comfyui-animatediff-evolved",
+        "ver": "3795f515b8faa1f4cfd9393a50cdcca299a68993",
         "Node name for S&R": "ADE_LoopedUniformContextOptions"
       },
       "widgets_values": [
@@ -376,16 +379,18 @@
       "outputs": [
         {
           "name": "string",
+          "shape": 3,
           "type": "STRING",
+          "slot_index": 0,
           "links": [
             627
-          ],
-          "slot_index": 0,
-          "shape": 3
+          ]
         }
       ],
       "title": "Positive Prompt",
       "properties": {
+        "cnr_id": "ComfyUI-Crystools",
+        "ver": "0820a7560bcc405ef6d0a7c5c53a83cc02ae7db2",
         "Node name for S&R": "Primitive string multiline [Crystools]"
       },
       "widgets_values": [
@@ -466,16 +471,18 @@
       "outputs": [
         {
           "name": "string",
+          "shape": 3,
           "type": "STRING",
+          "slot_index": 0,
           "links": [
             626
-          ],
-          "slot_index": 0,
-          "shape": 3
+          ]
         }
       ],
       "title": "Negative Prompt",
       "properties": {
+        "cnr_id": "ComfyUI-Crystools",
+        "ver": "0820a7560bcc405ef6d0a7c5c53a83cc02ae7db2",
         "Node name for S&R": "Primitive string multiline [Crystools]"
       },
       "widgets_values": [
@@ -496,7 +503,7 @@
         82
       ],
       "flags": {},
-      "order": 22,
+      "order": 23,
       "mode": 4,
       "inputs": [
         {
@@ -508,15 +515,17 @@
       "outputs": [
         {
           "name": "MODEL",
+          "shape": 3,
           "type": "MODEL",
+          "slot_index": 0,
           "links": [
             560
-          ],
-          "slot_index": 0,
-          "shape": 3
+          ]
         }
       ],
       "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.27",
         "Node name for S&R": "ModelSamplingDiscrete",
         "ttNbgOverride": {
           "color": "#222",
@@ -540,102 +549,103 @@
       ],
       "size": [
         410.6483459472656,
-        387.6549072265625
+        418
       ],
       "flags": {},
-      "order": 18,
+      "order": 19,
       "mode": 0,
       "inputs": [
         {
           "name": "lora_stack",
+          "shape": 7,
           "type": "LORA_STACK",
-          "link": null,
-          "slot_index": 0,
-          "shape": 7
+          "link": null
         },
         {
           "name": "cnet_stack",
+          "shape": 7,
           "type": "CONTROL_NET_STACK",
-          "link": null,
-          "shape": 7
+          "link": null
         },
         {
           "name": "positive",
           "type": "STRING",
-          "link": 627,
           "widget": {
             "name": "positive"
-          }
+          },
+          "link": 627
         },
         {
           "name": "negative",
           "type": "STRING",
-          "link": 626,
           "widget": {
             "name": "negative"
-          }
+          },
+          "link": 626
         }
       ],
       "outputs": [
         {
           "name": "MODEL",
+          "shape": 3,
           "type": "MODEL",
+          "slot_index": 0,
           "links": [
             559
-          ],
-          "slot_index": 0,
-          "shape": 3
+          ]
         },
         {
           "name": "CONDITIONING+",
+          "shape": 3,
           "type": "CONDITIONING",
+          "slot_index": 1,
           "links": [
             371
-          ],
-          "slot_index": 1,
-          "shape": 3
+          ]
         },
         {
           "name": "CONDITIONING-",
+          "shape": 3,
           "type": "CONDITIONING",
+          "slot_index": 2,
           "links": [
             372
-          ],
-          "slot_index": 2,
-          "shape": 3
+          ]
         },
         {
           "name": "LATENT",
+          "shape": 3,
           "type": "LATENT",
-          "links": [],
           "slot_index": 3,
-          "shape": 3
+          "links": []
         },
         {
           "name": "VAE",
+          "shape": 3,
           "type": "VAE",
+          "slot_index": 4,
           "links": [
             866
-          ],
-          "slot_index": 4,
-          "shape": 3
+          ]
         },
         {
           "name": "CLIP",
+          "shape": 3,
           "type": "CLIP",
-          "links": [],
           "slot_index": 5,
-          "shape": 3
+          "links": []
         },
         {
           "name": "DEPENDENCIES",
+          "shape": 3,
           "type": "DEPENDENCIES",
-          "links": null,
           "slot_index": 6,
-          "shape": 3
+          "links": null
         }
       ],
       "properties": {
+        "cnr_id": "efficiency-nodes-comfyui",
+        "ver": "9e3c5aa4976ad457065ef06a0dfdfc66e17c59ee",
         "Node name for S&R": "Efficient Loader"
       },
       "widgets_values": [
@@ -669,7 +679,7 @@
         198
       ],
       "flags": {},
-      "order": 44,
+      "order": 45,
       "mode": 0,
       "inputs": [
         {
@@ -679,23 +689,25 @@
         },
         {
           "name": "optional_interpolation_states",
+          "shape": 7,
           "type": "INTERPOLATION_STATES",
-          "link": null,
-          "shape": 7
+          "link": null
         }
       ],
       "outputs": [
         {
           "name": "IMAGE",
+          "shape": 3,
           "type": "IMAGE",
+          "slot_index": 0,
           "links": [
             527
-          ],
-          "slot_index": 0,
-          "shape": 3
+          ]
         }
       ],
       "properties": {
+        "cnr_id": "comfyui-frame-interpolation",
+        "ver": "7578205bd810cf96257b2e32d534b4513892af37",
         "Node name for S&R": "RIFE VFI"
       },
       "widgets_values": [
@@ -716,56 +728,56 @@
       ],
       "size": [
         390,
-        690
+        718
       ],
       "flags": {},
-      "order": 45,
+      "order": 46,
       "mode": 0,
       "inputs": [
         {
           "name": "images",
           "type": "IMAGE",
-          "link": 527,
-          "slot_index": 0
+          "link": 527
         },
         {
           "name": "audio",
+          "shape": 7,
           "type": "AUDIO",
-          "link": null,
-          "shape": 7
+          "link": null
         },
         {
           "name": "meta_batch",
+          "shape": 7,
           "type": "VHS_BatchManager",
-          "link": null,
-          "slot_index": 2,
-          "shape": 7
+          "link": null
         },
         {
           "name": "vae",
+          "shape": 7,
           "type": "VAE",
-          "link": null,
-          "shape": 7
+          "link": null
         },
         {
           "name": "filename_prefix",
           "type": "STRING",
-          "link": 891,
           "widget": {
             "name": "filename_prefix"
-          }
+          },
+          "link": 891
         }
       ],
       "outputs": [
         {
           "name": "Filenames",
+          "shape": 3,
           "type": "VHS_FILENAMES",
-          "links": [],
           "slot_index": 0,
-          "shape": 3
+          "links": []
         }
       ],
       "properties": {
+        "cnr_id": "comfyui-videohelpersuite",
+        "ver": "7236c5dff09e64dcf8d5946f93d4d7fc4f1a6147",
         "Node name for S&R": "VHS_VideoCombine"
       },
       "widgets_values": {
@@ -776,17 +788,20 @@
         "pix_fmt": "yuv420p",
         "crf": 19,
         "save_metadata": true,
+        "trim_to_audio": false,
         "pingpong": false,
         "save_output": true,
         "videopreview": {
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "zenon_general_00005_upscale_rife_00001.mp4",
-            "subfolder": "WorkFlower",
+            "filename": "test_00001_upscale_rife_00002.mp4",
+            "subfolder": "Zenerator",
             "type": "output",
             "format": "video/h264-mp4",
-            "frame_rate": 24
+            "frame_rate": 24,
+            "workflow": "test_00001_upscale_rife_00002.png",
+            "fullpath": "D:\\nilor-corp\\ComfyUI\\output\\Zenerator\\test_00001_upscale_rife_00002.mp4"
           }
         }
       },
@@ -805,7 +820,7 @@
         26
       ],
       "flags": {},
-      "order": 43,
+      "order": 44,
       "mode": 0,
       "inputs": [
         {
@@ -818,10 +833,10 @@
         {
           "name": "IMAGE",
           "type": "IMAGE",
+          "slot_index": 0,
           "links": [
             549
-          ],
-          "slot_index": 0
+          ]
         }
       ],
       "properties": {
@@ -846,22 +861,24 @@
       "inputs": [
         {
           "name": "tk_optional",
+          "shape": 7,
           "type": "TIMESTEP_KEYFRAME",
-          "link": null,
-          "shape": 7
+          "link": null
         }
       ],
       "outputs": [
         {
           "name": "CONTROL_NET",
+          "shape": 3,
           "type": "CONTROL_NET",
           "links": [
             373
-          ],
-          "shape": 3
+          ]
         }
       ],
       "properties": {
+        "cnr_id": "comfyui-advanced-controlnet",
+        "ver": "da254b700db562a22e03358b933c85a9a3392540",
         "Node name for S&R": "ControlNetLoaderAdvanced"
       },
       "widgets_values": [
@@ -887,23 +904,25 @@
       "inputs": [
         {
           "name": "prev_motion_lora",
+          "shape": 7,
           "type": "MOTION_LORA",
-          "link": null,
-          "shape": 7
+          "link": null
         }
       ],
       "outputs": [
         {
           "name": "MOTION_LORA",
+          "shape": 3,
           "type": "MOTION_LORA",
+          "slot_index": 0,
           "links": [
             505
-          ],
-          "slot_index": 0,
-          "shape": 3
+          ]
         }
       ],
       "properties": {
+        "cnr_id": "comfyui-animatediff-evolved",
+        "ver": "3795f515b8faa1f4cfd9393a50cdcca299a68993",
         "Node name for S&R": "ADE_AnimateDiffLoRALoader",
         "ttNbgOverride": {
           "color": "#222",
@@ -913,8 +932,7 @@
       },
       "widgets_values": [
         "WAS26.safetensors",
-        0.6,
-        ""
+        0.6
       ],
       "color": "#432",
       "bgcolor": "#653"
@@ -928,10 +946,10 @@
       ],
       "size": [
         315,
-        230
+        254
       ],
       "flags": {},
-      "order": 25,
+      "order": 26,
       "mode": 0,
       "inputs": [
         {
@@ -941,56 +959,57 @@
         },
         {
           "name": "context_options",
+          "shape": 7,
           "type": "CONTEXT_OPTIONS",
-          "link": 364,
-          "slot_index": 1,
-          "shape": 7
+          "link": 364
         },
         {
           "name": "motion_lora",
+          "shape": 7,
           "type": "MOTION_LORA",
-          "link": 505,
-          "slot_index": 2,
-          "shape": 7
+          "link": 505
         },
         {
           "name": "ad_settings",
+          "shape": 7,
           "type": "AD_SETTINGS",
-          "link": null,
-          "shape": 7
+          "link": null
         },
         {
           "name": "sample_settings",
+          "shape": 7,
           "type": "SAMPLE_SETTINGS",
-          "link": null,
-          "shape": 7
+          "link": null
         },
         {
           "name": "ad_keyframes",
+          "shape": 7,
           "type": "AD_KEYFRAMES",
-          "link": null,
-          "shape": 7
+          "link": null
         }
       ],
       "outputs": [
         {
           "name": "MODEL",
+          "shape": 3,
           "type": "MODEL",
+          "slot_index": 0,
           "links": [
             846
-          ],
-          "slot_index": 0,
-          "shape": 3
+          ]
         }
       ],
       "properties": {
+        "cnr_id": "comfyui-animatediff-evolved",
+        "ver": "3795f515b8faa1f4cfd9393a50cdcca299a68993",
         "Node name for S&R": "ADE_AnimateDiffLoaderWithContext"
       },
       "widgets_values": [
         "animate_lcm_sd15_t2v_beta.ckpt",
         "lcm[100_ots]",
         1,
-        false
+        false,
+        ""
       ],
       "color": "#222",
       "bgcolor": "#000"
@@ -1013,16 +1032,18 @@
       "outputs": [
         {
           "name": "IPADAPTER",
+          "shape": 3,
           "type": "IPADAPTER",
+          "slot_index": 0,
           "links": [
             850,
             851
-          ],
-          "slot_index": 0,
-          "shape": 3
+          ]
         }
       ],
       "properties": {
+        "cnr_id": "comfyui_ipadapter_plus",
+        "ver": "9d076a3df0d2763cef5510ec5ab807f6632c39f5",
         "Node name for S&R": "IPAdapterModelLoader"
       },
       "widgets_values": [
@@ -1049,16 +1070,18 @@
       "outputs": [
         {
           "name": "CLIP_VISION",
+          "shape": 3,
           "type": "CLIP_VISION",
+          "slot_index": 0,
           "links": [
             849,
             852
-          ],
-          "slot_index": 0,
-          "shape": 3
+          ]
         }
       ],
       "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.27",
         "Node name for S&R": "CLIPVisionLoader"
       },
       "widgets_values": [
@@ -1079,7 +1102,7 @@
         26
       ],
       "flags": {},
-      "order": 26,
+      "order": 27,
       "mode": 0,
       "inputs": [
         {
@@ -1092,13 +1115,13 @@
         {
           "name": "",
           "type": "IMAGE",
+          "slot_index": 0,
           "links": [
             376,
             490,
             855,
             868
-          ],
-          "slot_index": 0
+          ]
         }
       ],
       "properties": {
@@ -1118,30 +1141,32 @@
         106
       ],
       "flags": {},
-      "order": 30,
+      "order": 31,
       "mode": 0,
       "inputs": [
         {
           "name": "image_optional",
+          "shape": 7,
           "type": "IMAGE",
-          "link": 490,
-          "shape": 7
+          "link": 490
         }
       ],
       "outputs": [
         {
           "name": "IMAGE",
+          "shape": 3,
           "type": "IMAGE",
+          "slot_index": 0,
           "links": [
             853,
             854,
             856
-          ],
-          "slot_index": 0,
-          "shape": 3
+          ]
         }
       ],
       "properties": {
+        "cnr_id": "comfyui_ipadapter_plus",
+        "ver": "9d076a3df0d2763cef5510ec5ab807f6632c39f5",
         "Node name for S&R": "IPAdapterNoise"
       },
       "widgets_values": [
@@ -1164,7 +1189,7 @@
         278
       ],
       "flags": {},
-      "order": 38,
+      "order": 39,
       "mode": 0,
       "inputs": [
         {
@@ -1184,35 +1209,37 @@
         },
         {
           "name": "image_negative",
+          "shape": 7,
           "type": "IMAGE",
-          "link": 856,
-          "shape": 7
+          "link": 856
         },
         {
           "name": "attn_mask",
+          "shape": 7,
           "type": "MASK",
-          "link": null,
-          "shape": 7
+          "link": null
         },
         {
           "name": "clip_vision",
+          "shape": 7,
           "type": "CLIP_VISION",
-          "link": 852,
-          "shape": 7
+          "link": 852
         }
       ],
       "outputs": [
         {
           "name": "MODEL",
+          "shape": 3,
           "type": "MODEL",
+          "slot_index": 0,
           "links": [
             863
-          ],
-          "slot_index": 0,
-          "shape": 3
+          ]
         }
       ],
       "properties": {
+        "cnr_id": "comfyui_ipadapter_plus",
+        "ver": "9d076a3df0d2763cef5510ec5ab807f6632c39f5",
         "Node name for S&R": "IPAdapterBatch"
       },
       "widgets_values": [
@@ -1236,7 +1263,7 @@
         278
       ],
       "flags": {},
-      "order": 34,
+      "order": 35,
       "mode": 0,
       "inputs": [
         {
@@ -1256,35 +1283,37 @@
         },
         {
           "name": "image_negative",
+          "shape": 7,
           "type": "IMAGE",
-          "link": 854,
-          "shape": 7
+          "link": 854
         },
         {
           "name": "attn_mask",
+          "shape": 7,
           "type": "MASK",
-          "link": null,
-          "shape": 7
+          "link": null
         },
         {
           "name": "clip_vision",
+          "shape": 7,
           "type": "CLIP_VISION",
-          "link": 849,
-          "shape": 7
+          "link": 849
         }
       ],
       "outputs": [
         {
           "name": "MODEL",
+          "shape": 3,
           "type": "MODEL",
+          "slot_index": 0,
           "links": [
             847
-          ],
-          "slot_index": 0,
-          "shape": 3
+          ]
         }
       ],
       "properties": {
+        "cnr_id": "comfyui_ipadapter_plus",
+        "ver": "9d076a3df0d2763cef5510ec5ab807f6632c39f5",
         "Node name for S&R": "IPAdapterBatch"
       },
       "widgets_values": [
@@ -1314,16 +1343,18 @@
       "outputs": [
         {
           "name": "int",
+          "shape": 3,
           "type": "INT",
+          "slot_index": 0,
           "links": [
             867
-          ],
-          "slot_index": 0,
-          "shape": 3
+          ]
         }
       ],
       "title": "Steps",
       "properties": {
+        "cnr_id": "ComfyUI-Crystools",
+        "ver": "0820a7560bcc405ef6d0a7c5c53a83cc02ae7db2",
         "Node name for S&R": "Primitive integer [Crystools]"
       },
       "widgets_values": [
@@ -1344,7 +1375,7 @@
         570
       ],
       "flags": {},
-      "order": 42,
+      "order": 43,
       "mode": 0,
       "inputs": [
         {
@@ -1375,28 +1406,30 @@
         {
           "name": "steps",
           "type": "INT",
-          "link": 867,
           "widget": {
             "name": "steps"
-          }
+          },
+          "link": 867
         }
       ],
       "outputs": [
         {
           "name": "IMAGE",
+          "shape": 3,
           "type": "IMAGE",
+          "slot_index": 0,
           "links": [
             870
-          ],
-          "slot_index": 0,
-          "shape": 3
+          ]
         }
       ],
       "properties": {
+        "cnr_id": "comfyui_ultimatesdupscale",
+        "ver": "778a475dde8116a2066fe07f6c9ca15554e0b5be",
         "Node name for S&R": "UltimateSDUpscaleNoUpscale"
       },
       "widgets_values": [
-        464474775430677,
+        96250519971512,
         "randomize",
         9,
         6,
@@ -1428,73 +1461,75 @@
       ],
       "size": [
         234.69961547851562,
-        238
+        286
       ],
       "flags": {},
-      "order": 23,
+      "order": 24,
       "mode": 0,
       "inputs": [
         {
           "name": "meta_batch",
+          "shape": 7,
           "type": "VHS_BatchManager",
-          "link": null,
-          "shape": 7
+          "link": null
         },
         {
           "name": "vae",
+          "shape": 7,
           "type": "VAE",
-          "link": null,
-          "shape": 7
+          "link": null
         },
         {
           "name": "video",
           "type": "STRING",
-          "link": 770,
           "widget": {
             "name": "video"
-          }
+          },
+          "link": 770
         }
       ],
       "outputs": [
         {
           "name": "IMAGE",
+          "shape": 3,
           "type": "IMAGE",
           "links": [
             771
-          ],
-          "shape": 3
+          ]
         },
         {
           "name": "frame_count",
+          "shape": 3,
           "type": "INT",
-          "links": null,
-          "shape": 3
+          "links": null
         },
         {
           "name": "audio",
+          "shape": 3,
           "type": "AUDIO",
-          "links": null,
-          "shape": 3
+          "links": null
         },
         {
           "name": "video_info",
+          "shape": 3,
           "type": "VHS_VIDEOINFO",
-          "links": null,
-          "shape": 3
+          "links": null
         }
       ],
       "properties": {
+        "cnr_id": "comfyui-videohelpersuite",
+        "ver": "7236c5dff09e64dcf8d5946f93d4d7fc4f1a6147",
         "Node name for S&R": "VHS_LoadVideoPath"
       },
       "widgets_values": {
         "video": "",
         "force_rate": 0,
-        "force_size": "Disabled",
-        "custom_width": 512,
-        "custom_height": 512,
+        "custom_width": 0,
+        "custom_height": 0,
         "frame_load_cap": 0,
         "skip_first_frames": 0,
         "select_every_nth": 2,
+        "format": "AnimateDiff",
         "videopreview": {
           "hidden": false,
           "paused": false,
@@ -1525,38 +1560,40 @@
         126
       ],
       "flags": {},
-      "order": 24,
+      "order": 25,
       "mode": 0,
       "inputs": [
         {
           "name": "source",
           "type": "STRING",
-          "link": 872,
           "widget": {
             "name": "source"
-          }
+          },
+          "link": 872
         }
       ],
       "outputs": [
         {
           "name": "STRING",
+          "shape": 3,
           "type": "STRING",
-          "links": [],
           "slot_index": 0,
-          "shape": 3
+          "links": []
         },
         {
           "name": "STRING",
+          "shape": 3,
           "type": "STRING",
+          "slot_index": 1,
           "links": [
             873,
             876
-          ],
-          "slot_index": 1,
-          "shape": 3
+          ]
         }
       ],
       "properties": {
+        "cnr_id": "comfyui-various",
+        "ver": "5bd85aaf7616878471469c4ec7e11bbd0cef3bf2",
         "Node name for S&R": "JWStringSplit"
       },
       "widgets_values": [
@@ -1574,17 +1611,17 @@
       ],
       "size": [
         320,
-        80
+        88
       ],
       "flags": {},
-      "order": 27,
+      "order": 28,
       "mode": 0,
       "inputs": [
         {
           "name": "anything",
+          "shape": 7,
           "type": "*",
-          "link": 873,
-          "shape": 7
+          "link": 873
         }
       ],
       "outputs": [
@@ -1595,10 +1632,12 @@
         }
       ],
       "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "9292f2286207928cfdade99ad1634103470c0799",
         "Node name for S&R": "easy showAnything"
       },
       "widgets_values": [
-        "zenon_general_00005.mp4"
+        "test_00001.mp4"
       ],
       "color": "#323",
       "bgcolor": "#535"
@@ -1615,38 +1654,40 @@
         126
       ],
       "flags": {},
-      "order": 28,
+      "order": 29,
       "mode": 0,
       "inputs": [
         {
           "name": "source",
           "type": "STRING",
-          "link": 876,
           "widget": {
             "name": "source"
-          }
+          },
+          "link": 876
         }
       ],
       "outputs": [
         {
           "name": "STRING",
+          "shape": 3,
           "type": "STRING",
+          "slot_index": 0,
           "links": [
             883,
             888
-          ],
-          "slot_index": 0,
-          "shape": 3
+          ]
         },
         {
           "name": "STRING",
+          "shape": 3,
           "type": "STRING",
-          "links": [],
           "slot_index": 1,
-          "shape": 3
+          "links": []
         }
       ],
       "properties": {
+        "cnr_id": "comfyui-various",
+        "ver": "5bd85aaf7616878471469c4ec7e11bbd0cef3bf2",
         "Node name for S&R": "JWStringSplit"
       },
       "widgets_values": [
@@ -1664,17 +1705,17 @@
       ],
       "size": [
         320,
-        80
+        88
       ],
       "flags": {},
-      "order": 36,
+      "order": 37,
       "mode": 0,
       "inputs": [
         {
           "name": "anything",
+          "shape": 7,
           "type": "*",
-          "link": 879,
-          "shape": 7
+          "link": 879
         }
       ],
       "outputs": [
@@ -1685,10 +1726,12 @@
         }
       ],
       "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "9292f2286207928cfdade99ad1634103470c0799",
         "Node name for S&R": "easy showAnything"
       },
       "widgets_values": [
-        "WorkFlower\\zenon_general_00005"
+        "Zenerator\\test_00001"
       ],
       "color": "#323",
       "bgcolor": "#535"
@@ -1702,17 +1745,17 @@
       ],
       "size": [
         320,
-        80
+        88
       ],
       "flags": {},
-      "order": 39,
+      "order": 40,
       "mode": 0,
       "inputs": [
         {
           "name": "anything",
+          "shape": 7,
           "type": "*",
-          "link": 880,
-          "shape": 7
+          "link": 880
         }
       ],
       "outputs": [
@@ -1723,10 +1766,12 @@
         }
       ],
       "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "9292f2286207928cfdade99ad1634103470c0799",
         "Node name for S&R": "easy showAnything"
       },
       "widgets_values": [
-        "WorkFlower\\zenon_general_00005_upscale"
+        "Zenerator\\test_00001_upscale"
       ],
       "color": "#323",
       "bgcolor": "#535"
@@ -1743,32 +1788,30 @@
         30
       ],
       "flags": {},
-      "order": 20,
+      "order": 22,
       "mode": 0,
       "inputs": [
         {
+          "dir": 3,
+          "label": " ",
           "name": "",
           "type": "*",
-          "link": 889,
-          "dir": 3,
-          "has_old_label": true,
-          "label": " ",
           "widget": {
             "name": "value"
-          }
+          },
+          "link": 889
         }
       ],
       "outputs": [
         {
+          "dir": 4,
+          "label": " ",
           "name": "string",
           "type": "STRING",
+          "slot_index": 0,
           "links": [
             872
-          ],
-          "slot_index": 0,
-          "dir": 4,
-          "has_old_label": true,
-          "label": " "
+          ]
         }
       ],
       "properties": {
@@ -1797,15 +1840,17 @@
       "outputs": [
         {
           "name": "string",
+          "shape": 3,
           "type": "STRING",
+          "slot_index": 0,
           "links": [
             878
-          ],
-          "slot_index": 0,
-          "shape": 3
+          ]
         }
       ],
       "properties": {
+        "cnr_id": "ComfyUI-Crystools",
+        "ver": "0820a7560bcc405ef6d0a7c5c53a83cc02ae7db2",
         "Node name for S&R": "Primitive string [Crystools]"
       },
       "widgets_values": [
@@ -1821,32 +1866,34 @@
       ],
       "size": [
         320,
-        80
+        88
       ],
       "flags": {},
-      "order": 32,
+      "order": 33,
       "mode": 0,
       "inputs": [
         {
           "name": "anything",
+          "shape": 7,
           "type": "*",
-          "link": 883,
-          "shape": 7
+          "link": 883
         }
       ],
       "outputs": [
         {
           "name": "output",
           "type": "*",
-          "links": [],
-          "slot_index": 0
+          "slot_index": 0,
+          "links": []
         }
       ],
       "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "9292f2286207928cfdade99ad1634103470c0799",
         "Node name for S&R": "easy showAnything"
       },
       "widgets_values": [
-        "zenon_general_00005"
+        "test_00001"
       ],
       "color": "#323",
       "bgcolor": "#535"
@@ -1869,15 +1916,17 @@
       "outputs": [
         {
           "name": "string",
+          "shape": 3,
           "type": "STRING",
+          "slot_index": 0,
           "links": [
             885
-          ],
-          "slot_index": 0,
-          "shape": 3
+          ]
         }
       ],
       "properties": {
+        "cnr_id": "ComfyUI-Crystools",
+        "ver": "0820a7560bcc405ef6d0a7c5c53a83cc02ae7db2",
         "Node name for S&R": "Primitive string [Crystools]"
       },
       "widgets_values": [
@@ -1902,15 +1951,17 @@
       "outputs": [
         {
           "name": "string",
+          "shape": 3,
           "type": "STRING",
+          "slot_index": 0,
           "links": [
             875
-          ],
-          "slot_index": 0,
-          "shape": 3
+          ]
         }
       ],
       "properties": {
+        "cnr_id": "ComfyUI-Crystools",
+        "ver": "0820a7560bcc405ef6d0a7c5c53a83cc02ae7db2",
         "Node name for S&R": "Primitive string [Crystools]"
       },
       "widgets_values": [
@@ -1926,42 +1977,44 @@
       ],
       "size": [
         210,
-        54
+        82
       ],
       "flags": {},
-      "order": 35,
+      "order": 36,
       "mode": 0,
       "inputs": [
         {
           "name": "a",
           "type": "STRING",
-          "link": 877,
           "widget": {
             "name": "a"
-          }
+          },
+          "link": 877
         },
         {
           "name": "b",
           "type": "STRING",
-          "link": 878,
           "widget": {
             "name": "b"
-          }
+          },
+          "link": 878
         }
       ],
       "outputs": [
         {
           "name": "STRING",
+          "shape": 3,
           "type": "STRING",
+          "slot_index": 0,
           "links": [
             880,
             890
-          ],
-          "slot_index": 0,
-          "shape": 3
+          ]
         }
       ],
       "properties": {
+        "cnr_id": "comfyui-various",
+        "ver": "5bd85aaf7616878471469c4ec7e11bbd0cef3bf2",
         "Node name for S&R": "JWStringConcat"
       },
       "widgets_values": [
@@ -1978,42 +2031,44 @@
       ],
       "size": [
         210,
-        54
+        82
       ],
       "flags": {},
-      "order": 37,
+      "order": 38,
       "mode": 0,
       "inputs": [
         {
           "name": "a",
           "type": "STRING",
-          "link": 884,
           "widget": {
             "name": "a"
-          }
+          },
+          "link": 884
         },
         {
           "name": "b",
           "type": "STRING",
-          "link": 885,
           "widget": {
             "name": "b"
-          }
+          },
+          "link": 885
         }
       ],
       "outputs": [
         {
           "name": "STRING",
+          "shape": 3,
           "type": "STRING",
+          "slot_index": 0,
           "links": [
             886,
             891
-          ],
-          "slot_index": 0,
-          "shape": 3
+          ]
         }
       ],
       "properties": {
+        "cnr_id": "comfyui-various",
+        "ver": "5bd85aaf7616878471469c4ec7e11bbd0cef3bf2",
         "Node name for S&R": "JWStringConcat"
       },
       "widgets_values": [
@@ -2030,17 +2085,17 @@
       ],
       "size": [
         320,
-        80
+        88
       ],
       "flags": {},
-      "order": 41,
+      "order": 42,
       "mode": 0,
       "inputs": [
         {
           "name": "anything",
+          "shape": 7,
           "type": "*",
-          "link": 886,
-          "shape": 7
+          "link": 886
         }
       ],
       "outputs": [
@@ -2051,92 +2106,15 @@
         }
       ],
       "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "9292f2286207928cfdade99ad1634103470c0799",
         "Node name for S&R": "easy showAnything"
       },
       "widgets_values": [
-        "WorkFlower\\zenon_general_00005_upscale_rife"
+        "Zenerator\\test_00001_upscale_rife"
       ],
       "color": "#323",
       "bgcolor": "#535"
-    },
-    {
-      "id": 419,
-      "type": "Primitive string [Crystools]",
-      "pos": [
-        657,
-        718
-      ],
-      "size": [
-        315,
-        58
-      ],
-      "flags": {},
-      "order": 15,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "string",
-          "type": "STRING",
-          "links": [
-            682,
-            889
-          ],
-          "slot_index": 0,
-          "shape": 3
-        }
-      ],
-      "title": "Input Video",
-      "properties": {
-        "Node name for S&R": "Primitive string [Crystools]"
-      },
-      "widgets_values": [
-        "D:\\NILOR\\HUGGINGFACE\\nilor-corp-2\\ComfyUI\\output\\WorkFlower\\zenon_general_00005.mp4"
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
-      "id": 540,
-      "type": "UpscalerTensorrt",
-      "pos": [
-        3920,
-        420
-      ],
-      "size": [
-        315,
-        82
-      ],
-      "flags": {},
-      "order": 31,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 868
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            869
-          ],
-          "slot_index": 0,
-          "shape": 3
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "UpscalerTensorrt"
-      },
-      "widgets_values": [
-        "realistic.engine",
-        "none"
-      ],
-      "color": "#432",
-      "bgcolor": "#653"
     },
     {
       "id": 557,
@@ -2147,43 +2125,45 @@
       ],
       "size": [
         210,
-        54
+        82
       ],
       "flags": {},
-      "order": 33,
+      "order": 34,
       "mode": 0,
       "inputs": [
         {
           "name": "a",
           "type": "STRING",
-          "link": 887,
           "widget": {
             "name": "a"
-          }
+          },
+          "link": 887
         },
         {
           "name": "b",
           "type": "STRING",
-          "link": 888,
           "widget": {
             "name": "b"
-          }
+          },
+          "link": 888
         }
       ],
       "outputs": [
         {
           "name": "STRING",
+          "shape": 3,
           "type": "STRING",
+          "slot_index": 0,
           "links": [
             877,
             879,
             884
-          ],
-          "slot_index": 0,
-          "shape": 3
+          ]
         }
       ],
       "properties": {
+        "cnr_id": "comfyui-various",
+        "ver": "5bd85aaf7616878471469c4ec7e11bbd0cef3bf2",
         "Node name for S&R": "JWStringConcat"
       },
       "widgets_values": [
@@ -2200,39 +2180,41 @@
       ],
       "size": [
         210,
-        54
+        82
       ],
       "flags": {},
-      "order": 16,
+      "order": 15,
       "mode": 0,
       "inputs": [
         {
           "name": "a",
           "type": "STRING",
-          "link": null,
           "widget": {
             "name": "a"
-          }
+          },
+          "link": null
         },
         {
           "name": "b",
           "type": "STRING",
-          "link": null,
           "widget": {
             "name": "b"
-          }
+          },
+          "link": null
         }
       ],
       "outputs": [
         {
           "name": "STRING",
+          "shape": 3,
           "type": "STRING",
-          "links": [],
           "slot_index": 0,
-          "shape": 3
+          "links": []
         }
       ],
       "properties": {
+        "cnr_id": "comfyui-various",
+        "ver": "5bd85aaf7616878471469c4ec7e11bbd0cef3bf2",
         "Node name for S&R": "JWStringConcat"
       },
       "widgets_values": [
@@ -2249,41 +2231,43 @@
       ],
       "size": [
         210,
-        54
+        82
       ],
       "flags": {},
-      "order": 21,
+      "order": 20,
       "mode": 0,
       "inputs": [
         {
           "name": "a",
           "type": "STRING",
-          "link": 895,
           "widget": {
             "name": "a"
-          }
+          },
+          "link": 895
         },
         {
           "name": "b",
           "type": "STRING",
-          "link": 875,
           "widget": {
             "name": "b"
-          }
+          },
+          "link": 875
         }
       ],
       "outputs": [
         {
           "name": "STRING",
+          "shape": 3,
           "type": "STRING",
+          "slot_index": 0,
           "links": [
             887
-          ],
-          "slot_index": 0,
-          "shape": 3
+          ]
         }
       ],
       "properties": {
+        "cnr_id": "comfyui-various",
+        "ver": "5bd85aaf7616878471469c4ec7e11bbd0cef3bf2",
         "Node name for S&R": "JWStringConcat"
       },
       "widgets_values": [
@@ -2303,7 +2287,7 @@
         58
       ],
       "flags": {},
-      "order": 17,
+      "order": 16,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -2316,11 +2300,136 @@
         }
       ],
       "properties": {
+        "cnr_id": "ComfyUI-Crystools",
+        "ver": "0820a7560bcc405ef6d0a7c5c53a83cc02ae7db2",
         "Node name for S&R": "Primitive string [Crystools]"
       },
       "widgets_values": [
         "Zenerator"
       ]
+    },
+    {
+      "id": 419,
+      "type": "Primitive string [Crystools]",
+      "pos": [
+        657,
+        718
+      ],
+      "size": [
+        315,
+        58
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "string",
+          "shape": 3,
+          "type": "STRING",
+          "slot_index": 0,
+          "links": [
+            682,
+            889
+          ]
+        }
+      ],
+      "title": "Input Video",
+      "properties": {
+        "cnr_id": "ComfyUI-Crystools",
+        "ver": "0820a7560bcc405ef6d0a7c5c53a83cc02ae7db2",
+        "Node name for S&R": "Primitive string [Crystools]"
+      },
+      "widgets_values": [
+        "D:\\nilor-corp\\ComfyUI\\output\\Zenerator\\test_00001.mp4"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 540,
+      "type": "UpscalerTensorrt",
+      "pos": [
+        3920,
+        420
+      ],
+      "size": [
+        315,
+        82
+      ],
+      "flags": {},
+      "order": 32,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 868
+        },
+        {
+          "name": "upscaler_trt_model",
+          "type": "UPSCALER_TRT_MODEL",
+          "link": 896
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "shape": 3,
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            869
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "ComfyUI-Upscaler-Tensorrt",
+        "ver": "9a178df8fccdfba72c9eb216dac0f6e552b43ffa",
+        "Node name for S&R": "UpscalerTensorrt"
+      },
+      "widgets_values": [
+        "none"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 562,
+      "type": "LoadUpscalerTensorrtModel",
+      "pos": [
+        3495.49853515625,
+        260.7537841796875
+      ],
+      "size": [
+        340.20001220703125,
+        82
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "upscaler_trt_model",
+          "type": "UPSCALER_TRT_MODEL",
+          "links": [
+            896
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "ComfyUI-Upscaler-Tensorrt",
+        "ver": "9a178df8fccdfba72c9eb216dac0f6e552b43ffa",
+        "Node name for S&R": "LoadUpscalerTensorrtModel"
+      },
+      "widgets_values": [
+        "4x-UltraSharp",
+        "fp16"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
     }
   ],
   "links": [
@@ -2739,6 +2848,14 @@
       544,
       0,
       "STRING"
+    ],
+    [
+      896,
+      562,
+      0,
+      540,
+      1,
+      "UPSCALER_TRT_MODEL"
     ]
   ],
   "groups": [
@@ -2863,12 +2980,17 @@
   "config": {},
   "extra": {
     "ds": {
-      "scale": 0.5054470284993055,
+      "scale": 0.683013455365071,
       "offset": [
-        -3698.137674592439,
-        172.99332451125116
+        -2373.9981198578835,
+        396.13911636636425
       ]
-    }
+    },
+    "ue_links": [],
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
   },
   "version": 0.4
 }
