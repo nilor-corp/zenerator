@@ -218,46 +218,46 @@ def check_tensorrt_installation():
     return installed
 
 
-# REF: https://github.com/yuvraj108c/ComfyUI-Upscaler-Tensorrt/blob/master/export_trt.py
-def install_tensorrt():
-    print("Installing TensorRT...")
+# # REF: https://github.com/yuvraj108c/ComfyUI-Upscaler-Tensorrt/blob/master/export_trt.py
+# def install_tensorrt():
+#     print("Installing TensorRT...")
 
-    engine = Engine(UPSCALER_DIR + "\\realistic.engine")
+#     engine = Engine(UPSCALER_DIR + "\\realistic.engine")
 
-    torch.cuda.empty_cache()
+#     torch.cuda.empty_cache()
 
-    s = time.time()
-    ret = engine.build(
-        ONNX_PATH,
-        True,
-        enable_preview=True,
-        input_profile=[
-            {
-                "input": [(1, 3, 256, 256), (1, 3, 512, 512), (1, 3, 1280, 1280)]
-            },  # any sizes from 256x256 to 1280x1280
-        ],
-    )
-    e = time.time()
-    print(f"Time taken to build TensorRT: {(e-s)} seconds")
+#     s = time.time()
+#     ret = engine.build(
+#         ONNX_PATH,
+#         True,
+#         enable_preview=True,
+#         input_profile=[
+#             {
+#                 "input": [(1, 3, 256, 256), (1, 3, 512, 512), (1, 3, 1280, 1280)]
+#             },  # any sizes from 256x256 to 1280x1280
+#         ],
+#     )
+#     e = time.time()
+#     print(f"Time taken to build TensorRT: {(e-s)} seconds")
 
-    return ret
+#     return ret
 
 
-if os.path.exists(TENSORRT_NODES_DIR):
-    print(f"Importing TensorRT requirements.")
+# if os.path.exists(TENSORRT_NODES_DIR):
+#     print(f"Importing TensorRT requirements.")
 
-    sys.path.append(TENSORRT_NODES_DIR)
+#     sys.path.append(TENSORRT_NODES_DIR)
 
-    # from export_trt import export_trt
-    from utilities import Engine
+#     # from export_trt import export_trt
+#     from utilities import Engine
 
-try:
-    if check_tensorrt_installation():
-        print(f"TensorRT is already installed.")
-    else:
-        install_tensorrt()
-except Exception as e:
-    print(f"Error installing TensorRT: {e}")
+# try:
+#     if check_tensorrt_installation():
+#         print(f"TensorRT is already installed.")
+#     else:
+#         install_tensorrt()
+# except Exception as e:
+#     print(f"Error installing TensorRT: {e}")
 
 
 # endregion
