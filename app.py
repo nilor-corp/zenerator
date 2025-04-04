@@ -301,7 +301,7 @@ def send_heartbeat(ws):
         try:
             ws.ping()
             time_as_string = datetime.now().strftime("%H:%M:%S")
-            print(f"Heartbeat at {time_as_string}")
+            #print(f"Heartbeat at {time_as_string}")
             time.sleep(1)
         except websocket.WebSocketConnectionClosedException:
             print("WebSocket connection closed, stopping heartbeat")
@@ -1003,7 +1003,7 @@ def create_dynamic_input(
     gr.Markdown(markdown_text, elem_classes="group-label")
     with gr.Group():
         selected_option = gr.Radio(choices, label=text_label, value=choices[0])
-        print(f"Choices: {choices}")
+        #print(f"Choices: {choices}")
 
         # Add optional limit controls only for image inputs
         if input_type == "images":
