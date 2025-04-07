@@ -845,7 +845,7 @@
   "motion-directed-ltxv": {
     "name": "Motion Directed LTXV",
     "filename": "motion-directed-ltxv.json",
-    "description": "Motion Directed LTXV i2v\nTip: Works much better when some motion is prescribed\nTip: Works significantly better with a landscape image input\nTip: About 1 in 4 output attempts are OK.",
+    "description": "i2v with prescribed motion influence  \nTip: Works much better when some strong-ish motion is prescribed  \nTip: Works significantly better with a landscape image input  \nTip: About 1 in 4 output attempts are OK.",
     "inputs": {
       "input-specifications": {
         "type": "group",
