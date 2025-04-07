@@ -301,7 +301,7 @@ def send_heartbeat(ws):
         try:
             ws.ping()
             time_as_string = datetime.now().strftime("%H:%M:%S")
-            #print(f"Heartbeat at {time_as_string}")
+            # print(f"Heartbeat at {time_as_string}")
             time.sleep(1)
         except websocket.WebSocketConnectionClosedException:
             print("WebSocket connection closed, stopping heartbeat")
@@ -1003,7 +1003,7 @@ def create_dynamic_input(
     gr.Markdown(markdown_text, elem_classes="group-label")
     with gr.Group():
         selected_option = gr.Radio(choices, label=text_label, value=choices[0])
-        #print(f"Choices: {choices}")
+        # print(f"Choices: {choices}")
 
         # Add optional limit controls only for image inputs
         if input_type == "images":
@@ -1512,6 +1512,95 @@ def create_tab_interface(workflow_name):
     return components, component_data_dict
 
 
+# Add this at the module level, before defining any functions
+_tabs_created = False
+
+
+def create_tabs():
+    """Create and return the main interface tabs"""
+    global _tabs_created
+
+    # Check if tabs have already been created
+    if _tabs_created:
+        print("Skipping tab creation (already created)")
+        return gr.Tabs()
+
+    _tabs_created = True  # Set flag before creating to prevent recursion
+    print("Creating About tab")
+    tabs = gr.Tabs()
+    with tabs:
+        with gr.TabItem(label="About"):
+            gr.Markdown(
+                "Zenerator is a tool by Nilor Corp for creating and running generative AI workflows.\n\n"
+                "Select a workflow from the tabs above and fill in the parameters.\n\n"
+                "Click 'Run Workflow' to start the workflow.",
+                line_breaks=True,
+            )
+
+        print(f"\nWorkflow definitions keys: {list(workflow_definitions.keys())}")
+        for workflow_name in workflow_definitions.keys():
+            workflow_filename = workflow_definitions[workflow_name]["filename"]
+            print(f"\nCreating tab for workflow: {workflow_name}")
+            print(f"Workflow name: {workflow_definitions[workflow_name]['name']}")
+
+            with gr.TabItem(label=workflow_definitions[workflow_name]["name"]):
+                print(f"Creating content for {workflow_name}")
+                with gr.Row():
+                    with gr.Column():
+                        with gr.Group():
+                            with gr.Row(equal_height=True):
+                                comfy_url_and_port_selector = gr.Dropdown(
+                                    label="ComfyUI Port",
+                                    choices=COMFY_PORTS,
+                                    value=COMFY_PORTS[0],
+                                    interactive=True,
+                                    scale=1,
+                                )
+                                run_button = gr.Button(
+                                    "Run Workflow",
+                                    variant="primary",
+                                    scale=3,
+                                    elem_id="run-button",
+                                )
+                            with gr.Accordion(
+                                "Workflow Info",
+                                open=False,
+                                elem_id="workflow-info",
+                            ):
+                                info = gr.Markdown(
+                                    workflow_definitions[workflow_name].get(
+                                        "description", ""
+                                    )
+                                )
+
+                        components, component_dict = create_tab_interface(workflow_name)
+
+                    output_type = workflow_definitions[workflow_name]["outputs"].get(
+                        "type", ""
+                    )
+
+                comfy_url_and_port_selector.change(
+                    select_correct_port,
+                    inputs=[comfy_url_and_port_selector],
+                )
+
+                run_button.click(
+                    fn=run_workflow_with_name(
+                        workflow_filename,
+                        workflow_name,
+                        components,
+                        component_dict,
+                    ),
+                    inputs=components,
+                    outputs=gr.Text(visible=False),
+                    trigger_mode="multiple",
+                    api_name=f"workflow/{workflow_name}",
+                )
+                print(f"Finished creating tab for {workflow_name}")
+
+    return tabs
+
+
 def load_demo():
     """Initialize demo with proper resource management"""
     global tick_timer, threads
@@ -1621,79 +1710,17 @@ with gr.Blocks(
     theme=gr.themes.Ocean(font=gr.themes.GoogleFont("DM Sans")),
     css=custom_css,
 ) as demo:
+    print("\nCreating tabs...")
     tick_timer = gr.Timer(value=1.0)
     demo.load(fn=load_demo)
     demo.unload(fn=unload_demo)
 
     with gr.Row():
         with gr.Column(scale=5):
-            tabs = gr.Tabs()
-            with tabs:
-                with gr.TabItem(label="About"):
-                    with gr.Row():
-                        gr.Markdown(
-                            "Zenerator is a tool by Nilor Corp for creating and running generative AI workflows.\n\n"
-                            "Select a workflow from the tabs above and fill in the parameters.\n\n"
-                            "Click 'Run Workflow' to start the workflow.  ",
-                            line_breaks=True,
-                        )
-                for workflow_name in workflow_definitions.keys():
-                    workflow_filename = workflow_definitions[workflow_name]["filename"]
-
-                    with gr.TabItem(label=workflow_definitions[workflow_name]["name"]):
-                        with gr.Row():
-                            with gr.Column():
-                                with gr.Group():
-                                    with gr.Row(equal_height=True):
-                                        comfy_url_and_port_selector = gr.Dropdown(
-                                            label="ComfyUI Port",
-                                            choices=COMFY_PORTS,
-                                            value=COMFY_PORTS[0],
-                                            interactive=True,
-                                            scale=1,
-                                        )
-                                        run_button = gr.Button(
-                                            "Run Workflow",
-                                            variant="primary",
-                                            scale=3,
-                                            elem_id="run-button",
-                                        )
-                                    with gr.Accordion(
-                                        "Workflow Info",
-                                        open=False,
-                                        elem_id="workflow-info",
-                                    ):
-                                        info = gr.Markdown(
-                                            workflow_definitions[workflow_name].get(
-                                                "description", ""
-                                            )
-                                        )
-
-                                components, component_dict = create_tab_interface(
-                                    workflow_name
-                                )
-
-                            output_type = workflow_definitions[workflow_name][
-                                "outputs"
-                            ].get("type", "")
-
-                    comfy_url_and_port_selector.change(
-                        select_correct_port,
-                        inputs=[comfy_url_and_port_selector],
-                    )
-
-                    run_button.click(
-                        fn=run_workflow_with_name(
-                            workflow_filename, workflow_name, components, component_dict
-                        ),
-                        inputs=components,
-                        outputs=gr.Text(visible=False),
-                        trigger_mode="multiple",
-                        api_name=f"workflow/{workflow_name}",
-                    )
+            tabs = create_tabs()
 
         with gr.Column(scale=4):
-            # TODO: is it possible to preview only an output that was produced by this workflow tab? otherwise this should probably exist outside of the workflow tab
+            # Right column content remains the same
             gr.Markdown("### Output Preview")
             with gr.Group():
                 if output_type == "image":
@@ -1796,7 +1823,5 @@ with gr.Blocks(
         setup_signal_handlers()
         initialize_content_tracking()
         demo.queue()
-
-        demo.load(fn=load_demo)
 
         demo.launch(allowed_paths=allowed_paths, favicon_path="favicon.png")
