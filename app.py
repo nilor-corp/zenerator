@@ -756,25 +756,31 @@ def check_queue(progress=gr.Progress()):
 
 
 def check_progress(progress=gr.Progress()):
-    try:
-        if app_state.current_progress_data:
-            value = app_state.current_progress_data.get("value", 0)
-            max_value = app_state.current_progress_data.get("max", 1)
-            if max_value > 0:
-                progress(progress=(value, max_value), unit="steps")
-        else:
-            progress(progress=0.0)
-    except Exception as e:
-        print(f"Error in check_progress: {e}")
-        progress(progress=0.0)
+    app_state.check_progress_running = True
 
+    while app_state.check_progress_running:
+        try:
+            value = app_state.current_progress_data.get("value", 0)
+            max_value = app_state.current_progress_data.get("max", 0)
+            if max_value > 0:
+                computed_progress = value / max_value
+                print(f"progress: {value} / {max_value} -> {computed_progress:.2f}")
+                progress(progress=(value, max_value), unit="steps")
+            else:
+                progress(progress=0.0)
+
+            time.sleep(1.0)
+        except Exception as e:
+            print(f"Error in check_progress: {e}")
+            progress(progress=0.0)
+            time.sleep(1.0)
 
 def check_gen_progress_visibility():
     try:
         prompt_id = app_state.current_progress_data.get("prompt_id", None)
-        current_step = app_state.current_progress_data.get("value", None)
+        current_step = app_state.current_progress_data.get("value", 0)
         queue_running = app_state.current_queue_info[5]
-        visibility = (current_step is not None) and (queue_running > 0)
+        visibility = (current_step != 0) and (queue_running is not None)
     except Exception:
         visibility = False
     return gr.update(visible=visibility)
@@ -1761,13 +1767,18 @@ with gr.Blocks(
                     show_progress="hidden",
                 )
 
+
             with gr.Group(visible=False) as gen_progress_group:
                 gen_component = gr.Textbox(
-                    label="Generation Progress", interactive=False, visible=True
+                    label="Generation Progress", 
+                    interactive=False, 
+                    visible=True
                 )
 
                 tick_timer.tick(
-                    fn=check_progress, outputs=gen_component, show_progress="full"
+                    fn=check_progress, 
+                    outputs=gen_component, 
+                    show_progress="full"
                 )
 
             tick_timer.tick(
@@ -1778,11 +1789,15 @@ with gr.Blocks(
 
             with gr.Group(visible=False) as queue_progress_group:
                 queue_info_component = gr.Textbox(
-                    label="Queue Info", interactive=False, visible=True
+                    label="Queue Info", 
+                    interactive=False, 
+                    visible=True
                 )
 
                 tick_timer.tick(
-                    fn=check_queue, outputs=queue_info_component, show_progress="full"
+                    fn=check_queue, 
+                    outputs=queue_info_component, 
+                    show_progress="full"
                 )
 
             tick_timer.tick(
@@ -1793,15 +1808,23 @@ with gr.Blocks(
 
             with gr.Group():
                 vram_usage_component = gr.Textbox(
-                    label="VRAM Usage", interactive=False, visible=True
+                    label="VRAM Usage", 
+                    interactive=False, 
+                    visible=True
                 )
 
                 tick_timer.tick(
-                    fn=check_vram, outputs=[vram_usage_component], show_progress="full"
+                    fn=check_vram, 
+                    outputs=[vram_usage_component], 
+                    show_progress="full"
                 )
 
             with gr.Group() as interrupt_group:
-                interrupt_button = gr.Button("Interrupt", visible=False, variant="stop")
+                interrupt_button = gr.Button(
+                    "Interrupt", 
+                    visible=False, 
+                    variant="stop"
+                )
                 interrupt_button.click(fn=post_interrupt)
 
             tick_timer.tick(
