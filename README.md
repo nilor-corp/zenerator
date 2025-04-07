@@ -170,7 +170,7 @@ Congratulations, you are finished installing **Zenerator**!
 
 <details>
 <summary>Motion Directed LTXV</summary>
-This workflow uses a node which makes an API call to use an LLM to describe your input image. For that reason, you need to add a free API key for [Groq](https://console.groq.com/keys). You basically just need to put an API key in an .env file inside the custom node pack. Instructions are [here](https://github.com/MNeMoNiCuZ/ComfyUI-mnemic-nodes?tab=readme-ov-file#configuration-only-needed-for-groq-nodes).
+This workflow uses a node which makes an API call to use an LLM to describe your input image. For that reason, you need to add a free API key for <a href="https://console.groq.com/keys">Groq</a>. You basically just need to put an API key in an .env file inside the custom node pack. Instructions are <a href="https://github.com/MNeMoNiCuZ/ComfyUI-mnemic-nodes?tab=readme-ov-file#configuration-only-needed-for-groq-nodes">here</a>.
 </details>
 
 ## Usage
