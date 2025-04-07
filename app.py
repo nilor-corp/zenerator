@@ -1659,6 +1659,7 @@ def unload_demo():
     # Deactivate timer
     if tick_timer:
         tick_timer.active = False
+    tick_timer = None
 
     # Clean up resources
     resource_manager.cleanup()
