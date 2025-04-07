@@ -1782,7 +1782,7 @@ with gr.Blocks(
                 )
 
             tick_timer.tick(
-                fn=check_gen_progress_visibility,
+                fn=check_interrupt_visibility,
                 outputs=gen_progress_group,
                 show_progress="hidden",
             )
