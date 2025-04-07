@@ -163,16 +163,27 @@ Congratulations, you are finished installing **Zenerator**!
 > [!NOTE]
 > The first time you run a workflow on a machine, expect it to take longer to begin generating because some custom nodes will need to download models. Subsequent runs of the same workflow will take less time to start generating.
 
+## Workflow Dependencies
+
+> [!WARNING]
+> If you plan to use the included workflows, be aware that some of them may have additional specific dependencies or setup steps. Below are workflow-specific requirements you should resolve before attempting to run them.
+
+<details>
+<summary>Motion Directed LTXV</summary>
+This workflow uses a node which makes an API call to use an LLM to describe your input image. For that reason, you need to add a free API key for [Groq](https://console.groq.com/keys). You basically just need to put an API key in an .env file inside the custom node pack. Instructions are [here](https://github.com/MNeMoNiCuZ/ComfyUI-mnemic-nodes?tab=readme-ov-file#configuration-only-needed-for-groq-nodes).
+</details>
 
 ## Usage
+
 You will need to run ComfyUI and **Zenerator** in seperate instances of Powershell.
 
 ### Run ComfyUI
-* In the first instance of Powershell, from the `.\nilor-corp\` directory:
-    ```console
-    .\venv\scripts\activate
-    comfy launch
-    ```
+
+- In the first instance of Powershell, from the `.\nilor-corp\` directory:
+  ```console
+  .\venv\scripts\activate
+  comfy launch
+  ```
 
 > [!TIP]
 > If you run into a "import torch" error when trying to launch ComfyUI for the first time, try [the potential fix here](https://github.com/Comfy-Org/comfy-cli/issues/150).
