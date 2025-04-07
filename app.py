@@ -416,7 +416,7 @@ def post_interrupt():
     """Interrupt current processing with proper state management"""
     app_state.current_progress_data = {}
     message = ""
-    return comfy_POST("interrupt", message)
+    comfy_POST("interrupt", message)
 
 
 def post_history_clear():
@@ -763,8 +763,8 @@ def check_progress(progress=gr.Progress()):
             value = app_state.current_progress_data.get("value", 0)
             max_value = app_state.current_progress_data.get("max", 0)
             if max_value > 0:
-                computed_progress = value / max_value
-                print(f"progress: {value} / {max_value} -> {computed_progress:.2f}")
+                #computed_progress = value / max_value
+                #print(f"progress: {value} / {max_value} -> {computed_progress:.2f}")
                 progress(progress=(value, max_value), unit="steps")
             else:
                 progress(progress=0.0)
@@ -1822,8 +1822,8 @@ with gr.Blocks(
             with gr.Group() as interrupt_group:
                 interrupt_button = gr.Button(
                     "Interrupt", 
-                    visible=False, 
-                    variant="stop"
+                    variant="stop",
+                    visible=True
                 )
                 interrupt_button.click(fn=post_interrupt)
 
