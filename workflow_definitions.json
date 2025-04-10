@@ -1153,7 +1153,7 @@
             "type": "string",
             "label": "Filename Prefix",
             "node-id": "[\"40\"][\"inputs\"][\"filename_prefix\"]",
-            "value": "flux-with-loras/image-"
+            "value": "Zenerator/flux-with-loras/image-"
           }
         }
       },
