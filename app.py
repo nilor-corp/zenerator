@@ -763,8 +763,8 @@ def check_progress(progress=gr.Progress()):
             value = app_state.current_progress_data.get("value", 0)
             max_value = app_state.current_progress_data.get("max", 0)
             if max_value > 0:
-                #computed_progress = value / max_value
-                #print(f"progress: {value} / {max_value} -> {computed_progress:.2f}")
+                # computed_progress = value / max_value
+                # print(f"progress: {value} / {max_value} -> {computed_progress:.2f}")
                 progress(progress=(value, max_value), unit="steps")
             else:
                 progress(progress=0.0)
@@ -774,6 +774,7 @@ def check_progress(progress=gr.Progress()):
             print(f"Error in check_progress: {e}")
             progress(progress=0.0)
             time.sleep(1.0)
+
 
 def check_gen_progress_visibility():
     try:
@@ -1767,18 +1768,13 @@ with gr.Blocks(
                     show_progress="hidden",
                 )
 
-
             with gr.Group(visible=False) as gen_progress_group:
                 gen_component = gr.Textbox(
-                    label="Generation Progress", 
-                    interactive=False, 
-                    visible=True
+                    label="Generation Progress", interactive=False, visible=True
                 )
 
                 tick_timer.tick(
-                    fn=check_progress, 
-                    outputs=gen_component, 
-                    show_progress="full"
+                    fn=check_progress, outputs=gen_component, show_progress="full"
                 )
 
             tick_timer.tick(
@@ -1789,15 +1785,11 @@ with gr.Blocks(
 
             with gr.Group(visible=False) as queue_progress_group:
                 queue_info_component = gr.Textbox(
-                    label="Queue Info", 
-                    interactive=False, 
-                    visible=True
+                    label="Queue Info", interactive=False, visible=True
                 )
 
                 tick_timer.tick(
-                    fn=check_queue, 
-                    outputs=queue_info_component, 
-                    show_progress="full"
+                    fn=check_queue, outputs=queue_info_component, show_progress="full"
                 )
 
             tick_timer.tick(
@@ -1808,23 +1800,15 @@ with gr.Blocks(
 
             with gr.Group():
                 vram_usage_component = gr.Textbox(
-                    label="VRAM Usage", 
-                    interactive=False, 
-                    visible=True
+                    label="VRAM Usage", interactive=False, visible=True
                 )
 
                 tick_timer.tick(
-                    fn=check_vram, 
-                    outputs=[vram_usage_component], 
-                    show_progress="full"
+                    fn=check_vram, outputs=[vram_usage_component], show_progress="full"
                 )
 
             with gr.Group() as interrupt_group:
-                interrupt_button = gr.Button(
-                    "Interrupt", 
-                    variant="stop",
-                    visible=True
-                )
+                interrupt_button = gr.Button("Interrupt", variant="stop", visible=True)
                 interrupt_button.click(fn=post_interrupt)
 
             tick_timer.tick(
