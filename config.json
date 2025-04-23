@@ -1,6 +1,11 @@
 {
   "COMFY_IP": "127.0.0.1",
-  "COMFY_PORTS": ["8188", "6969"],
+  "COMFY_PORTS": [
+    "8188",
+    "6969"
+  ],
   "COMFY_ROOT": "../ComfyUI/",
-  "User": "test"
+  "User": "test",
+  "ZENERATOR_IP": "127.0.0.1",
+  "ZENERATOR_PORT": 7860
 }

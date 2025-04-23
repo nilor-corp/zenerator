@@ -99,6 +99,8 @@ with open("config.json") as f:
 
 COMFY_IP = config["COMFY_IP"]
 COMFY_PORTS = config["COMFY_PORTS"]
+ZENERATOR_IP = config["ZENERATOR_IP"]
+ZENERATOR_PORT = config["ZENERATOR_PORT"]
 QUEUE_URLS = []
 
 ROOT_DIR = str(Path(__file__).parent.resolve())
@@ -1832,4 +1834,10 @@ with gr.Blocks(
         initialize_content_tracking()
         demo.queue()
 
-        demo.launch(allowed_paths=allowed_paths, favicon_path="favicon.png")
+        demo.launch(
+            allowed_paths=allowed_paths,
+            favicon_path="favicon.png",
+            server_name=ZENERATOR_IP,
+            server_port=ZENERATOR_PORT,
+            open_browser=True,
+        )
