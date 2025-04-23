@@ -1839,5 +1839,5 @@ with gr.Blocks(
             favicon_path="favicon.png",
             server_name=ZENERATOR_IP,
             server_port=ZENERATOR_PORT,
-            open_browser=True,
+            inbrowser=True,
         )
