@@ -1131,5 +1131,121 @@
     "outputs": {
       "type": "image"
     }
+  },
+  "flux-with-loras-shape-mask": {
+    "name": "Flux with Loras (Shape Mask)",
+    "filename": "flux-with-loras-shape-mask.json",
+    "description": "Create a shape masked image from a description with control over loras and their strength.",
+    "inputs": {
+      "output-specifications": {
+        "type": "group",
+        "label": "Output Specifications",
+        "inputs": {
+          "width": {
+            "type": "int",
+            "label": "Canvas Size",
+            "node-id": "[\"48\"][\"inputs\"][\"value\"]",
+            "value": 1024,
+            "minimum": 128,
+            "maximum": 4096
+          },
+          "filename-prefix": {
+            "type": "string",
+            "label": "Filename Prefix",
+            "node-id": "[\"40\"][\"inputs\"][\"filename_prefix\"]",
+            "value": "Zenerator/flux-with-loras/image-"
+          }
+        }
+      },
+      "input-specifications": {
+        "type": "group",
+        "label": "Input Specifications",
+        "inputs": {
+          "positive-prompt": {
+            "type": "string",
+            "label": "Text Prompt",
+            "node-id": "[\"6\"][\"inputs\"][\"text\"]",
+            "value": "",
+            "info": "Generate an image from this prompt"
+          },
+          "shape": {
+            "type": "enum",
+            "label": "Shape",
+            "node-id": "[\"61\"][\"inputs\"][\"shape\"]",
+            "value": "circle",
+            "choices": [
+              "circle",
+              "square",
+              "triangle"
+            ]
+          }
+        }
+      },
+      "lora-settings": {
+        "type": "group",
+        "label": "Lora Settings",
+        "inputs": {
+          "lora-01": {
+            "type": "string",
+            "label": "Lora 01",
+            "node-id": "[\"34\"][\"inputs\"][\"lora_01\"]",
+            "value": "FluxD\\flux-lora-vintage-tarot.safetensors"
+          },
+          "strength-01": {
+            "type": "float",
+            "label": "Strength 01",
+            "node-id": "[\"34\"][\"inputs\"][\"strength_01\"]",
+            "value": 0.3,
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          "lora-02": {
+            "type": "string",
+            "label": "Lora 02",
+            "node-id": "[\"34\"][\"inputs\"][\"lora_02\"]",
+            "value": "FluxD\\nilor\\FluxD_Nilor_Instagram_art_lora_v02.safetensors"
+          },
+          "strength-02": {
+            "type": "float",
+            "label": "Strength 02",
+            "node-id": "[\"34\"][\"inputs\"][\"strength_02\"]",
+            "value": 0.3,
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          "lora-03": {
+            "type": "string",
+            "label": "Lora 03",
+            "node-id": "[\"34\"][\"inputs\"][\"lora_03\"]",
+            "value": "FluxD\\nilor\\FluxD_Nilor_Snapping_Turtles.safetensors"
+          },
+          "strength-03": {
+            "type": "float",
+            "label": "Strength 03",
+            "node-id": "[\"34\"][\"inputs\"][\"strength_03\"]",
+            "value": 0.9,
+            "minimum": 0.0,
+            "maximum": 1.0
+          }
+        }
+      },
+      "extra-settings": {
+        "type": "group",
+        "label": "Extra Settings",
+        "inputs": {
+          "diffusion-steps": {
+            "type": "int",
+            "label": "Diffusion Steps",
+            "node-id": "[\"17\"][\"inputs\"][\"steps\"]",
+            "value": 39,
+            "minimum": 1,
+            "maximum": 100
+          }
+        }
+      }
+    },
+    "outputs": {
+      "type": "image"
+    }
   }
 }
