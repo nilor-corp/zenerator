@@ -2,11 +2,17 @@ import gradio as gr
 import json
 import time
 import threading
-from typing import Dict
+from typing import Dict, Set
 import uuid
+import asyncio
+import websockets
+from websockets.server import WebSocketServerProtocol
 
 # Store active jobs and their status
 jobs: Dict[str, dict] = {}
+
+# Store active WebSocket connections
+active_connections: Set[WebSocketServerProtocol] = set()
 
 def start_job():
     """Simulate starting a job that will complete after some time"""
@@ -23,6 +29,8 @@ def start_job():
             "status": "completed",
             "output_file": f"output_{job_id}.png"
         }
+        # Notify all connected clients about job completion
+        asyncio.run(notify_job_completion(job_id))
     
     threading.Thread(target=complete_job, daemon=True).start()
     return job_id
@@ -41,6 +49,44 @@ def check_for_new_content():
         if job_data["status"] == "completed"
     }
     return completed_jobs
+
+async def handle_websocket_message(ws: WebSocketServerProtocol, message: str):
+    """Handle incoming WebSocket messages"""
+    try:
+        data = json.loads(message)
+        if data.get("type") == "subscribe_job":
+            job_id = data.get("job_id")
+            if job_id in jobs:
+                # Send current job status
+                response = {
+                    "type": "job_update",
+                    "job_id": job_id,
+                    "status": jobs[job_id]["status"],
+                    "output_file": jobs[job_id]["output_file"]
+                }
+                await ws.send(json.dumps(response))
+    except Exception as e:
+        print(f"Error handling WebSocket message: {e}")
+
+async def notify_job_completion(job_id: str):
+    """Notify all connected clients about job completion"""
+    if job_id in jobs:
+        job = jobs[job_id]
+        message = {
+            "type": "job_update",
+            "job_id": job_id,
+            "status": job["status"],
+            "output_file": job["output_file"]
+        }
+        message_str = json.dumps(message)
+        
+        # Send to all active connections
+        for ws in list(active_connections):
+            try:
+                await ws.send(message_str)
+            except Exception as e:
+                print(f"Error sending to WebSocket: {e}")
+                active_connections.discard(ws)
 
 # Create the Gradio interface
 with gr.Blocks() as demo:
@@ -78,4 +124,30 @@ with gr.Blocks() as demo:
     )
 
 if __name__ == "__main__":
+    async def start_websocket_server():
+        async def handler(websocket: WebSocketServerProtocol):
+            active_connections.add(websocket)
+            try:
+                async for message in websocket:
+                    if message:
+                        await handle_websocket_message(websocket, message)
+            except websockets.exceptions.ConnectionClosed:
+                print("WebSocket connection closed")
+            except Exception as e:
+                print(f"Error in WebSocket handler: {e}")
+            finally:
+                active_connections.discard(websocket)
+        
+        server = await websockets.serve(handler, "localhost", 8765)
+        print("WebSocket server started on ws://localhost:8765")
+        await server.wait_closed()
+    
+    # Start WebSocket server in a separate thread
+    websocket_thread = threading.Thread(
+        target=lambda: asyncio.run(start_websocket_server()),
+        daemon=True
+    )
+    websocket_thread.start()
+    
+    # Launch Gradio app
     demo.launch() 
