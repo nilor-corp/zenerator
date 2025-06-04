@@ -104,7 +104,7 @@ def create_test_app():
         "4": {
             "class_type": "CheckpointLoaderSimple",
             "inputs": {
-                "ckpt_name": "v1-5-pruned-emaonly.safetensors"
+                "ckpt_name": "juggernautXL_v9Rdphoto2Lightning.safetensors"
             }
         },
         "5": {
