@@ -11,6 +11,8 @@ import urllib.parse
 from PIL import Image
 import io
 import logging
+from dataclasses import dataclass
+from enum import Enum
 
 # Configure logging
 logging.basicConfig(
@@ -18,6 +20,22 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger('TestWSApp')
+
+class ContentType(Enum):
+    IMAGE = "image"
+    VIDEO = "video"
+
+@dataclass
+class AppState:
+    job_tracking: Dict = None
+    current_progress_data: Dict = None
+    websocket_manager = None
+
+    def __post_init__(self):
+        if self.job_tracking is None:
+            self.job_tracking = {}
+        if self.current_progress_data is None:
+            self.current_progress_data = {}
 
 class ComfyUIWebSocket:
     def __init__(self, server_address="127.0.0.1:8188", ws_address="127.0.0.1:8189"):
@@ -154,7 +172,9 @@ class ComfyUIWebSocket:
 
 def create_test_app():
     logger.info("Creating test app")
+    app_state = AppState()
     comfy = ComfyUIWebSocket()
+    app_state.websocket_manager = comfy
     
     # Default prompt template
     default_prompt = """
@@ -223,19 +243,58 @@ def create_test_app():
         logger.info("Generate function called from Gradio interface")
         return comfy.generate_image(default_prompt, positive_prompt, negative_prompt, seed)
 
+    def get_client_id():
+        """Get a new client ID for WebSocket connection"""
+        return str(uuid.uuid4())
+
+    def get_job_result(job_id: str):
+        """Get the current status and result for a job"""
+        if job_id in comfy.job_tracking:
+            job = comfy.job_tracking[job_id]
+            return {
+                "status": job["status"],
+                "output_file": job["output_file"],
+                "timestamp": job["timestamp"]
+            }
+        return {"status": "not_found"}
+
     # Create the Gradio interface
     logger.info("Creating Gradio interface")
-    iface = gr.Interface(
-        fn=generate,
-        inputs=[
-            gr.Textbox(label="Positive Prompt", value="masterpiece best quality bavis"),
-            gr.Textbox(label="Negative Prompt", value="bad hands"),
-            gr.Number(label="Seed", value=5)
-        ],
-        outputs=gr.Image(label="Generated Image"),
-        title="ComfyUI WebSocket Test",
-        description="Test the ComfyUI WebSocket API with a simple image generation interface"
-    )
+    with gr.Blocks() as iface:
+        with gr.Row():
+            with gr.Column():
+                positive_prompt = gr.Textbox(label="Positive Prompt", value="masterpiece best quality bavis")
+                negative_prompt = gr.Textbox(label="Negative Prompt", value="bad hands")
+                seed = gr.Number(label="Seed", value=5)
+                generate_button = gr.Button("Generate Image")
+                output_image = gr.Image(label="Generated Image")
+
+        # Add API endpoints
+        generate_button.click(
+            fn=generate,
+            inputs=[positive_prompt, negative_prompt, seed],
+            outputs=output_image,
+            api_name="workflow/test"
+        )
+
+        # Add hidden components for API endpoints
+        client_id_input = gr.Text(visible=False)
+        client_id_output = gr.Text(visible=False)
+        client_id_input.submit(
+            fn=get_client_id,
+            inputs=[],
+            outputs=client_id_output,
+            api_name="get_client_id"
+        )
+
+        result_input = gr.Text(visible=False)
+        result_output = gr.JSON(visible=False)
+        result_input.submit(
+            fn=get_job_result,
+            inputs=result_input,
+            outputs=result_output,
+            api_name="workflow_result"
+        )
     
     # Add cleanup on close
     logger.info("Launching Gradio interface")
