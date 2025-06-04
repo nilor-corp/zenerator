@@ -119,7 +119,7 @@ def create_test_app():
             "class_type": "CLIPTextEncode",
             "inputs": {
                 "clip": ["4", 1],
-                "text": "masterpiece best quality girl"
+                "text": "masterpiece best quality bavis"
             }
         },
         "7": {
@@ -153,7 +153,7 @@ def create_test_app():
     iface = gr.Interface(
         fn=generate,
         inputs=[
-            gr.Textbox(label="Positive Prompt", value="masterpiece best quality man"),
+            gr.Textbox(label="Positive Prompt", value="masterpiece best quality bavis"),
             gr.Textbox(label="Negative Prompt", value="bad hands"),
             gr.Number(label="Seed", value=5)
         ],
