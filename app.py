@@ -721,3 +721,159 @@ def create_tabs():
                 print(f"Finished creating tab for {workflow_name}")
 
     return tabs
+
+def run_workflow(workflow_filename, workflow_name, progress, **kwargs):
+    """Run a workflow with the given parameters"""
+    try:
+        print(f"\nAttempting to run workflow: {workflow_filename}")
+
+        # Construct the path to the workflow JSON file
+        workflow_json_filepath = "./workflows/" + workflow_filename
+
+        # Open the workflow JSON file
+        try:
+            with open(workflow_json_filepath, "r", encoding="utf-8") as file:
+                workflow_data = json.load(file)
+                print("Successfully loaded workflow JSON")
+        except FileNotFoundError:
+            print(f"ERROR: Workflow file not found at {workflow_json_filepath}")
+            return None
+        except json.JSONDecodeError as e:
+            print(f"ERROR: Invalid JSON in workflow file: {str(e)}")
+            return None
+
+        try:
+            # Iterate through changes requested via kwargs
+            for change_request in kwargs.values():
+                # Extract the node path and the new value from the change request
+                node_path = change_request["node-id"]
+                new_value = change_request["value"]
+
+                # Log the intended change for debugging
+                print(f"Intending to change {node_path} to {new_value}")
+
+                # Process the node path into a list of keys
+                path_keys = node_path.strip("[]").split("][")
+                path_keys = [key.strip('"') for key in path_keys]
+
+                # Navigate through the workflow data to the last key
+                current_section = workflow_data
+                for key in path_keys[:-1]:  # Exclude the last key for now
+                    current_section = current_section[key]
+
+                # Update the value at the final key
+                final_key = path_keys[-1]
+                print(f"Updating {current_section[final_key]} to {new_value}")
+                current_section[final_key] = new_value
+
+        except Exception as e:
+            print(f"ERROR: Failed to update parameter {change_request}: {str(e)}")
+            return None
+
+        print("\nSubmitting workflow to ComfyUI...")
+        prompt_id = post_prompt(workflow_data)
+        print(f"post_prompt returned: {prompt_id}")
+
+        if not prompt_id:
+            print("ERROR: No prompt ID returned from post_prompt")
+            return None
+
+        # Track the job
+        track_generation_job(prompt_id, workflow_name)
+        print(f"Successfully tracked job {prompt_id} for {workflow_name}")
+        return prompt_id
+
+    except Exception as e:
+        print(f"ERROR in run_workflow: {str(e)}")
+        print(f"Stack trace: {traceback.format_exc()}")
+        return None
+
+def post_prompt(workflow):
+    """Submit a workflow prompt to ComfyUI"""
+    prompt_data = {
+        "prompt": workflow,
+        "client_id": app_state.websocket_manager.client_id,
+    }
+
+    try:
+        print(f"Attempting to post prompt to {selected_port_url}/prompt")
+        print(f"Prompt data: {prompt_data}")
+
+        response = requests.post(f"{selected_port_url}/prompt", json=prompt_data)
+        print(f"Response status: {response.status_code}")
+        print(f"Response content: {response.text}")
+
+        if response.status_code != 200:
+            print(f"Error posting prompt: {response.status_code} - {response.text}")
+            return None
+
+        data = response.json()
+        print(f"Parsed response data: {data}")
+
+        prompt_id = data.get("prompt_id")
+        if not prompt_id:
+            print("No prompt_id in response data")
+            return None
+
+        print(f"Successfully got prompt_id: {prompt_id}")
+        return prompt_id
+
+    except Exception as e:
+        print(f"Exception in post_prompt: {str(e)}")
+        print(f"Stack trace: ", traceback.format_exc())
+        return None
+
+def track_generation_job(job_id: str, workflow_name: str):
+    """Track a new generation job"""
+    content_type = get_content_type_from_workflow(workflow_name)
+    app_state.job_tracking[job_id] = {
+        "status": "pending",
+        "type": content_type,
+        "workflow_name": workflow_name,
+        "timestamp": time.time(),
+        "output_file": None,
+    }
+
+def get_job_result(prompt_id):
+    """Get the current status and result for a job"""
+    if prompt_id in app_state.job_tracking:
+        job = app_state.job_tracking[prompt_id]
+
+        response = {
+            "status": job["status"],
+            "output_file": job["output_file"],
+            "workflow_name": job["workflow_name"],
+            "timestamp": job["timestamp"],
+        }
+
+        # Schedule cleanup if job is done and we have the output file (or it failed)
+        if (job["status"] == "completed" and job["output_file"]) or job["status"] == "failed":
+            Timer(300.0, lambda: app_state.job_tracking.pop(prompt_id, None)).start()
+
+        return response
+
+    return {"status": "not_found"}
+
+def run_workflow_with_name(workflow_filename, workflow_name, raw_components, component_info_dict, progress=gr.Progress(track_tqdm=True)):
+    output_type = workflow_definitions[workflow_name]["outputs"].get("type", "")
+
+    def wrapper(*args):
+        app_state.current_output_type = output_type
+        print(f"I just got told to make a(n) {app_state.current_output_type}")
+
+        for component, arg in zip(raw_components, args):
+            if component_info_dict[component.elem_id].get("type") == "path" and arg:
+                arg = os.path.abspath(arg)
+            component_info_dict[component.elem_id]["value"] = arg
+
+        return run_workflow(
+            workflow_filename,
+            workflow_name,
+            progress,
+            **component_info_dict,
+        )
+
+    wrapper.__name__ = workflow_name
+    wrapper.__doc__ = workflow_definitions[workflow_name].get("description", "")
+
+    return wrapper
