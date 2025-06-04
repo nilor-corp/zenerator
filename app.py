@@ -511,6 +511,90 @@ html {
 }
 """
 
+def create_tabs():
+    """Create and return the main interface tabs"""
+    global _tabs_created
+
+    # Check if tabs have already been created
+    if _tabs_created:
+        print("Skipping tab creation (already created)")
+        return gr.Tabs()
+
+    _tabs_created = True  # Set flag before creating to prevent recursion
+    print("Creating About tab")
+    tabs = gr.Tabs()
+    with tabs:
+        with gr.TabItem(label="About"):
+            gr.Markdown(
+                "Zenerator is a tool by Nilor Corp for creating and running generative AI workflows.\n\n"
+                "Select a workflow from the tabs above and fill in the parameters.\n\n"
+                "Click 'Run Workflow' to start the workflow.",
+                line_breaks=True,
+            )
+
+        print(f"\nWorkflow definitions keys: {list(workflow_definitions.keys())}")
+        for workflow_name in workflow_definitions.keys():
+            workflow_filename = workflow_definitions[workflow_name]["filename"]
+            print(f"\nCreating tab for workflow: {workflow_name}")
+            print(f"Workflow name: {workflow_definitions[workflow_name]['name']}")
+
+            with gr.TabItem(label=workflow_definitions[workflow_name]["name"]):
+                print(f"Creating content for {workflow_name}")
+                with gr.Row():
+                    with gr.Column():
+                        with gr.Group():
+                            with gr.Row(equal_height=True):
+                                comfy_url_and_port_selector = gr.Dropdown(
+                                    label="ComfyUI Port",
+                                    choices=COMFY_PORTS,
+                                    value=COMFY_PORTS[0],
+                                    interactive=True,
+                                    scale=1,
+                                )
+                                run_button = gr.Button(
+                                    "Run Workflow",
+                                    variant="primary",
+                                    scale=3,
+                                    elem_id="run-button",
+                                )
+                            with gr.Accordion(
+                                "Workflow Info",
+                                open=False,
+                                elem_id="workflow-info",
+                            ):
+                                info = gr.Markdown(
+                                    workflow_definitions[workflow_name].get(
+                                        "description", ""
+                                    )
+                                )
+
+                        components, component_dict = create_tab_interface(workflow_name)
+
+                    output_type = workflow_definitions[workflow_name]["outputs"].get(
+                        "type", ""
+                    )
+
+                comfy_url_and_port_selector.change(
+                    select_correct_port,
+                    inputs=[comfy_url_and_port_selector],
+                )
+
+                run_button.click(
+                    fn=run_workflow_with_name(
+                        workflow_filename,
+                        workflow_name,
+                        components,
+                        component_dict,
+                    ),
+                    inputs=components,
+                    outputs=gr.Text(visible=False),
+                    trigger_mode="multiple",
+                    api_name=f"workflow/{workflow_name}",
+                )
+                print(f"Finished creating tab for {workflow_name}")
+
+    return tabs
+
 with gr.Blocks(
     title="Zenerator",
     theme=gr.themes.Ocean(font=gr.themes.GoogleFont("DM Sans")),
@@ -637,90 +721,6 @@ with gr.Blocks(
             server_port=ZENERATOR_PORT,
             inbrowser=True,
         )
-
-def create_tabs():
-    """Create and return the main interface tabs"""
-    global _tabs_created
-
-    # Check if tabs have already been created
-    if _tabs_created:
-        print("Skipping tab creation (already created)")
-        return gr.Tabs()
-
-    _tabs_created = True  # Set flag before creating to prevent recursion
-    print("Creating About tab")
-    tabs = gr.Tabs()
-    with tabs:
-        with gr.TabItem(label="About"):
-            gr.Markdown(
-                "Zenerator is a tool by Nilor Corp for creating and running generative AI workflows.\n\n"
-                "Select a workflow from the tabs above and fill in the parameters.\n\n"
-                "Click 'Run Workflow' to start the workflow.",
-                line_breaks=True,
-            )
-
-        print(f"\nWorkflow definitions keys: {list(workflow_definitions.keys())}")
-        for workflow_name in workflow_definitions.keys():
-            workflow_filename = workflow_definitions[workflow_name]["filename"]
-            print(f"\nCreating tab for workflow: {workflow_name}")
-            print(f"Workflow name: {workflow_definitions[workflow_name]['name']}")
-
-            with gr.TabItem(label=workflow_definitions[workflow_name]["name"]):
-                print(f"Creating content for {workflow_name}")
-                with gr.Row():
-                    with gr.Column():
-                        with gr.Group():
-                            with gr.Row(equal_height=True):
-                                comfy_url_and_port_selector = gr.Dropdown(
-                                    label="ComfyUI Port",
-                                    choices=COMFY_PORTS,
-                                    value=COMFY_PORTS[0],
-                                    interactive=True,
-                                    scale=1,
-                                )
-                                run_button = gr.Button(
-                                    "Run Workflow",
-                                    variant="primary",
-                                    scale=3,
-                                    elem_id="run-button",
-                                )
-                            with gr.Accordion(
-                                "Workflow Info",
-                                open=False,
-                                elem_id="workflow-info",
-                            ):
-                                info = gr.Markdown(
-                                    workflow_definitions[workflow_name].get(
-                                        "description", ""
-                                    )
-                                )
-
-                        components, component_dict = create_tab_interface(workflow_name)
-
-                    output_type = workflow_definitions[workflow_name]["outputs"].get(
-                        "type", ""
-                    )
-
-                comfy_url_and_port_selector.change(
-                    select_correct_port,
-                    inputs=[comfy_url_and_port_selector],
-                )
-
-                run_button.click(
-                    fn=run_workflow_with_name(
-                        workflow_filename,
-                        workflow_name,
-                        components,
-                        component_dict,
-                    ),
-                    inputs=components,
-                    outputs=gr.Text(visible=False),
-                    trigger_mode="multiple",
-                    api_name=f"workflow/{workflow_name}",
-                )
-                print(f"Finished creating tab for {workflow_name}")
-
-    return tabs
 
 def run_workflow(workflow_filename, workflow_name, progress, **kwargs):
     """Run a workflow with the given parameters"""
