@@ -2,152 +2,247 @@ import gradio as gr
 import json
 import time
 import threading
-from typing import Dict, Set
+from typing import Dict, Set, Optional
 import uuid
 import asyncio
-import websockets
-from websockets.server import WebSocketServerProtocol
+import websocket
+import urllib.request
+import urllib.parse
+from PIL import Image
+import io
+import logging
 
-# Store active jobs and their status
-jobs: Dict[str, dict] = {}
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger('TestWSApp')
 
-# Store active WebSocket connections
-active_connections: Set[WebSocketServerProtocol] = set()
+class ComfyUIWebSocket:
+    def __init__(self, server_address="127.0.0.1:8188", ws_address="127.0.0.1:8189"):
+        self.server_address = server_address
+        self.ws_address = ws_address
+        self.client_id = str(uuid.uuid4())
+        self.ws = None
+        self.job_tracking: Dict[str, dict] = {}
+        logger.info(f"Initializing ComfyUIWebSocket with server_address={server_address}, ws_address={ws_address}")
 
-def start_job():
-    """Simulate starting a job that will complete after some time"""
-    job_id = str(uuid.uuid4())
-    jobs[job_id] = {
-        "status": "pending",
-        "output_file": None
-    }
-    
-    # Start a thread to simulate job completion
-    def complete_job():
-        time.sleep(5)  # Simulate work
-        jobs[job_id] = {
-            "status": "completed",
-            "output_file": f"output_{job_id}.png"
+    def connect(self):
+        logger.info(f"Connecting to WebSocket at ws://{self.ws_address}/ws?clientId={self.client_id}")
+        if self.ws:
+            logger.info("Closing existing WebSocket connection")
+            self.ws.close()
+        self.ws = websocket.WebSocket()
+        self.ws.connect(f"ws://{self.ws_address}/ws?clientId={self.client_id}")
+        logger.info("WebSocket connected successfully")
+
+    def queue_prompt(self, prompt):
+        logger.info("Queueing prompt...")
+        p = {"prompt": prompt, "client_id": self.client_id}
+        data = json.dumps(p).encode('utf-8')
+        req = urllib.request.Request(f"http://{self.server_address}/prompt", data=data)
+        response = json.loads(urllib.request.urlopen(req).read())
+        logger.info(f"Prompt queued successfully. Prompt ID: {response['prompt_id']}")
+        return response
+
+    def get_image(self, filename, subfolder, folder_type):
+        logger.info(f"Fetching image: {filename} from {subfolder}/{folder_type}")
+        data = {"filename": filename, "subfolder": subfolder, "type": folder_type}
+        url_values = urllib.parse.urlencode(data)
+        with urllib.request.urlopen(f"http://{self.server_address}/view?{url_values}") as response:
+            image_data = response.read()
+            logger.info(f"Image fetched successfully. Size: {len(image_data)} bytes")
+            return image_data
+
+    def get_history(self, prompt_id):
+        logger.info(f"Fetching history for prompt ID: {prompt_id}")
+        with urllib.request.urlopen(f"http://{self.server_address}/history/{prompt_id}") as response:
+            history = json.loads(response.read())
+            logger.info("History fetched successfully")
+            return history
+
+    def track_job(self, job_id: str):
+        """Track a new generation job"""
+        self.job_tracking[job_id] = {
+            "status": "pending",
+            "timestamp": time.time(),
+            "output_file": None
         }
-        # Notify all connected clients about job completion
-        asyncio.run(notify_job_completion(job_id))
-    
-    threading.Thread(target=complete_job, daemon=True).start()
-    return job_id
+        logger.info(f"Started tracking job {job_id}")
 
-def get_job_status(job_id: str):
-    """Get the current status of a job"""
-    if job_id not in jobs:
-        return {"status": "not_found"}
-    return jobs[job_id]
+    def get_job_status(self, job_id: str):
+        """Get the current status of a job"""
+        if job_id not in self.job_tracking:
+            return {"status": "not_found"}
+        return self.job_tracking[job_id]
 
-def check_for_new_content():
-    """Check for completed jobs and return their results"""
-    completed_jobs = {
-        job_id: job_data 
-        for job_id, job_data in jobs.items() 
-        if job_data["status"] == "completed"
-    }
-    return completed_jobs
-
-async def handle_websocket_message(ws: WebSocketServerProtocol, message: str):
-    """Handle incoming WebSocket messages"""
-    try:
-        data = json.loads(message)
-        if data.get("type") == "subscribe_job":
-            job_id = data.get("job_id")
-            if job_id in jobs:
-                # Send current job status
-                response = {
-                    "type": "job_update",
-                    "job_id": job_id,
-                    "status": jobs[job_id]["status"],
-                    "output_file": jobs[job_id]["output_file"]
-                }
-                await ws.send(json.dumps(response))
-    except Exception as e:
-        print(f"Error handling WebSocket message: {e}")
-
-async def notify_job_completion(job_id: str):
-    """Notify all connected clients about job completion"""
-    if job_id in jobs:
-        job = jobs[job_id]
-        message = {
-            "type": "job_update",
-            "job_id": job_id,
-            "status": job["status"],
-            "output_file": job["output_file"]
+    def check_for_new_content(self):
+        """Check for completed jobs and return their results"""
+        completed_jobs = {
+            job_id: job_data 
+            for job_id, job_data in self.job_tracking.items() 
+            if job_data["status"] == "completed"
         }
-        message_str = json.dumps(message)
+        return completed_jobs
+
+    def generate_image(self, prompt_text, positive_prompt, negative_prompt, seed):
+        logger.info(f"Starting image generation with seed={seed}")
+        logger.info(f"Positive prompt: {positive_prompt}")
+        logger.info(f"Negative prompt: {negative_prompt}")
         
-        # Send to all active connections
-        for ws in list(active_connections):
-            try:
-                await ws.send(message_str)
-            except Exception as e:
-                print(f"Error sending to WebSocket: {e}")
-                active_connections.discard(ws)
+        try:
+            # Parse the base prompt
+            prompt = json.loads(prompt_text)
+            
+            # Update the prompts and seed
+            prompt["6"]["inputs"]["text"] = positive_prompt
+            prompt["7"]["inputs"]["text"] = negative_prompt
+            prompt["3"]["inputs"]["seed"] = seed
+            logger.info("Prompt template updated with new values")
 
-# Create the Gradio interface
-with gr.Blocks() as demo:
-    with gr.Row():
-        with gr.Column():
-            start_button = gr.Button("Start Test Job")
-            job_id_output = gr.Textbox(label="Job ID")
+            # Ensure we have a connection
+            self.connect()
+
+            # Queue the prompt and get the prompt ID
+            response = self.queue_prompt(prompt)
+            prompt_id = response['prompt_id']
+            logger.info(f"Waiting for execution to complete for prompt ID: {prompt_id}")
             
-            # Hidden components for the result endpoint
-            result_input = gr.Text(visible=False)
-            result_output = gr.JSON(visible=False)
-            
-            # Add the result endpoint
-            result_input.submit(
-                fn=get_job_status,
-                inputs=result_input,
-                outputs=result_output,
-                api_name="workflow_result"
-            )
-            
-        with gr.Column():
-            status_output = gr.JSON(label="Job Status")
+            # Track the job
+            self.track_job(prompt_id)
+
+            # Wait for execution to complete
+            while True:
+                out = self.ws.recv()
+                if isinstance(out, str):
+                    message = json.loads(out)
+                    if message['type'] == 'executing':
+                        data = message['data']
+                        logger.info(f"Execution status: Node {data['node']} for prompt {data['prompt_id']}")
+                        if data['node'] is None and data['prompt_id'] == prompt_id:
+                            logger.info("Execution completed")
+                            break
+
+            # Get the history and images
+            history = self.get_history(prompt_id)[prompt_id]
+            for node_id in history['outputs']:
+                node_output = history['outputs'][node_id]
+                if 'images' in node_output:
+                    for image in node_output['images']:
+                        logger.info(f"Processing image from node {node_id}")
+                        image_data = self.get_image(image['filename'], image['subfolder'], image['type'])
+                        # Convert bytes to PIL Image
+                        pil_image = Image.open(io.BytesIO(image_data))
+                        # Update job status
+                        self.job_tracking[prompt_id].update({
+                            "status": "completed",
+                            "output_file": image['filename']
+                        })
+                        logger.info("Image generation completed successfully")
+                        return pil_image
+
+        except Exception as e:
+            logger.error(f"Error during image generation: {str(e)}", exc_info=True)
+            if prompt_id in self.job_tracking:
+                self.job_tracking[prompt_id]["status"] = "failed"
+            return f"Error: {str(e)}"
+        finally:
+            if self.ws:
+                logger.info("Closing WebSocket connection")
+                self.ws.close()
+
+def create_test_app():
+    logger.info("Creating test app")
+    comfy = ComfyUIWebSocket()
     
-    # Set up the start button
-    start_button.click(
-        fn=start_job,
-        outputs=job_id_output
+    # Default prompt template
+    default_prompt = """
+    {
+        "3": {
+            "class_type": "KSampler",
+            "inputs": {
+                "cfg": 8,
+                "denoise": 1,
+                "latent_image": ["5", 0],
+                "model": ["4", 0],
+                "negative": ["7", 0],
+                "positive": ["6", 0],
+                "sampler_name": "euler",
+                "scheduler": "normal",
+                "seed": 8566257,
+                "steps": 20
+            }
+        },
+        "4": {
+            "class_type": "CheckpointLoaderSimple",
+            "inputs": {
+                "ckpt_name": "juggernautXL_v9Rdphoto2Lightning.safetensors"
+            }
+        },
+        "5": {
+            "class_type": "EmptyLatentImage",
+            "inputs": {
+                "batch_size": 1,
+                "height": 512,
+                "width": 512
+            }
+        },
+        "6": {
+            "class_type": "CLIPTextEncode",
+            "inputs": {
+                "clip": ["4", 1],
+                "text": "masterpiece best quality bavis"
+            }
+        },
+        "7": {
+            "class_type": "CLIPTextEncode",
+            "inputs": {
+                "clip": ["4", 1],
+                "text": "bad hands"
+            }
+        },
+        "8": {
+            "class_type": "VAEDecode",
+            "inputs": {
+                "samples": ["3", 0],
+                "vae": ["4", 2]
+            }
+        },
+        "9": {
+            "class_type": "SaveImage",
+            "inputs": {
+                "filename_prefix": "ComfyUI",
+                "images": ["8", 0]
+            }
+        }
+    }
+    """
+
+    def generate(positive_prompt, negative_prompt, seed):
+        logger.info("Generate function called from Gradio interface")
+        return comfy.generate_image(default_prompt, positive_prompt, negative_prompt, seed)
+
+    # Create the Gradio interface
+    logger.info("Creating Gradio interface")
+    iface = gr.Interface(
+        fn=generate,
+        inputs=[
+            gr.Textbox(label="Positive Prompt", value="masterpiece best quality bavis"),
+            gr.Textbox(label="Negative Prompt", value="bad hands"),
+            gr.Number(label="Seed", value=5)
+        ],
+        outputs=gr.Image(label="Generated Image"),
+        title="ComfyUI WebSocket Test",
+        description="Test the ComfyUI WebSocket API with a simple image generation interface"
     )
     
-    # Set up polling for job status
-    timer = gr.Timer(value=1.0)
-    timer.tick(
-        fn=check_for_new_content,
-        outputs=status_output
-    )
+    # Add cleanup on close
+    logger.info("Launching Gradio interface")
+    iface.launch(show_error=True)
+    
+    return iface
 
 if __name__ == "__main__":
-    async def start_websocket_server():
-        async def handler(websocket: WebSocketServerProtocol):
-            active_connections.add(websocket)
-            try:
-                async for message in websocket:
-                    if message:
-                        await handle_websocket_message(websocket, message)
-            except websockets.exceptions.ConnectionClosed:
-                print("WebSocket connection closed")
-            except Exception as e:
-                print(f"Error in WebSocket handler: {e}")
-            finally:
-                active_connections.discard(websocket)
-        
-        server = await websockets.serve(handler, "localhost", 8765)
-        print("WebSocket server started on ws://localhost:8765")
-        await server.wait_closed()
-    
-    # Start WebSocket server in a separate thread
-    websocket_thread = threading.Thread(
-        target=lambda: asyncio.run(start_websocket_server()),
-        daemon=True
-    )
-    websocket_thread.start()
-    
-    # Launch Gradio app
-    demo.launch() 
+    logger.info("Starting test app")
+    app = create_test_app() 
