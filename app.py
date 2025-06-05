@@ -627,6 +627,7 @@ def initialize_content_tracking():
 def check_for_new_content():
     """Check for new content and associate with correct job"""
     try:
+        print("Checking for new content")
         # Only log job tracking when there are NEW pending jobs
         pending_jobs_now = {
             pid
