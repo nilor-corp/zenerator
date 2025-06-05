@@ -7,6 +7,7 @@ gradio>=5.7.1
 python-dotenv>=1.0.1
 websocket_client>=1.8.0
 opencv-python
+pillow
 
 tensorrt==10.6.0.post1
 tensorrt-cu12==10.6.0.post1
