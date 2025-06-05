@@ -1829,6 +1829,17 @@ with gr.Blocks(
         api_name="workflow_result",
     )
 
+    # Create hidden components for the update_job_tracking endpoint
+    update_input = gr.Text(visible=False)
+    update_output = gr.JSON(visible=False)
+    update_input.submit(
+        fn=check_for_new_content,
+        inputs=update_input,
+        outputs=update_output,
+        api_name="check_for_new_content",
+    )
+
+
     if __name__ == "__main__":
         setup_signal_handlers()
         initialize_content_tracking()
