@@ -1845,7 +1845,7 @@ with gr.Blocks(
         api_name="check_for_new_content",
     )
 
-    free_input = gr.JSON(visible=False)
+    free_input = gr.Text(visible=False)
     free_output = gr.JSON(visible=False)
     free_input.submit(
         fn=post_free,
