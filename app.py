@@ -1845,6 +1845,14 @@ with gr.Blocks(
         api_name="check_for_new_content",
     )
 
+    free_input = gr.JSON(visible=False)
+    free_output = gr.JSON(visible=False)
+    free_input.submit(
+        fn=post_free,
+        inputs=free_input,
+        outputs=free_output,
+        api_name="free",
+    )
 
     if __name__ == "__main__":
         setup_signal_handlers()
