@@ -431,6 +431,12 @@ def post_history_delete(prompt_id):
     return comfy_POST("history", message)
 
 
+def post_free(unload_models: bool = True, free_memory: bool = True):
+    """Free memory in ComfyUI by unloading models and freeing memory"""
+    message = {"unload_models": unload_models, "free_memory": free_memory}
+    return comfy_POST("free", message)
+
+
 # endregion
 
 
