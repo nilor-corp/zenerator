@@ -260,28 +260,18 @@ def create_test_app():
         )
         # If result is a PIL Image, save it and return the path
         if isinstance(result, Image.Image):
-            import tempfile
             import os
 
-            # Create the exact same path structure as Gradio
-            temp_dir = tempfile.gettempdir()
-            # Add /private prefix if on macOS
-            if os.path.exists("/private" + temp_dir):
-                temp_dir = "/private" + temp_dir
+            # Create a test directory in our project
+            test_dir = os.path.join(os.path.dirname(__file__), "test_outputs")
+            os.makedirs(test_dir, exist_ok=True)
 
-            # Use the exact same hash directory that Gradio uses
-            gradio_dir = os.path.join(
-                temp_dir,
-                "gradio",
-                "f0cc5d2dd66c2783daf61269644758c1b0c8103139927d4dcc004130b485128a",
-            )
-            os.makedirs(gradio_dir, exist_ok=True)
-
+            # Save the image with a unique name
             filename = f"image_{uuid.uuid4()}.webp"
-            filepath = os.path.join(gradio_dir, filename)
+            filepath = os.path.join(test_dir, filename)
             result.save(filepath, format="WEBP")
 
-            # Track this job with the exact same path that Gradio will use
+            # Track this job with the filepath
             logger.info(f"Started tracking job {filepath}")
             comfy.track_job(filepath)
             comfy.job_tracking[filepath].update(
@@ -294,6 +284,22 @@ def create_test_app():
             return filepath
         return result
 
+    def translate_gradio_path(gradio_path):
+        """Translate a Gradio temp path to our test directory path"""
+        import os
+
+        if not gradio_path:
+            return None
+
+        # Extract the filename from the Gradio path
+        filename = os.path.basename(gradio_path)
+        if not filename.startswith("image_"):
+            return None
+
+        # Create the corresponding path in our test directory
+        test_dir = os.path.join(os.path.dirname(__file__), "test_outputs")
+        return os.path.join(test_dir, filename)
+
     def get_client_id():
         """Get a new client ID for WebSocket connection"""
         return str(uuid.uuid4())
@@ -301,6 +307,13 @@ def create_test_app():
     def get_job_result(job_id: str):
         """Get the current status and result for a job"""
         logger.info(f"Checking job status for: {job_id}")
+
+        # Try to translate the Gradio path to our test directory path
+        translated_path = translate_gradio_path(job_id)
+        if translated_path:
+            logger.info(f"Translated path: {translated_path}")
+            job_id = translated_path
+
         if job_id in comfy.job_tracking:
             job = comfy.job_tracking[job_id]
             logger.info(f"Found job with status: {job['status']}")
