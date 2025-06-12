@@ -7,3 +7,4 @@ kohya-trainer/
 *.env
 *.pyc
 **pycache**
+tests/test_outputs/
