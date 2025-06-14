@@ -13,6 +13,7 @@ import io
 import logging
 from dataclasses import dataclass
 from enum import Enum
+import os
 
 # Configure logging
 logging.basicConfig(
@@ -260,8 +261,6 @@ def create_test_app():
         )
         # If result is a PIL Image, save it and return the path
         if isinstance(result, Image.Image):
-            import os
-
             # Create a test directory in our project
             test_dir = os.path.join(os.path.dirname(__file__), "test_outputs")
             os.makedirs(test_dir, exist_ok=True)
@@ -286,14 +285,13 @@ def create_test_app():
 
     def translate_gradio_path(gradio_path):
         """Translate a Gradio temp path to our test directory path"""
-        import os
-
         if not gradio_path:
             return None
 
         # Extract the filename from the Gradio path
         filename = os.path.basename(gradio_path)
-        if not filename.startswith("image_"):
+        # Check for both test and flux image patterns
+        if not (filename.startswith("image_") or filename.startswith("flux_")):
             return None
 
         # Create the corresponding path in our test directory
@@ -355,6 +353,45 @@ def create_test_app():
             logger.error(f"Error in free command: {str(e)}")
             return {"status": "error", "message": str(e)}
 
+    def generate_flux(
+        width,
+        height,
+        prefix,
+        prompt,
+        lora_01,
+        lora_01_weight,
+        lora_02,
+        lora_02_weight,
+        lora_03,
+        lora_03_weight,
+        steps,
+    ):
+        """Handle the flux workflow generation"""
+        logger.info("Generate flux function called from Gradio interface")
+        # Create a test directory in our project
+        test_dir = os.path.join(os.path.dirname(__file__), "test_outputs")
+        os.makedirs(test_dir, exist_ok=True)
+
+        # Save a test image
+        filename = f"flux_{uuid.uuid4()}.webp"
+        filepath = os.path.join(test_dir, filename)
+
+        # Create a test image
+        img = Image.new("RGB", (width, height), color="white")
+        img.save(filepath, format="WEBP")
+
+        # Track this job with the filepath
+        logger.info(f"Started tracking job {filepath}")
+        comfy.track_job(filepath)
+        comfy.job_tracking[filepath].update(
+            {
+                "status": "completed",
+                "output_file": filepath,
+                "timestamp": time.time(),
+            }
+        )
+        return filepath
+
     # Create the Gradio interface
     logger.info("Creating Gradio interface")
     with gr.Blocks() as iface:
@@ -374,6 +411,37 @@ def create_test_app():
             inputs=[positive_prompt, negative_prompt, seed],
             outputs=output_image,
             api_name="workflow/test",
+        )
+
+        # Add flux workflow endpoint
+        flux_inputs = [
+            gr.Number(label="Width", value=1024),
+            gr.Number(label="Height", value=1024),
+            gr.Textbox(label="Prefix", value="Zenerator/flux-with-loras"),
+            gr.Textbox(label="Prompt", value=""),
+            gr.Textbox(
+                label="LoRA 01", value="FluxD\\flux-lora-vintage-tarot.safetensors"
+            ),
+            gr.Number(label="LoRA 01 Weight", value=0.3),
+            gr.Textbox(
+                label="LoRA 02",
+                value="FluxD\\nilor\\FluxD_Nilor_Instagram_art_lora_v02.safetensors",
+            ),
+            gr.Number(label="LoRA 02 Weight", value=0.3),
+            gr.Textbox(
+                label="LoRA 03",
+                value="FluxD\\nilor\\FluxD_Nilor_Snapping_Turtles.safetensors",
+            ),
+            gr.Number(label="LoRA 03 Weight", value=0.9),
+            gr.Number(label="Steps", value=39),
+        ]
+        flux_output = gr.Image(label="Generated Flux Image")
+        flux_button = gr.Button("Generate Flux Image")
+        flux_button.click(
+            fn=generate_flux,
+            inputs=flux_inputs,
+            outputs=flux_output,
+            api_name="workflow/flux-with-loras",
         )
 
         # Add hidden components for API endpoints
