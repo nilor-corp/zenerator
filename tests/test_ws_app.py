@@ -339,6 +339,22 @@ def create_test_app():
         logger.info(f"Returning completed job: {job_id}")
         return {job_id: completed_jobs[job_id]}
 
+    def handle_free_command(unload_models: bool = True, free_memory: bool = True):
+        """Handle the free command"""
+        logger.info(
+            f"Free command called with unload_models={unload_models}, free_memory={free_memory}"
+        )
+        try:
+            # Simulate freeing memory
+            if unload_models:
+                logger.info("Unloading models...")
+            if free_memory:
+                logger.info("Freeing memory...")
+            return {"status": "success", "message": "Memory freed successfully"}
+        except Exception as e:
+            logger.error(f"Error in free command: {str(e)}")
+            return {"status": "error", "message": str(e)}
+
     # Create the Gradio interface
     logger.info("Creating Gradio interface")
     with gr.Blocks() as iface:
@@ -387,6 +403,17 @@ def create_test_app():
             inputs=[],
             outputs=check_content_output,
             api_name="check_for_new_content",
+        )
+
+        # Add free command endpoint
+        gr.Interface(
+            fn=handle_free_command,
+            inputs=[
+                gr.Checkbox(label="Unload Models", value=True),
+                gr.Checkbox(label="Free Memory", value=True),
+            ],
+            outputs=gr.JSON(),
+            api_name="free",
         )
 
     # Add cleanup on close
