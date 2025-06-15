@@ -291,7 +291,11 @@ def create_test_app():
         # Extract the filename from the Gradio path
         filename = os.path.basename(gradio_path)
         # Check for both test and flux image patterns
-        if not (filename.startswith("image_") or filename.startswith("flux_")):
+        if not (
+            filename.startswith("image_")
+            or filename.startswith("flux_")
+            or filename.startswith("cogvideox_")
+        ):
             return None
 
         # Create the corresponding path in our test directory
@@ -306,6 +310,11 @@ def create_test_app():
         """Get the current status and result for a job"""
         logger.info(f"Checking job status for: {job_id}")
 
+        # If job_id is a dictionary (from old format), extract the video path
+        if isinstance(job_id, dict) and "video" in job_id:
+            job_id = job_id["video"]
+            logger.info(f"Extracted video path from dictionary: {job_id}")
+
         # Try to translate the Gradio path to our test directory path
         translated_path = translate_gradio_path(job_id)
         if translated_path:
@@ -319,6 +328,8 @@ def create_test_app():
                 "status": job["status"],
                 "output_file": job["output_file"],
                 "timestamp": job["timestamp"],
+                "workflow_name": job.get("workflow_name", "unknown"),
+                "type": job.get("type", "unknown"),  # Add content type
             }
         logger.info(f"Job not found: {job_id}")
         return {"status": "not_found"}
@@ -392,6 +403,46 @@ def create_test_app():
         )
         return filepath
 
+    def generate_cogvideox(
+        width,
+        height,
+        prefix,
+        number_of_frames,
+        steps,
+        prompt,
+        negative_prompt,
+        input_image,
+    ):
+        """Handle the cogvideox workflow generation"""
+        logger.info("Generate cogvideox function called from Gradio interface")
+
+        # Create a test directory in our project
+        test_dir = os.path.join(os.path.dirname(__file__), "test_outputs")
+        os.makedirs(test_dir, exist_ok=True)
+
+        # Save a test video
+        filename = f"cogvideox_{uuid.uuid4()}.mp4"
+        filepath = os.path.join(test_dir, filename)
+
+        # Create a test video file (just an empty file for testing)
+        with open(filepath, "w") as f:
+            f.write("test video content")
+
+        # Track this job with the filepath
+        logger.info(f"Started tracking job {filepath}")
+        comfy.track_job(filepath)
+        comfy.job_tracking[filepath].update(
+            {
+                "status": "completed",
+                "output_file": filepath,
+                "timestamp": time.time(),
+                "workflow_name": "cogvideox-i2v",
+                "type": "video",
+            }
+        )
+        # Return just the filepath as the job ID
+        return filepath
+
     # Create the Gradio interface
     logger.info("Creating Gradio interface")
     with gr.Blocks() as iface:
@@ -442,6 +493,35 @@ def create_test_app():
             inputs=flux_inputs,
             outputs=flux_output,
             api_name="workflow/flux-with-loras",
+        )
+
+        # Add cogvideox workflow endpoint
+        cogvideox_inputs = [
+            gr.Number(label="Width", value=1024, minimum=128, maximum=4096),
+            gr.Number(label="Height", value=576, minimum=128, maximum=4096),
+            gr.Textbox(label="Filename Prefix", value="Zenerator/cogvideox-i2v"),
+            gr.Number(label="Number of Frames", value=49, minimum=16),
+            gr.Number(label="Steps", value=50, minimum=1),
+            gr.Textbox(label="Positive Prompt", value="extremely detailed"),
+            gr.Textbox(
+                label="Negative Prompt",
+                value="The video is low quality, it has a low resolution. Watermark present in each frame. Strange motion trajectory.",
+            ),
+            gr.Image(
+                label="Image Input",
+                show_label=False,
+                visible=False,
+                type="filepath",
+                sources=["upload"],
+            ),
+        ]
+        cogvideox_output = gr.Video(label="Generated CogVideoX Video")
+        cogvideox_button = gr.Button("Generate CogVideoX Video")
+        cogvideox_button.click(
+            fn=generate_cogvideox,
+            inputs=cogvideox_inputs,
+            outputs=cogvideox_output,
+            api_name="workflow/cogvideox-i2v",
         )
 
         # Add hidden components for API endpoints
