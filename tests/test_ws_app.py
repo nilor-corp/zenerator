@@ -487,6 +487,46 @@ def create_test_app():
             logger.error(f"Error in generate_frame_interpolation: {str(e)}")
             return None, f"Error: {str(e)}"
 
+    def generate_motion_directed_ltxv(
+        input_image,
+        text_guidance,
+        zoom,
+        zoom_strength,
+        pan_x,
+        pan_x_strength,
+        pan_y,
+        pan_y_strength,
+        image_input,
+    ):
+        """Generate a motion directed ltxv video"""
+        try:
+            test_dir = os.path.join(os.path.dirname(__file__), "test_outputs")
+            os.makedirs(test_dir, exist_ok=True)
+            logger.info(
+                "Generate motion directed ltxv function called from Gradio interface"
+            )
+            # Save a test image
+            filename = f"motion_directed_ltxv_{uuid.uuid4()}.webp"
+            filepath = os.path.join(test_dir, filename)
+
+            with open(filepath, "w") as f:
+                f.write("test image content")
+
+            comfy.track_job(filepath)
+            comfy.job_tracking[filepath].update(
+                {
+                    "status": "completed",
+                    "output_file": filepath,
+                    "timestamp": time.time(),
+                    "workflow_name": "motion_directed_ltxv",
+                    "type": "video",
+                }
+            )
+            return filepath
+        except Exception as e:
+            logger.error(f"Error in generate_motion_directed_ltxv: {str(e)}")
+            return None, f"Error: {str(e)}"
+
     # Create the Gradio interface
     logger.info("Creating Gradio interface")
     with gr.Blocks() as iface:
@@ -568,6 +608,34 @@ def create_test_app():
             inputs=cogvideox_inputs,
             outputs=cogvideox_output,
             api_name="workflow/cogvideox-i2v",
+        )
+
+        # Add motion directed ltxv workflow endpoint
+        motion_directed_ltxv_inputs = [
+            gr.Textbox(label="Text Guidance", value="extremely detailed"),
+            gr.Textbox(label="Zoom", value="No Zoom"),
+            gr.Number(label="Zoom Strength", value=0.5),
+            gr.Textbox(label="Pan X", value="No Pan X"),
+            gr.Number(label="Pan X Strength", value=0.5),
+            gr.Textbox(label="Pan Y", value="No Pan Y"),
+            gr.Number(label="Pan Y Strength", value=0.5),
+            gr.Textbox(
+                label="Image Input",
+                show_label=False,
+                visible=False,
+            ),
+        ]
+        motion_directed_ltxv_output = gr.Textbox(
+            label="Generated Motion Directed LTXV Video",
+            interactive=False,
+            elem_id="motion_directed_ltxv_output",
+        )
+        motion_directed_ltxv_button = gr.Button("Generate Motion Directed LTXV Video")
+        motion_directed_ltxv_button.click(
+            fn=generate_motion_directed_ltxv,
+            inputs=motion_directed_ltxv_inputs,
+            outputs=motion_directed_ltxv_output,
+            api_name="workflow/motion-directed-ltxv",
         )
 
         # Add hidden components for API endpoints
