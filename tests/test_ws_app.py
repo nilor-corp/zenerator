@@ -551,15 +551,17 @@ def create_test_app():
                 label="Negative Prompt",
                 value="The video is low quality, it has a low resolution. Watermark present in each frame. Strange motion trajectory.",
             ),
-            gr.Image(
+            gr.Textbox(
                 label="Image Input",
                 show_label=False,
                 visible=False,
-                type="filepath",
-                sources=["upload"],
             ),
         ]
-        cogvideox_output = gr.Video(label="Generated CogVideoX Video")
+        cogvideox_output = gr.Textbox(
+            label="Generated CogVideoX Video",
+            interactive=False,
+            elem_id="cogvideox_output",
+        )
         cogvideox_button = gr.Button("Generate CogVideoX Video")
         cogvideox_button.click(
             fn=generate_cogvideox,
