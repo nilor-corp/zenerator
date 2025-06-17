@@ -295,6 +295,7 @@ def create_test_app():
             filename.startswith("image_")
             or filename.startswith("flux_")
             or filename.startswith("cogvideox_")
+            or filename.startswith("interpolate_")
         ):
             return None
 
@@ -443,6 +444,49 @@ def create_test_app():
         # Return just the filepath as the job ID
         return filepath
 
+    def generate_frame_interpolation(
+        input_video,
+        interpolator,
+        multiplier,
+    ):
+        """Generate interpolated video frames"""
+        try:
+            logger.info(
+                "Generate frame interpolate function called from Gradio interface"
+            )
+
+            # Create a test directory in our project
+            test_dir = os.path.join(os.path.dirname(__file__), "test_outputs")
+            os.makedirs(test_dir, exist_ok=True)
+
+            # Save a test video
+            filename = f"interpolate_{uuid.uuid4()}.mp4"
+            filepath = os.path.join(test_dir, filename)
+            logger.info(f"Saving test video to {filepath}")
+
+            # Create a test video file (just an empty file for testing)
+            with open(filepath, "w") as f:
+                f.write("test video content")
+
+            # Track this job with the filepath
+            logger.info(f"Started tracking job {filepath}")
+            comfy.track_job(filepath)
+            comfy.job_tracking[filepath].update(
+                {
+                    "status": "completed",
+                    "output_file": filepath,
+                    "timestamp": time.time(),
+                    "workflow_name": "frame-interpolation",
+                    "type": "video",
+                }
+            )
+            # Return just the filepath as the job ID
+
+            return filepath
+        except Exception as e:
+            logger.error(f"Error in generate_frame_interpolation: {str(e)}")
+            return None, f"Error: {str(e)}"
+
     # Create the Gradio interface
     logger.info("Creating Gradio interface")
     with gr.Blocks() as iface:
@@ -563,6 +607,41 @@ def create_test_app():
             outputs=gr.JSON(),
             api_name="free",
         )
+
+        # Add frame interpolation workflow
+        with gr.Tab("Frame Interpolation"):
+            with gr.Row():
+                with gr.Column():
+                    input_video = gr.Video(label="Input Video")
+                    interpolator = gr.Dropdown(
+                        choices=[
+                            "gmfss",
+                            "ifrnet",
+                            "ifunet",
+                            "m2m",
+                            "rife",
+                            "amt",
+                            "film",
+                            "cain",
+                        ],
+                        value="rife",
+                        label="Interpolator",
+                    )
+                    multiplier = gr.Slider(
+                        minimum=1, maximum=10, value=2, step=1, label="Multiplier"
+                    )
+                    interpolate_button = gr.Button("Interpolate")
+
+                with gr.Column():
+                    output_video = gr.Video(label="Output Video")
+                    status = gr.Textbox(label="Status")
+
+            interpolate_button.click(
+                fn=generate_frame_interpolation,
+                inputs=[input_video, interpolator, multiplier],
+                outputs=output_video,
+                api_name="workflow/frame-interpolation",
+            )
 
     # Add cleanup on close
     logger.info("Launching Gradio interface")
