@@ -417,25 +417,16 @@ def create_test_app():
         """Handle the cogvideox workflow generation"""
         return mock_image_in_video_out("cogvideox-i2v")
 
-    def generate_frame_interpolation(
-        input_video,
-        interpolator,
-        multiplier,
-    ):
-        """Generate interpolated video frames"""
+    def mock_video_in_video_out(workflow_name: str):
+        """Mock function that simulates a video-to-video workflow"""
         try:
-            logger.info(
-                "Generate frame interpolate function called from Gradio interface"
-            )
-
-            # Create a test directory in our project
             test_dir = os.path.join(os.path.dirname(__file__), "test_outputs")
             os.makedirs(test_dir, exist_ok=True)
+            logger.info(f"Mock {workflow_name} function called from Gradio interface")
 
             # Save a test video
-            filename = f"interpolate_{uuid.uuid4()}.mp4"
+            filename = f"{workflow_name}_{uuid.uuid4()}.mp4"
             filepath = os.path.join(test_dir, filename)
-            logger.info(f"Saving test video to {filepath}")
 
             # Create a test video file (just an empty file for testing)
             with open(filepath, "w") as f:
@@ -449,16 +440,22 @@ def create_test_app():
                     "status": "completed",
                     "output_file": filepath,
                     "timestamp": time.time(),
-                    "workflow_name": "frame-interpolation",
+                    "workflow_name": workflow_name,
                     "type": "video",
                 }
             )
-            # Return just the filepath as the job ID
-
             return filepath
         except Exception as e:
-            logger.error(f"Error in generate_frame_interpolation: {str(e)}")
+            logger.error(f"Error in mock_video_in_video_out: {str(e)}")
             return None, f"Error: {str(e)}"
+
+    def generate_frame_interpolation(
+        input_video,
+        interpolator,
+        multiplier,
+    ):
+        """Generate interpolated video frames"""
+        return mock_video_in_video_out("frame-interpolation")
 
     def mock_image_in_video_out(workflow_name: str):
         """Mock function that simulates an image-to-video workflow"""
