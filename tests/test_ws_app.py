@@ -365,6 +365,67 @@ def create_test_app():
             logger.error(f"Error in free command: {str(e)}")
             return {"status": "error", "message": str(e)}
 
+    def mock_video_in_video_out(workflow_name: str):
+        """Mock function that simulates a video-to-video workflow"""
+        try:
+            test_dir = os.path.join(os.path.dirname(__file__), "test_outputs")
+            os.makedirs(test_dir, exist_ok=True)
+            logger.info(f"Mock {workflow_name} function called from Gradio interface")
+
+            # Save a test video
+            filename = f"{workflow_name}_{uuid.uuid4()}.mp4"
+            filepath = os.path.join(test_dir, filename)
+
+            # Create a test video file (just an empty file for testing)
+            with open(filepath, "w") as f:
+                f.write("test video content")
+
+            # Track this job with the filepath
+            logger.info(f"Started tracking job {filepath}")
+            comfy.track_job(filepath)
+            comfy.job_tracking[filepath].update(
+                {
+                    "status": "completed",
+                    "output_file": filepath,
+                    "timestamp": time.time(),
+                    "workflow_name": workflow_name,
+                    "type": "video",
+                }
+            )
+            return filepath
+        except Exception as e:
+            logger.error(f"Error in mock_video_in_video_out: {str(e)}")
+            return None, f"Error: {str(e)}"
+
+    def mock_image_in_video_out(workflow_name: str):
+        """Mock function that simulates an image-to-video workflow"""
+        try:
+            test_dir = os.path.join(os.path.dirname(__file__), "test_outputs")
+            os.makedirs(test_dir, exist_ok=True)
+            logger.info(f"Mock {workflow_name} function called from Gradio interface")
+
+            # Save a test image
+            filename = f"{workflow_name}_{uuid.uuid4()}.webp"
+            filepath = os.path.join(test_dir, filename)
+
+            with open(filepath, "w") as f:
+                f.write("test image content")
+
+            comfy.track_job(filepath)
+            comfy.job_tracking[filepath].update(
+                {
+                    "status": "completed",
+                    "output_file": filepath,
+                    "timestamp": time.time(),
+                    "workflow_name": workflow_name,
+                    "type": "video",
+                }
+            )
+            return filepath
+        except Exception as e:
+            logger.error(f"Error in mock_image_in_video_out: {str(e)}")
+            return None, f"Error: {str(e)}"
+
     def generate_flux(
         width,
         height,
@@ -417,38 +478,6 @@ def create_test_app():
         """Handle the cogvideox workflow generation"""
         return mock_image_in_video_out("cogvideox-i2v")
 
-    def mock_video_in_video_out(workflow_name: str):
-        """Mock function that simulates a video-to-video workflow"""
-        try:
-            test_dir = os.path.join(os.path.dirname(__file__), "test_outputs")
-            os.makedirs(test_dir, exist_ok=True)
-            logger.info(f"Mock {workflow_name} function called from Gradio interface")
-
-            # Save a test video
-            filename = f"{workflow_name}_{uuid.uuid4()}.mp4"
-            filepath = os.path.join(test_dir, filename)
-
-            # Create a test video file (just an empty file for testing)
-            with open(filepath, "w") as f:
-                f.write("test video content")
-
-            # Track this job with the filepath
-            logger.info(f"Started tracking job {filepath}")
-            comfy.track_job(filepath)
-            comfy.job_tracking[filepath].update(
-                {
-                    "status": "completed",
-                    "output_file": filepath,
-                    "timestamp": time.time(),
-                    "workflow_name": workflow_name,
-                    "type": "video",
-                }
-            )
-            return filepath
-        except Exception as e:
-            logger.error(f"Error in mock_video_in_video_out: {str(e)}")
-            return None, f"Error: {str(e)}"
-
     def generate_frame_interpolation(
         input_video,
         interpolator,
@@ -456,35 +485,6 @@ def create_test_app():
     ):
         """Generate interpolated video frames"""
         return mock_video_in_video_out("frame-interpolation")
-
-    def mock_image_in_video_out(workflow_name: str):
-        """Mock function that simulates an image-to-video workflow"""
-        try:
-            test_dir = os.path.join(os.path.dirname(__file__), "test_outputs")
-            os.makedirs(test_dir, exist_ok=True)
-            logger.info(f"Mock {workflow_name} function called from Gradio interface")
-
-            # Save a test image
-            filename = f"{workflow_name}_{uuid.uuid4()}.webp"
-            filepath = os.path.join(test_dir, filename)
-
-            with open(filepath, "w") as f:
-                f.write("test image content")
-
-            comfy.track_job(filepath)
-            comfy.job_tracking[filepath].update(
-                {
-                    "status": "completed",
-                    "output_file": filepath,
-                    "timestamp": time.time(),
-                    "workflow_name": workflow_name,
-                    "type": "video",
-                }
-            )
-            return filepath
-        except Exception as e:
-            logger.error(f"Error in mock_image_in_video_out: {str(e)}")
-            return None, f"Error: {str(e)}"
 
     def generate_motion_directed_ltxv(
         input_image,
