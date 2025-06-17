@@ -614,7 +614,11 @@ def create_test_app():
         with gr.Tab("Frame Interpolation"):
             with gr.Row():
                 with gr.Column():
-                    input_video = gr.Video(label="Input Video")
+                    input_video = gr.Textbox(
+                        label="Input Video",
+                        show_label=False,
+                        visible=True,
+                    )
                     interpolator = gr.Dropdown(
                         choices=[
                             "gmfss",
@@ -635,7 +639,11 @@ def create_test_app():
                     interpolate_button = gr.Button("Interpolate")
 
                 with gr.Column():
-                    output_video = gr.Video(label="Output Video")
+                    output_video = gr.Textbox(
+                        label="Output Video",
+                        interactive=False,
+                        elem_id="interpolate_output",
+                    )
                     status = gr.Textbox(label="Status")
 
             interpolate_button.click(
