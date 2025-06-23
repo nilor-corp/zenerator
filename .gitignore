@@ -8,3 +8,4 @@ kohya-trainer/
 *.pyc
 **pycache**
 tests/test_outputs/
+temp/
