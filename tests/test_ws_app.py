@@ -509,6 +509,23 @@ def create_test_app():
         """Generate a motion directed ltxv video"""
         return mock_image_in_video_out("motion_directed_ltxv")
 
+    def generate_image_travel(
+        width,
+        height,
+        number_of_frames,
+        prefix,
+        prompt,
+        negative_prompt,
+        input_images,
+        loop,
+        ip_adapter_tiled,
+        use_depth,
+        depth_video_path,
+        depth_strength,
+    ):
+        """Generate an image travel video"""
+        return mock_image_in_video_out("image_travel")
+
     # Create the Gradio interface
     logger.info("Creating Gradio interface")
     with gr.Blocks() as iface:
@@ -618,6 +635,34 @@ def create_test_app():
             inputs=motion_directed_ltxv_inputs,
             outputs=motion_directed_ltxv_output,
             api_name="workflow/motion-directed-ltxv",
+        )
+
+        # add image travel workflow endpoint
+        image_travel_inputs = [
+            gr.Number(label="Width", value=1024),
+            gr.Number(label="Height", value=576),
+            gr.Number(label="number_of_frames", value=128),
+            gr.Textbox(label="Prefix", value="Zenerator/image-travel"),
+            gr.Textbox(label="Prompt", value=""),
+            gr.Textbox(label="Negative Prompt", value=""),
+            gr.Textbox(label="Input Images", value=""),
+            gr.Checkbox(label="Loop", value=True),
+            gr.Checkbox(label="IPAdapterTiled", value=True),
+            gr.Checkbox(label="Use Depth", value=False),
+            gr.Textbox(label="Depth Vido Path", value=""),
+            gr.Number(label="Depth Strength", value=0.7),
+        ]
+        image_travel_output = gr.Textbox(
+            label="Generated Image Travel Video",
+            interactive=False,
+            elem_id="image_travel_output",
+        )
+        image_travel_button = gr.Button("Generate Image Travel Video")
+        image_travel_button.click(
+            fn=generate_image_travel,
+            inputs=image_travel_inputs,
+            outputs=image_travel_output,
+            api_name="workflow/image-travel",
         )
 
         # Add hidden components for API endpoints
