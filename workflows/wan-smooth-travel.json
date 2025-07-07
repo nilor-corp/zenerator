@@ -1,0 +1,1172 @@
+{
+  "532": {
+    "inputs": {
+      "value": 81
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "Set Frames Per Video"
+    }
+  },
+  "533": {
+    "inputs": {
+      "value": 10
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "Set Overlap Frames"
+    }
+  },
+  "537": {
+    "inputs": {
+      "value": 8
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "Set Steps"
+    }
+  },
+  "562": {
+    "inputs": {
+      "images": [
+        "1696",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "566": {
+    "inputs": {
+      "shift": 3.000000000000001,
+      "model": [
+        "644",
+        0
+      ]
+    },
+    "class_type": "ModelSamplingSD3",
+    "_meta": {
+      "title": "Shift"
+    }
+  },
+  "570": {
+    "inputs": {
+      "clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+      "type": "wan",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader",
+    "_meta": {
+      "title": "Load CLIP"
+    }
+  },
+  "571": {
+    "inputs": {
+      "vae_name": "WanVideo\\wan_2.1_vae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE"
+    }
+  },
+  "572": {
+    "inputs": {
+      "text": "anxious sweat euphoric schizophrenic",
+      "clip": [
+        "570",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Positive Prompt)"
+    }
+  },
+  "573": {
+    "inputs": {
+      "text": "色调艳丽，过曝，静态，细节模糊不清，字幕，风格，作品，画作，画面，静止，整体发灰，最差质量，低质量，JPEG压缩残留，丑陋的，残缺的，多余的手指，画得不好的手部，画得不好的脸部，畸形的，毁容的，形态畸形的肢体，手指融合，静止不动的画面，杂乱的背景，三条腿，背景人很多，倒着走",
+      "clip": [
+        "570",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Negative Prompt)"
+    }
+  },
+  "576": {
+    "inputs": {
+      "trim_amount": [
+        "1115",
+        3
+      ],
+      "samples": [
+        "842",
+        0
+      ]
+    },
+    "class_type": "TrimVideoLatent",
+    "_meta": {
+      "title": "TrimVideoLatent"
+    }
+  },
+  "577": {
+    "inputs": {
+      "samples": [
+        "576",
+        0
+      ],
+      "vae": [
+        "571",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "579": {
+    "inputs": {
+      "num_frames": [
+        "532",
+        0
+      ],
+      "empty_frame_level": 0.5000000000000001,
+      "start_index": 0,
+      "end_index": -1,
+      "start_image": [
+        "1696",
+        0
+      ],
+      "end_image": [
+        "1700",
+        0
+      ]
+    },
+    "class_type": "WanVideoVACEStartToEndFrame",
+    "_meta": {
+      "title": "WanVideo VACE Start To End Frame"
+    }
+  },
+  "602": {
+    "inputs": {
+      "value": 1.0000000000000002
+    },
+    "class_type": "PrimitiveFloat",
+    "_meta": {
+      "title": "Set CFG"
+    }
+  },
+  "644": {
+    "inputs": {
+      "model_name": "Wan2.1\\Wan2.1-14B-T2V-FusionX-VACE-FP8_e4m3fn.safetensors",
+      "weight_dtype": "fp8_e4m3fn",
+      "compute_dtype": "default",
+      "patch_cublaslinear": false,
+      "sage_attention": "disabled",
+      "enable_fp16_accumulation": false
+    },
+    "class_type": "DiffusionModelLoaderKJ",
+    "_meta": {
+      "title": "Diffusion Model Loader KJ"
+    }
+  },
+  "657": {
+    "inputs": {
+      "width": [
+        "757",
+        0
+      ],
+      "height": [
+        "759",
+        0
+      ],
+      "batch_size": 1,
+      "color": 8421504
+    },
+    "class_type": "EmptyImage",
+    "_meta": {
+      "title": "EmptyImage"
+    }
+  },
+  "743": {
+    "inputs": {
+      "color_space": "LAB",
+      "factor": [
+        "845",
+        0
+      ],
+      "device": "gpu",
+      "batch_size": 0,
+      "image": [
+        "1318",
+        0
+      ],
+      "reference": [
+        "1696",
+        0
+      ]
+    },
+    "class_type": "ImageColorMatch+",
+    "_meta": {
+      "title": "🔧 Image Color Match"
+    }
+  },
+  "757": {
+    "inputs": {
+      "value": 832
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "Width"
+    }
+  },
+  "759": {
+    "inputs": {
+      "value": 480
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "Height"
+    }
+  },
+  "769": {
+    "inputs": {
+      "batch_index": 1,
+      "length": 4096,
+      "image": [
+        "1685",
+        1
+      ]
+    },
+    "class_type": "ImageFromBatch",
+    "_meta": {
+      "title": "ImageFromBatch"
+    }
+  },
+  "783": {
+    "inputs": {
+      "scheduler": "sgm_uniform",
+      "steps": [
+        "537",
+        0
+      ],
+      "denoise": 1,
+      "model": [
+        "566",
+        0
+      ]
+    },
+    "class_type": "BasicScheduler",
+    "_meta": {
+      "title": "BasicScheduler"
+    }
+  },
+  "784": {
+    "inputs": {
+      "sampler_name": "res_multistep"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "KSamplerSelect"
+    }
+  },
+  "789": {
+    "inputs": {
+      "step": 2,
+      "sigmas": [
+        "783",
+        0
+      ]
+    },
+    "class_type": "SplitSigmas",
+    "_meta": {
+      "title": "SplitSigmas"
+    }
+  },
+  "840": {
+    "inputs": {
+      "add_noise": true,
+      "noise_seed": 50073502225894,
+      "cfg": [
+        "602",
+        0
+      ],
+      "model": [
+        "566",
+        0
+      ],
+      "positive": [
+        "1113",
+        0
+      ],
+      "negative": [
+        "1113",
+        1
+      ],
+      "sampler": [
+        "784",
+        0
+      ],
+      "sigmas": [
+        "789",
+        0
+      ],
+      "latent_image": [
+        "1113",
+        2
+      ]
+    },
+    "class_type": "SamplerCustom",
+    "_meta": {
+      "title": "SamplerCustom"
+    }
+  },
+  "842": {
+    "inputs": {
+      "add_noise": false,
+      "noise_seed": 790589102981842,
+      "cfg": [
+        "602",
+        0
+      ],
+      "model": [
+        "566",
+        0
+      ],
+      "positive": [
+        "1115",
+        0
+      ],
+      "negative": [
+        "1115",
+        1
+      ],
+      "sampler": [
+        "784",
+        0
+      ],
+      "sigmas": [
+        "789",
+        1
+      ],
+      "latent_image": [
+        "840",
+        0
+      ]
+    },
+    "class_type": "SamplerCustom",
+    "_meta": {
+      "title": "SamplerCustom"
+    }
+  },
+  "845": {
+    "inputs": {
+      "value": 0
+    },
+    "class_type": "PrimitiveFloat",
+    "_meta": {
+      "title": "Set ColorMatchFactor"
+    }
+  },
+  "868": {
+    "inputs": {
+      "frame_rate": 24.000000000000007,
+      "loop_count": 0,
+      "filename_prefix": "Zenerator/wan-smooth-travel",
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": true,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "769",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "1110": {
+    "inputs": {
+      "value": 1.0000000000000002
+    },
+    "class_type": "PrimitiveFloat",
+    "_meta": {
+      "title": "Set VACEStrength"
+    }
+  },
+  "1113": {
+    "inputs": {
+      "width": [
+        "757",
+        0
+      ],
+      "height": [
+        "759",
+        0
+      ],
+      "length": [
+        "532",
+        0
+      ],
+      "batch_size": 1,
+      "strength": [
+        "1110",
+        0
+      ],
+      "positive": [
+        "1121:1",
+        0
+      ],
+      "negative": [
+        "573",
+        0
+      ],
+      "vae": [
+        "571",
+        0
+      ],
+      "control_video": [
+        "579",
+        0
+      ],
+      "control_masks": [
+        "579",
+        1
+      ],
+      "reference_image": [
+        "657",
+        0
+      ]
+    },
+    "class_type": "WanVaceToVideo",
+    "_meta": {
+      "title": "WanVaceToVideo"
+    }
+  },
+  "1115": {
+    "inputs": {
+      "width": [
+        "757",
+        0
+      ],
+      "height": [
+        "759",
+        0
+      ],
+      "length": [
+        "532",
+        0
+      ],
+      "batch_size": 1,
+      "strength": [
+        "1110",
+        0
+      ],
+      "positive": [
+        "1121:1",
+        0
+      ],
+      "negative": [
+        "573",
+        0
+      ],
+      "vae": [
+        "571",
+        0
+      ],
+      "control_video": [
+        "579",
+        0
+      ],
+      "control_masks": [
+        "579",
+        1
+      ],
+      "reference_image": [
+        "1696",
+        0
+      ]
+    },
+    "class_type": "WanVaceToVideo",
+    "_meta": {
+      "title": "WanVaceToVideo"
+    }
+  },
+  "1120": {
+    "inputs": {
+      "text": "",
+      "clip": [
+        "570",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Positive Prompt)"
+    }
+  },
+  "1132": {
+    "inputs": {
+      "images": [
+        "1700",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "1133": {
+    "inputs": {
+      "value": 1
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "Extra Trim"
+    }
+  },
+  "1229": {
+    "inputs": {
+      "width": [
+        "757",
+        0
+      ],
+      "height": [
+        "759",
+        0
+      ],
+      "upscale_method": "lanczos",
+      "keep_proportion": "crop",
+      "pad_color": "0, 0, 0",
+      "crop_position": "center",
+      "divisible_by": 2,
+      "device": "cpu",
+      "image": [
+        "1691",
+        0
+      ]
+    },
+    "class_type": "ImageResizeKJv2",
+    "_meta": {
+      "title": "Resize Image v2"
+    }
+  },
+  "1235": {
+    "inputs": {
+      "images": [
+        "1692",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "1236": {
+    "inputs": {
+      "batch_index": 0,
+      "length": 1,
+      "image": [
+        "1713",
+        0
+      ]
+    },
+    "class_type": "ImageFromBatch",
+    "_meta": {
+      "title": "ImageFromBatch"
+    }
+  },
+  "1238": {
+    "inputs": {
+      "value": 1
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "Extra Trim"
+    }
+  },
+  "1239": {
+    "inputs": {
+      "add_noise": true,
+      "noise_seed": 475274041832053,
+      "cfg": [
+        "602",
+        0
+      ],
+      "model": [
+        "566",
+        0
+      ],
+      "positive": [
+        "1247",
+        0
+      ],
+      "negative": [
+        "1247",
+        1
+      ],
+      "sampler": [
+        "784",
+        0
+      ],
+      "sigmas": [
+        "783",
+        0
+      ],
+      "latent_image": [
+        "1247",
+        2
+      ]
+    },
+    "class_type": "SamplerCustom",
+    "_meta": {
+      "title": "SamplerCustom"
+    }
+  },
+  "1240": {
+    "inputs": {
+      "samples": [
+        "1241",
+        0
+      ],
+      "vae": [
+        "571",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "1241": {
+    "inputs": {
+      "trim_amount": [
+        "1247",
+        3
+      ],
+      "samples": [
+        "1239",
+        0
+      ]
+    },
+    "class_type": "TrimVideoLatent",
+    "_meta": {
+      "title": "TrimVideoLatent"
+    }
+  },
+  "1247": {
+    "inputs": {
+      "width": [
+        "757",
+        0
+      ],
+      "height": [
+        "759",
+        0
+      ],
+      "length": [
+        "532",
+        0
+      ],
+      "batch_size": 1,
+      "strength": [
+        "1110",
+        0
+      ],
+      "positive": [
+        "572",
+        0
+      ],
+      "negative": [
+        "573",
+        0
+      ],
+      "vae": [
+        "571",
+        0
+      ],
+      "control_video": [
+        "1713",
+        0
+      ],
+      "control_masks": [
+        "1713",
+        1
+      ],
+      "reference_image": [
+        "1696",
+        0
+      ]
+    },
+    "class_type": "WanVaceToVideo",
+    "_meta": {
+      "title": "WanVaceToVideo"
+    }
+  },
+  "1248": {
+    "inputs": {
+      "overlap_frames": [
+        "533",
+        0
+      ],
+      "video_1": [
+        "1684",
+        3
+      ],
+      "video_2": [
+        "1252",
+        0
+      ]
+    },
+    "class_type": "WanVideoBlender",
+    "_meta": {
+      "title": "WAN Video Blender 🎞️🅢🅜"
+    }
+  },
+  "1249": {
+    "inputs": {
+      "value": "a - b * 4",
+      "a": [
+        "532",
+        0
+      ],
+      "b": [
+        "1238",
+        0
+      ]
+    },
+    "class_type": "SimpleMath+",
+    "_meta": {
+      "title": "🔧 Simple Math"
+    }
+  },
+  "1252": {
+    "inputs": {
+      "color_space": "LAB",
+      "factor": [
+        "845",
+        0
+      ],
+      "device": "gpu",
+      "batch_size": 0,
+      "image": [
+        "1265",
+        0
+      ],
+      "reference": [
+        "1236",
+        0
+      ]
+    },
+    "class_type": "ImageColorMatch+",
+    "_meta": {
+      "title": "🔧 Image Color Match"
+    }
+  },
+  "1265": {
+    "inputs": {
+      "batch_index": 0,
+      "length": [
+        "1249",
+        0
+      ],
+      "image": [
+        "1240",
+        0
+      ]
+    },
+    "class_type": "ImageFromBatch",
+    "_meta": {
+      "title": "TrimFromEnd"
+    }
+  },
+  "1318": {
+    "inputs": {
+      "batch_index": 0,
+      "length": [
+        "1319",
+        0
+      ],
+      "image": [
+        "577",
+        0
+      ]
+    },
+    "class_type": "ImageFromBatch",
+    "_meta": {
+      "title": "TrimFromEnd"
+    }
+  },
+  "1319": {
+    "inputs": {
+      "value": "a - b * 4",
+      "a": [
+        "532",
+        0
+      ],
+      "b": [
+        "1133",
+        0
+      ]
+    },
+    "class_type": "SimpleMath+",
+    "_meta": {
+      "title": "🔧 Simple Math"
+    }
+  },
+  "1622": {
+    "inputs": {
+      "fps": 16.000000000000004,
+      "images": [
+        "743",
+        0
+      ]
+    },
+    "class_type": "PreviewAnimation",
+    "_meta": {
+      "title": "Preview Animation 77x832x480"
+    }
+  },
+  "1624": {
+    "inputs": {
+      "fps": 16.000000000000004,
+      "images": [
+        "1248",
+        0
+      ]
+    },
+    "class_type": "PreviewAnimation",
+    "_meta": {
+      "title": "Preview Animation 211x832x480"
+    }
+  },
+  "1684": {
+    "inputs": {
+      "total": [
+        "1707",
+        0
+      ],
+      "initial_value1": [
+        "743",
+        0
+      ],
+      "initial_value2": [
+        "743",
+        0
+      ]
+    },
+    "class_type": "easy forLoopStart",
+    "_meta": {
+      "title": "For Loop Start"
+    }
+  },
+  "1685": {
+    "inputs": {
+      "flow": [
+        "1684",
+        0
+      ],
+      "initial_value1": [
+        "1252",
+        0
+      ],
+      "initial_value2": [
+        "1248",
+        0
+      ]
+    },
+    "class_type": "easy forLoopEnd",
+    "_meta": {
+      "title": "For Loop End"
+    }
+  },
+  "1691": {
+    "inputs": {
+      "directory": "G:\\Shared drives\\nilor-drive\\01_Projects\\033_Chicken_Party_2\\03_development\\images\\images-to-interpolate\\eyes",
+      "image_load_cap": 0,
+      "skip_first_images": 0,
+      "select_every_nth": 1
+    },
+    "class_type": "VHS_LoadImagesPath",
+    "_meta": {
+      "title": "Load Images (Path) 🎥🅥🅗🅢"
+    }
+  },
+  "1692": {
+    "inputs": {
+      "indexes": [
+        "1694",
+        0
+      ],
+      "err_if_missing": true,
+      "err_if_empty": true,
+      "image": [
+        "1724",
+        0
+      ]
+    },
+    "class_type": "VHS_SelectImages",
+    "_meta": {
+      "title": "Select Images 🎥🅥🅗🅢"
+    }
+  },
+  "1693": {
+    "inputs": {
+      "value": "a+2",
+      "a": [
+        "1684",
+        1
+      ]
+    },
+    "class_type": "SimpleMath+",
+    "_meta": {
+      "title": "🔧 Simple Math"
+    }
+  },
+  "1694": {
+    "inputs": {
+      "int_": [
+        "1693",
+        0
+      ]
+    },
+    "class_type": "CR Integer To String",
+    "_meta": {
+      "title": "🔧 CR Integer To String"
+    }
+  },
+  "1696": {
+    "inputs": {
+      "indexes": "0",
+      "err_if_missing": true,
+      "err_if_empty": true,
+      "image": [
+        "1724",
+        0
+      ]
+    },
+    "class_type": "VHS_SelectImages",
+    "_meta": {
+      "title": "Select Images 🎥🅥🅗🅢"
+    }
+  },
+  "1700": {
+    "inputs": {
+      "indexes": "1",
+      "err_if_missing": true,
+      "err_if_empty": true,
+      "image": [
+        "1724",
+        0
+      ]
+    },
+    "class_type": "VHS_SelectImages",
+    "_meta": {
+      "title": "Select Images 🎥🅥🅗🅢"
+    }
+  },
+  "1705": {
+    "inputs": {
+      "images": [
+        "1724",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "1707": {
+    "inputs": {
+      "value": "a-2",
+      "a": [
+        "1724",
+        3
+      ]
+    },
+    "class_type": "SimpleMath+",
+    "_meta": {
+      "title": "🔧 Simple Math"
+    }
+  },
+  "1711": {
+    "inputs": {
+      "text": "1",
+      "anything": [
+        "1684",
+        1
+      ]
+    },
+    "class_type": "easy showAnything",
+    "_meta": {
+      "title": "Show Current Index"
+    }
+  },
+  "1713": {
+    "inputs": {
+      "total_output_frames": [
+        "532",
+        0
+      ],
+      "overlap_frames": [
+        "533",
+        0
+      ],
+      "empty_frame_fill_level": 0.5,
+      "how_to_use_control_images": "start_sequence_at_beginning_and_prioritise_input_frames",
+      "how_to_use_inpaint_masks": "start_sequence_at_beginning_and_prioritise_input_frames",
+      "input_video_frames": [
+        "1684",
+        2
+      ],
+      "end_frame": [
+        "1692",
+        0
+      ]
+    },
+    "class_type": "VideoContinuationGenerator",
+    "_meta": {
+      "title": "Video Continuation Generator 🎞️🅢🅜"
+    }
+  },
+  "1714": {
+    "inputs": {
+      "text": "2",
+      "anything": [
+        "1707",
+        0
+      ]
+    },
+    "class_type": "easy showAnything",
+    "_meta": {
+      "title": "Show Last Index"
+    }
+  },
+  "1716": {
+    "inputs": {
+      "indexes": "0",
+      "err_if_missing": true,
+      "err_if_empty": true,
+      "image": [
+        "1229",
+        0
+      ]
+    },
+    "class_type": "VHS_SelectImages",
+    "_meta": {
+      "title": "Select Images 🎥🅥🅗🅢"
+    }
+  },
+  "1717": {
+    "inputs": {
+      "image1": [
+        "1229",
+        0
+      ],
+      "image2": [
+        "1716",
+        0
+      ]
+    },
+    "class_type": "ImageBatch",
+    "_meta": {
+      "title": "Batch Images"
+    }
+  },
+  "1721": {
+    "inputs": {
+      "value": false
+    },
+    "class_type": "PrimitiveBoolean",
+    "_meta": {
+      "title": "Set LoopVideo"
+    }
+  },
+  "1724": {
+    "inputs": {
+      "image": [
+        "1715:1",
+        0
+      ]
+    },
+    "class_type": "GetImageSizeAndCount",
+    "_meta": {
+      "title": "Get Image Size & Count"
+    }
+  },
+  "1121:0": {
+    "inputs": {
+      "value": false
+    },
+    "class_type": "SimpleMathBoolean+",
+    "_meta": {
+      "title": "🔧 Simple Math Boolean"
+    }
+  },
+  "1121:1": {
+    "inputs": {
+      "evaluate": [
+        "1121:0",
+        0
+      ],
+      "on_true": [
+        "1120",
+        0
+      ],
+      "on_false": [
+        "572",
+        0
+      ]
+    },
+    "class_type": "SimpleCondition+",
+    "_meta": {
+      "title": "🔧 Simple Condition"
+    }
+  },
+  "1715:0": {
+    "inputs": {
+      "value": [
+        "1721",
+        0
+      ]
+    },
+    "class_type": "SimpleMathBoolean+",
+    "_meta": {
+      "title": "🔧 Simple Math Boolean"
+    }
+  },
+  "1715:1": {
+    "inputs": {
+      "evaluate": [
+        "1715:0",
+        0
+      ],
+      "on_true": [
+        "1717",
+        0
+      ],
+      "on_false": [
+        "1229",
+        0
+      ]
+    },
+    "class_type": "SimpleCondition+",
+    "_meta": {
+      "title": "🔧 Simple Condition"
+    }
+  }
+}
