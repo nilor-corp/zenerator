@@ -94,7 +94,7 @@ resource_manager = ResourceManager()
 app_state = AppState()
 
 # Load config
-with open("config.json") as f:
+with open("config.json", encoding="utf-8") as f:
     config = json.load(f)
 
 COMFY_IP = config["COMFY_IP"]
@@ -520,7 +520,7 @@ def get_system_stats():
 
 # endregion
 
-with open("workflow_definitions.json") as f:
+with open("workflow_definitions.json", encoding="utf-8") as f:
     workflow_definitions = json.load(f)
 
 
